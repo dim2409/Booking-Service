@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    FullCalendarModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
