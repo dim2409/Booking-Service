@@ -12,7 +12,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DemoModule } from "./mwl-demo-component/mwl-demo-component.module";
-
+import { FlatpickrModule } from 'angularx-flatpickr';
 @NgModule({
     declarations: [
         AppComponent
@@ -25,6 +25,7 @@ import { DemoModule } from "./mwl-demo-component/mwl-demo-component.module";
         BrowserAnimationsModule,
         MatToolbarModule,
         MatButtonModule,
+        FlatpickrModule,
         FullCalendarModule,
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
         DemoModule

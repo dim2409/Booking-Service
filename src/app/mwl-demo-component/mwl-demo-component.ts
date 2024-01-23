@@ -35,6 +35,7 @@ import {
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 
+
 const colors: Record<string, EventColor> = {
   red: {
     primary: '#ad2121',
@@ -146,6 +147,10 @@ export class DemoComponent {
 
   constructor(private modal: NgbModal) {}
 
+  ngOnInit(): void {
+    this.setView(CalendarView.Month);
+  }
+  //Toggle day view
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -204,6 +209,7 @@ export class DemoComponent {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
+  //Set view kind to month, week or day
   setView(view: CalendarView) {
     this.view = view;
   }

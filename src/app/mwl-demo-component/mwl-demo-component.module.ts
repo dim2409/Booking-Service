@@ -7,6 +7,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoComponent } from './mwl-demo-component';
 
+import {MatButtonModule} from '@angular/material/button';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import { DemoComponent } from './mwl-demo-component';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatButtonModule
   ],
   declarations: [DemoComponent],
   exports: [DemoComponent],
