@@ -15,6 +15,7 @@
   <div mat-label class="col-md-4">
     <h1>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
   </div>
+  <!-- Set view kind to month, week or day -->
   <div class="col-md-4">
     <div>
       <button mat-raised-button color="accent" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">

@@ -11,11 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { DemoModule } from "./mwl-demo-component/mwl-demo-component.module";
 import { FlatpickrModule } from 'angularx-flatpickr';
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -25,10 +24,12 @@ import { FlatpickrModule } from 'angularx-flatpickr';
         BrowserAnimationsModule,
         MatToolbarModule,
         MatButtonModule,
-        FlatpickrModule,
         FullCalendarModule,
-        CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-        DemoModule
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: adapterFactory,
+        }),
     ]
 })
 export class AppModule { }

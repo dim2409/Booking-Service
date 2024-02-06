@@ -1,14 +1,3 @@
-/* import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-mwl-demo-component',
-  templateUrl: './mwl-demo-component.component.html',
-  styleUrls: ['./mwl-demo-component.component.less']
-})
-export class MwlDemoComponentComponent {
-
-}
- */
 import {
   Component,
   ChangeDetectionStrategy,
@@ -69,18 +58,21 @@ const colors: Record<string, EventColor> = {
   templateUrl: './mwl-demo-component.html',
 })
 export class DemoComponent {
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
+  /* ----- modal data ----- */
 
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
+  modalData!: {
+    action: string;
+    event: CalendarEvent;
+  };
+
+  /* ----- calendar view ----- */
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
 
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
 
   actions: CalendarEventAction[] = [
     {
@@ -145,7 +137,7 @@ export class DemoComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal) { }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
@@ -183,7 +175,9 @@ export class DemoComponent {
     this.handleEvent('Dropped or resized', event);
   }
 
+  //handles event
   handleEvent(action: string, event: CalendarEvent): void {
+    //modal when click on event
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
