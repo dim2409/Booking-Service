@@ -1,6 +1,7 @@
-<p>home works!</p>
-<!-- <mwl-demo-component></mwl-demo-component> -->
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+  <button mat-button [routerLink]="'/myBookings'">
+      Go to booking
+  </button>
+</mat-menu>
 <app-calendar></app-calendar>
-<button mat-raised-button color="primary" [routerLink]="'/booking'">
-    Go to booking
-</button>

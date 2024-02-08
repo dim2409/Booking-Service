@@ -12,6 +12,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
     declarations: [
         AppComponent,
@@ -30,6 +31,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
           provide: DateAdapter,
           useFactory: adapterFactory,
         }),
+        FontAwesomeModule,
     ]
 })
 export class AppModule { }

@@ -1,13 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
+import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 
 /* Services */
 import { BookingsService } from 'src/app/services/bookings.service';
@@ -19,7 +17,14 @@ import { BookingsService } from 'src/app/services/bookings.service';
 })
 export class CalendarComponent {
   handleEvent(arg0: string, event: CalendarEvent) {
-    console.log(arg0, event);
+    const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
+      data: event,
+      autoFocus: false,
+      width: "90vw",
+      height: "90%",
+      maxWidth: "90vw"
+    });
+    return dialogRef.afterClosed();
   }
   eventTimesChanged({
     event,
@@ -42,7 +47,7 @@ export class CalendarComponent {
   activeDayIsOpen: boolean = true;
   events: any;
 
-  constructor(private BookingsService: BookingsService) { }
+  constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
