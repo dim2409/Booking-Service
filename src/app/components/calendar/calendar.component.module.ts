@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -21,7 +22,8 @@ import { CalendarComponent } from './calendar.component';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    MatButtonModule
+    MatButtonModule,
+    MatButtonToggleModule
   ],
   exports: [CalendarComponent]
 })

@@ -1,24 +1,57 @@
-<div class="calendar-container row justify-content-center">
+<div class="calendar-container">
+  <div class="calendar">
+    <!-- Set view kind to month, week or day -->
+    <div class="view-kind-controls-contaier">
+      <mat-button-toggle-group name="viewKind" aria-label="Kind of View"  [(ngModel)]="selectedValue">
+        <mat-button-toggle color="accent" (click)="setView(CalendarView.Month)"
+          [class.active]="view === CalendarView.Month" value="Month">
+          Month
+        </mat-button-toggle>
+        <mat-button-toggle color="accent" (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week" value="Week">
+          Week
+        </mat-button-toggle>
+        <mat-button-toggle color="accent" (click)="setView(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day" value="Day">
+          Day
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
 
-  <!-- Current month, week or day -->
-  <div mat-label class="col-md-4 text-center">
-    <h1>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
+    <!-- Current month, week or day -->
+    <div mat-label class="text-center">
+      <h1>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
+    </div>
+
+    <!-- Previous, current and next buttons -->
+    <div class="controls-container">
+      <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()" class="controls">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button mat-stroked-button mwlCalendarToday [(viewDate)]="viewDate" class="controls">
+        Today
+      </button>
+      <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()" class="controls">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- The calendars to switch between -->
+    <div [ngSwitch]="view" class="h5">
+      <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
+        [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="bookings"
+        [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="bookings"
+        [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+    </div>
   </div>
-
-  <!-- The calendars to switch between -->
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
-      [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-      (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="bookings"
-      [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="bookings"
-      [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-day-view>
-  </div>
-
 </div>

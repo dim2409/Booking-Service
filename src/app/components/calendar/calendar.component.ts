@@ -16,6 +16,7 @@ import { BookingsService } from 'src/app/services/bookings.service';
   styleUrl: './calendar.component.less'
 })
 export class CalendarComponent {
+  selectedValue!: string;
   handleEvent(arg0: string, event: CalendarEvent) {
     const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
       data: event,
@@ -53,6 +54,7 @@ export class CalendarComponent {
     this.setView(CalendarView.Month);
     this.bookings = this.BookingsService.getBookings();
     console.log(this.bookings);
+    this.selectedValue = 'Month';
   }
 
   //Set view kind to month, week or day

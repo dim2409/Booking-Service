@@ -8,7 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [DemoModule, MatButtonModule, RouterModule, CalendarComponentModule, MatMenuModule, MatDialogModule],
+  imports: [DemoModule, CalendarComponentModule, MatDialogModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })

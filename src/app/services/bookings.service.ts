@@ -88,6 +88,12 @@ export class BookingsService {
       },
       draggable: true,
     },
+    {
+      start: startOfDay(new Date()),
+      title: 'Booking - Room 4',
+      color: { ...this.colors['blue'] },
+      actions: this.actions,
+    },
   ];
 
   constructor() { }
