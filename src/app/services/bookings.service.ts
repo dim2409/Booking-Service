@@ -49,7 +49,7 @@ export class BookingsService {
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'Booking - Room 1',
+      title: 'Booking 1 - Room 1',
       color: { ...this.colors['red'] },
       actions: this.actions,
       allDay: true,
@@ -65,21 +65,23 @@ export class BookingsService {
     },
     {
       start: startOfDay(new Date()),
-      title: 'Booking - Room 2',
+      title: 'Booking 2 - Room 2',
       color: { ...this.colors['green'] },
       actions: this.actions,
+      id: 2,
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
-      title: 'Booking - Room 1',
+      title: 'Booking 3 - Room 1',
       color: { ...this.colors['red'] },
       allDay: true,
+      id: 3,
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
-      title: 'Booking - Room 3',
+      title: 'Booking 4 - Room 3',
       color: { ...this.colors['yellow'] },
       actions: this.actions,
       resizable: {
@@ -87,12 +89,14 @@ export class BookingsService {
         afterEnd: true,
       },
       draggable: true,
+      id: 4,
     },
     {
       start: startOfDay(new Date()),
-      title: 'Booking - Room 4',
+      title: 'Booking 5 - Room 4',
       color: { ...this.colors['blue'] },
       actions: this.actions,
+      id: 5,
     },
   ];
 

@@ -36,4 +36,10 @@ button {
 .main {
   height: 100%;
   align-content: flex-start;
+  font-size: 1.2rem;
+}
+.close {
+  cursor: pointer;
+  width: fit-content !important;
+  font-size: 1.5rem;
 }

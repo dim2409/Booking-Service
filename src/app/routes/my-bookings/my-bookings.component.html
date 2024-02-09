@@ -1,1 +1,29 @@
-<p>my-bookings works!</p>
+<div class="container main mt-5">
+    <mat-card *ngFor="let booking of bookings" class="my-3">
+        <div class="row w-100 flex-row-reverse position-absolute">
+            <button mat-mini-fab (click)="alert('Delete')" class="mx-1"><i class="fa-solid fa-trash"></i></button>
+            <button mat-mini-fab color="primary" (click)="alert('Edit')" class="mx-1"><i class="fa-solid fa-pencil"></i></button>
+            <button mat-mini-fab color="warm" (click)="openInfoDialog(booking)" class="mx-1"><i class="fa-solid fa-expand"></i></button>
+        </div>
+        <mat-card-header>
+            <p class="h4">
+                {{booking.title}}
+            </p>
+            <p class="h4 time mx-5">
+                {{booking.start.toLocaleDateString('en-GB', options)}} 
+                {{booking.end ? ' - ' + booking.end?.toLocaleDateString('en-GB', options): ''}} 
+            </p>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-divider></mat-divider>
+            <p class="my-2">
+            {{
+                booking?.info ?
+                (booking.info.length > 0 ? booking.info.slice(0, 50) + (booking.info.length > 50 ? '...' : '') : 'No info')
+                :
+                'No info'
+            }}
+            </p>
+        </mat-card-content>
+    </mat-card>
+</div>

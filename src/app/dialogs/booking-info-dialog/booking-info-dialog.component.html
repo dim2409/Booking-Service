@@ -1,2 +1,12 @@
-{{data.title}}
-{{data.info}}
+<div class="row w-100 flex-row-reverse p-5 close">
+    <i class="fa-solid fa-x" (click)="close()" style="width: fit-content;"></i>
+</div>
+<div class="container pt-5">
+    <p class="h2">{{data.title}}</p>
+    <p class="h4">
+        {{data.start.toLocaleDateString('en-GB', options)}} 
+        <!-- {{data.start.toLocaleDateString('el-GR', options)}} -->
+    </p>
+    <hr>
+    <p class="h5">{{data.info}}</p>
+</div>
