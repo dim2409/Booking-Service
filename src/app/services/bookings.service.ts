@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { subDays, startOfDay, addDays, endOfMonth, addHours } from 'date-fns';
 import { EventColor } from 'calendar-utils';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingsService {
-  
+
 
   colors: Record<string, EventColor> = {
     red: {
@@ -100,9 +101,24 @@ export class BookingsService {
     },
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getBookings() {
-    return this.bookings;
+    return new Promise(resolve => {
+      this.http.get<any>('http://localhost:8000/api/bookings').subscribe((data) => {
+        const resp = data.map((item: {
+          color: any; start: string | number | Date;
+        }) => {
+          const startDate = new Date(item.start);
+          return {
+            ...item,
+            start: startDate,
+            color: { ...this.colors[item.color] },
+          }
+        })
+        resolve(resp);
+      })
+    })
   }
 }
+

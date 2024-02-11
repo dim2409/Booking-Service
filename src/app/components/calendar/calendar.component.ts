@@ -52,8 +52,10 @@ export class CalendarComponent {
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
-    this.bookings = this.BookingsService.getBookings();
-    console.log(this.bookings);
+    this.BookingsService.getBookings().then((resp: any) => {
+      this.bookings = resp;
+      console.log(this.bookings);
+    });
     this.selectedValue = 'Month';
   }
 

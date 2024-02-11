@@ -14,6 +14,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         AppComponent,
@@ -33,7 +34,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
           useFactory: adapterFactory,
         }),
         FontAwesomeModule,
-        NavbarComponent
+        NavbarComponent,
+        HttpClientModule
     ]
 })
 export class AppModule { }
