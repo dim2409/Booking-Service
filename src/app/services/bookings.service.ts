@@ -61,7 +61,7 @@ export class BookingsService {
       draggable: true,
 
       id: 1,
-      info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In diam augue, vulputate id nisl vel, feugiat egestas ex. Phasellus eget pretium odio. Phasellus gravida mi id ipsum consequat suscipit. Maecenas malesuada hendrerit ex, lacinia tristique lacus venenatis ac. Fusce semper risus eget elit feugiat, at facilisis erat pretium. Praesent tincidunt, diam vel congue cursus, tortor arcu commodo diam, sit amet scelerisque dolor dolor a ante. Nunc eget metus sapien. Phasellus in consequat justo. Suspendisse porta porta erat id maximus. Donec vitae luctus felis, posuere vestibulum risus. Donec viverra pretium laoreet. Nullam non dolor dictum, aliquam urna ut, malesuada mi. Ut lacus velit, tempus ut condimentum tempor, tempus vulputate elit. Suspendisse vel tortor pellentesque, mollis lacus in, rutrum est. Donec rutrum pretium mauris in mattis. Quisque quis ipsum a mauris gravida tristique. Proin faucibus purus nec mollis commodo. Mauris at felis sit amet lacus tempus blandit nec sed nibh. Phasellus sed pulvinar mi. Quisque ac varius felis, sit amet molestie justo. Praesent ut finibus est. Vivamus venenatis aliquam erat ut imperdiet. Praesent nec eleifend justo. Mauris egestas dapibus enim. Proin dignissim tincidunt tortor. Morbi faucibus orci ut sodales placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.',
+      //info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In diam augue, vulputate id nisl vel, feugiat egestas ex. Phasellus eget pretium odio. Phasellus gravida mi id ipsum consequat suscipit. Maecenas malesuada hendrerit ex, lacinia tristique lacus venenatis ac. Fusce semper risus eget elit feugiat, at facilisis erat pretium. Praesent tincidunt, diam vel congue cursus, tortor arcu commodo diam, sit amet scelerisque dolor dolor a ante. Nunc eget metus sapien. Phasellus in consequat justo. Suspendisse porta porta erat id maximus. Donec vitae luctus felis, posuere vestibulum risus. Donec viverra pretium laoreet. Nullam non dolor dictum, aliquam urna ut, malesuada mi. Ut lacus velit, tempus ut condimentum tempor, tempus vulputate elit. Suspendisse vel tortor pellentesque, mollis lacus in, rutrum est. Donec rutrum pretium mauris in mattis. Quisque quis ipsum a mauris gravida tristique. Proin faucibus purus nec mollis commodo. Mauris at felis sit amet lacus tempus blandit nec sed nibh. Phasellus sed pulvinar mi. Quisque ac varius felis, sit amet molestie justo. Praesent ut finibus est. Vivamus venenatis aliquam erat ut imperdiet. Praesent nec eleifend justo. Mauris egestas dapibus enim. Proin dignissim tincidunt tortor. Morbi faucibus orci ut sodales placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.',
 
     },
     {
@@ -107,12 +107,15 @@ export class BookingsService {
     return new Promise(resolve => {
       this.http.get<any>('http://localhost:8000/api/bookings').subscribe((data) => {
         const resp = data.map((item: {
+          end: string | number | Date;
           color: any; start: string | number | Date;
         }) => {
           const startDate = new Date(item.start);
+          const endDate = new Date(item.end);
           return {
             ...item,
             start: startDate,
+            end: endDate,
             color: { ...this.colors[item.color] },
           }
         })
