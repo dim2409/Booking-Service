@@ -11,21 +11,17 @@ export class BookingsService {
 
 
   colors: Record<string, EventColor> = {
-    red: {
-      primary: '#ad2121',
-      secondary: '#FAE3E3',
+    color1: {
+      primary: '#46B95C',
+      secondary: '#46B95C',
     },
-    blue: {
-      primary: '#1e90ff',
-      secondary: '#D1E8FF',
+    color2: {
+      primary: '#B99646',
+      secondary: '#B99646',
     },
-    yellow: {
-      primary: '#e3bc08',
-      secondary: '#FDF1BA',
-    },
-    green: {
-      primary: '#32cf1d',
-      secondary: '#32cf1d',
+    color3: {
+      primary: '#A3B946',
+      secondary: '#A3B946',
     }
   };
   /* Actions for the Calendar once you click on booking */

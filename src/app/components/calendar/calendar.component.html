@@ -28,7 +28,9 @@
         </span>
       </div>
       <div class="cel-title">
-        {{day.events[0]?.title}}
+        <div *ngFor="let event of day.events" class="event" [ngStyle]="{'background-color': event.color.primary}">
+          {{event.title}} - {{event.start.getHours()+':'}}{{event.start.getMinutes()>10 ? event.start.getMinutes() : event.start.getMinutes()+'0'}}
+        </div>
       </div>
     </ng-template>
 
