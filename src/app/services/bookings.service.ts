@@ -116,6 +116,7 @@ export class BookingsService {
             ...item,
             start: startDate,
             end: endDate,
+            draggable: true,
             color: { ...this.colors[item.color] },
           }
         })

@@ -1,0 +1,44 @@
+<div class="row mt-5 main justify-content-center">
+
+    <p class="col-12 h2 pt-5 text-center">
+        Make a booking request
+    </p>
+
+    <mat-form-field class="col-7">
+        <mat-label>Title of your event</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <mat-form-field class="col-7">
+        <mat-label>Choose a date for your event</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col-7">
+        <mat-label>Information about your event</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    
+    <span class="col-12"></span>
+    <mat-form-field class="col-2">
+        <mat-label>Select Room</mat-label>
+        <mat-select >
+            <mat-option value="all">All Rooms</mat-option>
+            <mat-option value="one">Room 1</mat-option>
+            <mat-option value="two">Room 2</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <span class="col-12"></span>
+    <app-calendar class="col-7"></app-calendar>
+    
+    <span class="col-12"></span>
+    <br>
+    <button mat-raised-button color="primary" class="col-2">
+        Submit Request
+    </button>
+
+</div>

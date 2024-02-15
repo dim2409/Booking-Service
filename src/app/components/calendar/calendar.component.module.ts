@@ -8,6 +8,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarComponent } from './calendar.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -23,7 +24,8 @@ import { CalendarComponent } from './calendar.component';
       useFactory: adapterFactory,
     }),
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDialogModule
   ],
   exports: [CalendarComponent]
 })

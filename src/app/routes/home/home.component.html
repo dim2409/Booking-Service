@@ -1,8 +1,16 @@
-<div class="row mt-5 main">
+<div class="row mt-5 main justify-content-center">
 
   <p class="col-12 h2 pt-5 text-center">
     Conference Hall Schedule 
   </p>
 
+  <mat-form-field class="col-2">
+    <mat-label>Select Room</mat-label>
+    <mat-select >
+      <mat-option value="all">All Rooms</mat-option>
+      <mat-option value="one">Room 1</mat-option>
+      <mat-option value="two">Room 2</mat-option>
+    </mat-select>
+  </mat-form-field>
   <app-calendar></app-calendar>
 </div>

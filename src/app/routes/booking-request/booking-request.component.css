@@ -1,0 +1,13 @@
+.cal-month-view .cal-cell {
+  width: 10%;
+  min-height: 1px;
+}
+.cal-month-view .cal-cell-top {
+  min-height: 1px;
+}
+.cel-title {
+  font-size: small;
+}
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  font-size: 1.2rem;
+}
