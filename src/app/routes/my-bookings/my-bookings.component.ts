@@ -25,7 +25,9 @@ export class MyBookingsComponent implements OnInit {
   bookings!: any;
   constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
   ngOnInit(): void {
-    this.bookings = this.BookingsService.getBookings();
+    this.BookingsService.getBookings().then((resp: any) => {
+      this.bookings = resp;
+    });
     console.log(this.bookings);
   }
 

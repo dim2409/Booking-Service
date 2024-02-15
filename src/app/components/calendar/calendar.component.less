@@ -33,9 +33,6 @@
     display: flex;
     justify-content: end;
 }
-.cal-month-view .cal-event{
-    background-color: @primaryElementColor;
-}
 .cal-day-badge{
     background-color: @secondary-color;
 }
@@ -43,12 +40,12 @@
 
     .cel-title {
         .event {
-            background-color: @primaryElementColor;
             color: @primaryElementTextColor;
             width: fit-content;
             padding: 2px 7px;
             margin: 2px;
             border-radius: 1rem;
+            font-size: medium;
         }
     }
 
@@ -56,8 +53,8 @@
 }
 .cal-month-view .cal-open-day-events {
     color: #fff;
-    background-color: #46a3b980;
-    box-shadow: inset 0 0 8px 0 rgb(13 120 145 / 75%);
+    background-color: @primary-color;
+    box-shadow: inset 0 0 8px 0 @primary-color;
 }
 .cal-week-view .cal-event {
     color: #fff;

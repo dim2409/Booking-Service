@@ -1,12 +1,13 @@
 <div class="container main mt-5">
     <mat-card *ngFor="let booking of bookings" class="my-3">
         <div class="row w-100 flex-row-reverse position-absolute">
-            <button mat-mini-fab (click)="alert('Delete')" class="mx-1"><i class="fa-solid fa-trash"></i></button>
-            <button mat-mini-fab color="primary" (click)="alert('Edit')" class="mx-1"><i class="fa-solid fa-pencil"></i></button>
-            <button mat-mini-fab color="warm" (click)="openInfoDialog(booking)" class="mx-1"><i class="fa-solid fa-expand"></i></button>
+            <button mat-mini-fab (click)="alert('Delete')" class="mx-1 button-color"><i class="fa-solid fa-trash"></i></button>
+            <button mat-mini-fab (click)="alert('Edit')" class="mx-1 button-color"><i class="fa-solid fa-pencil"></i></button>
+            <button mat-mini-fab (click)="openInfoDialog(booking)" class="mx-1 button-color"><i class="fa-solid fa-expand"></i></button>
         </div>
         <mat-card-header>
             <p class="h4">
+                <i class="fa-solid fa-circle" [ngStyle]="{'color': booking.color.primary}"></i>
                 {{booking.title}}
             </p>
             <p class="h4 time mx-5">

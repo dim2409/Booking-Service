@@ -12,15 +12,15 @@ export class BookingsService {
 
   colors: Record<string, EventColor> = {
     color1: {
-      primary: '#46B95C',
+      primary: '#86b6f6',
       secondary: '#46B95C',
     },
     color2: {
-      primary: '#B99646',
+      primary: '#a393e8',
       secondary: '#B99646',
     },
     color3: {
-      primary: '#A3B946',
+      primary: '#6edec5',
       secondary: '#A3B946',
     }
   };

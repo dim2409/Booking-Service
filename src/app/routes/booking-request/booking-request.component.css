@@ -11,3 +11,7 @@
 .booking-request .cal-month-view .cal-day-cell.cal-today .cal-day-number {
   font-size: 1.2rem;
 }
+.button-color {
+  background-color: #176b87;
+  color: #ffffff;
+}
