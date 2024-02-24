@@ -8,7 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 
-import { BookingsService } from 'src/app/services/bookings.service';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 @Component({
   selector: 'app-my-bookings',
   standalone: true,
@@ -22,10 +22,11 @@ export class MyBookingsComponent implements OnInit {
   alert(arg0: string) {
     alert(arg0)
   }
+  userId: number = 1;
   bookings!: any;
   constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
   ngOnInit(): void {
-    this.BookingsService.getBookings().then((resp: any) => {
+    this.BookingsService.getUserBookings(this.userId).then((resp: any) => {
       this.bookings = resp;
     });
     console.log(this.bookings);

@@ -8,7 +8,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CalendarComponentModule } from 'src/app/components/calendar/calendar.component.module';
 import { FormsModule, NgForm } from '@angular/forms';
-import { BookingsService } from 'src/app/services/bookings.service';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 @Component({
   selector: 'app-booking-request',
   standalone: true,

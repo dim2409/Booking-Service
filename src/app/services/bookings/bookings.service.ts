@@ -112,9 +112,9 @@ export class BookingsService {
 
   constructor(private http: HttpClient) { }
 
-  getBookings() {
+  getActiveBookings() {
     return new Promise(resolve => {
-      this.http.get<any>('http://localhost:8000/api/bookings').subscribe((data) => {
+      this.http.get<any>('http://localhost:8000/api/getActiveBookings').subscribe((data) => {
         const resp = data.map((item: {
           end: string | number | Date;
           color: any; start: string | number | Date;
@@ -133,6 +133,52 @@ export class BookingsService {
       })
     })
   }
+
+  getBookingByRoom(id: number) {
+    return new Promise(resolve => {
+      this.http.get<any>('http://localhost:8000/api/getBookingByRoom/'+id).subscribe((data) => {
+        const resp = data.map((item: {
+          end: string | number | Date;
+          color: any; start: string | number | Date;
+        }) => {
+          const startDate = new Date(item.start);
+          const endDate = new Date(item.end);
+          return {
+            ...item,
+            start: startDate,
+            end: endDate,
+            draggable: false,
+            color: { ...this.colors[item.color] },
+          }
+        })
+        resolve(resp);
+      })
+    })
+  }
+
+  getUserBookings(id: number) {
+    return new Promise(resolve => {
+      this.http.get<any>('http://localhost:8000/api/getUserBookings/'+id).subscribe((data) => {
+        const resp = data.map((item: {
+          end: string | number | Date;
+          color: any; start: string | number | Date;
+        }) => {
+          const startDate = new Date(item.start);
+          const endDate = new Date(item.end);
+          return {
+            ...item,
+            start: startDate,
+            end: endDate,
+            draggable: false,
+            color: { ...this.colors[item.color] },
+          }
+        })
+        resolve(resp);
+      })
+    })
+  }
+
+  
   createBooking(data: any) : Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -142,14 +188,11 @@ export class BookingsService {
     let booking = {
       ...data,
       color: 'blue',
-      status: 0,
       participants: 'No participants',
-      booker_id: 1,
+      booker_id: 4,
       type: 'normal',
       semester_id: 1,
     }
-
-    console.log(booking);
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 }

@@ -14,6 +14,9 @@
                 {{booking.start.toLocaleDateString('en-GB', options)}} 
                 {{booking.end ? ' - ' + booking.end?.toLocaleDateString('en-GB', options): ''}} 
             </p>
+            <p>
+                Status: {{booking.status==0 ? 'Pending' : 'Approved'}}
+            </p>
         </mat-card-header>
         <mat-card-content>
             <mat-divider></mat-divider>

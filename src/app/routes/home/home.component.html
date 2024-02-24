@@ -3,14 +3,12 @@
   <p class="col-12 h2 pt-5 text-center">
     Conference Hall Schedule 
   </p>
-
   <mat-form-field class="col-2">
     <mat-label>Select Room</mat-label>
-    <mat-select >
+    <mat-select (selectionChange)="selectRoom($event)">
       <mat-option value="all">All Rooms</mat-option>
-      <mat-option value="one">Room 1</mat-option>
-      <mat-option value="two">Room 2</mat-option>
+      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <app-calendar></app-calendar>
+  <app-calendar [bookings]="bookings"></app-calendar>
 </div>

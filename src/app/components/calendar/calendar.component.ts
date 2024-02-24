@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 
 /* Services */
-import { BookingsService } from 'src/app/services/bookings.service';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 
 @Component({
   selector: 'app-calendar',
@@ -43,19 +43,18 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-  bookings: CalendarEvent[] = [];
+  @Input() bookings: CalendarEvent[] = [];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
   events: any;
 
+  
   constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
-    this.BookingsService.getBookings().then((resp: any) => {
-      this.bookings = resp;
-      console.log(this.bookings);
-    });
+    
+    console.log(this.bookings);
     this.selectedValue = 'Month';
   }
 
