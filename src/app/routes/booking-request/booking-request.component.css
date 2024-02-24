@@ -5,8 +5,8 @@
 .booking-request .cal-month-view .cal-cell-top {
   min-height: 1px;
 }
-.booking-request .cel-title {
-  font-size: small;
+.booking-request .cel-title .event {
+  font-size: 1rem!important;
 }
 .booking-request .cal-month-view .cal-day-cell.cal-today .cal-day-number {
   font-size: 1.2rem;

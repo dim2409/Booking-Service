@@ -1,44 +1,85 @@
-<div class="row mt-5 main booking-request justify-content-center">
+<form #bookingRequestForm="ngForm" (ngSubmit)="onSubmit(bookingRequestForm)" class="row mt-5 main booking-request justify-content-center">
 
     <p class="col-12 h2 pt-5 text-center">
         Make a booking request
     </p>
 
-    <mat-form-field class="col-7">
+    <mat-form-field class="col-2">
         <mat-label>Title of your event</mat-label>
-        <input matInput>
+        <input matInput type="text" name="title" ngModel required>
     </mat-form-field>
 
-    <mat-form-field class="col-7">
-        <mat-label>Choose a date for your event</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field class="col-7">
-        <mat-label>Information about your event</mat-label>
-        <textarea matInput></textarea>
-    </mat-form-field>
-    
     <span class="col-12"></span>
     <mat-form-field class="col-2">
         <mat-label>Select Room</mat-label>
-        <mat-select >
-            <mat-option value="all">All Rooms</mat-option>
-            <mat-option value="one">Room 1</mat-option>
-            <mat-option value="two">Room 2</mat-option>
+        <mat-select name="room_id" [(ngModel)]="room" >
+            <mat-option value="1">Room 1</mat-option>
+            <mat-option value="2">Room 2</mat-option>
         </mat-select>
     </mat-form-field>
     
     <span class="col-12"></span>
-    <app-calendar class="col-7"></app-calendar>
+    <mat-form-field class="col-2">
+        <mat-label>Date for your event</mat-label>
+        <input matInput [matDatepicker]="picker" ngModel name="date" >
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <!-- Start end hours -->
+    <span class="col-12 row justify-content-center">
+
+        <mat-form-field class="col-2">
+          <mat-label>Start time of your event</mat-label>
+          <mat-select required name="start" [(ngModel)]="selectedStart">
+            <mat-option [value]="[8,0,0]">08:00</mat-option>
+            <mat-option [value]="[9,0,0]">09:00</mat-option>
+            <mat-option [value]="[10,0,0]">10:00</mat-option>
+            <mat-option [value]="[11,0,0]">11:00</mat-option>
+            <mat-option [value]="[12,0,0]">12:00</mat-option>
+            <mat-option [value]="[13,0,0]">13:00</mat-option>
+            <mat-option [value]="[14,0,0]">14:00</mat-option>
+            <mat-option [value]="[15,0,0]">15:00</mat-option>
+            <mat-option [value]="[16,0,0]">16:00</mat-option>
+            <mat-option [value]="[17,0,0]">17:00</mat-option>
+            <mat-option [value]="[18,0,0]">18:00</mat-option>
+            <mat-option [value]="[19,0,0]">19:00</mat-option>
+            <mat-option [value]="[20,0,0]">20:00</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-2">
+          <mat-label>End time of your event</mat-label>
+          <mat-select required name="end" [(ngModel)]="selectedEnd">
+            <mat-option [value]="[8,0,0]">08:00</mat-option>
+            <mat-option [value]="[9,0,0]">09:00</mat-option>
+            <mat-option [value]="[10,0,0]">10:00</mat-option>
+            <mat-option [value]="[11,0,0]">11:00</mat-option>
+            <mat-option [value]="[12,0,0]">12:00</mat-option>
+            <mat-option [value]="[13,0,0]">13:00</mat-option>
+            <mat-option [value]="[14,0,0]">14:00</mat-option>
+            <mat-option [value]="[15,0,0]">15:00</mat-option>
+            <mat-option [value]="[16,0,0]">16:00</mat-option>
+            <mat-option [value]="[17,0,0]">17:00</mat-option>
+            <mat-option [value]="[18,0,0]">18:00</mat-option>
+            <mat-option [value]="[19,0,0]">19:00</mat-option>
+            <mat-option [value]="[20,0,0]">20:00</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </span>
+    <span class="col-12"></span>
+    
+    <mat-form-field class="col-2">
+        <mat-label>Information about your event</mat-label>
+        <textarea matInput  type="text" name="info" ngModel required></textarea>
+    </mat-form-field>
+    
+    <span class="col-12"></span>
+    <app-calendar class="col-10"></app-calendar>
     
     <span class="col-12"></span>
     <br>
-    <button mat-raised-button class="col-2 button-color">
+    <button mat-raised-button type="submit" class="col-2 button-color">
         Submit Request
     </button>
 
-</div>
+</form>

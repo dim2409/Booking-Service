@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { subDays, startOfDay, addDays, endOfMonth, addHours } from 'date-fns';
 import { EventColor } from 'calendar-utils';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,29 @@ export class BookingsService {
 
 
   colors: Record<string, EventColor> = {
-    color1: {
+    blue: {
       primary: '#86b6f6',
       secondary: '#46B95C',
     },
-    color2: {
+    pink: {
       primary: '#a393e8',
       secondary: '#B99646',
     },
-    color3: {
+    green: {
       primary: '#6edec5',
       secondary: '#A3B946',
+    },
+    red: {
+      primary: '#f66a6a',
+      secondary: '#B94646',
+    },
+    orange: {
+      primary: '#f6b26a',
+      secondary: '#B94646',
+    },
+    purple: {
+      primary: '#b66af6',
+      secondary: '#B94646',
     }
   };
   /* Actions for the Calendar once you click on booking */
@@ -119,6 +132,25 @@ export class BookingsService {
         resolve(resp);
       })
     })
+  }
+  createBooking(data: any) : Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    console.log(data)
+
+    let booking = {
+      ...data,
+      color: 'blue',
+      status: 0,
+      participants: 'No participants',
+      booker_id: 1,
+      type: 'normal',
+      semester_id: 1,
+    }
+
+    console.log(booking);
+    return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 }
 
