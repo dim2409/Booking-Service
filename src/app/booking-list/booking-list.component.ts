@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatCardModule } from '@angular/material/card';
@@ -21,9 +21,12 @@ export class BookingListComponent {
   alert(arg0: string) {
     alert(arg0)
   }
-  
+
+  @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
+
   @Input() bookings: any[] = [];
   @Input() rooms: any[] = [];
+  @Input() buttons: any[] = [];
   constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
   
 
@@ -36,5 +39,15 @@ export class BookingListComponent {
       maxWidth: "90vw"
     });
     return dialogRef.afterClosed();
+  }
+
+
+  buttonAction(action: string, booking: any) {
+    if (action == 'updateBookingStatus') {
+      this.BookingsService.updateBookingStatus(booking.id, 1).subscribe((resp: any) => {
+        this.alert('Booking Status'+resp.title+' Updated');
+        this.bookingUpdated.emit();
+      })
+    }
   }
 }

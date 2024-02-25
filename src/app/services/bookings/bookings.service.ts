@@ -200,7 +200,6 @@ export class BookingsService {
     })
   }
 
-  
   createBooking(data: any) : Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -215,6 +214,13 @@ export class BookingsService {
       semester_id: 1,
     }
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
+  }
+
+  updateBookingStatus(bookingId: number, status: number) : Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<any>('http://localhost:8000/api/updateBookingStatus/'+bookingId, { status: status }, { headers });
   }
 }
 

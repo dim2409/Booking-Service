@@ -6,5 +6,5 @@
           <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-    <app-booking-list [bookings]="bookings" [rooms]="rooms"></app-booking-list>
+    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" (bookingUpdated)="updateBooking()"></app-booking-list>
 </div>
