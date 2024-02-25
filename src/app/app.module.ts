@@ -15,6 +15,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BookingListComponent } from './booking-list/booking-list.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
         }),
         FontAwesomeModule,
         NavbarComponent,
+        BookingListComponent,
         HttpClientModule
     ]
 })

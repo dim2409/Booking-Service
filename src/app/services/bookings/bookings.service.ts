@@ -155,6 +155,28 @@ export class BookingsService {
       })
     })
   }
+  
+  getAllBookingsByRoom(id:number[]) {
+    return new Promise(resolve => {
+      this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', {ids: id}).subscribe((data) => {
+        const resp = data.map((item: {
+          end: string | number | Date;
+          color: any; start: string | number | Date;
+        }) => {
+          const startDate = new Date(item.start);
+          const endDate = new Date(item.end);
+          return {
+            ...item,
+            start: startDate,
+            end: endDate,
+            draggable: false,
+            color: { ...this.colors[item.color] },
+          }
+        })
+        resolve(resp);
+      })
+    })
+  }
 
   getUserBookings(id: number) {
     return new Promise(resolve => {
@@ -183,7 +205,6 @@ export class BookingsService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    console.log(data)
 
     let booking = {
       ...data,

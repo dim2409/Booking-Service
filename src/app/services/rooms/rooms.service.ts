@@ -15,4 +15,12 @@ export class RoomsService {
       })
     })
   }
+
+  getModeratedRooms(id: number) {
+    return new Promise((resolve, reject) => {
+      this.http.get('http://localhost:8000/api/getModeratedRooms/'+id).subscribe((data: any) => {
+        resolve(data);
+      })
+    })
+  }
 }

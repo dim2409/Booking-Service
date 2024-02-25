@@ -32,7 +32,7 @@ export class BookingRequestComponent {
     bookingRequestForm.value.start = this.start;
     bookingRequestForm.value.end = this.end;
     this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
-      console.log(response);
+      console.log(response);//ToDo add success message dialog
     });
   }
 }

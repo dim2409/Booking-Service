@@ -49,12 +49,11 @@ export class CalendarComponent {
   events: any;
 
   
-  constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);
     
-    console.log(this.bookings);
     this.selectedValue = 'Month';
   }
 

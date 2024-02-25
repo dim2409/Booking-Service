@@ -1,0 +1,10 @@
+<div class="container mt-5">
+    <mat-form-field class="col-2 mt-5">
+        <mat-label>Select Room</mat-label>
+        <mat-select (selectionChange)="selectRoom($event)">
+          <mat-option value="all">All Rooms</mat-option>
+          <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    <app-booking-list [bookings]="bookings" [rooms]="rooms"></app-booking-list>
+</div>

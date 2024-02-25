@@ -6,7 +6,6 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CalendarComponentModule } from 'src/app/components/calendar/calendar.component.module';
-import { DemoModule } from 'src/app/mwl-demo-component/mwl-demo-component.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
@@ -16,7 +15,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, DemoModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule],
+  imports: [CommonModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })
@@ -40,11 +39,9 @@ export class HomeComponent {
   ngOnInit(): void {
     this.BookingsService.getActiveBookings().then((resp: any) => {
       this.bookings = resp;
-      console.log(this.bookings);
     });
     this.RoomsService.getRooms().then((resp: any) => {
       this.rooms = resp;
-      console.log(this.rooms);
     });
   }
 }
