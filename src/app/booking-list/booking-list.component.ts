@@ -27,6 +27,7 @@ export class BookingListComponent {
   @Input() bookings: any[] = [];
   @Input() rooms: any[] = [];
   @Input() buttons: any[] = [];
+  @Input() removeConflicts: boolean = false;
   constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
   
 

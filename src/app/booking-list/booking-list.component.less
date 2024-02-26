@@ -3,9 +3,33 @@
 .main {
     margin-top: 5rem !important;
 }
-.time{
+
+.time {
     color: #bec9d5;
 }
-.button-color{
+
+.button-color {
     background-color: @primary-color;
+}
+
+.conflict-container {
+    border-radius: 0.5rem;
+    border-style  : solid;
+    border-color  : #f34248b0;
+    padding: 0.2rem;
+    .conflict {
+        color           : @primary-color;
+        background-color: #ff00004d;
+        border-style    : solid;
+
+        .time{
+            color: @highlight-color;
+        }
+        .icon{
+            border-radius: 1rem;
+            border-style  : solid;
+            border-color  :  @highlight-color;
+            padding: 0.1rem;
+        }
+    }
 }

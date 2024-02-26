@@ -116,6 +116,23 @@ export class BookingsService {
 
   constructor(private http: HttpClient) { }
 
+  mapBookings(data: {
+    end: string | number | Date;
+    color: any;
+    start: string | number | Date;
+  }[], colors: any): any[] {
+    return data.map(item => {
+      const startDate = new Date(item.start);
+      const endDate = new Date(item.end);
+      return {
+        ...item,
+        start: startDate,
+        end: endDate,
+        draggable: false,
+        color: { ...colors[item.color] },
+      };
+    });
+  };
   getActiveBookings() {
     return new Promise(resolve => {
       this.http.get<any>('http://localhost:8000/api/getActiveBookings').subscribe((data) => {
@@ -140,7 +157,7 @@ export class BookingsService {
 
   getBookingByRoom(id: number) {
     return new Promise(resolve => {
-      this.http.get<any>('http://localhost:8000/api/getBookingByRoom/'+id).subscribe((data) => {
+      this.http.get<any>('http://localhost:8000/api/getBookingByRoom/' + id).subscribe((data) => {
         const resp = data.map((item: {
           end: string | number | Date;
           color: any; start: string | number | Date;
@@ -159,25 +176,14 @@ export class BookingsService {
       })
     })
   }
-  
-  getAllBookingsByRoom(id:number[]) {
+
+  getAllBookingsByRoom(id: number[]) {
     return new Promise(resolve => {
-      this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', {ids: id}).subscribe((data : any) => {
-        const resp = data.bookings.map((item: {
-          end: string | number | Date;
-          color: any; start: string | number | Date;
-        }) => {
-          console.log(item)
-          const startDate = new Date(item.start);
-          const endDate = new Date(item.end);
-          return {
-            ...item,
-            start: startDate,
-            end: endDate,
-            draggable: false,
-            color: { ...this.colors[item.color] },
-          }
-        })
+      this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', { ids: id }).subscribe((data: any) => {
+        console.log(data)
+        const resp = {conflicts: this.mapBookings(data.conflicts.original, this.colors), 
+          bookings: this.mapBookings(data.bookings, this.colors)
+        }
         console.log(resp)
         resolve(resp);
       })
@@ -186,7 +192,7 @@ export class BookingsService {
 
   getUserBookings(id: number) {
     return new Promise(resolve => {
-      this.http.get<any>('http://localhost:8000/api/getUserBookings/'+id).subscribe((data) => {
+      this.http.get<any>('http://localhost:8000/api/getUserBookings/' + id).subscribe((data) => {
         const resp = data.map((item: {
           end: string | number | Date;
           color: any; start: string | number | Date;
@@ -206,7 +212,7 @@ export class BookingsService {
     })
   }
 
-  createBooking(data: any) : Observable<any> {
+  createBooking(data: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -222,11 +228,11 @@ export class BookingsService {
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 
-  updateBookingStatus(bookingId: number, status: number) : Observable<any> {
+  updateBookingStatus(bookingId: number, status: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.put<any>('http://localhost:8000/api/updateBookingStatus/'+bookingId, { status: status }, { headers });
+    return this.http.put<any>('http://localhost:8000/api/updateBookingStatus/' + bookingId, { status: status }, { headers });
   }
 }
 

@@ -1,10 +1,24 @@
-<div class="container mt-5">
-    <mat-form-field class="col-2 mt-5">
-        <mat-label>Select Room</mat-label>
-        <mat-select (selectionChange)="selectRoom($event)">
-          <mat-option value="all">All Rooms</mat-option>
-          <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" (bookingUpdated)="updateBooking()"></app-booking-list>
+<div class="container main mt-5">
+  <mat-form-field class="col-2 mt-5">
+    <mat-label>Select Room</mat-label>
+    <mat-select (selectionChange)="selectRoom($event)">
+      <mat-option value="all">All Rooms</mat-option>
+      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <div class="moderator-list-container">
+    <div class="moderator-list-title">
+      Conflicts
+    </div>
+    <app-booking-list [bookings]="conflicts" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
+      (bookingUpdated)="updateBooking()"></app-booking-list>
+  </div>
+  <div class="moderator-list-container">
+    <div class="moderator-list-title">
+      Non-Conflicting Bookings
+    </div>
+    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
+      (bookingUpdated)="updateBooking()"></app-booking-list>
+  </div>
 </div>
