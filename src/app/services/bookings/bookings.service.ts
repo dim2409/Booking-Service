@@ -121,6 +121,7 @@ export class BookingsService {
     color: any;
     start: string | number | Date;
   }[], colors: any): any[] {
+    console.log(data)
     return data.map(item => {
       const startDate = new Date(item.start);
       const endDate = new Date(item.end);
@@ -181,8 +182,10 @@ export class BookingsService {
     return new Promise(resolve => {
       this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', { ids: id }).subscribe((data: any) => {
         console.log(data)
-        const resp = {conflicts: this.mapBookings(data.conflicts.original, this.colors), 
-          bookings: this.mapBookings(data.bookings, this.colors)
+        const conflictsArray = Object.values(data.conflicts.original) as any;
+
+        const resp = {bookings: this.mapBookings(data.bookings, this.colors),
+          conflicts: this.mapBookings(conflictsArray, this.colors),           
         }
         console.log(resp)
         resolve(resp);
@@ -216,7 +219,7 @@ export class BookingsService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
+    console.log(data)
     let booking = {
       ...data,
       color: 'blue',
@@ -225,6 +228,7 @@ export class BookingsService {
       type: 'normal',
       semester_id: 1,
     }
+    console.log(booking)
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 
