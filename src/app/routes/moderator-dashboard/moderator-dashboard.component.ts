@@ -32,6 +32,7 @@ export class ModeratorDashboardComponent implements OnInit {
       }]
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
+      console.log(this.roomIds);
       this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
         this.bookings = resp;
       });
@@ -46,7 +47,6 @@ export class ModeratorDashboardComponent implements OnInit {
         this.bookings = resp;
       });
     } else {
-      console.log(selectedRoom);
       const roomArray: number[] = [selectedRoom];
       this.BookingsService.getAllBookingsByRoom(roomArray).then((resp: any) => {
         this.bookings = resp;

@@ -35,6 +35,10 @@ export class BookingsService {
     purple: {
       primary: '#b66af6',
       secondary: '#B94646',
+    },
+    yellow: {
+      primary: '#f6f26a',
+      secondary: '#B94646',
     }
   };
   /* Actions for the Calendar once you click on booking */
@@ -158,11 +162,12 @@ export class BookingsService {
   
   getAllBookingsByRoom(id:number[]) {
     return new Promise(resolve => {
-      this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', {ids: id}).subscribe((data) => {
-        const resp = data.map((item: {
+      this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', {ids: id}).subscribe((data : any) => {
+        const resp = data.bookings.map((item: {
           end: string | number | Date;
           color: any; start: string | number | Date;
         }) => {
+          console.log(item)
           const startDate = new Date(item.start);
           const endDate = new Date(item.end);
           return {
@@ -173,6 +178,7 @@ export class BookingsService {
             color: { ...this.colors[item.color] },
           }
         })
+        console.log(resp)
         resolve(resp);
       })
     })
