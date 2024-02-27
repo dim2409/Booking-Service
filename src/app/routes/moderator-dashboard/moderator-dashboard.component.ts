@@ -47,7 +47,7 @@ export class ModeratorDashboardComponent implements OnInit {
     ]
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.RoomsService.getModeratedRooms(1).then((resp: any) => {
+    this.RoomsService.getModeratedRooms(2).then((resp: any) => {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
       this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {

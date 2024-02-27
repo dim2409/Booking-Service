@@ -29,8 +29,8 @@ export class BookingRequestComponent {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router) { }
 
-  selectedStart!: BigInteger;
-  selectedEnd!: BigInteger;
+  selectedStart!: Date;
+  selectedEnd!: Date;
   room!: BigInteger;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
 
@@ -47,20 +47,27 @@ export class BookingRequestComponent {
   }
   onSubmit(bookingRequestForm: any) {
 
-    this.start = new Date(bookingRequestForm.value.date.setHours(this.selectedStart[0], 0, 0));
-    this.end = new Date(bookingRequestForm.value.date.setHours(this.selectedEnd[0], 0, 0));
-    console.log(this.start);
-    console.log(this.end);
-    console.log(this.selectedStart);
-    console.log(this.selectedEnd);
-    bookingRequestForm.value.start = this.selectedStart;
-    bookingRequestForm.value.end = this.selectedEnd;
+    const startTime = new Date(this.selectedStart);
+    const startHour = startTime.getHours();
+    const startMinute = startTime.getMinutes();
+
+    // Extract time from selected end time
+    const endTime = new Date(this.selectedEnd);
+    const endHour = endTime.getHours();
+    const endMinute = endTime.getMinutes();
+    this.start = new Date(bookingRequestForm.value.date);
+    this.end = new Date(bookingRequestForm.value.date);
+    this.start.setHours(startHour, startMinute);
+    this.end.setHours(endHour, endMinute);
+
+    bookingRequestForm.value.start = this.start;
+    bookingRequestForm.value.end = this.end;
     bookingRequestForm.value.room_id = this.selectedRoom;
-    /* this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
+    this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
       alert("Booking created successfully!");
 
       this.router.navigateByUrl('/myBookings');
-    }); */
+    });
   }
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
@@ -70,12 +77,9 @@ export class BookingRequestComponent {
     })
 
   }
-  selectDateTime(event: MatSelectChange) {
-    console.log(event.value);
-  }
   initializeTimeOptions() {
     for (let i = 8; i <= 20; i++) {
-      const date = this.selectedDate;
+      const date = new Date();
       date.setHours(i, 0, 0);
       console.log(date);
       this.timeOptions.push(date);

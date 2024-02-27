@@ -30,13 +30,13 @@
 
         <mat-form-field class="col-2">
           <mat-label>Start time of your event</mat-label>
-          <mat-select required name="start" [(ngModel)]="selectedStart" (selectionChange)="selectDateTime($event)">
+          <mat-select required name="start" [(ngModel)]="selectedStart">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="col-2">
           <mat-label>End time of your event</mat-label>
-          <mat-select required name="end" [(ngModel)]="selectedEnd" (selectionChange)="selectDateTime($event)">
+          <mat-select required name="end" [(ngModel)]="selectedEnd">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
