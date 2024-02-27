@@ -18,10 +18,27 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 })
 
 export class MyBookingsComponent implements OnInit {  
-  userId: number = 1;
+  userId: number = 3;
   bookings!: any;
+  buttons: any;
+  
   constructor(private BookingsService: BookingsService,) { }
+  
   ngOnInit(): void {
+    this.buttons = [
+    {
+      icon: 'fa-pencil',
+      action: 'updateBooking',
+    },
+    {
+      icon: 'fa-trash',
+      action: 'deleteBooking',
+    },
+    {
+      icon: 'fa-expand',
+      action: 'openInfo',
+    }
+    ]
     this.BookingsService.getUserBookings(this.userId).then((resp: any) => {
       this.bookings = resp;
     });

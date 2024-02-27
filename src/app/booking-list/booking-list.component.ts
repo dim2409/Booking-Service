@@ -46,9 +46,13 @@ export class BookingListComponent {
   buttonAction(action: string, booking: any) {
     if (action == 'updateBookingStatus') {
       this.BookingsService.updateBookingStatus(booking.id, 1).subscribe((resp: any) => {
-        this.alert('Booking Status'+resp.title+' Updated');
+        this.alert('Booking Status '+resp.title+' Updated');
         this.bookingUpdated.emit();
       })
+    }else if('openInfo'){
+      this.openInfoDialog(booking);
+    }else{
+      //TODO: Implement button actions
     }
   }
 }

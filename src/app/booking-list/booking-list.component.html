@@ -2,11 +2,8 @@
     <div *ngFor="let booking of bookings" class="m-2" ngClass="{{booking.conflict_id && !removeConflicts ? 'conflict-container' : ''}}">
         <mat-card ngClass="{{booking.conflict_id ? 'conflict' : ''}}" *ngIf="!(removeConflicts && booking.conflict_id)">
             <div class="row w-100 flex-row-reverse position-absolute py-2">
-                <button mat-mini-fab (click)="alert('Delete')" class="mx-1 button-color"><i class="fa-solid fa-trash"></i></button>
-                <button mat-mini-fab (click)="alert('Edit')" class="mx-1 button-color"><i class="fa-solid fa-pencil"></i></button>
-                <button mat-mini-fab (click)="openInfoDialog(booking)" class="mx-1 button-color"><i class="fa-solid fa-expand"></i></button>
                 <ng-container *ngFor="let button of buttons">
-                    <button mat-mini-fab *ngIf="booking.status == 0" (click)="buttonAction(button.action, booking)" class="mx-1 button-color"><i class="fa-solid {{button.icon}}"></i></button>
+                    <button mat-mini-fab *ngIf="!(booking.status != 0 && button.icon == 'fa-check')" (click)="buttonAction(button.action, booking)" class="mx-1 button-color"><i class="fa-solid {{button.icon}}"></i></button>
                 </ng-container>
                 
             </div>

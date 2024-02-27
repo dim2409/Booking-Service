@@ -7,7 +7,7 @@ import { BookingListComponent } from 'src/app/booking-list/booking-list.componen
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
@@ -28,20 +28,33 @@ export class ModeratorDashboardComponent implements OnInit {
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
   ngOnInit(): void {
+    this.buttons = [{
+      icon: 'fa-check',
+      action: 'updateBookingStatus',
+    },
+    {
+      icon: 'fa-pencil',
+      action: 'updateBooking',
+    },
+    {
+      icon: 'fa-trash',
+      action: 'deleteBooking',
+    },
+    {
+      icon: 'fa-expand',
+      action: 'openInfo',
+    }
+    ]
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.RoomsService.getModeratedRooms(1).then((resp: any) => {
-      this.buttons = [{
-        icon: 'fa-check',
-        action: 'updateBookingStatus',
-      }]
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
       this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
         this.bookings = resp.bookings;
-        this.conflicts = resp.conflicts;  
+        this.conflicts = resp.conflicts;
         this.conflicts = this.BookingsService.sortBookings(this.conflicts, 'conflict_id');
-        this.conflictGroups = this.BookingsService.groupBookings(this.conflicts,'conflict_id')
+        this.conflictGroups = this.BookingsService.groupBookings(this.conflicts, 'conflict_id')
       });
     });
 
