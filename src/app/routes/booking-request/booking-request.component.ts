@@ -48,7 +48,6 @@ export class BookingRequestComponent {
     bookingRequestForm.value.start = this.selectedStart;
     bookingRequestForm.value.end = this.selectedEnd;
     bookingRequestForm.value.room_id = this.selectedRoom;
-    console.log(bookingRequestForm.value)
     this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
       console.log(response);//ToDo add success message dialog
     });

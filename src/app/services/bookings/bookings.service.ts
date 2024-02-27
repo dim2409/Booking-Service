@@ -121,7 +121,6 @@ export class BookingsService {
     color: any;
     start: string | number | Date;
   }[], colors: any): any[] {
-    console.log(data)
     return data.map(item => {
       const startDate = new Date(item.start);
       const endDate = new Date(item.end);
@@ -184,13 +183,11 @@ export class BookingsService {
   getAllBookingsByRoom(id: number[]) {
     return new Promise(resolve => {
       this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', { ids: id }).subscribe((data: any) => {
-        console.log(data)
         const conflictsArray = Object.values(data.conflicts.original) as any;
 
         const resp = {bookings: this.mapBookings(data.bookings, this.colors),
           conflicts: this.mapBookings(conflictsArray, this.colors),           
         }
-        console.log(resp)
         resolve(resp);
       })
     })
@@ -222,7 +219,6 @@ export class BookingsService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    console.log(data)
     let booking = {
       ...data,
       color: 'blue',
@@ -231,7 +227,6 @@ export class BookingsService {
       type: 'normal',
       semester_id: 1,
     }
-    console.log(booking)
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 
@@ -240,6 +235,28 @@ export class BookingsService {
       'Content-Type': 'application/json'
     });
     return this.http.put<any>('http://localhost:8000/api/updateBookingStatus/' + bookingId, { status: status }, { headers });
+  }
+
+  sortBookings(bookings: any[], key: string):any{
+    return bookings.sort((a, b) => {
+        if (a[key] < b[key]) return -1;
+        if (a[key] > b[key]) return 1;
+        return 0;
+    });
+  }
+
+  groupBookings(bookings: any[],key: string):any{
+    const groupedBookings = new Map<string, any[]>
+    bookings.forEach(booking => {
+      const keyValue = booking['conflict_id'];
+      if(!groupedBookings.has(keyValue)){
+        groupedBookings.set(keyValue, []) 
+      }
+      groupedBookings.get(keyValue)!.push(booking)
+    });
+    const result: any[][] = Array.from(groupedBookings.values());
+    
+    return result;
   }
 }
 

@@ -27,3 +27,6 @@
   border-color: #f14c38;
   padding: 0.1rem;
 }
+.conflict-container .conflict .mat-mdc-card-header {
+  align-items: center;
+}

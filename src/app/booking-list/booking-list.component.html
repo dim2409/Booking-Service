@@ -11,18 +11,18 @@
                 
             </div>
             <mat-card-header>
-                <p class="h4">
+                <p class="h4 title-text">
                     <i class="fa-solid fa-circle icon" [ngStyle]="{'color': booking?.color?.primary}"></i>
                     {{booking.title}}
                 </p>
-                <p class="h4 time mx-5">
+                <p class="h4 time mx-5 title-text">
                     {{booking.start.toLocaleDateString('en-GB', options)}} 
                     {{booking.end ? ' - ' + booking?.end?.toLocaleDateString('en-GB', options): ''}} 
                 </p>
-                <p class="h4" *ngIf="rooms">
+                <p class="h4" *ngIf="rooms && removeConflicts">
                     {{rooms[booking.room_id-1]?.name}}
                 </p>
-                <p class="h4 mx-3">
+                <p class="h4 mx-3 title-text">
                     Status: <span class="primary-color">
                         {{booking?.status==0 ? 'Pending' : 'Approved'}}
                     </span>

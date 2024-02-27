@@ -7,13 +7,27 @@
     </mat-select>
   </mat-form-field>
   <br>
+  <!-- Conflicts -->
   <div class="moderator-list-container">
     <div class="moderator-list-title">
       Conflicts
     </div>
-    <app-booking-list [bookings]="conflicts" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
-      (bookingUpdated)="updateBooking()"></app-booking-list>
+    <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let group of conflictGroups">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{rooms[group[0].room_id-1]?.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            Conflicts <i class="fa-solid fa-circle-exclamation m-5"></i>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-booking-list [bookings]="group" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
+          (bookingUpdated)="updateBooking()"></app-booking-list>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
+  <!-- Non-Conflicts -->
   <div class="moderator-list-container">
     <div class="moderator-list-title">
       Non-Conflicting Bookings
@@ -21,4 +35,5 @@
     <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
       (bookingUpdated)="updateBooking()"></app-booking-list>
   </div>
+
 </div>

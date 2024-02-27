@@ -6,10 +6,12 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BookingListComponent } from 'src/app/booking-list/booking-list.component';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+
+import {MatExpansionModule} from '@angular/material/expansion';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule],
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule],
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.less'
 })
@@ -20,13 +22,14 @@ export class ModeratorDashboardComponent implements OnInit {
   roomIds: any;
   buttons!: any[];
   conflicts!: any[];
+  conflictGroups: any;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.RoomsService.getModeratedRooms(4).then((resp: any) => {
+    this.RoomsService.getModeratedRooms(1).then((resp: any) => {
       this.buttons = [{
         icon: 'fa-check',
         action: 'updateBookingStatus',
@@ -35,9 +38,9 @@ export class ModeratorDashboardComponent implements OnInit {
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
       this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
         this.bookings = resp.bookings;
-        this.conflicts = resp.conflicts;
-        console.log(this.bookings)
-        console.log(this.conflicts)
+        this.conflicts = resp.conflicts;  
+        this.conflicts = this.BookingsService.sortBookings(this.conflicts, 'conflict_id');
+        this.conflictGroups = this.BookingsService.groupBookings(this.conflicts,'conflict_id')
       });
     });
 
