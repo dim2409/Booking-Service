@@ -23,6 +23,7 @@ export class ModeratorDashboardComponent implements OnInit {
   buttons!: any[];
   conflicts!: any[];
   conflictGroups: any;
+  selectedRoom: any;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
@@ -47,22 +48,20 @@ export class ModeratorDashboardComponent implements OnInit {
   }
 
   selectRoom(event: MatSelectChange) {
-    const selectedRoom = event.value;
-    if (selectedRoom === 'all') {
-      this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
-        this.bookings = resp;
-      });
-    } else {
-      const roomArray: number[] = [selectedRoom];
-      this.BookingsService.getAllBookingsByRoom(roomArray).then((resp: any) => {
-        this.bookings = resp;
-      })
-    }
+    this.selectedRoom = event.value;
+    this.updateBooking();
   }
 
   updateBooking() {
-    this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
-      this.bookings = resp;
-    });
+    if (this.selectedRoom === 'all') {
+      this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
+        this.bookings = resp.bookings;
+      });
+    } else {
+      const roomArray: number[] = [this.selectedRoom];
+      this.BookingsService.getAllBookingsByRoom(roomArray).then((resp: any) => {
+        this.bookings = resp.bookings;
+      })
+    }
   }
 }
