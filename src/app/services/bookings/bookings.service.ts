@@ -37,7 +37,7 @@ export class BookingsService {
       secondary: '#B94646',
     },
     yellow: {
-      primary: '#f6f26a',
+      primary: '#edce1c',
       secondary: '#B94646',
     }
   };
@@ -59,7 +59,7 @@ export class BookingsService {
       },
     },
   ];
-  bookings: CalendarEvent[] = [
+  /* bookings: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
@@ -112,7 +112,7 @@ export class BookingsService {
       actions: this.actions,
       id: 5,
     },
-  ];
+  ]; */
 
   constructor(private http: HttpClient) { }
 
@@ -138,6 +138,8 @@ export class BookingsService {
     return new Promise(resolve => {
       this.http.get<any>('http://localhost:8000/api/getActiveBookings').subscribe((data) => {
         const resp = data.map((item: {
+          room_id: string;
+          title: string;
           end: string | number | Date;
           color: any; start: string | number | Date;
         }) => {
@@ -145,6 +147,7 @@ export class BookingsService {
           const endDate = new Date(item.end);
           return {
             ...item,
+            title: item.title+'-Room'+item.room_id,
             start: startDate,
             end: endDate,
             draggable: true,
