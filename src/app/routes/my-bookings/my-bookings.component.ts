@@ -18,7 +18,7 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 })
 
 export class MyBookingsComponent implements OnInit {  
-  userId: number = 3;
+  userId: number = 4;
   bookings!: any;
   buttons: any;
   

@@ -10,6 +10,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-booking-request',
   standalone: true,
@@ -24,13 +25,15 @@ export class BookingRequestComponent {
   rooms: any;
   selectedRoom: number = 1;
   timeOptions: Date[] = [];
+  selectedDate: Date = new Date();
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router) { }
 
   selectedStart!: BigInteger;
   selectedEnd!: BigInteger;
   room!: BigInteger;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
+
 
   ngOnInit() {
     this.BookingsService.getActiveBookings().then((resp: any) => {
@@ -39,18 +42,25 @@ export class BookingRequestComponent {
     this.RoomsService.getRooms().then((resp: any) => {
       this.rooms = resp;
     });
-    
+
     this.initializeTimeOptions();
   }
   onSubmit(bookingRequestForm: any) {
-    //this.start = new Date(bookingRequestForm.value.date.setHours(this.selectedStart[0], 0, 0));
-    //this.end = new Date(bookingRequestForm.value.date.setHours(this.selectedEnd[0], 0, 0));
+
+    this.start = new Date(bookingRequestForm.value.date.setHours(this.selectedStart[0], 0, 0));
+    this.end = new Date(bookingRequestForm.value.date.setHours(this.selectedEnd[0], 0, 0));
+    console.log(this.start);
+    console.log(this.end);
+    console.log(this.selectedStart);
+    console.log(this.selectedEnd);
     bookingRequestForm.value.start = this.selectedStart;
     bookingRequestForm.value.end = this.selectedEnd;
     bookingRequestForm.value.room_id = this.selectedRoom;
-    this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
-      console.log(response);//ToDo add success message dialog
-    });
+    /* this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
+      alert("Booking created successfully!");
+
+      this.router.navigateByUrl('/myBookings');
+    }); */
   }
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
@@ -60,11 +70,14 @@ export class BookingRequestComponent {
     })
 
   }
+  selectDateTime(event: MatSelectChange) {
+    console.log(event.value);
+  }
   initializeTimeOptions() {
-    // Set up your time options here
     for (let i = 8; i <= 20; i++) {
-      const date = new Date();
+      const date = this.selectedDate;
       date.setHours(i, 0, 0);
+      console.log(date);
       this.timeOptions.push(date);
     }
   }
