@@ -49,7 +49,7 @@ export class BookingListComponent {
         this.alert('Booking Status '+resp.title+' Updated');
         this.bookingUpdated.emit();
       })
-    }else if('openInfo'){
+    }else if(action == 'openInfo'){
       this.openInfoDialog(booking);
     }else{
       //TODO: Implement button actions

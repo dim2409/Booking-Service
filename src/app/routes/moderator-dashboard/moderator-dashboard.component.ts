@@ -23,7 +23,7 @@ export class ModeratorDashboardComponent implements OnInit {
   buttons!: any[];
   conflicts!: any[];
   conflictGroups: any;
-  selectedRoom: any;
+  selectedRoom: any = 'all';
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
