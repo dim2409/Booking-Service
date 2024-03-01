@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
@@ -14,7 +16,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-booking-request',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, CalendarComponentModule, MatOptionModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    CalendarComponentModule,
+    MatOptionModule,
+    FormsModule],
   templateUrl: './booking-request.component.html',
   styleUrl: './booking-request.component.less'
 })
@@ -26,14 +40,25 @@ export class BookingRequestComponent {
   selectedRoom: number = 1;
   timeOptions: Date[] = [];
   selectedDate: Date = new Date();
-
+  recurringCheck: boolean = false;
+  @ViewChild('chipList') chipList!: MatChipListbox;
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router) { }
 
   selectedStart!: Date;
   selectedEnd!: Date;
   room!: BigInteger;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
+  public days: any[] = [
+    { label: 'Monday', name: 1, selected: false, start: Date, end: Date },
+    { label: 'Tuesday', name: 2, selected: false, start: Date, end: Date },
+    { label: 'Wednesday', name: 3, selected: false, start: Date, end: Date },
+    { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
+    { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
+  ];
 
+  toggleSelectDay(day: any) {
+    day.selected = !day.selected;
+  }
 
   ngOnInit() {
     this.BookingsService.getActiveBookings().then((resp: any) => {
@@ -60,10 +85,27 @@ export class BookingRequestComponent {
     this.start.setHours(startHour, startMinute);
     this.end.setHours(endHour, endMinute);
 
-    bookingRequestForm.value.start = this.start;
-    bookingRequestForm.value.end = this.end;
-    bookingRequestForm.value.room_id = this.selectedRoom;
-    this.BookingsService.createBooking(bookingRequestForm.value).subscribe((response) => {
+    var booking = {
+      ...bookingRequestForm.value,
+      start : this.start,
+      end : this.end,
+      room_id : this.selectedRoom,
+      is_recurring : this.recurringCheck,
+      days: []
+    }
+    if(this.recurringCheck){
+      const today = new Date();
+      this.days.forEach(day => {
+        if (day.selected) {
+          booking.days.push(day);
+          booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        }
+      });
+    }
+
+    console.log(booking);
+    this.BookingsService.createBooking(booking).subscribe((response) => {
       alert("Booking created successfully!");
 
       this.router.navigateByUrl('/myBookings');

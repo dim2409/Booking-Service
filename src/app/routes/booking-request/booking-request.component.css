@@ -6,10 +6,31 @@
   min-height: 1px;
 }
 .booking-request .cel-title .event {
-  font-size: 1rem!important;
+  font-size: 1rem !important;
 }
 .booking-request .cal-month-view .cal-day-cell.cal-today .cal-day-number {
   font-size: 1.2rem;
+}
+.recurring-options {
+  width: 35vw;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.recurring-options .day-chips {
+  width: 6vw;
+  margin-right: 10vh;
+}
+.recurring-options .hour-select-container .hour-select {
+  width: 31vw;
+}
+.recurring-options .hour-select-container .hour-select mat-form-field {
+  margin-inline: 1rem;
+}
+.mat-mdc-slide-toggle {
+  display: grid;
+}
+.mat-mdc-slide-toggle .mdc-form-field {
+  display: grid;
 }
 .button-color {
   background-color: #176b87;

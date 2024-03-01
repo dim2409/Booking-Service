@@ -26,7 +26,6 @@ export class ModeratorDashboardComponent implements OnInit {
   selectedRoom: any = 'all';
   recurringGroups: any;
   recurrings: any;
-
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
   ngOnInit(): void {

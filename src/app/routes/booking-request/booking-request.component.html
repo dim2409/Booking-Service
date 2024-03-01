@@ -1,61 +1,112 @@
-<form #bookingRequestForm="ngForm" (ngSubmit)="onSubmit(bookingRequestForm)" class="row mt-5 main booking-request justify-content-center">
+<form #bookingRequestForm="ngForm" (ngSubmit)="onSubmit(bookingRequestForm)"
+  class="row mt-5 main booking-request justify-content-center">
 
-    <p class="col-12 h2 pt-5 text-center">
-        Make a booking request
-    </p>
+  <p class="col-12 h2 pt-5 text-center">
+    Make a booking request
+  </p>
 
+
+  <!-- Title Input -->
+  <mat-form-field class="col-2">
+    <mat-label>Title of your event</mat-label>
+    <input matInput type="text" name="title" ngModel required>
+  </mat-form-field>
+
+
+  <!-- Room Select -->
+  <span class="col-12"></span>
+  <mat-form-field class="col-2">
+    <mat-label>Select Room</mat-label>
+    <mat-select (selectionChange)="selectRoom($event)">
+      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Recurring Check -->
+  <span class="col-12"></span>
+  <div class="col-3 row my-3">
+    <mat-label class="col-6 row justify-content-end">Recurring</mat-label>
+    <mat-slide-toggle class="col-6 row justify-content-end" [(ngModel)]="recurringCheck"
+      name="recurring"></mat-slide-toggle>
+  </div>
+
+  <span class="col-12"></span>
+
+
+  <div *ngIf="recurringCheck" class="recurring-options">
+
+    <!-- Recurring Days input -->
+    <div class="day-chips">
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Day Selection" multiple #chipList>
+        <mat-chip-option *ngFor="let chip of days" [selected]="chip.selected"
+          (click)="toggleSelectDay(chip)">{{chip.label}}
+        </mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+    <div class="hour-select-container">
+      <div *ngFor="let day of days" class="hour-select">
+        <p *ngIf="day.selected">{{day.label}} Times</p>
+        <mat-form-field *ngIf="day.selected">
+          <mat-label>Start Time</mat-label>
+          <mat-select required name="start" [(ngModel)]="day.start">
+            <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="day.selected">
+          <mat-label>End Time</mat-label>
+          <mat-select required name="end" [(ngModel)]="day.end">
+            <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm'
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <span class="col-12"></span>
+
+  <span *ngIf="!recurringCheck" class="col-12 row justify-content-center">
+    <!-- Date picker -->
     <mat-form-field class="col-2">
-        <mat-label>Title of your event</mat-label>
-        <input matInput type="text" name="title" ngModel required>
+      <mat-label>Date for your event</mat-label>
+      <input matInput [matDatepicker]="picker" ngModel name="date" [(ngModel)]="selectedDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <span class="col-12"></span>
-    <mat-form-field class="col-2">
-        <mat-label>Select Room</mat-label>
-        <mat-select (selectionChange)="selectRoom($event)">
-          <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-    <span class="col-12"></span>
-    <mat-form-field class="col-2">
-        <mat-label>Date for your event</mat-label>
-        <input matInput [matDatepicker]="picker" ngModel name="date" [(ngModel)]="selectedDate">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
     <!-- Start end hours -->
     <span class="col-12 row justify-content-center">
 
-        <mat-form-field class="col-2">
-          <mat-label>Start time of your event</mat-label>
-          <mat-select required name="start" [(ngModel)]="selectedStart">
-            <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="col-2">
-          <mat-label>End time of your event</mat-label>
-          <mat-select required name="end" [(ngModel)]="selectedEnd">
-            <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field class="col-2">
+        <mat-label>Start time of your event</mat-label>
+        <mat-select required name="start" [(ngModel)]="selectedStart">
+          <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-2">
+        <mat-label>End time of your event</mat-label>
+        <mat-select required name="end" [(ngModel)]="selectedEnd">
+          <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </span>
     <span class="col-12"></span>
-    
-    <mat-form-field class="col-2">
-        <mat-label>Information about your event</mat-label>
-        <textarea matInput  type="text" name="info" ngModel required></textarea>
-    </mat-form-field>
-    
-    <span class="col-12"></span>
+  </span>
 
-    <app-calendar class="col-10" [bookings]="bookings"></app-calendar>
-    
-    <span class="col-12"></span>
-    <br>
-    <button mat-raised-button type="submit" class="col-2 button-color">
-        Submit Request
-    </button>
+  <mat-form-field class="col-2">
+    <mat-label>Information about your event</mat-label>
+    <textarea matInput type="text" name="info" ngModel required></textarea>
+  </mat-form-field>
+
+  <span class="col-12"></span>
+
+  <app-calendar class="col-10" [bookings]="bookings"></app-calendar>
+
+  <span class="col-12"></span>
+  <br>
+  <button mat-raised-button type="submit" class="col-2 button-color">
+    Submit Request
+  </button>
 
 </form>
