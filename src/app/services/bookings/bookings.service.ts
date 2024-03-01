@@ -183,10 +183,8 @@ export class BookingsService {
   getAllBookingsByRoom(id: number[]) {
     return new Promise(resolve => {
       this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', { ids: id }).subscribe((data: any) => {
-        const conflictsArray = Object.values(data.conflicts.original) as any;
-
+        
         const resp = {bookings: this.mapBookings(data.bookings, this.colors),
-          conflicts: this.mapBookings(conflictsArray, this.colors),           
         }
         resolve(resp);
       })
@@ -257,6 +255,13 @@ export class BookingsService {
     const result: any[][] = Array.from(groupedBookings.values());
     
     return result;
+  }
+
+  filterBookings(bookings: any[], key: string, value: any):any{
+    return bookings.filter(booking => booking[key] === value);
+  }
+  filterOutBookings(bookings: any[], key: string, value: any):any{
+    return bookings.filter(booking => booking[key] !== value);
   }
 }
 
