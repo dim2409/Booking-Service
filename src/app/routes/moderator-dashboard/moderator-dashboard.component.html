@@ -36,8 +36,9 @@
       <mat-expansion-panel hideToggle *ngFor="let group of recurringGroups">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <p>
-              {{rooms[group[0].room_id-1]?.name}}  {{group[0].title}} - {{group[0].start.getHours()}}:00
+            <p class="accordion-title">
+              {{rooms[group[0].room_id-1]?.name}}  {{group[0].title}} - {{group[0].start| date: 'EEEE '}} {{group[0].start | date: 'HH:mm'}} - {{group[group.length-1].start | date: 'EEEE '}} {{group[group.length-1].start | date: 'HH:mm'}}
+              <i class="fa-solid fa-chevron-down"></i>
             </p>
           </mat-panel-title>
           <mat-panel-description>
