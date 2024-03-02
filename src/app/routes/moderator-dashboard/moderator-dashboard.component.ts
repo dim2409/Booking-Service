@@ -53,17 +53,16 @@ export class ModeratorDashboardComponent implements OnInit {
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
       this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
 
-        this.bookings = this.BookingsService.filterBookings(resp.bookings, 'recurring_id', null );
+        this.bookings = this.BookingsService.filterBookings(resp.bookings, 'recurring_id', null);
 
         this.conflicts = this.BookingsService.filterOutBookings(resp.bookings, 'conflict_id', null);
         this.conflicts = this.BookingsService.sortBookings(this.conflicts, 'conflict_id');
         this.conflictGroups = this.BookingsService.groupBookings(this.conflicts, 'conflict_id');
+      });
 
-        this.recurrings = this.BookingsService.filterOutBookings(resp.bookings, 'recurring_id', null);
-        this.recurringGroups = this.BookingsService.groupBookings(this.recurrings, 'recurring_id');
-
-        console.log(this.conflictGroups);
-        console.log(this.recurringGroups);
+      this.BookingsService.getRcurringBookings(this.roomIds).subscribe((resp: any) => {
+        this.recurrings = resp;
+        console.log(this.recurrings);
       });
     });
 

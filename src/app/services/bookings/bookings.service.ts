@@ -4,6 +4,7 @@ import { subDays, startOfDay, addDays, endOfMonth, addHours } from 'date-fns';
 import { EventColor } from 'calendar-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -146,7 +147,7 @@ export class BookingsService {
           const endDate = new Date(item.end);
           return {
             ...item,
-            title: item.title+'-Room'+item.room_id,
+            title: item.title + '-Room' + item.room_id,
             start: startDate,
             end: endDate,
             draggable: true,
@@ -183,8 +184,9 @@ export class BookingsService {
   getAllBookingsByRoom(id: number[]) {
     return new Promise(resolve => {
       this.http.post<any[]>('http://localhost:8000/api/getAllBookingsByRoom', { ids: id }).subscribe((data: any) => {
-        
-        const resp = {bookings: this.mapBookings(data.bookings, this.colors),
+
+        const resp = {
+          bookings: this.mapBookings(data.bookings, this.colors),
         }
         resolve(resp);
       })
@@ -213,6 +215,16 @@ export class BookingsService {
     })
   }
 
+  getRcurringBookings(roomIds: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/getRecurring', {room_id: roomIds}).pipe(
+      map((data: any) => {
+      data.recurrings.forEach((item: any) => {
+        item.bookings = this.mapBookings(item.bookings, this.colors)
+      });
+      return (data)
+    }))   
+  }
+
   createBooking(data: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -235,32 +247,32 @@ export class BookingsService {
     return this.http.put<any>('http://localhost:8000/api/updateBookingStatus/' + bookingId, { status: status }, { headers });
   }
 
-  sortBookings(bookings: any[], key: string):any{
+  sortBookings(bookings: any[], key: string): any {
     return bookings.sort((a, b) => {
-        if (a[key] < b[key]) return -1;
-        if (a[key] > b[key]) return 1;
-        return 0;
+      if (a[key] < b[key]) return -1;
+      if (a[key] > b[key]) return 1;
+      return 0;
     });
   }
 
-  groupBookings(bookings: any[],key: string):any{
+  groupBookings(bookings: any[], key: string): any {
     const groupedBookings = new Map<string, any[]>
     bookings.forEach(booking => {
       const keyValue = booking['conflict_id'];
-      if(!groupedBookings.has(keyValue)){
-        groupedBookings.set(keyValue, []) 
+      if (!groupedBookings.has(keyValue)) {
+        groupedBookings.set(keyValue, [])
       }
       groupedBookings.get(keyValue)!.push(booking)
     });
     const result: any[][] = Array.from(groupedBookings.values());
-    
+
     return result;
   }
 
-  filterBookings(bookings: any[], key: string, value: any):any{
+  filterBookings(bookings: any[], key: string, value: any): any {
     return bookings.filter(booking => booking[key] === value);
   }
-  filterOutBookings(bookings: any[], key: string, value: any):any{
+  filterOutBookings(bookings: any[], key: string, value: any): any {
     return bookings.filter(booking => booking[key] !== value);
   }
 }
