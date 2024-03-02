@@ -13,8 +13,8 @@
                     {{booking.title}}
                 </p>
                 <p class="h4 time mx-5 title-text">
-                    {{booking.start.toLocaleDateString('en-GB', options)}} 
-                    {{booking.end ? ' - ' + booking?.end?.toLocaleDateString('en-GB', options): ''}} 
+                    {{ booking.start | date: 'EEEE d/MM yyyy' }} {{ booking.start | date: 'HH:mm' }} -
+                    {{ booking.end | date: 'HH:mm' }}
                 </p>
                 <p class="h4" *ngIf="rooms && removeConflicts">
                     {{rooms[booking.room_id-1]?.name}}

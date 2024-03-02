@@ -8,7 +8,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { CalendarEvent } from 'angular-calendar';
-
 @Component({
   selector: 'app-booking-list',
   standalone: true,
@@ -17,7 +16,7 @@ import { CalendarEvent } from 'angular-calendar';
   styleUrl: './booking-list.component.less'
 })
 export class BookingListComponent {
-  public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
   alert(arg0: string) {
     alert(arg0)
   }

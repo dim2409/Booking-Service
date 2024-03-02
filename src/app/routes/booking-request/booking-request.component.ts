@@ -71,15 +71,21 @@ export class BookingRequestComponent {
     this.initializeTimeOptions();
   }
   onSubmit(bookingRequestForm: any) {
+    const timezoneOffset = new Date().getTimezoneOffset() / 60;
+    const athensOffset = 0; // UTC+3 for Europe/Athens
+    const timezoneDifference = athensOffset - timezoneOffset;
 
     const startTime = new Date(this.selectedStart);
+    startTime.setHours(startTime.getHours() + timezoneDifference);
     const startHour = startTime.getHours();
     const startMinute = startTime.getMinutes();
 
     // Extract time from selected end time
     const endTime = new Date(this.selectedEnd);
+    endTime.setHours(endTime.getHours() + timezoneDifference);
     const endHour = endTime.getHours();
     const endMinute = endTime.getMinutes();
+
     this.start = new Date(bookingRequestForm.value.date);
     this.end = new Date(bookingRequestForm.value.date);
     this.start.setHours(startHour, startMinute);
@@ -87,16 +93,22 @@ export class BookingRequestComponent {
 
     var booking = {
       ...bookingRequestForm.value,
-      start : this.start,
-      end : this.end,
-      room_id : this.selectedRoom,
-      is_recurring : this.recurringCheck,
+      start: this.start,
+      end: this.end,
+      room_id: this.selectedRoom,
+      is_recurring: this.recurringCheck,
       days: []
     }
-    if(this.recurringCheck){
+    if (this.recurringCheck) {
       const today = new Date();
       this.days.forEach(day => {
         if (day.selected) {
+          const start = new Date(day.start);
+          start.setHours(start.getHours() + timezoneDifference);
+          day.start= start;
+          const end = new Date(day.end);
+          end.setHours(end.getHours() + timezoneDifference);
+          day.end= end;
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -121,7 +133,7 @@ export class BookingRequestComponent {
   }
   initializeTimeOptions() {
     for (let i = 8; i <= 20; i++) {
-      const date = new Date();
+      const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
       date.setHours(i, 0, 0);
       console.log(date);
       this.timeOptions.push(date);
