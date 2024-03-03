@@ -218,10 +218,10 @@ export class BookingsService {
   getRcurringBookings(roomIds: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getRecurring', {room_id: roomIds}).pipe(
       map((data: any) => {
-      data.recurrings.forEach((item: any) => {
+      /* data.recurrings.forEach((item: any) => {
         item.bookings = this.mapBookings(item.bookings, this.colors)
-      });
-      return (data)
+      }); */
+      return (data.recurrings)
     }))   
   }
 

@@ -41,7 +41,7 @@ export class BookingListComponent {
     return dialogRef.afterClosed();
   }
 
-
+//ToDo emmit event to parent
   buttonAction(action: string, booking: any) {
     if (action == 'updateBookingStatus') {
       this.BookingsService.updateBookingStatus(booking.id, 1).subscribe((resp: any) => {

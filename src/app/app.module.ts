@@ -16,12 +16,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingListComponent } from './booking-list/booking-list.component';
-import { DatePipe } from '@angular/common';
 @NgModule({
     declarations: [
         AppComponent,
     ],
-    providers: [DatePipe],
+    providers: [],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

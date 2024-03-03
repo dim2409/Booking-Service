@@ -15,6 +15,17 @@
   margin-right: 450px;
   color: #f14c38;
 }
-.accordion-title {
-  width: 50vw;
+.recurring .mat-mdc-card {
+  margin-block: 3vh;
+}
+.recurring .mat-mdc-card .mat-mdc-card-content {
+  margin-top: 1vh;
+  font-size: medium;
+}
+.recurring .mat-mdc-card .buttons {
+  position: absolute;
+  right: 0.1rem;
+}
+.recurring .mat-mdc-card .button-color {
+  background-color: #176b87;
 }

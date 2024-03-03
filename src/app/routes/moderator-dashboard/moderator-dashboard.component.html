@@ -31,32 +31,40 @@
   <div class="moderator-list-container">
     <div class="moderator-list-title">
       Recurring Bookings
-    </div>
-    <mat-accordion>
-      <mat-expansion-panel hideToggle *ngFor="let group of recurringGroups">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <p class="accordion-title">
-              {{rooms[group[0].room_id-1]?.name}}  {{group[0].title}} - {{group[0].start| date: 'EEEE '}} {{group[0].start | date: 'HH:mm'}} - {{group[group.length-1].start | date: 'EEEE '}} {{group[group.length-1].start | date: 'HH:mm'}}
-              <i class="fa-solid fa-chevron-down"></i>
-            </p>
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <app-booking-list [bookings]="group" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
+      <div class="recurring">
+        <mat-card *ngFor="let group of recurrings">
+          <mat-card-header>
+            <mat-card-title>
+              {{rooms[group.room_id-1]?.name}} - {{group.title}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              <span *ngFor="let day of group.days">
+                {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+              </span>
+              {{group.status == 0 ? 'Pending' : 'Approved'}}
+            </mat-card-subtitle>
+            <div class="buttons">
+              <ng-container *ngFor="let button of buttons">
+                <button mat-mini-fab *ngIf="!(group.status != 0 && button.icon == 'fa-check')"
+                  (click)="buttonAction(button.action, group)" class="mx-1 button-color">
+                  <i class="fa-solid {{button.icon}}"></i>
+                </button>
+              </ng-container>
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            {{group.info}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- Non-Conflicts -->
+      <div class="moderator-list-container">
+        <div class="moderator-list-title">
+          Non-Conflicting Bookings
+        </div>
+        <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
           (bookingUpdated)="updateBooking()"></app-booking-list>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-  <!-- Non-Conflicts -->
-  <div class="moderator-list-container">
-    <div class="moderator-list-title">
-      Non-Conflicting Bookings
-    </div>
-    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-      (bookingUpdated)="updateBooking()"></app-booking-list>
-  </div>
-  
+      </div>
 
-</div>
+
+    </div>

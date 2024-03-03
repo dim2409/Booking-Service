@@ -8,12 +8,15 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DayNamePipe } from "../../pipes/day-name.pipe";
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule],
   templateUrl: './moderator-dashboard.component.html',
-  styleUrl: './moderator-dashboard.component.less'
+  styleUrl: './moderator-dashboard.component.less',
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -66,6 +69,11 @@ export class ModeratorDashboardComponent implements OnInit {
       });
     });
 
+  }
+
+  //ToDo move to list along with all recuirring and handle button event action here
+  buttonAction(arg0: any, arg1: any) {
+    throw new Error('Method not implemented.');
   }
 
   selectRoom(event: MatSelectChange) {
