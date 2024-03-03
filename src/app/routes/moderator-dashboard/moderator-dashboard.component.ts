@@ -49,23 +49,16 @@ export class ModeratorDashboardComponent implements OnInit {
       action: 'openInfo',
     }
     ]
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.RoomsService.getModeratedRooms(2).then((resp: any) => {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
-      this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
 
-        this.bookings = this.BookingsService.filterBookings(resp.bookings, 'recurring_id', null);
-
-        this.conflicts = this.BookingsService.filterOutBookings(resp.bookings, 'conflict_id', null);
-        this.conflicts = this.BookingsService.sortBookings(this.conflicts, 'conflict_id');
-        this.conflictGroups = this.BookingsService.groupBookings(this.conflicts, 'conflict_id');
-      });
+      this.BookingsService.getBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.bookings = resp;
+      })
 
       this.BookingsService.getRcurringBookings(this.roomIds).subscribe((resp: any) => {
         this.recurrings = resp;
-        console.log(this.recurrings);
       });
     });
 
@@ -83,13 +76,13 @@ export class ModeratorDashboardComponent implements OnInit {
 
   updateBooking() {
     if (this.selectedRoom === 'all') {
-      this.BookingsService.getAllBookingsByRoom(this.roomIds).then((resp: any) => {
-        this.bookings = resp.bookings;
-      });
+      this.BookingsService.getBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.bookings = resp;
+      })
     } else {
       const roomArray: number[] = [this.selectedRoom];
-      this.BookingsService.getAllBookingsByRoom(roomArray).then((resp: any) => {
-        this.bookings = resp.bookings;
+      this.BookingsService.getBookings({ room_id: roomArray }).subscribe((resp: any) => {
+        this.bookings = resp;
       })
     }
   }

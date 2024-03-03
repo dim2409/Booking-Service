@@ -42,6 +42,7 @@ export class BookingRequestComponent {
   selectedDate: Date = new Date();
   recurringCheck: boolean = false;
   @ViewChild('chipList') chipList!: MatChipListbox;
+  roomIds: any;
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router) { }
 
   selectedStart!: Date;
@@ -61,13 +62,14 @@ export class BookingRequestComponent {
   }
 
   ngOnInit() {
-    this.BookingsService.getActiveBookings().then((resp: any) => {
-      this.bookings = resp;
-    });
-    this.RoomsService.getRooms().then((resp: any) => {
+    this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
+      this.roomIds = this.rooms.map((room: any) => room.id);
+      this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.bookings = resp;
+      });
     });
-
+    
     this.initializeTimeOptions();
   }
   onSubmit(bookingRequestForm: any) {
@@ -116,7 +118,6 @@ export class BookingRequestComponent {
       });
     }
 
-    console.log(booking);
     this.BookingsService.createBooking(booking).subscribe((response) => {
       alert("Booking created successfully!");
 
@@ -126,7 +127,8 @@ export class BookingRequestComponent {
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
 
-    this.BookingsService.getBookingByRoom(this.selectedRoom).then((resp: any) => {
+    const roomArray  = [this.selectedRoom]
+    this.BookingsService.getActiveBookings(roomArray).subscribe((resp: any) => {
       this.bookings = resp;
     })
 
@@ -135,7 +137,6 @@ export class BookingRequestComponent {
     for (let i = 8; i <= 20; i++) {
       const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
       date.setHours(i, 0, 0);
-      console.log(date);
       this.timeOptions.push(date);
     }
   }

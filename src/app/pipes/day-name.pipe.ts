@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DayNamePipe implements PipeTransform {
 
   transform(dayNumber: any): string {
-    console.log(dayNumber);
     switch (dayNumber) {
       case '1':
         return 'Monday';

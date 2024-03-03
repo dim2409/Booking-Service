@@ -20,14 +20,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.less'
 })
 export class HomeComponent {
+  roomIds: any;
   selectRoom(event: MatSelectChange) {
     const selectedRoom = event.value;
     if (selectedRoom === 'all') {
-      this.BookingsService.getActiveBookings().then((resp: any) => {
+      this.BookingsService.getActiveBookings({'room_id': this.roomIds}).subscribe((resp: any) => {
         this.bookings = resp;
       });
     }else{
-      this.BookingsService.getBookingByRoom(selectedRoom).then((resp: any) => {
+      this.BookingsService.getActiveBookings({'room_id': selectedRoom.id}).subscribe((resp: any) => {
         this.bookings = resp;
       })
     }
@@ -37,11 +38,12 @@ export class HomeComponent {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
   ngOnInit(): void {
-    this.BookingsService.getActiveBookings().then((resp: any) => {
-      this.bookings = resp;
-    });
-    this.RoomsService.getRooms().then((resp: any) => {
+    this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
+      this.roomIds = this.rooms.map((room: any) => room.id);
+      this.BookingsService.getActiveBookings({'room_id': this.roomIds}).subscribe((resp: any) => {
+        this.bookings = resp;
+      });
     });
   }
 }

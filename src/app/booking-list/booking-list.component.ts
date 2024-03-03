@@ -44,7 +44,7 @@ export class BookingListComponent {
 //ToDo emmit event to parent
   buttonAction(action: string, booking: any) {
     if (action == 'updateBookingStatus') {
-      this.BookingsService.updateBookingStatus(booking.id, 1).subscribe((resp: any) => {
+      this.BookingsService.updateBooking({id: booking.id, status: 1}).subscribe((resp: any) => {
         this.alert('Booking Status '+resp.title+' Updated');
         this.bookingUpdated.emit();
       })
