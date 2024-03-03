@@ -28,7 +28,8 @@ export class HomeComponent {
         this.bookings = resp;
       });
     }else{
-      this.BookingsService.getActiveBookings({'room_id': selectedRoom.id}).subscribe((resp: any) => {
+      const roomArray: number[] = [selectedRoom]
+      this.BookingsService.getActiveBookings({'room_id': roomArray}).subscribe((resp: any) => {
         this.bookings = resp;
       })
     }

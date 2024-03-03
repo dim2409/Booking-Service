@@ -13,17 +13,17 @@
       Conflicts
     </div>
     <mat-accordion>
-      <mat-expansion-panel hideToggle *ngFor="let group of conflictGroups">
+      <mat-expansion-panel hideToggle *ngFor="let group of conflicts">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{rooms[group[0].room_id-1]?.name}}
+            {{group.room_name}}
           </mat-panel-title>
           <mat-panel-description>
-            Conflicts <i class="fa-solid fa-circle-exclamation m-5"></i>
+            Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-booking-list [bookings]="group" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
-          (bookingUpdated)="updateBooking()"></app-booking-list>
+        <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
+          (bookingUpdated)="updateBooking($event)"></app-booking-list>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -46,7 +46,7 @@
             <div class="buttons">
               <ng-container *ngFor="let button of buttons">
                 <button mat-mini-fab *ngIf="!(group.status != 0 && button.icon == 'fa-check')"
-                  (click)="buttonAction(button.action, group)" class="mx-1 button-color">
+                  (click)="updateBooking({action: 'updateRecurring', booking: group})" class="mx-1 button-color">
                   <i class="fa-solid {{button.icon}}"></i>
                 </button>
               </ng-container>
@@ -63,7 +63,7 @@
           Non-Conflicting Bookings
         </div>
         <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-          (bookingUpdated)="updateBooking()"></app-booking-list>
+          (bookingUpdated)="updateBooking($event)"></app-booking-list>
       </div>
 
 

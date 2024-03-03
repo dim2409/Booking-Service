@@ -3,15 +3,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
-import { CalendarEvent } from 'angular-calendar';
 @Component({
   selector: 'app-booking-list',
   standalone: true,
-  imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule, MatDialogModule],
+  imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule],
   templateUrl: './booking-list.component.html',
   styleUrl: './booking-list.component.less'
 })
@@ -27,31 +24,13 @@ export class BookingListComponent {
   @Input() rooms: any[] = [];
   @Input() buttons: any[] = [];
   @Input() removeConflicts: boolean = false;
-  constructor(private BookingsService: BookingsService, private dialog: MatDialog) { }
+  constructor(private BookingsService: BookingsService) { }
   
 
-  openInfoDialog(booking: any) {
-    const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
-      data: booking,
-      autoFocus: false,
-      width: "90vw",
-      height: "90%",
-      maxWidth: "90vw"
-    });
-    return dialogRef.afterClosed();
-  }
+
 
 //ToDo emmit event to parent
   buttonAction(action: string, booking: any) {
-    if (action == 'updateBookingStatus') {
-      this.BookingsService.updateBooking({id: booking.id, status: 1}).subscribe((resp: any) => {
-        this.alert('Booking Status '+resp.title+' Updated');
-        this.bookingUpdated.emit();
-      })
-    }else if(action == 'openInfo'){
-      this.openInfoDialog(booking);
-    }else{
-      //TODO: Implement button actions
-    }
+    this.bookingUpdated.emit({action: action, booking: booking});
   }
 }

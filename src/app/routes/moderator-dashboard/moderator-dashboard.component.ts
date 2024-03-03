@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionModule } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BookingListComponent } from 'src/app/booking-list/booking-list.component';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
-
+import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DayNamePipe } from "../../pipes/day-name.pipe";
 import { MatCardModule } from '@angular/material/card';
@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.less',
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule]
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDialogModule]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -29,7 +29,7 @@ export class ModeratorDashboardComponent implements OnInit {
   selectedRoom: any = 'all';
   recurringGroups: any;
   recurrings: any;
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.buttons = [{
@@ -38,7 +38,7 @@ export class ModeratorDashboardComponent implements OnInit {
     },
     {
       icon: 'fa-pencil',
-      action: 'updateBooking',
+      action: 'editBooking',
     },
     {
       icon: 'fa-trash',
@@ -57,33 +57,79 @@ export class ModeratorDashboardComponent implements OnInit {
         this.bookings = resp;
       })
 
-      this.BookingsService.getRcurringBookings(this.roomIds).subscribe((resp: any) => {
+      this.BookingsService.getRcurringBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
         this.recurrings = resp;
       });
+
+      this.BookingsService.getConflicts({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.conflicts = resp;
+      })
+
     });
 
   }
 
-  //ToDo move to list along with all recuirring and handle button event action here
-  buttonAction(arg0: any, arg1: any) {
-    throw new Error('Method not implemented.');
-  }
-
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
-    this.updateBooking();
+    this.getBookings();
   }
-
-  updateBooking() {
+  getBookings() {
     if (this.selectedRoom === 'all') {
       this.BookingsService.getBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
         this.bookings = resp;
       })
+      this.BookingsService.getRcurringBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.recurrings = resp;
+      });
     } else {
       const roomArray: number[] = [this.selectedRoom];
       this.BookingsService.getBookings({ room_id: roomArray }).subscribe((resp: any) => {
         this.bookings = resp;
       })
+      this.BookingsService.getRcurringBookings({ room_id: roomArray }).subscribe((resp: any) => {
+        this.recurrings = resp;
+      });
     }
+  }
+
+  updateBooking(data: any) {
+    switch (data.action) {
+      case 'updateBookingStatus':
+       {
+          const idArray : number[] = [data.booking.id]
+          this.BookingsService.updateBooking({ id: idArray, status: 1 }).subscribe((resp: any) => {
+            console.log('Booking Status Updated');
+            this.getBookings();
+          })
+        }
+        break;
+      case 'updateRecurring':
+          const idArray : number[] = [data.booking.id]
+          this.BookingsService.updateRecurring({ id: idArray, status: 1 }).subscribe((resp: any) => {
+            console.log('Recurring Booking Status Updated');
+            this.getBookings();
+          });
+        break;
+      case 'editBooking':
+        //Todo make edit booking dialog + service + endpoint
+        break;
+      case 'deleteBooking':
+        //Todo make delete/reject booking dialog + service + endpoint
+        break;
+      case 'openInfo':
+        this.openInfoDialog(data.booking);
+        break;
+
+    }
+  }
+  openInfoDialog(booking: any) {
+    const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
+      data: booking,
+      autoFocus: false,
+      width: "90vw",
+      height: "90%",
+      maxWidth: "90vw"
+    });
+    return dialogRef.afterClosed();
   }
 }

@@ -64,7 +64,17 @@ export class BookingsService {
   }
 
   getRcurringBookings(roomIds: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/api/getRecurring', { room_id: roomIds })
+    return this.http.post<any>('http://localhost:8000/api/getRecurring',roomIds)
+  }
+
+  getConflicts(req: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/getConflicts', req).pipe(map((data: any) => {
+      const resp: any[] = data
+      for (const item of resp) {
+        item.bookings = this.mapBookings(item.bookings, this.colors);
+      }
+      return resp
+    }))
   }
 
   getActiveBookings(req:any): Observable<any> {
@@ -112,7 +122,13 @@ export class BookingsService {
   }
 
   updateBooking(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/api/updateBooking', req);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    return this.http.post<any>('http://localhost:8000/api/updateBooking', req, { headers });
+  }
+  updateRecurring(req: any): Observable<any> {    
+    return this.http.post<any>('http://localhost:8000/api/updateRecurring', req);
   }
 
   sortBookings(bookings: any[], key: string): any {

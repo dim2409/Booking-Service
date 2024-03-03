@@ -127,8 +127,8 @@ export class BookingRequestComponent {
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
 
-    const roomArray  = [this.selectedRoom]
-    this.BookingsService.getActiveBookings(roomArray).subscribe((resp: any) => {
+    const roomArray: number[] = [this.selectedRoom]
+    this.BookingsService.getActiveBookings({room_id:roomArray}).subscribe((resp: any) => {
       this.bookings = resp;
     })
 
