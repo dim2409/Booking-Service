@@ -13,6 +13,9 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
+
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-booking-request',
   standalone: true,
@@ -28,7 +31,8 @@ import { Router } from '@angular/router';
     MatButtonModule,
     CalendarComponentModule,
     MatOptionModule,
-    FormsModule],
+    FormsModule,
+    MatDialogModule],
   templateUrl: './booking-request.component.html',
   styleUrl: './booking-request.component.less'
 })
@@ -43,7 +47,7 @@ export class BookingRequestComponent {
   recurringCheck: boolean = false;
   @ViewChild('chipList') chipList!: MatChipListbox;
   roomIds: any;
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialog: MatDialog) { }
 
   selectedStart!: Date;
   selectedEnd!: Date;
@@ -69,7 +73,7 @@ export class BookingRequestComponent {
         this.bookings = resp;
       });
     });
-    
+
     this.initializeTimeOptions();
   }
   onSubmit(bookingRequestForm: any) {
@@ -107,10 +111,10 @@ export class BookingRequestComponent {
         if (day.selected) {
           const start = new Date(day.start);
           start.setHours(start.getHours() + timezoneDifference);
-          day.start= start;
+          day.start = start;
           const end = new Date(day.end);
           end.setHours(end.getHours() + timezoneDifference);
-          day.end= end;
+          day.end = end;
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -119,16 +123,21 @@ export class BookingRequestComponent {
     }
 
     this.BookingsService.createBooking(booking).subscribe((response) => {
-      alert("Booking created successfully!");
-
-      this.router.navigateByUrl('/myBookings');
+      const dialogRef = this.dialog.open(SuccessDialogComponent, {
+        data: {
+          successMessage: 'Booking created successfully'
+        }
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        this.router.navigateByUrl('/myBookings');
+      });
     });
   }
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
 
     const roomArray: number[] = [this.selectedRoom]
-    this.BookingsService.getActiveBookings({room_id:roomArray}).subscribe((resp: any) => {
+    this.BookingsService.getActiveBookings({ room_id: roomArray }).subscribe((resp: any) => {
       this.bookings = resp;
     })
 
