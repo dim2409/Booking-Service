@@ -16,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingListComponent } from './booking-list/booking-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
     declarations: [
         AppComponent,
@@ -37,7 +38,8 @@ import { BookingListComponent } from './booking-list/booking-list.component';
         FontAwesomeModule,
         NavbarComponent,
         BookingListComponent,
-        HttpClientModule
+        HttpClientModule,
+        MatDialogModule
     ]
 })
 export class AppModule { }

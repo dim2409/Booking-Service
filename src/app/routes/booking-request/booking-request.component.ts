@@ -13,9 +13,7 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
-
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 @Component({
   selector: 'app-booking-request',
   standalone: true,
@@ -32,27 +30,30 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     CalendarComponentModule,
     MatOptionModule,
     FormsModule,
-    MatDialogModule],
+    ],
   templateUrl: './booking-request.component.html',
   styleUrl: './booking-request.component.less'
 })
 export class BookingRequestComponent {
   start!: Date;
   end!: Date;
-  bookings: any;
-  rooms: any;
-  selectedRoom: number = 1;
-  timeOptions: Date[] = [];
-  selectedDate: Date = new Date();
-  recurringCheck: boolean = false;
-  @ViewChild('chipList') chipList!: MatChipListbox;
-  roomIds: any;
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialog: MatDialog) { }
-
   selectedStart!: Date;
   selectedEnd!: Date;
+  timeOptions: Date[] = [];
+  selectedDate: Date = new Date();
+
+  bookings: any;
+
+  rooms: any;
+  roomIds: any;
   room!: BigInteger;
+  selectedRoom: number = 1;
+
+  recurringCheck: boolean = false;
+
+  @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
+
   public days: any[] = [
     { label: 'Monday', name: 1, selected: false, start: Date, end: Date },
     { label: 'Tuesday', name: 2, selected: false, start: Date, end: Date },
@@ -60,7 +61,8 @@ export class BookingRequestComponent {
     { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
-
+  
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService) { }
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
@@ -123,12 +125,7 @@ export class BookingRequestComponent {
     }
 
     this.BookingsService.createBooking(booking).subscribe((response) => {
-      const dialogRef = this.dialog.open(SuccessDialogComponent, {
-        data: {
-          successMessage: 'Booking created successfully'
-        }
-      });
-      dialogRef.afterClosed().subscribe(() => {
+      this.dialogService.openSuccessDialog('Booking created successfully!').subscribe(() => {
         this.router.navigateByUrl('/myBookings');
       });
     });

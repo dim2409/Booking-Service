@@ -1,22 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionModule } from '@angular/material/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BookingListComponent } from 'src/app/booking-list/booking-list.component';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
-import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DayNamePipe } from "../../pipes/day-name.pipe";
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.less',
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDialogModule]
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -29,7 +28,7 @@ export class ModeratorDashboardComponent implements OnInit {
   selectedRoom: any = 'all';
   recurringGroups: any;
   recurrings: any;
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialog: MatDialog) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.buttons = [{
@@ -98,7 +97,7 @@ export class ModeratorDashboardComponent implements OnInit {
        {
           const idArray : number[] = [data.booking.id]
           this.BookingsService.updateBooking({ id: idArray, status: 1 }).subscribe((resp: any) => {
-            console.log('Booking Status Updated');
+            this.dialogService.openSuccessDialog('Booking Status Updated');
             this.getBookings();
           })
         }
@@ -106,7 +105,7 @@ export class ModeratorDashboardComponent implements OnInit {
       case 'updateRecurring':
           const idArray : number[] = [data.booking.id]
           this.BookingsService.updateRecurring({ id: idArray, status: 1 }).subscribe((resp: any) => {
-            console.log('Recurring Booking Status Updated');
+            this.dialogService.openSuccessDialog('Recurring Booking Status Updated');
             this.getBookings();
           });
         break;
@@ -117,19 +116,11 @@ export class ModeratorDashboardComponent implements OnInit {
         //Todo make delete/reject booking dialog + service + endpoint
         break;
       case 'openInfo':
-        this.openInfoDialog(data.booking);
+        this.dialogService.openInfoDialog(data.booking);
         break;
 
     }
   }
-  openInfoDialog(booking: any) {
-    const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
-      data: booking,
-      autoFocus: false,
-      width: "90vw",
-      height: "90%",
-      maxWidth: "90vw"
-    });
-    return dialogRef.afterClosed();
-  }
+  
+  
 }

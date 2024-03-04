@@ -12,6 +12,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -37,7 +38,7 @@ export class HomeComponent {
   bookings: any;
   rooms: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
   ngOnInit(): void {
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;

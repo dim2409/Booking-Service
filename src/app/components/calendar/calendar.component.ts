@@ -1,14 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
-import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 
 /* Services */
-import { BookingsService } from 'src/app/services/bookings/bookings.service';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,14 +16,7 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 export class CalendarComponent {
   selectedValue!: string;
   handleEvent(arg0: string, event: CalendarEvent) {
-    const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
-      data: event,
-      autoFocus: false,
-      width: "90vw",
-      height: "90%",
-      maxWidth: "90vw"
-    });
-    return dialogRef.afterClosed();
+    this.dialogService.openInfoDialog(event);
   }
   eventTimesChanged({
     event,
@@ -49,7 +40,7 @@ export class CalendarComponent {
   events: any;
 
   
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.setView(CalendarView.Month);

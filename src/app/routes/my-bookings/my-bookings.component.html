@@ -1,4 +1,3 @@
 <div class="main">
-
-    <app-booking-list [bookings]="bookings" [buttons]="buttons"></app-booking-list>
+    <app-booking-list [bookings]="bookings" [buttons]="buttons" (bookingUpdated)="updateBooking($event)"></app-booking-list>
 </div>
