@@ -46,7 +46,7 @@
             <div class="buttons">
               <ng-container *ngFor="let button of buttons">
                 <button mat-mini-fab *ngIf="!(group.status != 0 && button.icon == 'fa-check')"
-                  (click)="updateBooking({action: 'updateRecurring', booking: group})" class="mx-1 button-color">
+                  (click)="updateBooking({action: 'approveRecurring', booking: group})" class="mx-1 button-color">
                   <i class="fa-solid {{button.icon}}"></i>
                 </button>
               </ng-container>

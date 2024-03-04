@@ -121,14 +121,11 @@ export class BookingsService {
     return this.http.post<any>('http://localhost:8000/api/createBooking', booking, { headers });
   }
 
-  updateBooking(req: any): Observable<any> {
+  approveBooking(req: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    return this.http.post<any>('http://localhost:8000/api/updateBooking', req, { headers });
-  }
-  updateRecurring(req: any): Observable<any> {    
-    return this.http.post<any>('http://localhost:8000/api/updateRecurring', req);
+    return this.http.post<any>('http://localhost:8000/api/approveBooking', req, { headers });
   }
 
   sortBookings(bookings: any[], key: string): any {
