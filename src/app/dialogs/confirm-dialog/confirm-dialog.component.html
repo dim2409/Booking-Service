@@ -1,0 +1,10 @@
+<div class="container pt-5 confirm-dialog">
+    <i class="fa-solid fa-circle-exclamation confirm-icon"></i>
+    <p class="confirm-text">
+        {{data.message}}
+    </p>
+    <div class="confirm-buttons">
+        <button mat-raised-button class="button button-color" (click)="close()">Cancel</button>
+        <button mat-raised-button class="button button-color" (click)="confirm()">Confirm</button>
+    </div>
+</div>

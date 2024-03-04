@@ -94,20 +94,26 @@ export class ModeratorDashboardComponent implements OnInit {
   updateBooking(data: any) {
     switch (data.action) {
       case 'updateBookingStatus':
-       {
-          const idArray : number[] = [data.booking.id]
-          this.BookingsService.updateBooking({ id: idArray, status: 1 }).subscribe((resp: any) => {
-            this.dialogService.openSuccessDialog('Booking Status Updated');
-            this.getBookings();
+        {
+          this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this booking?').subscribe((resp: any) => {
+            if (!resp) { return; }
+            const idArray: number[] = [data.booking.id]
+            this.BookingsService.updateBooking({ id: idArray, status: 1 }).subscribe((resp: any) => {
+              this.dialogService.openSuccessDialog('Booking Status Updated');
+              this.getBookings();
+            })
           })
         }
         break;
       case 'updateRecurring':
-          const idArray : number[] = [data.booking.id]
+        this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this recurring booking?').subscribe((resp: any) => {
+          if (!resp) { return; }
+          const idArray: number[] = [data.booking.id]
           this.BookingsService.updateRecurring({ id: idArray, status: 1 }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Recurring Booking Status Updated');
             this.getBookings();
           });
+        })
         break;
       case 'editBooking':
         //Todo make edit booking dialog + service + endpoint
@@ -121,6 +127,6 @@ export class ModeratorDashboardComponent implements OnInit {
 
     }
   }
-  
-  
+
+
 }

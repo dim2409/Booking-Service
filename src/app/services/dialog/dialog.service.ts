@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
 
 @Injectable({
@@ -24,7 +25,19 @@ export class DialogService {
     const dialogRef = this.dialog.open(SuccessDialogComponent, {
       data: {
         successMessage: successMessage
-      }
+      },
+      autoFocus: false,
+    });
+    return dialogRef.afterClosed();
+  }
+
+  openConfirmDialog(booking: any, message: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data:{
+        booking : booking,
+        message: message
+      },
+      autoFocus: false,
     });
     return dialogRef.afterClosed();
   }

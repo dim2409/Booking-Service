@@ -1,26 +1,31 @@
-.success-dialog {
+.confirm-dialog {
   width: 50vw;
   height: 50vh;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-.success-dialog .success-icon {
+.confirm-dialog .confirm-icon {
   font-size: 7vw;
-  color: #4caf50;
+  color: #f14c38;
 }
-.success-dialog .success-text {
+.confirm-dialog .confirm-text {
   width: 100%;
   text-align: center;
   font-size: xxx-large;
 }
-.success-dialog .close-button {
+.confirm-dialog .confirm-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.confirm-dialog .confirm-buttons .button {
   margin: 1.5rem;
   width: 16vw;
   height: 7vh;
   font-size: 3vh;
 }
-.success-dialog .button-color {
+.confirm-dialog .confirm-buttons .button-color {
   background-color: #176b87;
   color: white;
 }
