@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker'
@@ -14,11 +14,13 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+
 @Component({
-  selector: 'app-booking-request',
+  selector: 'app-edit-booking-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -29,20 +31,18 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
     MatButtonModule,
     CalendarComponentModule,
     MatOptionModule,
-    FormsModule,
-    CalendarComponentModule
-    ],
-  templateUrl: './booking-request.component.html',
-  styleUrl: './booking-request.component.less'
+    FormsModule,],
+  templateUrl: './edit-booking-dialog.component.html',
+  styleUrl: './edit-booking-dialog.component.less'
 })
-export class BookingRequestComponent {
+export class EditBookingDialogComponent implements OnInit {
   start!: Date;
   end!: Date;
   selectedStart!: Date;
   selectedEnd!: Date;
   timeOptions: Date[] = [];
   selectedDate: Date = new Date();
-
+  bookingTitle: any;
   bookings: any;
 
   rooms: any;
@@ -62,24 +62,44 @@ export class BookingRequestComponent {
     { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
-  
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService) { }
+  bookingInfo: any;
+
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
 
   ngOnInit() {
-    this.RoomsService.getRooms().subscribe((resp: any) => {
-      this.rooms = resp;
-      this.roomIds = this.rooms.map((room: any) => room.id);
-      this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.bookings = resp;
+    console.log(this.data)
+    this.dialogRef.afterOpened().subscribe(() => {
+      this.RoomsService.getRooms().subscribe((resp: any) => {
+        this.rooms = resp;
+        this.roomIds = this.rooms.map((room: any) => room.id);
+        this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+          this.bookings = resp;
+        });
       });
     });
+    this.bookingTitle = this.data.title;
+    this.selectedRoom = this.data.room_id;
+    this.recurringCheck = this.data.is_recurring;
+    if (this.recurringCheck) {
+      this.days.forEach((day: any) => {
+        this.data.days.forEach((bookingDay: any) => {
+          if (day.name === bookingDay) {
+            day.selected = true;
+            day.start = new Date(bookingDay.start);
+            day.end = new Date(bookingDay.end);
+          }
+        })
+      })
+    }
+    this.selectedDate = new Date(this.data.start);
 
+    this.bookingInfo = this.data.info;
     this.initializeTimeOptions();
   }
-  onSubmit(bookingRequestForm: any) {
+  onSave(bookingRequestForm: any) {
     const timezoneOffset = new Date().getTimezoneOffset() / 60;
     const athensOffset = 0; // UTC+3 for Europe/Athens
     const timezoneDifference = athensOffset - timezoneOffset;
@@ -101,6 +121,7 @@ export class BookingRequestComponent {
     this.end.setHours(endHour, endMinute);
 
     var booking = {
+      ...this.data,
       ...bookingRequestForm.value,
       start: this.start,
       end: this.end,
@@ -125,11 +146,10 @@ export class BookingRequestComponent {
       });
     }
 
-    this.BookingsService.createBooking(booking).subscribe((response) => {
-      this.dialogService.openSuccessDialog('Booking created successfully!').subscribe(() => {
-        this.router.navigateByUrl('/myBookings');
-      });
-    });
+    this.dialogRef.close(booking);
+  }
+  close() {
+    this.dialogRef.close();
   }
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
@@ -146,8 +166,19 @@ export class BookingRequestComponent {
       date.setHours(i, 0, 0);
       this.timeOptions.push(date);
     }
-  }
-  openInfo(booking: any) {
-    this.dialogService.openInfoDialog(booking);
+    const startHours = new Date(this.data.start).getHours();
+    const startMinutes = new Date(this.data.start).getMinutes();
+    const selectedStartIndex = this.timeOptions.findIndex(time => {
+      return time.getHours() === startHours && time.getMinutes() === startMinutes;
+    });
+    this.selectedStart = this.timeOptions[selectedStartIndex];
+
+    const endHours = new Date(this.data.end).getHours();
+    const endMinutes = new Date(this.data.end).getMinutes();
+    const selectedEndIndex = this.timeOptions.findIndex(time => {
+      return time.getHours() === endHours && time.getMinutes() === endMinutes;
+    });
+    this.selectedEnd = this.timeOptions[selectedEndIndex];
+
   }
 }

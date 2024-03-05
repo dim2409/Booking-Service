@@ -1,0 +1,62 @@
+// src/app/styles.less
+@import '../../../variables.less';
+
+.booking-request {
+    .cal-month-view .cal-cell {
+        width: 10%;
+        min-height: 1px;
+    }
+
+    .cal-month-view .cal-cell-top {
+        min-height: 1px;
+    }
+
+    .cel-title {
+        .event {
+            font-size: 1rem !important;
+        }
+    }
+
+    .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+        font-size: 1.2rem;
+    }
+}
+
+.recurring-options {
+    width: 35vw;
+    display: flex;
+    flex-wrap: nowrap;
+
+    .day-chips {
+        width: 6vw;
+        margin-right: 10vh;
+    }
+
+    .hour-select-container {
+
+        .hour-select {
+            width: 31vw;
+            mat-form-field {
+                margin-inline: 1rem;
+            }
+        }
+    }
+
+}
+
+.mat-mdc-slide-toggle {
+    display: grid;
+
+    .mdc-form-field {
+        display: grid;
+    }
+}
+
+.button-color {
+    background-color: @primary-color;
+    color: @primaryElementTextColor;
+}
+.mat-mdc-raised-button[disabled][disabled] {
+    background-color: #b9b9b9;
+    color: @primaryElementTextColor;
+}

@@ -10,5 +10,5 @@
       <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <app-calendar [bookings]="bookings"></app-calendar>
+  <app-calendar [bookings]="bookings" (bookingClicked)="openInfo($event)"></app-calendar>
 </div>

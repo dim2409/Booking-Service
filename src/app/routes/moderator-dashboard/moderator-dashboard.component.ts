@@ -109,9 +109,15 @@ export class ModeratorDashboardComponent implements OnInit {
         break;
       case 'editBooking':
         //Todo make edit booking dialog + service + endpoint
+        this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
+          console.log(resp)
+          this.BookingsService.editBooking(resp).subscribe((resp: any) => {
+            this.dialogService.openSuccessDialog('Booking Updated');
+            this.getBookings();
+          })
+        });
         break;
       case 'cancelBooking':
-        //Todo make delete/reject booking dialog + service + endpoint
         this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to cancel this booking?').subscribe((resp: any) => {
           if (!resp) { return; }
           const idArray: number[] = [data.booking.id]

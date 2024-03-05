@@ -132,8 +132,9 @@ export class BookingsService {
     return this.http.post<any>('http://localhost:8000/api/cancelBooking', req)
   }
 
-  
-
+  editBooking(req: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/editBooking', req)
+  }
 
   sortBookings(bookings: any[], key: string): any {
     return bookings.sort((a, b) => {

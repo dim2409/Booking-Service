@@ -48,4 +48,7 @@ export class HomeComponent {
       });
     });
   }
+  openInfo(booking: any) {
+    this.dialogService.openInfoDialog(booking);
+  }
 }
