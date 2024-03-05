@@ -40,7 +40,7 @@ export class ModeratorDashboardComponent implements OnInit {
       action: 'editBooking',
     },
     {
-      icon: 'fa-trash',
+      icon: 'fa-xmark',
       action: 'cancelBooking',
     },
     {
@@ -48,7 +48,7 @@ export class ModeratorDashboardComponent implements OnInit {
       action: 'openInfo',
     }
     ]
-    this.RoomsService.getModeratedRooms(4).subscribe((resp: any) => {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
 
@@ -92,34 +92,35 @@ export class ModeratorDashboardComponent implements OnInit {
   }
 
   updateBooking(data: any) {
+    console.log(data)
     switch (data.action) {
       case 'approveBooking':
         {
           this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this booking?').subscribe((resp: any) => {
-            if (!resp) { return; }
-            const idArray: number[] = [data.booking.id]
-            this.BookingsService.approveBooking({ id: idArray, status: 1 }).subscribe((resp: any) => {
-              this.dialogService.openSuccessDialog('Booking Status Updated');
-              this.getBookings();
-            })
+            if (resp) {
+              const idArray: number[] = [data.booking.id]
+              this.BookingsService.approveBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
+                this.dialogService.openSuccessDialog('Booking Status Updated');
+                this.getBookings();
+              })
+            }
           })
         }
-        break;
-      case 'approveRecurring':
-        this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this recurring booking?').subscribe((resp: any) => {
-          if (!resp) { return; }
-          const idArray: number[] = [data.booking.id]
-          this.BookingsService.approveBooking({ id: idArray, status: 1, is_recurring: true }).subscribe((resp: any) => {
-            this.dialogService.openSuccessDialog('Recurring Booking Status Updated');
-            this.getBookings();
-          });
-        })
         break;
       case 'editBooking':
         //Todo make edit booking dialog + service + endpoint
         break;
-      case 'deleteBooking':
+      case 'cancelBooking':
         //Todo make delete/reject booking dialog + service + endpoint
+        this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to cancel this booking?').subscribe((resp: any) => {
+          if (!resp) { return; }
+          const idArray: number[] = [data.booking.id]
+
+          this.BookingsService.cancelBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
+            this.dialogService.openSuccessDialog('Booking Canceled');
+            this.getBookings();
+          })
+        })
         break;
       case 'openInfo':
         this.dialogService.openInfoDialog(data.booking);
