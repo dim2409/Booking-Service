@@ -34,13 +34,13 @@
         <p *ngIf="day.selected">{{day.label}} Times</p>
         <mat-form-field *ngIf="day.selected">
           <mat-label>Start Time</mat-label>
-          <mat-select required name="start" ngModel [(ngModel)]="day.start">
+          <mat-select required [name]="day.label+'Start'" ngModel [(ngModel)]="day.start">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf="day.selected">
           <mat-label>End Time</mat-label>
-          <mat-select required name="end" ngModel [(ngModel)]="day.end">
+          <mat-select required [name]="day.label+'End'" ngModel [(ngModel)]="day.end">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
