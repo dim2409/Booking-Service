@@ -30,22 +30,24 @@
     </div>
 
     <div class="hour-select-container">
-      <div *ngFor="let day of days" class="hour-select">
+      <div *ngFor="let day of days; let i = index" class="hour-select">
         <p *ngIf="day.selected">{{day.label}} Times</p>
         <mat-form-field *ngIf="day.selected">
           <mat-label>Start Time</mat-label>
-          <mat-select required name="start" [(ngModel)]="day.start">
+          <mat-select required name="start" ngModel [(ngModel)]="day.start">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf="day.selected">
           <mat-label>End Time</mat-label>
-          <mat-select required name="end" [(ngModel)]="day.end">
+          <mat-select required name="end" ngModel [(ngModel)]="day.end">
             <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
     </div>
+
+    
   </div>
 
   <span class="col-12"></span>

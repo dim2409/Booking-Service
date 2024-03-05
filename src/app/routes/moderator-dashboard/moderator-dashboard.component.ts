@@ -111,10 +111,12 @@ export class ModeratorDashboardComponent implements OnInit {
         //Todo make edit booking dialog + service + endpoint
         this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
           console.log(resp)
-          this.BookingsService.editBooking(resp).subscribe((resp: any) => {
-            this.dialogService.openSuccessDialog('Booking Updated');
-            this.getBookings();
-          })
+          if(resp){
+            /* this.BookingsService.editBooking(resp).subscribe((resp: any) => {
+              this.dialogService.openSuccessDialog('Booking Updated');
+              this.getBookings();
+            }) */
+          }
         });
         break;
       case 'cancelBooking':

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker'
@@ -62,44 +62,40 @@ export class EditBookingDialogComponent implements OnInit {
     { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
+
   bookingInfo: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private cdr: ChangeDetectorRef, private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
 
   ngOnInit() {
     console.log(this.data)
-    this.dialogRef.afterOpened().subscribe(() => {
-      this.RoomsService.getRooms().subscribe((resp: any) => {
-        this.rooms = resp;
-        this.roomIds = this.rooms.map((room: any) => room.id);
-        this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-          this.bookings = resp;
-        });
+
+    this.RoomsService.getRooms().subscribe((resp: any) => {
+      this.rooms = resp;
+      this.roomIds = this.rooms.map((room: any) => room.id);
+      this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+        this.bookings = resp;
       });
     });
     this.bookingTitle = this.data.title;
     this.selectedRoom = this.data.room_id;
     this.recurringCheck = this.data.type === 'recurringGroup';
     this.selectedDate = new Date(this.data.start);
-    
+
     this.bookingInfo = this.data.info;
     this.initializeTimeOptions();
     if (this.recurringCheck) {
-      this.days.forEach((day: any) => {
-        this.data.days.forEach((bookingDay: any) => {
+      this.data.days.forEach((bookingDay: any) => {
+        this.days.forEach((day: any) => {
           if (day.name == bookingDay.name) {
-            console.log(bookingDay)
+            day.start = this.getTimeOption(bookingDay.start);
+            day.end = this.getTimeOption(bookingDay.end);
             day.selected = true;
-            const startHours = new Date(this.data.start).getHours();
-            const startMinutes = new Date(this.data.start).getMinutes();
-            const selectedStartIndex = this.timeOptions.findIndex(time => {
-              return time.getHours() === startHours && time.getMinutes() === startMinutes;
-            });
-            day.start = selectedStartIndex;
-            day.end = new Date(bookingDay.end);
+            console.log(bookingDay);
+            console.log(day);
           }
         })
       })
@@ -166,25 +162,24 @@ export class EditBookingDialogComponent implements OnInit {
     })
 
   }
+
   initializeTimeOptions() {
     for (let i = 8; i <= 20; i++) {
       const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
       date.setHours(i, 0, 0);
       this.timeOptions.push(date);
     }
-    const startHours = new Date(this.data.start).getHours();
-    const startMinutes = new Date(this.data.start).getMinutes();
-    const selectedStartIndex = this.timeOptions.findIndex(time => {
-      return time.getHours() === startHours && time.getMinutes() === startMinutes;
-    });
-    this.selectedStart = this.timeOptions[selectedStartIndex];
+    this.selectedStart = this.getTimeOption(this.data.start);
+    this.selectedEnd = this.getTimeOption(this.data.end);
 
-    const endHours = new Date(this.data.end).getHours();
-    const endMinutes = new Date(this.data.end).getMinutes();
-    const selectedEndIndex = this.timeOptions.findIndex(time => {
-      return time.getHours() === endHours && time.getMinutes() === endMinutes;
-    });
-    this.selectedEnd = this.timeOptions[selectedEndIndex];
+  }
 
+  getTimeOption(timeInput: Date) {
+    const hours = new Date(timeInput).getHours();
+    const minutes = new Date(timeInput).getMinutes();
+    const timeIndex = this.timeOptions.findIndex(time => {
+      return time.getHours() === hours && time.getMinutes() === minutes;
+    })
+    return this.timeOptions[timeIndex];
   }
 }
