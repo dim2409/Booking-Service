@@ -82,22 +82,28 @@ export class EditBookingDialogComponent implements OnInit {
     });
     this.bookingTitle = this.data.title;
     this.selectedRoom = this.data.room_id;
-    this.recurringCheck = this.data.is_recurring;
+    this.recurringCheck = this.data.type === 'recurringGroup';
+    this.selectedDate = new Date(this.data.start);
+    
+    this.bookingInfo = this.data.info;
+    this.initializeTimeOptions();
     if (this.recurringCheck) {
       this.days.forEach((day: any) => {
         this.data.days.forEach((bookingDay: any) => {
-          if (day.name === bookingDay) {
+          if (day.name == bookingDay.name) {
+            console.log(bookingDay)
             day.selected = true;
-            day.start = new Date(bookingDay.start);
+            const startHours = new Date(this.data.start).getHours();
+            const startMinutes = new Date(this.data.start).getMinutes();
+            const selectedStartIndex = this.timeOptions.findIndex(time => {
+              return time.getHours() === startHours && time.getMinutes() === startMinutes;
+            });
+            day.start = selectedStartIndex;
             day.end = new Date(bookingDay.end);
           }
         })
       })
     }
-    this.selectedDate = new Date(this.data.start);
-
-    this.bookingInfo = this.data.info;
-    this.initializeTimeOptions();
   }
   onSave(bookingRequestForm: any) {
     const timezoneOffset = new Date().getTimezoneOffset() / 60;
