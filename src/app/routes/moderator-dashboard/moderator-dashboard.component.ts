@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { BookingListComponent } from 'src/app/booking-list/booking-list.component';
+import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -23,6 +23,7 @@ export class ModeratorDashboardComponent implements OnInit {
   rooms: any;
   roomIds: any;
   buttons!: any[];
+  conflictBtn!: any[];
   conflicts!: any[];
   conflictGroups: any;
   selectedRoom: any = 'all';
@@ -31,22 +32,23 @@ export class ModeratorDashboardComponent implements OnInit {
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.buttons = [{
-      icon: 'fa-check',
-      action: 'approveBooking',
-    },
-    {
-      icon: 'fa-pencil',
-      action: 'editBooking',
-    },
-    {
-      icon: 'fa-xmark',
-      action: 'cancelBooking',
-    },
-    {
-      icon: 'fa-expand',
-      action: 'openInfo',
-    }
+    this.buttons = [
+      {
+        icon: 'fa-expand',
+        action: 'openInfo',
+      },
+      {
+        icon: 'fa-check',
+        action: 'approveBooking',
+      },
+      {
+        icon: 'fa-pencil',
+        action: 'editBooking',
+      },
+      {
+        icon: 'fa-xmark',
+        action: 'cancelBooking',
+      },
     ]
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
@@ -107,10 +109,9 @@ export class ModeratorDashboardComponent implements OnInit {
         }
         break;
       case 'editBooking':
-        //Todo make edit booking dialog + service + endpoint
         this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
           console.log(resp)
-          if(resp){
+          if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');
               this.getBookings();
@@ -132,9 +133,15 @@ export class ModeratorDashboardComponent implements OnInit {
       case 'openInfo':
         this.dialogService.openInfoDialog(data.booking);
         break;
-
     }
   }
 
-
+  resolveConflict(conflictGroup: any) {
+    this.dialogService.openResolveConflictDialog(conflictGroup).subscribe((resp: any) => {
+      if (resp) {
+        this.dialogService.openSuccessDialog('Conflict Resolved');
+        this.getBookings();
+      }
+    })
+  }
 }

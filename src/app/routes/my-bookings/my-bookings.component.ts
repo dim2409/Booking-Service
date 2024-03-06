@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { BookingListComponent } from 'src/app/booking-list/booking-list.component';
+import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';

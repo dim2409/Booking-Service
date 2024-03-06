@@ -20,9 +20,11 @@
           </mat-panel-title>
           <mat-panel-description>
             Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
+            <i class="fa-solid fa-angle-down"></i>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="false"
+        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i class="fa-solid fa-list-check"></i></button>
+        <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [removeConflicts]="false"
           (bookingUpdated)="updateBooking($event)"></app-booking-list>
       </mat-expansion-panel>
     </mat-accordion>

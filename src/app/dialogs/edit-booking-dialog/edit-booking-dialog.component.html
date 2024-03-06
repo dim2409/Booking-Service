@@ -94,9 +94,9 @@
 
   <span class="col-12"></span>
   <br>
-  <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class="col-2 button-color">
-    Save Changes
-  </button>
-  <button mat-raised-button class="col-2 button-color" (click)="close()">Cancel</button>
+  <div class="col-12 mb-5 row justify-content-center">
+    <button mat-raised-button class="button button-color" (click)="close()">Cancel</button>
+    <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color"> Save Changes </button>
+  </div>
 
 </form>

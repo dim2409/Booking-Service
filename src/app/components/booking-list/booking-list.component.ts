@@ -26,10 +26,6 @@ export class BookingListComponent {
   @Input() removeConflicts: boolean = false;
   constructor(private BookingsService: BookingsService) { }
   
-
-
-
-//ToDo emmit event to parent
   buttonAction(action: string, booking: any) {
     this.bookingUpdated.emit({action: action, booking: booking});
   }

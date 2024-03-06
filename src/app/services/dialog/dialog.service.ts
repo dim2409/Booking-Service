@@ -3,6 +3,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { EditBookingDialogComponent } from 'src/app/dialogs/edit-booking-dialog/edit-booking-dialog.component';
+import { ResolveConflictDialogComponent } from 'src/app/dialogs/resolve-conflict-dialog/resolve-conflict-dialog.component';
 import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
 
 @Injectable({
@@ -46,6 +47,18 @@ export class DialogService {
   openEditBookingDialog(booking: any) {
     const dialogRef = this.dialog.open(EditBookingDialogComponent, {
       data: booking,
+      autoFocus: false,
+      width: "90vw",
+      height: "90%",
+    });
+    return dialogRef.afterClosed();
+  }
+
+  openResolveConflictDialog(conflictGroup: any) {
+    const dialogRef = this.dialog.open(ResolveConflictDialogComponent, {
+      data:{
+        conflictGroup : conflictGroup,
+      },
       autoFocus: false,
       width: "90vw",
       height: "90%",

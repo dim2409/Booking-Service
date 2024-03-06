@@ -2,7 +2,7 @@
     <div *ngFor="let booking of bookings" class="m-2"
         ngClass="{{booking.conflict_id && !removeConflicts ? 'conflict-container' : ''}}">
         <mat-card ngClass="{{booking.conflict_id ? 'conflict' : ''}}" *ngIf="!(removeConflicts && booking.conflict_id)">
-            <div class="row w-100 flex-row-reverse position-absolute py-2">
+            <div class="row w-100 justify-content-end position-absolute py-2">
                 <ng-container *ngFor="let button of buttons">
                     <button mat-mini-fab *ngIf="!(booking.status != 0 && button.icon == 'fa-check')"
                         (click)="buttonAction(button.action, booking)" class="mx-1 button-color"><i
