@@ -92,7 +92,6 @@ export class ModeratorDashboardComponent implements OnInit {
   }
 
   updateBooking(data: any) {
-    console.log(data)
     switch (data.action) {
       case 'approveBooking':
         {
@@ -112,10 +111,10 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
           console.log(resp)
           if(resp){
-            /* this.BookingsService.editBooking(resp).subscribe((resp: any) => {
+            this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');
               this.getBookings();
-            }) */
+            })
           }
         });
         break;
