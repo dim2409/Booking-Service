@@ -1,0 +1,14 @@
+.toKeep {
+  background-color: #26bb4b;
+}
+.toDelete {
+  background-color: #f34248;
+}
+button {
+  margin: 5px;
+  border-radius: 3rem;
+}
+.button-color {
+  background-color: #176b87;
+  color: #ffffff;
+}

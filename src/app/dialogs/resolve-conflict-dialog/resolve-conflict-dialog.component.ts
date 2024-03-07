@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatTableModule } from '@angular/material/table';
-
+import { MatButtonModule } from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
@@ -17,13 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTableModule,
     CommonModule,
     MatRadioModule,
-    MatFormFieldModule],
+    MatFormFieldModule,
+    MatButtonModule],
   templateUrl: './resolve-conflict-dialog.component.html',
   styleUrl: './resolve-conflict-dialog.component.less'
 })
 export class ResolveConflictDialogComponent implements OnInit {
   @ViewChild('conflictResolveForm') myForm!: NgForm;
-  displayedColumns: string[] = ['title','room', 'date', 'start', 'end', 'keep'];
+  displayedColumns: string[] = ['title','room', 'date', 'start', 'end', 'keep', 'action', 'edit'];	
   rooms: any;
   toKeep: any;
   constructor(public BookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -43,5 +44,8 @@ export class ResolveConflictDialogComponent implements OnInit {
   }
   selectToKeep(toKeep: any) {
     this.toKeep = toKeep
+  }
+  editBooking(booking: any) {
+    
   }
 }
