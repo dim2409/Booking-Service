@@ -146,11 +146,12 @@ export class EditBookingDialogComponent implements OnInit {
         }
       });
     }
-
+    console.log('submit')
     this.dialogRef.close(booking);
   }
   close() {
-    this.dialogRef.close();
+    console.log('close')
+    this.dialogRef.close(false);
   }
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;

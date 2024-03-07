@@ -4,6 +4,9 @@
 .toDelete {
   background-color: #f34248;
 }
+.resolved {
+  background-color: #6b8bf3;
+}
 button {
   margin: 5px;
   border-radius: 3rem;

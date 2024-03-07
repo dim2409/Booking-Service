@@ -3,16 +3,18 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 @Component({
   selector: 'app-resolve-conflict-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatTableModule,
     CommonModule,
@@ -24,28 +26,61 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class ResolveConflictDialogComponent implements OnInit {
   @ViewChild('conflictResolveForm') myForm!: NgForm;
-  displayedColumns: string[] = ['title','room', 'date', 'start', 'end', 'keep', 'action', 'edit'];	
+  displayedColumns: string[] = ['title', 'room', 'date', 'start', 'end', 'keep', 'action', 'edit'];
   rooms: any;
   toKeep: any;
-  constructor(public BookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
-  
+  constructor(public dialogService: DialogService, public BookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  dataSource = this.data.conflictGroup.bookings;
   ngOnInit(): void {
     console.log(this.data)
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
     });
+    //this.checkConflicts();
+    this.toKeep = this.data.conflictGroup.bookings[0];
   }
+
+  resetDataSource() {
+    this.dataSource = this.data.conflictGroup.bookings
+    this.dataSource = [...this.dataSource]
+  }
+
   roomName(roomId: number) {
     return this.rooms?.find((room: any) => room.id == roomId)?.name
   }
   onResolve(conflictResolveForm: any) {
     console.log(conflictResolveForm)
-    
+
   }
   selectToKeep(toKeep: any) {
     this.toKeep = toKeep
   }
   editBooking(booking: any) {
-    
+    this.dialogService.openEditBookingDialog(booking).subscribe((resp: any) => {
+      this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)] = resp
+      this.checkConflicts(booking)
+      console.log(this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)])
+    })
+  }
+
+  checkConflicts(booking: any) {
+    this.BookingsService.checkConflict(booking).subscribe((resp: any) => {
+      this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)].resolved = !resp.isConflicting
+      this.resetDataSource();
+    })
+  }
+
+  checkEditingConflict(newBooking: any) {
+    let conflicts = false
+    this.data.conflictGroup.bookings.forEach((booking: any) => {
+      if (
+        (newBooking.start >= booking.start && newBooking.start < booking.end) ||
+        (newBooking.end > booking.start && newBooking.end <= booking.end) ||
+        (newBooking.start < booking.start && newBooking.end > booking.end)
+      ){
+        conflicts = true;
+      }
+    })
+    return conflicts;
   }
 }

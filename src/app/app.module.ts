@@ -16,12 +16,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookingListComponent } from './components/booking-list/booking-list.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
     declarations: [
         AppComponent,
     ],
-    providers: [],
+    providers: [
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }, // Provide default dialog options if needed
+        ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
@@ -32,14 +35,15 @@ import { MatDialogModule } from '@angular/material/dialog';
         FullCalendarModule,
         FlatpickrModule.forRoot(),
         CalendarModule.forRoot({
-          provide: DateAdapter,
-          useFactory: adapterFactory,
+            provide: DateAdapter,
+            useFactory: adapterFactory,
         }),
         FontAwesomeModule,
         NavbarComponent,
         BookingListComponent,
         HttpClientModule,
-        MatDialogModule
+        MatDialogModule,
+        MatNativeDateModule
     ]
 })
 export class AppModule { }

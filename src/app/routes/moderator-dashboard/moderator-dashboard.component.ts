@@ -10,12 +10,13 @@ import { DayNamePipe } from "../../pipes/day-name.pipe";
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.less',
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule]
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -110,7 +111,6 @@ export class ModeratorDashboardComponent implements OnInit {
         break;
       case 'editBooking':
         this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
-          console.log(resp)
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');

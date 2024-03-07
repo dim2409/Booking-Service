@@ -77,6 +77,10 @@ export class BookingsService {
     }))
   }
 
+  checkConflict(req: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/checkConflict', req)
+  }
+
   getActiveBookings(req:any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getActiveBookings', req).pipe(map((data: any) => {
       const resp = this.mapBookings(data, this.colors);
