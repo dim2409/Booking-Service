@@ -10,6 +10,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-resolve-conflict-dialog',
   standalone: true,
@@ -29,7 +30,7 @@ export class ResolveConflictDialogComponent implements OnInit {
   displayedColumns: string[] = ['title', 'room', 'date', 'start', 'end', 'keep', 'action', 'edit'];
   rooms: any;
   toKeep: any;
-  constructor(public dialogService: DialogService, public BookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogService: DialogService, public bookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   dataSource = this.data.conflictGroup.bookings;
   ngOnInit(): void {
     console.log(this.data)
@@ -55,32 +56,55 @@ export class ResolveConflictDialogComponent implements OnInit {
   selectToKeep(toKeep: any) {
     this.toKeep = toKeep
   }
-  editBooking(booking: any) {
+  editBooking(data: any) {
+    let booking = data
+    const bookingIndex = this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)
     this.dialogService.openEditBookingDialog(booking).subscribe((resp: any) => {
-      this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)] = resp
-      this.checkConflicts(booking)
-      console.log(this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)])
-    })
-  }
-
-  checkConflicts(booking: any) {
-    this.BookingsService.checkConflict(booking).subscribe((resp: any) => {
-      this.data.conflictGroup.bookings[this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)].resolved = !resp.isConflicting
+      booking = resp
+      this.data.conflictGroup.bookings[bookingIndex] = resp
+      this.checkConflicts(booking).subscribe((resp) => {
+        if(!resp.isConflicting){
+          if(!this.checkEditingConflict(booking)){
+            this.data.conflictGroup.bookings[bookingIndex].resolved = true
+          }
+        }
+      })
       this.resetDataSource();
     })
   }
 
+  checkConflicts(booking: any): Observable<any> {
+    return new Observable<boolean>(observer => {
+      let isConflicting = false
+      this.bookingsService.checkConflict(booking).subscribe((resp: any) => {
+        if (resp.isConflicting) {
+          const filteredConflicts = resp.conflicts.filter((conflict: any) => {
+            return !this.data.conflictGroup.bookings.find((b: any) => b.id === conflict.id).resolved;
+          });
+  
+          if (filteredConflicts.length > 0) {
+            isConflicting = true;
+          }
+        }
+      });
+      observer.next(isConflicting); 
+      observer.complete();
+    });
+  }
+
   checkEditingConflict(newBooking: any) {
-    let conflicts = false
+    let conflicts = false;
     this.data.conflictGroup.bookings.forEach((booking: any) => {
-      if (
+      if (newBooking.id !== booking.id && (
         (newBooking.start >= booking.start && newBooking.start < booking.end) ||
         (newBooking.end > booking.start && newBooking.end <= booking.end) ||
         (newBooking.start < booking.start && newBooking.end > booking.end)
-      ){
+      )){
         conflicts = true;
       }
     })
     return conflicts;
   }
+
+  //ToDo RF and test the shit out of this
 }
