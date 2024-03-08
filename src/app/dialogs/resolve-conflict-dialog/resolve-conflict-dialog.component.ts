@@ -87,13 +87,11 @@ export class ResolveConflictDialogComponent implements OnInit {
     return new Observable<boolean>(observer => {
       let isConflicting = false
       this.bookingsService.checkConflict(booking).subscribe((resp: any) => {
-        console.log('checkConflict:',resp)
         if (resp.isConflicting) {
           const filteredConflicts = resp.conflicts.filter((conflict: any) => {
             const localConflict = this.data.conflictGroup.bookings.find((b: any) => b.id === conflict.id);
             return !localConflict || !localConflict.resolved;
           });
-          console.log('filteredConflicts:',filteredConflicts)
           if (filteredConflicts.length > 0) {
             isConflicting = true;
           }
@@ -119,4 +117,12 @@ export class ResolveConflictDialogComponent implements OnInit {
     return conflicts;
   }
 
+  onClose() {
+    this.dialogRef.close()
+  }
+  resolve(){
+    this.bookingsService.resolveConflict(this.data.conflictGroup).subscribe((resp: any) => {
+      this.dialogRef.close(resp)
+    })
+  }
 }
