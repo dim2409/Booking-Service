@@ -1,17 +1,25 @@
 .toKeep {
-  background-color: #26bb4b !important;
+  background-color: #38e362 !important;
 }
 .toDelete {
-  background-color: #f34248;
+  background-color: #fd474e;
 }
 .resolved {
-  background-color: #6b8bf3;
+  background-color: #6685ee;
 }
-button {
+.resolve-conflict td button {
   margin: 5px;
   border-radius: 3rem;
 }
-.button-color {
+.resolve-conflict td .button-color {
+  background-color: #176b87;
+  color: #ffffff;
+}
+.resolve-conflict button {
+  width: 7vw;
+  margin: 0.5vw;
+}
+.resolve-conflict .button-color {
   background-color: #176b87;
   color: #ffffff;
 }
