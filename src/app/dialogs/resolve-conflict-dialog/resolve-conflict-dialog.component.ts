@@ -62,14 +62,24 @@ export class ResolveConflictDialogComponent implements OnInit {
     this.dialogService.openEditBookingDialog(booking).subscribe((resp: any) => {
       booking = resp
       this.data.conflictGroup.bookings[bookingIndex] = resp
+      this.checkResolved();
+      this.resetDataSource();
+    })
+  }
+
+  checkResolved() {
+    this.data.conflictGroup.bookings.forEach((booking: any) => {
       this.checkConflicts(booking).subscribe((resp) => {
-        if(!resp.isConflicting){
+        if(!resp){
           if(!this.checkEditingConflict(booking)){
-            this.data.conflictGroup.bookings[bookingIndex].resolved = true
+            booking.resolved = true
+          }else{
+            booking.resolved = false
           }
+        }else{
+          booking.resolved = false
         }
       })
-      this.resetDataSource();
     })
   }
 
@@ -77,18 +87,21 @@ export class ResolveConflictDialogComponent implements OnInit {
     return new Observable<boolean>(observer => {
       let isConflicting = false
       this.bookingsService.checkConflict(booking).subscribe((resp: any) => {
+        console.log('checkConflict:',resp)
         if (resp.isConflicting) {
           const filteredConflicts = resp.conflicts.filter((conflict: any) => {
-            return !this.data.conflictGroup.bookings.find((b: any) => b.id === conflict.id).resolved;
+            const localConflict = this.data.conflictGroup.bookings.find((b: any) => b.id === conflict.id);
+            return !localConflict || !localConflict.resolved;
           });
-  
+          console.log('filteredConflicts:',filteredConflicts)
           if (filteredConflicts.length > 0) {
             isConflicting = true;
           }
         }
+        console.log('isConflicting:',isConflicting)
+        observer.next(isConflicting); 
+        observer.complete();
       });
-      observer.next(isConflicting); 
-      observer.complete();
     });
   }
 
@@ -106,5 +119,4 @@ export class ResolveConflictDialogComponent implements OnInit {
     return conflicts;
   }
 
-  //ToDo RF and test the shit out of this
 }

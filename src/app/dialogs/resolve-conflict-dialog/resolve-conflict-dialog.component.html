@@ -51,9 +51,10 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let booking; columns: displayedColumns;" [ngClass]="{
-      'toKeep': toKeep && toKeep.id === booking.id && !booking.resolved,
-    'toDelete': toKeep != null && toKeep.id != booking.id && !booking.resolved,
-    'resolved': booking.resolved}"></tr>
+      'toKeep': toKeep.id === booking.id,
+      'toDelete': toKeep != null && toKeep.id !== booking.id && !booking.resolved,
+      'resolved': booking.resolved
+    }"></tr>
   </table>
 
 
