@@ -55,6 +55,7 @@ export class ResolveConflictDialogComponent implements OnInit {
   }
   selectToKeep(toKeep: any) {
     this.toKeep = toKeep
+    this.checkResolved();
   }
   editBooking(data: any) {
     let booking = data

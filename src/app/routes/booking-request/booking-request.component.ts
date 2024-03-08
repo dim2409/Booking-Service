@@ -14,6 +14,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-booking-request',
   standalone: true,
@@ -36,8 +37,8 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
   styleUrl: './booking-request.component.less'
 })
 export class BookingRequestComponent {
-  start!: Date;
-  end!: Date;
+  start!: any;
+  end!: any;
   selectedStart!: Date;
   selectedEnd!: Date;
   timeOptions: Date[] = [];
@@ -80,25 +81,22 @@ export class BookingRequestComponent {
     this.initializeTimeOptions();
   }
   onSubmit(bookingRequestForm: any) {
-    const timezoneOffset = new Date().getTimezoneOffset() / 60;
-    const athensOffset = 0; // UTC+3 for Europe/Athens
-    const timezoneDifference = athensOffset - timezoneOffset;
 
     const startTime = new Date(this.selectedStart);
-    startTime.setHours(startTime.getHours() + timezoneDifference);
     const startHour = startTime.getHours();
     const startMinute = startTime.getMinutes();
 
     // Extract time from selected end time
     const endTime = new Date(this.selectedEnd);
-    endTime.setHours(endTime.getHours() + timezoneDifference);
     const endHour = endTime.getHours();
     const endMinute = endTime.getMinutes();
 
     this.start = new Date(bookingRequestForm.value.date);
     this.end = new Date(bookingRequestForm.value.date);
-    this.start.setHours(startHour, startMinute);
-    this.end.setHours(endHour, endMinute);
+    this.start.setHours(startHour, startMinute, 0, 0);
+    this.end.setHours(endHour, endMinute, 0, 0);
+    this.start = moment.utc(this.start).tz('Europe/Athens').format();
+    this.end = moment.utc(this.end).tz('Europe/Athens').format();
 
     var booking = {
       ...bookingRequestForm.value,
@@ -112,15 +110,15 @@ export class BookingRequestComponent {
       const today = new Date();
       this.days.forEach(day => {
         if (day.selected) {
-          const start = new Date(day.start);
-          start.setHours(start.getHours() + timezoneDifference);
+          const start = moment.utc(day.start).tz('Europe/Athens').toDate();
           day.start = start;
-          const end = new Date(day.end);
-          end.setHours(end.getHours() + timezoneDifference);
+          const end = moment.utc(day.end).tz('Europe/Athens').toDate();
           day.end = end;
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          booking.start = moment.utc(booking.start).tz('Europe/Athens').format();
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          booking.end = moment.utc(booking.end).tz('Europe/Athens').format();
         }
       });
     }
@@ -142,7 +140,7 @@ export class BookingRequestComponent {
   }
   initializeTimeOptions() {
     for (let i = 8; i <= 20; i++) {
-      const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
+      let date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
       date.setHours(i, 0, 0);
       this.timeOptions.push(date);
     }

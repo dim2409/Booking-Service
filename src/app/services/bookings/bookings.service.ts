@@ -5,6 +5,7 @@ import { EventColor } from 'calendar-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment-timezone';
 
 @Injectable({
   providedIn: 'root'
@@ -46,10 +47,12 @@ export class BookingsService {
 
   mapBookings(data: any[], colors: any): any[] {
     return data.map(item => {
+      let startDate = moment.utc(item.start).tz('Europe/Athens').toDate();
+      let endDate = moment.utc(item.end).tz('Europe/Athens').toDate();;
       return {
         ...item,
-        start: new Date(item.start),
-        end: new Date(item.end),
+        start: startDate,
+        end: endDate,
         draggable: false,
         color: { ...colors[item.color] },
       };

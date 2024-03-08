@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-edit-booking-dialog',
@@ -36,8 +37,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrl: './edit-booking-dialog.component.less'
 })
 export class EditBookingDialogComponent implements OnInit {
-  start!: Date;
-  end!: Date;
+  start!: any;
+  end!: any;
   selectedStart!: Date;
   selectedEnd!: Date;
   timeOptions: Date[] = [];
@@ -93,33 +94,30 @@ export class EditBookingDialogComponent implements OnInit {
           if (day.name == bookingDay.name) {
             day.id = bookingDay.id;
             day.start = this.getTimeOption(bookingDay.start);
-            day.end = this.getTimeOption(bookingDay.end);
-            day.selected = true;
+                        day.end = this.getTimeOption(bookingDay.end);
+                        day.selected = true;
           }
         })
       })
     }
   }
   onSave(bookingRequestForm: any) {
-    const timezoneOffset = new Date().getTimezoneOffset() / 60;
-    const athensOffset = 0; // UTC+3 for Europe/Athens
-    const timezoneDifference = athensOffset - timezoneOffset;
 
     const startTime = new Date(this.selectedStart);
-    startTime.setHours(startTime.getHours() + timezoneDifference);
     const startHour = startTime.getHours();
     const startMinute = startTime.getMinutes();
 
     // Extract time from selected end time
     const endTime = new Date(this.selectedEnd);
-    endTime.setHours(endTime.getHours() + timezoneDifference);
     const endHour = endTime.getHours();
     const endMinute = endTime.getMinutes();
 
     this.start = new Date(bookingRequestForm.value.date);
     this.end = new Date(bookingRequestForm.value.date);
-    this.start.setHours(startHour, startMinute);
-    this.end.setHours(endHour, endMinute);
+    this.start.setHours(startHour, startMinute, 0, 0);
+    this.end.setHours(endHour, endMinute, 0, 0);
+    this.start = moment.utc(this.start).tz('Europe/Athens').format();
+    this.end = moment.utc(this.end).tz('Europe/Athens').format();
 
     var booking = {
       ...this.data,
@@ -135,11 +133,11 @@ export class EditBookingDialogComponent implements OnInit {
       this.days.forEach(day => {
         if (day.selected) {
           const start = new Date(day.start);
-          start.setHours(start.getHours() + timezoneDifference);
           day.start = start;
+          day.start = moment.utc(day.start).tz('Europe/Athens').format();
           const end = new Date(day.end);
-          end.setHours(end.getHours() + timezoneDifference);
           day.end = end;
+          day.end = moment.utc(day.end).tz('Europe/Athens').format();
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
