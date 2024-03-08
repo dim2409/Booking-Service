@@ -110,15 +110,14 @@ export class BookingRequestComponent {
       const today = new Date();
       this.days.forEach(day => {
         if (day.selected) {
-          const start = moment.utc(day.start).tz('Europe/Athens').toDate();
-          day.start = start;
-          const end = moment.utc(day.end).tz('Europe/Athens').toDate();
+          const start = new Date(day.start);
+          day.start = moment.utc(start).tz('Europe/Athens').format(); 
+          const end = new Date(day.end);
           day.end = end;
+          day.end = moment.utc(end).tz('Europe/Athens').format(); 
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-          booking.start = moment.utc(booking.start).tz('Europe/Athens').format();
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-          booking.end = moment.utc(booking.end).tz('Europe/Athens').format();
         }
       });
     }
