@@ -141,6 +141,7 @@ export class ModeratorDashboardComponent implements OnInit {
       if (resp) {
         this.dialogService.openSuccessDialog('Conflict Resolved');
         this.getBookings();
+        this.ngOnInit();
       }
     })
   }

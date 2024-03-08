@@ -37,8 +37,7 @@ export class ResolveConflictDialogComponent implements OnInit {
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
     });
-    //this.checkConflicts();
-    this.toKeep = this.data.conflictGroup.bookings[0];
+    this.data.conflictGroup.bookings[0].toKeep = true;
   }
 
   resetDataSource() {
@@ -53,8 +52,9 @@ export class ResolveConflictDialogComponent implements OnInit {
     console.log(conflictResolveForm)
 
   }
-  selectToKeep(toKeep: any) {
-    this.toKeep = toKeep
+  selectToKeep(booking: any) {
+    this.data.conflictGroup.bookings.find((b: any) => b.toKeep == true).toKeep = false
+    booking.toKeep = true
     this.checkResolved();
   }
   editBooking(data: any) {
