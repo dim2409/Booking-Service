@@ -121,7 +121,6 @@ export class BookingRequestComponent {
         }
       });
     }
-
     this.BookingsService.createBooking(booking).subscribe((response) => {
       this.dialogService.openSuccessDialog('Booking created successfully!').subscribe(() => {
         this.router.navigateByUrl('/myBookings');

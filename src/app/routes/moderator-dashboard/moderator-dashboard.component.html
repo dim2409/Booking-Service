@@ -41,7 +41,9 @@
       <mat-expansion-panel hideToggle *ngFor="let group of recurringConflicts">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{group.room_name}}
+            <span *ngFor="let recurring of group.recurring">
+              {{recurring.title}}
+            </span>
           </mat-panel-title>
           <mat-panel-description>
             Recurring Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
@@ -54,10 +56,11 @@
               <mat-card class="conflict">
                 <mat-card-header>
                   <mat-card-title>
-                    {{rooms[recurring.room_id-1]?.name}} - {{recurring.title}}
+                    {{recurring.title}}
                   </mat-card-title>
                   <mat-card-subtitle>
                     <span *ngFor="let day of recurring.days" class="time">
+                      {{ rooms[day.room_id-1]?.name }} -
                       {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
                     </span>
                     {{recurring.status == 0 ? 'Pending' : 'Approved'}}
@@ -81,10 +84,11 @@
         <mat-card *ngFor="let group of recurrings">
           <mat-card-header>
             <mat-card-title>
-              {{rooms[group.room_id-1]?.name}} - {{group.title}}
+              {{group.title}}
             </mat-card-title>
             <mat-card-subtitle>
-              <span *ngFor="let day of group.days">
+              <span *ngFor="let day of group.days">                
+                {{ rooms[day.room_id-1]?.name }} -
                 {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
               </span>
               {{group.status == 0 ? 'Pending' : 'Approved'}}

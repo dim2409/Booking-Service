@@ -94,8 +94,9 @@ export class EditBookingDialogComponent implements OnInit {
           if (day.name == bookingDay.name) {
             day.id = bookingDay.id;
             day.start = this.getTimeOption(bookingDay.start);
-                        day.end = this.getTimeOption(bookingDay.end);
-                        day.selected = true;
+            day.end = this.getTimeOption(bookingDay.end);
+            day.room_id = bookingDay.room_id;
+            day.selected = true;
           }
         })
       })

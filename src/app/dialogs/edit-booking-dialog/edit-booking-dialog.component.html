@@ -7,15 +7,6 @@
     <input matInput type="text" name="title" [(ngModel)]="bookingTitle" required>
   </mat-form-field>
 
-  <!-- Room Select -->
-  <span class="col-12"></span>
-  <mat-form-field class="col-2">
-    <mat-label>Select Room</mat-label>
-    <mat-select (selectionChange)="selectRoom($event)" [(ngModel)]="selectedRoom" name="room">
-      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  
   <span class="col-12"></span>
 
   <!-- Recurring Check -->
@@ -31,7 +22,14 @@
 
     <div class="hour-select-container">
       <div *ngFor="let day of days; let i = index" class="hour-select">
-        <p *ngIf="day.selected">{{day.label}} Times</p>
+        <span class="col-12"></span>
+        <p *ngIf="day.selected">{{day.label}} Options</p>
+        <mat-form-field class="col-12" *ngIf="day.selected">
+          <mat-label>Select Room</mat-label>
+          <mat-select required [name]="day.label+day.room_id" ngModel [(ngModel)]="day.room_id">
+            <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field *ngIf="day.selected">
           <mat-label>Start Time</mat-label>
           <mat-select required [name]="day.label+'Start'" ngModel [(ngModel)]="day.start">
@@ -47,12 +45,22 @@
       </div>
     </div>
 
-    
+
   </div>
 
   <span class="col-12"></span>
 
   <span *ngIf="!recurringCheck" class="col-12 row justify-content-center">
+    <!-- Room Select -->
+    <span class="col-12"></span>
+    <mat-form-field class="col-2">
+      <mat-label>Select Room</mat-label>
+      <mat-select (selectionChange)="selectRoom($event)" [(ngModel)]="selectedRoom" name="room">
+        <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="col-12"></span>
     <!-- Date picker -->
     <mat-form-field class="col-2">
       <mat-label>Booking Date</mat-label>
@@ -82,7 +90,7 @@
   </span>
 
   <span class="col-12"></span>
-  
+
   <mat-form-field class="col-2">
     <mat-label>Booking info</mat-label>
     <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo" required></textarea>
@@ -95,8 +103,9 @@
   <span class="col-12"></span>
   <br>
   <div class="col-12 mb-5 row justify-content-center">
-    <button mat-raised-button class="button button-color"  type="button" (click)="close()">Cancel</button>
-    <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color"> Save Changes </button>
+    <button mat-raised-button class="button button-color" type="button" (click)="close()">Cancel</button>
+    <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color"> Save
+      Changes </button>
   </div>
 
 </form>

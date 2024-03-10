@@ -12,16 +12,6 @@
     <input matInput type="text" name="title" ngModel required>
   </mat-form-field>
 
-
-  <!-- Room Select -->
-  <span class="col-12"></span>
-  <mat-form-field class="col-2">
-    <mat-label>Select Room</mat-label>
-    <mat-select (selectionChange)="selectRoom($event)">
-      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
   <!-- Recurring Check -->
   <span class="col-12"></span>
   <div class="col-3 row my-3">
@@ -33,9 +23,10 @@
   <span class="col-12"></span>
 
 
+  <!-- Recurring Days input -->
   <div *ngIf="recurringCheck" class="recurring-options">
 
-    <!-- Recurring Days input -->
+    <!-- Recurring Days Chips -->
     <div class="day-chips">
       <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Day Selection" multiple #chipList>
         <mat-chip-option *ngFor="let chip of days" [selected]="chip.selected"
@@ -43,9 +34,19 @@
         </mat-chip-option>
       </mat-chip-listbox>
     </div>
+
+    <!-- Recurring Day Room input -->
     <div class="hour-select-container">
       <div *ngFor="let day of days" class="hour-select">
-        <p *ngIf="day.selected">{{day.label}} Times</p>
+        <span class="col-12"></span>
+        <p *ngIf="day.selected">{{day.label}} Options</p>
+        <mat-form-field class="col-12"  *ngIf="day.selected">
+          <mat-label>Select Room</mat-label>
+          <mat-select name="dayRoom" [(ngModel)]="day.room_id">
+            <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
         <mat-form-field *ngIf="day.selected">
           <mat-label>Start Time</mat-label>
           <mat-select required name="start" [(ngModel)]="day.start">
@@ -65,6 +66,15 @@
   <span class="col-12"></span>
 
   <span *ngIf="!recurringCheck" class="col-12 row justify-content-center">
+    <!-- Room Select -->
+    <span class="col-12"></span>
+    <mat-form-field class="col-2">
+      <mat-label>Select Room</mat-label>
+      <mat-select (selectionChange)="selectRoom($event)">
+        <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="col-12"></span>
     <!-- Date picker -->
     <mat-form-field class="col-2">
       <mat-label>Date for your event</mat-label>
