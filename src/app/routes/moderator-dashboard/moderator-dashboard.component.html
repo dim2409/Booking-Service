@@ -41,8 +41,8 @@
       <mat-expansion-panel hideToggle *ngFor="let group of recurringConflicts">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span *ngFor="let recurring of group.recurring">
-              {{recurring.title}}
+            <span *ngFor="let booking of group.bookings">
+              {{booking.title}}
             </span>
           </mat-panel-title>
           <mat-panel-description>
@@ -52,22 +52,22 @@
         </mat-expansion-panel-header>
         <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i
             class="fa-solid fa-list-check"></i></button>
-            <div class="conflict-container mt-2"  *ngFor="let recurring of group.recurring">
+            <div class="conflict-container mt-2"  *ngFor="let booking of group.bookings">
               <mat-card class="conflict">
                 <mat-card-header>
                   <mat-card-title>
-                    {{recurring.title}}
+                    {{booking.title}}
                   </mat-card-title>
                   <mat-card-subtitle>
-                    <span *ngFor="let day of recurring.days" class="time">
+                    <span *ngFor="let day of booking.days" class="time">
                       {{ rooms[day.room_id-1]?.name }} -
                       {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
                     </span>
-                    {{recurring.status == 0 ? 'Pending' : 'Approved'}}
+                    {{booking.status == 0 ? 'Pending' : 'Approved'}}
                   </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                  {{recurring.info}}
+                  {{booking.info}}
                 </mat-card-content>
               </mat-card>
             </div>

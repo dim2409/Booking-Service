@@ -67,7 +67,6 @@ export class ModeratorDashboardComponent implements OnInit {
       this.BookingsService.getConflicts({ room_id: this.roomIds }).subscribe((resp: any) => {
         this.conflicts = resp.conflictingBookings;
         this.recurringConflicts = resp.conflictingRecurrings;
-        console.log(this.recurringConflicts)
       })
 
     });
