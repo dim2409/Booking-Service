@@ -23,7 +23,7 @@
             <i class="fa-solid fa-angle-down"></i>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i
+        <button mat-raised-button color="warn" (click)="resolveConflict(group, false)">Resolve Conflict <i
             class="fa-solid fa-list-check"></i></button>
         <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [removeConflicts]="false"
           (bookingUpdated)="updateBooking($event)"></app-booking-list>
@@ -50,7 +50,7 @@
             <i class="fa-solid fa-angle-down"></i>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i
+        <button mat-raised-button color="warn" (click)="resolveConflict(group, true)">Resolve Conflict <i
             class="fa-solid fa-list-check"></i></button>
             <div class="conflict-container mt-2"  *ngFor="let booking of group.bookings">
               <mat-card class="conflict">

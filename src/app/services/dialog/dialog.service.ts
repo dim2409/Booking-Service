@@ -54,10 +54,11 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  openResolveConflictDialog(conflictGroup: any) {
+  openResolveConflictDialog(conflictGroup: any, isRecurring: boolean) {
     const dialogRef = this.dialog.open(ResolveConflictDialogComponent, {
       data:{
         conflictGroup : conflictGroup,
+        isRecurring: isRecurring
       },
       autoFocus: false,
       width: "90vw",

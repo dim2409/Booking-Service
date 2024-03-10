@@ -139,8 +139,8 @@ export class ModeratorDashboardComponent implements OnInit {
     }
   }
 
-  resolveConflict(conflictGroup: any) {
-    this.dialogService.openResolveConflictDialog(conflictGroup).subscribe((resp: any) => {
+  resolveConflict(conflictGroup: any, isRecurring: boolean) {
+    this.dialogService.openResolveConflictDialog(conflictGroup, isRecurring).subscribe((resp: any) => {
       if (resp) {
         this.dialogService.openSuccessDialog('Conflict Resolved');
         this.getBookings();

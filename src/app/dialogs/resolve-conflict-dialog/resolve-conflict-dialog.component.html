@@ -3,7 +3,14 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="room">
       <th mat-header-cell *matHeaderCellDef> Room </th>
-      <td mat-cell *matCellDef="let booking"> {{roomName(booking.room_id)}} </td>
+      <td mat-cell *matCellDef="let booking">
+        <span *ngIf="!data.isRecurring">
+          {{roomName(booking.room_id)}}
+        </span>
+        <span *ngIf="data.isRecurring">
+          <span *ngFor="let day of booking.days">{{ roomName(day.room_id) }} <br></span>
+        </span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="title">
@@ -14,16 +21,24 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let booking"> {{booking.start | date: 'EEEE d/MM yyyy'}} </td>
+      <td mat-cell *matCellDef="let booking">
+        <span *ngIf="!data.isRecurring">
+          {{booking.start | date: 'EEEE d/MM yyyy'}}
+        </span>
+        <span *ngIf="data.isRecurring">
+          <span *ngFor="let day of booking.days">{{day.name | dayName }} {{ day.start | date: 'HH:mm' }} - {{ day.end |
+            date: 'HH:mm' }}<br></span>
+        </span>
+      </td>
     </ng-container>
 
 
-    <ng-container matColumnDef="start">
+    <ng-container matColumnDef="start" *ngIf="!data.isRecurring">
       <th mat-header-cell *matHeaderCellDef> Start </th>
       <td mat-cell *matCellDef="let booking"> {{booking.start | date: 'HH:mm'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="end">
+    <ng-container matColumnDef="end" *ngIf="!data.isRecurring">
       <th mat-header-cell *matHeaderCellDef> End </th>
       <td mat-cell *matCellDef="let booking"> {{booking.end | date: 'HH:mm'}} </td>
     </ng-container>
@@ -44,7 +59,8 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let booking" class="w-25">
-        {{ booking.toKeep ? 'This booking will be kept' : booking.resolved ? 'This booking has been resolved' : 'This booking will be deleted unless edited'}}
+        {{ booking.toKeep ? 'This booking will be kept' : booking.resolved ? 'This booking has been resolved' : 'This
+        booking will be deleted unless edited'}}
       </td>
     </ng-container>
 
