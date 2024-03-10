@@ -37,6 +37,10 @@ export class ResolveConflictDialogComponent implements OnInit {
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
     });
+    this.data.conflictGroup.bookings.forEach((booking: any) => {
+      booking.resolved = false;
+      booking.toKeep = false;
+    })
     this.data.conflictGroup.bookings[0].toKeep = true;
   }
 

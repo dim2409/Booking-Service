@@ -107,6 +107,7 @@ export class ModeratorDashboardComponent implements OnInit {
               this.BookingsService.approveBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
                 this.dialogService.openSuccessDialog('Booking Status Updated');
                 this.getBookings();
+                this.ngOnInit();
               })
             }
           })
