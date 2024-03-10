@@ -72,8 +72,8 @@ export class BookingsService {
 
   getConflicts(req: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getConflicts', req).pipe(map((data: any) => {
-      const resp: any[] = data
-      for (const item of resp) {
+      const resp = data
+      for (const item of resp.conflictingBookings) {
         item.bookings = this.mapBookings(item.bookings, this.colors);
       }
       return resp

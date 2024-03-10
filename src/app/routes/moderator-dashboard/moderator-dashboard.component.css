@@ -29,3 +29,20 @@
 .recurring .mat-mdc-card .button-color {
   background-color: #176b87;
 }
+.conflict-container {
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: #f34248b0;
+  padding: 0.2rem;
+}
+.conflict-container .conflict {
+  color: #176b87;
+  background-color: #ff00004d;
+  border-style: solid;
+}
+.conflict-container .conflict .time {
+  color: #f14c38;
+}
+.conflict-container .conflict .mat-mdc-card-header {
+  align-items: center;
+}

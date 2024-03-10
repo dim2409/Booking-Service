@@ -5,32 +5,60 @@
 
     .moderator-list-title {
         margin-block: 2rem;
-        font-size   : 1.5rem;
+        font-size: 1.5rem;
     }
+
     .mat-expansion-panel-header {
         font-size: unset;
-        .mat-expansion-panel-header-title{
+
+        .mat-expansion-panel-header-title {
             margin-right: 0;
         }
-        .mat-expansion-panel-header-description{
+
+        .mat-expansion-panel-header-description {
             margin-right: 450px;
             color: @highlight-color;
         }
     }
 }
-&.recurring{
-    .mat-mdc-card{
+
+&.recurring {
+    .mat-mdc-card {
         margin-block: 3vh;
-        .mat-mdc-card-content{
+
+        .mat-mdc-card-content {
             margin-top: 1vh;
             font-size: medium;
         }
-        .buttons{
+
+        .buttons {
             position: absolute;
             right: 0.1rem;
         }
+
         .button-color {
             background-color: @primary-color;
+        }
+    }
+}
+
+.conflict-container {
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #f34248b0;
+    padding: 0.2rem;
+
+    .conflict {
+        color: @primary-color;
+        background-color: #ff00004d;
+        border-style: solid;
+
+        .time {
+            color: @highlight-color;
+        }
+
+        .mat-mdc-card-header {
+            align-items: center;
         }
     }
 }

@@ -30,6 +30,7 @@ export class ModeratorDashboardComponent implements OnInit {
   selectedRoom: any = 'all';
   recurringGroups: any;
   recurrings: any;
+  recurringConflicts: any;
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
@@ -64,7 +65,9 @@ export class ModeratorDashboardComponent implements OnInit {
       });
 
       this.BookingsService.getConflicts({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.conflicts = resp;
+        this.conflicts = resp.conflictingBookings;
+        this.recurringConflicts = resp.conflictingRecurrings;
+        console.log(this.recurringConflicts)
       })
 
     });

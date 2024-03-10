@@ -23,12 +23,56 @@
             <i class="fa-solid fa-angle-down"></i>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i class="fa-solid fa-list-check"></i></button>
+        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i
+            class="fa-solid fa-list-check"></i></button>
         <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [removeConflicts]="false"
           (bookingUpdated)="updateBooking($event)"></app-booking-list>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
+
+
+  <!-- Recurring Conflicts -->
+  <div class="moderator-list-container">
+    <div class="moderator-list-title">
+      Recurring Conflicts
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let group of recurringConflicts">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{group.room_name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            Recurring Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
+            <i class="fa-solid fa-angle-down"></i>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button mat-raised-button color="warn" (click)="resolveConflict(group)">Resolve Conflict <i
+            class="fa-solid fa-list-check"></i></button>
+            <div class="conflict-container mt-2"  *ngFor="let recurring of group.recurring">
+              <mat-card class="conflict">
+                <mat-card-header>
+                  <mat-card-title>
+                    {{rooms[recurring.room_id-1]?.name}} - {{recurring.title}}
+                  </mat-card-title>
+                  <mat-card-subtitle>
+                    <span *ngFor="let day of recurring.days" class="time">
+                      {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                    </span>
+                    {{recurring.status == 0 ? 'Pending' : 'Approved'}}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  {{recurring.info}}
+                </mat-card-content>
+              </mat-card>
+            </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
   <!-- Recurring -->
   <div class="moderator-list-container">
     <div class="moderator-list-title">

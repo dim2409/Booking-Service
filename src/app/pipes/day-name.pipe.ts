@@ -23,7 +23,7 @@ export class DayNamePipe implements PipeTransform {
       case '7':
         return 'Sunday';
       default:
-        return 'ass';
+        return '---';
     }
   }
 }
