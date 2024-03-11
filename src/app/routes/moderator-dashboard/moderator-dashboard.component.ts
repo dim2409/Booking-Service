@@ -117,7 +117,8 @@ export class ModeratorDashboardComponent implements OnInit {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');
-              this.getBookings();
+              this.getBookings();              
+              this.ngOnInit();
             })
           }
         });
@@ -129,7 +130,8 @@ export class ModeratorDashboardComponent implements OnInit {
 
           this.BookingsService.cancelBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Booking Canceled');
-            this.getBookings();
+            this.getBookings();                        
+            this.ngOnInit();
           })
         })
         break;

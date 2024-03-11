@@ -59,7 +59,6 @@ export class ResolveConflictDialogComponent implements OnInit {
       }
     })
     this.conflictGroup.bookings[0].toKeep = true;
-    console.log(this.conflictGroup)
   }
 
   resetDataSource() {
