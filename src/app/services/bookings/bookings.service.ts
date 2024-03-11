@@ -61,7 +61,7 @@ export class BookingsService {
   
   getBookings(req: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getBookings', req).pipe(map((data: any) => {
-      const resp = this.mapBookings(data, this.colors);
+      const resp = {bookings: this.mapBookings(data.bookings, this.colors), total: data.total};
       return resp;
     }))
   }

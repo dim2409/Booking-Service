@@ -11,14 +11,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.less',
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule]
+  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule]
 })
 export class ModeratorDashboardComponent implements OnInit {
+
+  dataSource: any[] = [];
+  pageSizeOptions: number[] = [10, 25, 50];
+  totalItems: number = 0;
+  currentPage: number = 1;
+  pageSize: number = 10; // Default page size
 
   bookings: any[] = [];
   rooms: any;
@@ -27,7 +34,7 @@ export class ModeratorDashboardComponent implements OnInit {
   conflictBtn!: any[];
   conflicts!: any[];
   conflictGroups: any;
-  selectedRoom: any = 'all';
+  selectedRoom: any = "";
   recurringGroups: any;
   recurrings: any;
   recurringConflicts: any;
@@ -56,13 +63,7 @@ export class ModeratorDashboardComponent implements OnInit {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
 
-      this.BookingsService.getBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.bookings = resp;
-      })
-
-      this.BookingsService.getRcurringBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.recurrings = resp;
-      });
+      this.getBookings();
 
       this.BookingsService.getConflicts({ room_id: this.roomIds }).subscribe((resp: any) => {
         this.conflicts = resp.conflictingBookings;
@@ -71,29 +72,38 @@ export class ModeratorDashboardComponent implements OnInit {
 
     });
 
+    this.dataSource = this.bookings;
+
+  }
+  onPageChange(event: PageEvent): void {
+    // Check if the page index has changed
+    if (event.pageIndex+1 !== this.currentPage) {
+      this.currentPage = event.pageIndex+1;
+    }
+
+    // Check if the page size has changed
+    if (event.pageSize !== this.pageSize) {
+      this.pageSize = event.pageSize;
+    }
+    this.getBookings();
   }
 
   selectRoom(event: MatSelectChange) {
     this.selectedRoom = event.value;
+    console.log(this.selectedRoom)
     this.getBookings();
   }
   getBookings() {
-    if (this.selectedRoom === 'all') {
-      this.BookingsService.getBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.bookings = resp;
-      })
-      this.BookingsService.getRcurringBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.recurrings = resp;
-      });
-    } else {
-      const roomArray: number[] = [this.selectedRoom];
-      this.BookingsService.getBookings({ room_id: roomArray }).subscribe((resp: any) => {
-        this.bookings = resp;
-      })
-      this.BookingsService.getRcurringBookings({ room_id: roomArray }).subscribe((resp: any) => {
-        this.recurrings = resp;
-      });
-    }
+    let roomArray: number[] = [];
+    this.selectedRoom == "" ? roomArray = [] : roomArray = [this.selectedRoom];
+    this.BookingsService.getBookings({ room_id: roomArray, page: this.currentPage, perPage: this.pageSize, user_id: 2 }).subscribe((resp: any) => {
+      this.bookings = resp.bookings;
+      this.totalItems = resp.total
+    })
+    this.BookingsService.getRcurringBookings({ room_id: roomArray }).subscribe((resp: any) => {
+      this.recurrings = resp;
+    });
+
   }
 
   updateBooking(data: any) {
@@ -105,7 +115,6 @@ export class ModeratorDashboardComponent implements OnInit {
               const idArray: number[] = [data.booking.id]
               this.BookingsService.approveBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
                 this.dialogService.openSuccessDialog('Booking Status Updated');
-                this.getBookings();
                 this.ngOnInit();
               })
             }
@@ -117,7 +126,6 @@ export class ModeratorDashboardComponent implements OnInit {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');
-              this.getBookings();              
               this.ngOnInit();
             })
           }
@@ -130,7 +138,6 @@ export class ModeratorDashboardComponent implements OnInit {
 
           this.BookingsService.cancelBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Booking Canceled');
-            this.getBookings();                        
             this.ngOnInit();
           })
         })
@@ -145,7 +152,6 @@ export class ModeratorDashboardComponent implements OnInit {
     this.dialogService.openResolveConflictDialog(conflictGroup, isRecurring).subscribe((resp: any) => {
       if (resp) {
         this.dialogService.openSuccessDialog('Conflict Resolved');
-        this.getBookings();
         this.ngOnInit();
       }
     })

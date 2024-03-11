@@ -2,7 +2,7 @@
   <mat-form-field class="col-2 mt-5">
     <mat-label>Select Room</mat-label>
     <mat-select (selectionChange)="selectRoom($event)">
-      <mat-option value="all">All Rooms</mat-option>
+      <mat-option value="">All Rooms</mat-option>
       <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -52,25 +52,25 @@
         </mat-expansion-panel-header>
         <button mat-raised-button color="warn" (click)="resolveConflict(group, true)">Resolve Conflict <i
             class="fa-solid fa-list-check"></i></button>
-            <div class="conflict-container mt-2"  *ngFor="let booking of group.bookings">
-              <mat-card class="conflict">
-                <mat-card-header>
-                  <mat-card-title>
-                    {{booking.title}}
-                  </mat-card-title>
-                  <mat-card-subtitle>
-                    <span *ngFor="let day of booking.days" class="time">
-                      {{ rooms[day.room_id-1]?.name }} -
-                      {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
-                    </span>
-                    {{booking.status == 0 ? 'Pending' : 'Approved'}}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  {{booking.info}}
-                </mat-card-content>
-              </mat-card>
-            </div>
+        <div class="conflict-container mt-2" *ngFor="let booking of group.bookings">
+          <mat-card class="conflict">
+            <mat-card-header>
+              <mat-card-title>
+                {{booking.title}}
+              </mat-card-title>
+              <mat-card-subtitle>
+                <span *ngFor="let day of booking.days" class="time">
+                  {{ rooms[day.room_id-1]?.name }} -
+                  {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                </span>
+                {{booking.status == 0 ? 'Pending' : 'Approved'}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              {{booking.info}}
+            </mat-card-content>
+          </mat-card>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -87,7 +87,7 @@
               {{group.title}}
             </mat-card-title>
             <mat-card-subtitle>
-              <span *ngFor="let day of group.days">                
+              <span *ngFor="let day of group.days">
                 {{ rooms[day.room_id-1]?.name }} -
                 {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
               </span>
@@ -107,8 +107,13 @@
           </mat-card-content>
         </mat-card>
       </div>
+
+      
       <!-- Non-Conflicts -->
       <div class="moderator-list-container">
+        <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+          (page)="onPageChange($event)">
+        </mat-paginator>
         <div class="moderator-list-title">
           Non-Conflicting Bookings
         </div>
