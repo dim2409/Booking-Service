@@ -1,0 +1,35 @@
+<!-- Filters -->
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms"></app-filters>
+<!-- Recurring -->
+<div class="moderator-list-container">
+    <div class="moderator-list-title">
+      Recurring Bookings
+      <div class="recurring">
+        <mat-card *ngFor="let group of recurrings">
+          <mat-card-header>
+            <mat-card-title>
+              {{group.title}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              <span *ngFor="let day of group.days">
+                {{ rooms[day.room_id-1]?.name }} -
+                {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+              </span>
+              {{group.status == 0 ? 'Pending' : 'Approved'}}
+            </mat-card-subtitle>
+            <div class="buttons">
+              <ng-container *ngFor="let button of buttons">
+                <button mat-mini-fab *ngIf="!(group.status != 0 && button.icon == 'fa-check')"
+                  (click)="updateBooking({action: button.action, booking: group})" class="mx-1 button-color">
+                  <i class="fa-solid {{button.icon}}"></i>
+                </button>
+              </ng-container>
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            {{group.info}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

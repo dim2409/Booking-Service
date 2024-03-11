@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
@@ -12,12 +12,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {MatTabsModule} from '@angular/material/tabs';
+import { NormalBookingsTabComponent } from "./normal-bookings-tab/normal-bookings-tab.component";
+import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurring-bookings-tab.component";
 @Component({
-  selector: 'app-moderator-dashboard',
-  standalone: true,
-  templateUrl: './moderator-dashboard.component.html',
-  styleUrl: './moderator-dashboard.component.less',
-  imports: [BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule]
+    selector: 'app-moderator-dashboard',
+    standalone: true,
+    templateUrl: './moderator-dashboard.component.html',
+    styleUrl: './moderator-dashboard.component.less',
+    imports: [MatTabsModule, BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, NormalBookingsTabComponent, RecurringBookingsTabComponent]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -40,6 +43,7 @@ export class ModeratorDashboardComponent implements OnInit {
   recurringConflicts: any;
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
+  @ViewChild (NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   ngOnInit(): void {
     this.buttons = [
       {
@@ -63,7 +67,7 @@ export class ModeratorDashboardComponent implements OnInit {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: { id: any; }) => room.id);
 
-      this.getBookings();
+      //this.getBookings();
 
       this.BookingsService.getConflicts({ room_id: this.roomIds }).subscribe((resp: any) => {
         this.conflicts = resp.conflictingBookings;
@@ -100,7 +104,7 @@ export class ModeratorDashboardComponent implements OnInit {
       this.bookings = resp.bookings;
       this.totalItems = resp.total
     })
-    this.BookingsService.getRcurringBookings({ room_id: roomArray }).subscribe((resp: any) => {
+    this.BookingsService.getRecurringBookings({ room_id: roomArray }).subscribe((resp: any) => {
       this.recurrings = resp;
     });
 
@@ -115,7 +119,7 @@ export class ModeratorDashboardComponent implements OnInit {
               const idArray: number[] = [data.booking.id]
               this.BookingsService.approveBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
                 this.dialogService.openSuccessDialog('Booking Status Updated');
-                this.ngOnInit();
+                this.updateTabs();
               })
             }
           })
@@ -126,7 +130,7 @@ export class ModeratorDashboardComponent implements OnInit {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');
-              this.ngOnInit();
+              this.updateTabs();
             })
           }
         });
@@ -138,7 +142,7 @@ export class ModeratorDashboardComponent implements OnInit {
 
           this.BookingsService.cancelBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Booking Canceled');
-            this.ngOnInit();
+            this.updateTabs();
           })
         })
         break;
@@ -146,6 +150,9 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openInfoDialog(data.booking);
         break;
     }
+  }
+  updateTabs() {
+    this.normalBookingsTab.getData();
   }
 
   resolveConflict(conflictGroup: any, isRecurring: boolean) {

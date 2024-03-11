@@ -66,7 +66,7 @@ export class BookingsService {
     }))
   }
 
-  getRcurringBookings(roomIds: any): Observable<any> {
+  getRecurringBookings(roomIds: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getRecurring',roomIds)
   }
 

@@ -1,0 +1,13 @@
+<!-- Filters -->
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms"></app-filters>
+<!-- Non-Conflicts -->
+<div class="moderator-list-container">
+    <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+        (page)="onPageChange($event)">
+    </mat-paginator>
+    <div class="moderator-list-title">
+        Non-Conflicting Bookings
+    </div>
+    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
+        (bookingUpdated)="updateBooking($event)"></app-booking-list>
+</div>
