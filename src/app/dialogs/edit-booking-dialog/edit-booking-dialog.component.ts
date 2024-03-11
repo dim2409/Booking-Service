@@ -72,7 +72,6 @@ export class EditBookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data)
 
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
@@ -145,11 +144,9 @@ export class EditBookingDialogComponent implements OnInit {
         }
       });
     }
-    console.log('submit')
     this.dialogRef.close(booking);
   }
   close() {
-    console.log('close')
     this.dialogRef.close(false);
   }
   selectRoom(event: MatSelectChange) {

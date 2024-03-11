@@ -13,38 +13,41 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DayNamePipe } from "../../pipes/day-name.pipe";
+import _ from 'lodash';
 @Component({
-    selector: 'app-resolve-conflict-dialog',
-    standalone: true,
-    templateUrl: './resolve-conflict-dialog.component.html',
-    styleUrl: './resolve-conflict-dialog.component.less',
-    imports: [
-        CommonModule,
-        FormsModule,
-        MatTableModule,
-        CommonModule,
-        MatRadioModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        DayNamePipe
-    ]
+  selector: 'app-resolve-conflict-dialog',
+  standalone: true,
+  templateUrl: './resolve-conflict-dialog.component.html',
+  styleUrl: './resolve-conflict-dialog.component.less',
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatTableModule,
+    CommonModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    DayNamePipe
+  ]
 })
 export class ResolveConflictDialogComponent implements OnInit {
   @ViewChild('conflictResolveForm') myForm!: NgForm;
   displayedColumns: string[] = !this.data.isRecurring ? ['title', 'room', 'date', 'start', 'end', 'keep', 'action', 'edit'] : ['title', 'room', 'date', 'keep', 'action', 'edit'];
   rooms: any;
   toKeep: any;
+  conflictGroup: any;
+  dataSource: any;
   constructor(public dialogService: DialogService, public bookingsService: BookingsService, public RoomsService: RoomsService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
-  dataSource = this.data.conflictGroup.bookings;
   ngOnInit(): void {
-    console.log(this.data)
+    this.conflictGroup = _.cloneDeep(this.data.conflictGroup);
+    this.dataSource = this.conflictGroup.bookings;
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
     });
-    this.data.conflictGroup.bookings.forEach((booking: any) => {
+    this.conflictGroup.bookings.forEach((booking: any) => {
       booking.resolved = false;
       booking.toKeep = false;
-      if(this.data.isRecurring){
+      if (this.data.isRecurring) {
         booking.days.forEach((day: any) => {
           const start = new Date(day.start);
           day.start = start;
@@ -55,48 +58,48 @@ export class ResolveConflictDialogComponent implements OnInit {
         })
       }
     })
-    this.data.conflictGroup.bookings[0].toKeep = true;
+    this.conflictGroup.bookings[0].toKeep = true;
+    console.log(this.conflictGroup)
   }
 
   resetDataSource() {
-    this.dataSource = this.data.conflictGroup.bookings
+    this.dataSource = this.conflictGroup.bookings
     this.dataSource = [...this.dataSource]
   }
 
   roomName(roomId: number) {
     return this.rooms?.find((room: any) => room.id == roomId)?.name
   }
-  onResolve(conflictResolveForm: any) {
-    console.log(conflictResolveForm)
 
-  }
   selectToKeep(booking: any) {
-    this.data.conflictGroup.bookings.find((b: any) => b.toKeep == true).toKeep = false
+    this.conflictGroup.bookings.find((b: any) => b.toKeep == true).toKeep = false
     booking.toKeep = true
     this.checkResolved();
   }
   editBooking(data: any) {
     let booking = data
     booking.type = this.data.isRecurring ? 'recurringGroup' : ''
-    const bookingIndex = this.data.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)
+    const bookingIndex = this.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)
     this.dialogService.openEditBookingDialog(booking).subscribe((resp: any) => {
-      booking = resp
-      this.data.conflictGroup.bookings[bookingIndex] = resp
-      this.checkResolved();
-      this.resetDataSource();
+      if (resp) {
+        booking = resp
+        this.conflictGroup.bookings[bookingIndex] = resp
+        this.checkResolved();
+        this.resetDataSource();
+      }
     })
   }
 
   checkResolved() {
-    this.data.conflictGroup.bookings.forEach((booking: any) => {
+    this.conflictGroup.bookings.forEach((booking: any) => {
       this.checkConflicts(booking).subscribe((resp) => {
-        if(!resp){
-          if(!this.checkEditingConflict(booking)){
+        if (!resp) {
+          if (!this.checkEditingConflict(booking)) {
             booking.resolved = true
-          }else{
+          } else {
             booking.resolved = false
           }
-        }else{
+        } else {
           booking.resolved = false
         }
       })
@@ -110,14 +113,14 @@ export class ResolveConflictDialogComponent implements OnInit {
       this.bookingsService.checkConflict(booking).subscribe((resp: any) => {
         if (resp.isConflicting) {
           const filteredConflicts = resp.conflicts.filter((conflict: any) => {
-            const localConflict = this.data.conflictGroup.bookings.find((b: any) => b.id === conflict.id);
+            const localConflict = this.conflictGroup.bookings.find((b: any) => b.id === conflict.id);
             return !localConflict || !localConflict.resolved;
           });
           if (filteredConflicts.length > 0) {
             isConflicting = true;
           }
         }
-        observer.next(isConflicting); 
+        observer.next(isConflicting);
         observer.complete();
       });
     });
@@ -125,12 +128,12 @@ export class ResolveConflictDialogComponent implements OnInit {
 
   checkEditingConflict(newBooking: any) {
     let conflicts = false;
-    this.data.conflictGroup.bookings.forEach((booking: any) => {
+    this.conflictGroup.bookings.forEach((booking: any) => {
       if (newBooking.id !== booking.id && (
         (newBooking.start >= booking.start && newBooking.start < booking.end) ||
         (newBooking.end > booking.start && newBooking.end <= booking.end) ||
         (newBooking.start < booking.start && newBooking.end > booking.end)
-      )){
+      )) {
         conflicts = true;
       }
     })
@@ -140,9 +143,9 @@ export class ResolveConflictDialogComponent implements OnInit {
   onClose() {
     this.dialogRef.close()
   }
-  resolve(){
-    this.data.conflictGroup.isRecurring = this.data.isRecurring
-    this.bookingsService.resolveConflict(this.data.conflictGroup).subscribe((resp: any) => {
+  resolve() {
+    this.conflictGroup.isRecurring = this.data.isRecurring
+    this.bookingsService.resolveConflict(this.conflictGroup).subscribe((resp: any) => {
       this.dialogRef.close(resp)
     })
   }

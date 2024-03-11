@@ -19,7 +19,8 @@ export class DialogService {
       autoFocus: false,
       width: "100vw",
       height: "90%",
-      maxWidth: "90vw"
+      maxWidth: "90vw",
+      disableClose: true,
     });
     return dialogRef.afterClosed();
   }
@@ -29,18 +30,20 @@ export class DialogService {
         successMessage: successMessage
       },
       autoFocus: false,
+      disableClose: true,
     });
     return dialogRef.afterClosed();
   }
 
   openConfirmDialog(booking: any, message: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data:{
-        booking : booking,
+      data: {
+        booking: booking,
         message: message
       },
       autoFocus: false,
-    });    
+      disableClose: true,
+    });
     return dialogRef.afterClosed();
   }
 
@@ -50,19 +53,21 @@ export class DialogService {
       autoFocus: false,
       width: "90vw",
       height: "90%",
+      disableClose: true,
     });
     return dialogRef.afterClosed();
   }
 
   openResolveConflictDialog(conflictGroup: any, isRecurring: boolean) {
     const dialogRef = this.dialog.open(ResolveConflictDialogComponent, {
-      data:{
-        conflictGroup : conflictGroup,
+      data: {
+        conflictGroup: conflictGroup,
         isRecurring: isRecurring
       },
       autoFocus: false,
       width: "90vw",
       height: "90%",
+      disableClose: true,
     });
     return dialogRef.afterClosed();
   }
