@@ -13,6 +13,7 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import { get } from 'lodash';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -21,20 +22,8 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
   styleUrl: './home.component.less'
 })
 export class HomeComponent {
-  roomIds: any;
-  selectRoom(event: MatSelectChange) {
-    const selectedRoom = event.value;
-    if (selectedRoom === 'all') {
-      this.BookingsService.getActiveBookings({'room_id': this.roomIds}).subscribe((resp: any) => {
-        this.bookings = resp;
-      });
-    }else{
-      const roomArray: number[] = [selectedRoom]
-      this.BookingsService.getActiveBookings({'room_id': roomArray}).subscribe((resp: any) => {
-        this.bookings = resp;
-      })
-    }
-  }
+  roomIds: any = "";
+  date: any;
   bookings: any;
   rooms: any;
 
@@ -42,13 +31,27 @@ export class HomeComponent {
   ngOnInit(): void {
     this.RoomsService.getRooms().subscribe((resp: any) => {
       this.rooms = resp;
-      this.roomIds = this.rooms.map((room: any) => room.id);
-      this.BookingsService.getActiveBookings({'room_id': this.roomIds}).subscribe((resp: any) => {
-        this.bookings = resp;
-      });
     });
+    this.getBookings();
+  }
+  selectRoom(event: MatSelectChange) {
+    this.roomIds = event.value;
+    this.getBookings();
   }
   openInfo(booking: any) {
     this.dialogService.openInfoDialog(booking);
+  }
+
+  scrollCalendar(event: any) {
+    this.date = event.viewDate;
+    this.getBookings();
+  }
+
+  getBookings() {
+    let roomArray: number[] = [];
+    this.roomIds == "" ? roomArray = [] : roomArray = [this.roomIds];
+    this.BookingsService.getActiveBookings({ room_id: roomArray, date: this.date }).subscribe((resp: any) => {
+      this.bookings = resp;
+    });
   }
 }

@@ -12,6 +12,8 @@ import { Subject } from 'rxjs';
 })
 
 export class CalendarComponent {
+  
+  @Output() scrollCalendarEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() bookingClicked: EventEmitter<any> = new EventEmitter<any>();
   selectedValue!: string;
   handleEvent(arg0: string, event: CalendarEvent) {
@@ -68,5 +70,8 @@ export class CalendarComponent {
   }
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  scrollCalendar(event: any) {
+    this.scrollCalendarEvent.emit(event);
   }
 }

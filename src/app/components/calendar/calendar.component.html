@@ -42,14 +42,14 @@
     <!-- Previous, current and next buttons -->
     <div class="controls-container">
       <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()" class="controls">
+        (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'previous', viewDate: viewDate})" class="controls">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
       <button mat-stroked-button mwlCalendarToday [(viewDate)]="viewDate" class="controls">
         Today
       </button>
       <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()" class="controls">
+        (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'next', viewDate: viewDate})" class="controls">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
