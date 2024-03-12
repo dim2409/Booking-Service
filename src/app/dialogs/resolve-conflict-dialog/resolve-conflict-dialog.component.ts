@@ -143,9 +143,15 @@ export class ResolveConflictDialogComponent implements OnInit {
     this.dialogRef.close()
   }
   resolve() {
-    this.conflictGroup.isRecurring = this.data.isRecurring
-    this.bookingsService.resolveConflict(this.conflictGroup).subscribe((resp: any) => {
-      this.dialogRef.close(resp)
-    })
+    if (this.data.isRecurring) {
+      this.bookingsService.resolveConflict(this.conflictGroup).subscribe((resp: any) => {
+        this.dialogRef.close(resp)
+      })
+      
+    }else{
+      this.bookingsService.resolveRecurringConflict(this.conflictGroup).subscribe((resp: any) => {
+        this.dialogRef.close(resp)
+      })
+    }
   }
 }

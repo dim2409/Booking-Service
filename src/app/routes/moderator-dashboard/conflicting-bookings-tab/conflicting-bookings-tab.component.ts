@@ -13,12 +13,9 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
-
 @Component({
-  selector: 'app-normal-bookings-tab',
+  selector: 'app-conflicting-bookings-tab',
   standalone: true,
-  templateUrl: './normal-bookings-tab.component.html',
-  styleUrl: './normal-bookings-tab.component.less',
   imports: [
     MatTabsModule, 
     BookingListComponent, 
@@ -31,12 +28,15 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
     MatDatepickerModule, 
     MatPaginatorModule, 
     FiltersComponent
-  ]
+  ],
+  templateUrl: './conflicting-bookings-tab.component.html',
+  styleUrl: './conflicting-bookings-tab.component.less'
 })
-export class NormalBookingsTabComponent implements OnInit {
+export class ConflictingBookingsTabComponent {
 
-  
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
+  conflicts: any;
+  recurringConflicts: any;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
@@ -45,9 +45,13 @@ export class NormalBookingsTabComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number = 1;
   pageSize: number = 10; // Default page size
-  bookings!: any[];
-  
   selectedRoom: any = "";
+  
+  recurringPageSizeOptions: number[] = [10, 25, 50];
+  recurringTotalItems: number = 0;
+  recurringCurrentPage: number = 1;
+  recurringPageSize: number = 10; // Default page size
+  recurringSelectedRoom: any = "";
 
   rooms!: any[];
   
@@ -80,19 +84,26 @@ export class NormalBookingsTabComponent implements OnInit {
     this.getData();
   }
 
+  getData() {
+    let roomArray: number[] = [];
+    this.selectedRoom == "" ? roomArray = [] : roomArray = [this.selectedRoom];
+    this.BookingsService.getConflicts({  room_id: roomArray, page: this.currentPage, perPage: this.pageSize, user_id: 2 }).subscribe((resp: any) => {
+      this.conflicts = resp.data;      
+      this.totalItems = resp.total
+    })
+    this.BookingsService.getRecurringConflicts({  room_id: roomArray, page: this.recurringCurrentPage, perPage: this.recurringPageSize, user_id: 2 }).subscribe((resp: any) => {
+      this.recurringConflicts = resp.data;
+      this.recurringTotalItems = resp.total
+    })
+  }
+
   getRooms() {
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
     });
   }
-  getData() {
-    let roomArray: number[] = [];
-    this.selectedRoom == "" ? roomArray = [] : roomArray = [this.selectedRoom];
-    this.BookingsService.getBookings({ room_id: roomArray, page: this.currentPage, perPage: this.pageSize, user_id: 2 }).subscribe((resp: any) => {
-      this.bookings = resp.bookings;
-      this.totalItems = resp.total
-    })
-  }
+
+  
   onPageChange(event: PageEvent): void {
     // Check if the page index has changed
     if (event.pageIndex + 1 !== this.currentPage) {
@@ -105,8 +116,20 @@ export class NormalBookingsTabComponent implements OnInit {
     }
     this.getData();
   }
+  onRecurringPageChange(event: PageEvent): void {
+    // Check if the page index has changed
+    if (event.pageIndex + 1 !== this.recurringCurrentPage) {
+      this.recurringCurrentPage = event.pageIndex + 1;
+    }
 
-  updateBooking(event: Event) {
+    // Check if the page size has changed
+    if (event.pageSize !== this.recurringPageSize) {
+      this.recurringPageSize = event.pageSize;
+    }
+    this.getData();
+  }
+
+  updateBooking(event: any) {
     this.bookingUpdate.emit(event);
   }
 }

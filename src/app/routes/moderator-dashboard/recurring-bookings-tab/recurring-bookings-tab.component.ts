@@ -68,7 +68,8 @@ export class RecurringBookingsTabComponent implements OnInit {
     let roomArray: number[] = [];
     this.selectedRoom == "" ? roomArray = [] : roomArray = [this.selectedRoom];
     this.BookingsService.getRecurringBookings({ room_id: roomArray, page: this.currentPage, perPage: this.pageSize, user_id: 2 }).subscribe((resp: any) => {
-      this.recurrings = resp.recurrings;
+      this.recurrings = resp.recurrings;      
+      this.totalItems = resp.total
     });
 
   }

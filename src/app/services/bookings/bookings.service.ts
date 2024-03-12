@@ -73,10 +73,15 @@ export class BookingsService {
   getConflicts(req: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getConflicts', req).pipe(map((data: any) => {
       const resp = data
-      for (const item of resp.conflictingBookings) {
+      for (const item of resp.data) {
         item.bookings = this.mapBookings(item.bookings, this.colors);
       }
       return resp
+    }))
+  }
+  getRecurringConflicts(req: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/getRecurringConflicts', req).pipe(map((data: any) => {
+      return data
     }))
   }
 
@@ -86,6 +91,9 @@ export class BookingsService {
 
   resolveConflict(req: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/resolveConflict', req)
+  }
+  resolveRecurringConflict(req: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/resolveRecurringConflict', req)
   }
 
   getActiveBookings(req:any): Observable<any> {
