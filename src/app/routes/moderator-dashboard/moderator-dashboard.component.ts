@@ -1,27 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
-import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { DayNamePipe } from "../../pipes/day-name.pipe";
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NormalBookingsTabComponent } from "./normal-bookings-tab/normal-bookings-tab.component";
 import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurring-bookings-tab.component";
 import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conflicting-bookings-tab.component";
 @Component({
-    selector: 'app-moderator-dashboard',
-    standalone: true,
-    templateUrl: './moderator-dashboard.component.html',
-    styleUrl: './moderator-dashboard.component.less',
-    imports: [MatTabsModule, BookingListComponent, MatSelectModule, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, NormalBookingsTabComponent, RecurringBookingsTabComponent, ConflictingBookingsTabComponent]
+  selector: 'app-moderator-dashboard',
+  standalone: true,
+  templateUrl: './moderator-dashboard.component.html',
+  styleUrl: './moderator-dashboard.component.less',
+  imports: [MatTabsModule,
+    BookingListComponent,
+    CommonModule,
+    MatExpansionModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    NormalBookingsTabComponent,
+    RecurringBookingsTabComponent,
+    ConflictingBookingsTabComponent]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -31,11 +33,11 @@ export class ModeratorDashboardComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10; // Default page size
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
+  constructor(private BookingsService: BookingsService, private dialogService: DialogService) { }
 
   @ViewChild(NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
-  @ViewChild(ConflictingBookingsTabComponent) conflictingBookingsTabComponent!:ConflictingBookingsTabComponent;
+  @ViewChild(ConflictingBookingsTabComponent) conflictingBookingsTabComponent!: ConflictingBookingsTabComponent;
   ngOnInit(): void {
   }
 
@@ -79,14 +81,8 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openInfoDialog(data.booking);
         break;
       case 'resolveConflict':
-        console.log(data)
-        this.dialogService.openResolveConflictDialog(data.conflictGroup, data.isRecurring).subscribe((resp: any) => {
-          if (resp) {
-            this.dialogService.openSuccessDialog('Conflict Resolved');
-            this.updateTabs();
-          }
-        })
-      break;
+        this.updateTabs();
+        break;
     }
   }
   updateTabs() {

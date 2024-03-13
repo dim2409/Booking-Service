@@ -13,24 +13,26 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { ConflictComponent } from "../../../components/conflict/conflict.component";
 @Component({
-  selector: 'app-conflicting-bookings-tab',
-  standalone: true,
-  imports: [
-    MatTabsModule, 
-    BookingListComponent, 
-    MatOptionModule, 
-    CommonModule, 
-    MatExpansionModule, 
-    DayNamePipe, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatDatepickerModule, 
-    MatPaginatorModule, 
-    FiltersComponent
-  ],
-  templateUrl: './conflicting-bookings-tab.component.html',
-  styleUrl: './conflicting-bookings-tab.component.less'
+    selector: 'app-conflicting-bookings-tab',
+    standalone: true,
+    templateUrl: './conflicting-bookings-tab.component.html',
+    styleUrl: './conflicting-bookings-tab.component.less',
+    imports: [
+        MatTabsModule,
+        BookingListComponent,
+        MatOptionModule,
+        CommonModule,
+        MatExpansionModule,
+        DayNamePipe,
+        MatCardModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatPaginatorModule,
+        FiltersComponent,
+        ConflictComponent
+    ]
 })
 export class ConflictingBookingsTabComponent {
 

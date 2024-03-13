@@ -9,24 +9,7 @@
     <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
         (page)="onPageChange($event)">
     </mat-paginator>
-    <mat-accordion>
-        <mat-expansion-panel hideToggle *ngFor="let group of conflicts">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{group.room_name}}
-                </mat-panel-title>
-                <mat-panel-description>
-                    Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
-                    <i class="fa-solid fa-angle-down"></i>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-raised-button color="warn"
-                (click)="updateBooking({action: 'resolveConflict', conflictGroup: group, recurring: false})">Resolve
-                Conflict <i class="fa-solid fa-list-check"></i></button>
-            <app-booking-list [bookings]="group.bookings" [rooms]="rooms" [removeConflicts]="false"
-                (bookingUpdated)="updateBooking($event)"></app-booking-list>
-        </mat-expansion-panel>
-    </mat-accordion>
+    <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="false" (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
 </div>
 
 <!-- Recurring Conflicts -->
@@ -38,41 +21,5 @@
     <mat-paginator [length]="recurringTotalItems" [pageSizeOptions]="recurringPageSizeOptions" [pageSize]="10"
         (page)="onRecurringPageChange($event)">
     </mat-paginator>
-    <mat-accordion>
-        <mat-expansion-panel hideToggle *ngFor="let group of recurringConflicts">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <span *ngFor="let booking of group.bookings">
-                        {{booking.title}}
-                    </span>
-                </mat-panel-title>
-                <mat-panel-description>
-                    Recurring Conflicting Bookings <i class="fa-solid fa-circle-exclamation m-5"></i>
-                    <i class="fa-solid fa-angle-down"></i>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-raised-button color="warn"
-                (click)="updateBooking({action: 'resolveConflict', conflictGroup: group, recurring: false})">Resolve
-                Conflict <i class="fa-solid fa-list-check"></i></button>
-            <div class="conflict-container mt-2" *ngFor="let booking of group.bookings">
-                <mat-card class="conflict">
-                    <mat-card-header>
-                        <mat-card-title>
-                            {{booking.title}}
-                        </mat-card-title>
-                        <mat-card-subtitle>
-                            <span *ngFor="let day of booking.days" class="time">
-                                {{ rooms[day.room_id-1]?.name }} -
-                                {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
-                            </span>
-                            {{booking.status == 0 ? 'Pending' : 'Approved'}}
-                        </mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        {{booking.info}}
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+    <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true" (bookingUpdated)="updateBooking($event)" *ngFor="let group of recurringConflicts"></app-conflict>
 </div>

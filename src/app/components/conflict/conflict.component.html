@@ -1,0 +1,67 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <!-- Title -->
+            <mat-panel-title>
+                {{!isRecurring ? conflictGroup.room_name : ''}}
+                <span *ngIf="isRecurring">
+                    <span *ngFor="let room of conflictGroup.conflictingRooms">{{room.name}}&nbsp;<br></span>
+                </span>
+            </mat-panel-title>
+            <mat-panel-description>
+                Conflicting Bookings
+                <i class="fa-solid fa-circle-exclamation m-5"></i>
+                <i class="fa-solid fa-angle-down"></i>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button mat-raised-button color="warn"
+            (click)="resolve({action: 'resolveConflict', conflictGroup: conflictGroup, recurring: false})">
+            Resolve Conflict <i class="fa-solid fa-list-check"></i></button>
+        <div class="container">
+            <div *ngFor="let booking of conflictGroup.bookings" class="conflict-container m-2"
+                ngClass="{{booking.toKeep ? 'to-keep' : booking.resolved ? 'resolved' : ''}}"
+                (click)="selectToKeep(booking)">
+                <mat-card class="conflict">
+                    <div class="row w-100 justify-content-end position-absolute py-2">
+                        <ng-container *ngFor="let button of buttons">
+                            <button mat-mini-fab *ngIf="!(booking.status != 0 && button.icon == 'fa-check')"
+                                (click)="buttonAction(button.action, booking, $event)" class="mx-1 button-color"><i
+                                    class="fa-solid {{button.icon}}"></i></button>
+                        </ng-container>
+                    </div>
+                    <mat-card-header>
+                        <mat-card-title>     
+                            <p class="title-text">
+                                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': booking?.color?.primary}"></i>
+                                {{booking.title}}
+                            </p>
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            <span class="time" *ngIf="!isRecurring">
+                                {{ booking.start | date: 'EEEE d/MM yyyy' }} {{ booking.start | date: 'HH:mm' }} -
+                                {{ booking.end | date: 'HH:mm' }} |
+                            </span>
+                            <span *ngFor="let day of booking.days" class="time">
+                                {{ rooms[day.room_id-1]?.name }} -
+                                {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                            </span>
+                            {{booking.status == 0 ? 'Pending' : 'Approved'}}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="my-2">
+                            {{
+                            booking?.info ?
+                            (booking.info.length > 0 ? booking.info?.slice(0, 50) + (booking.info.length > 50 ? '...' :
+                            '') :
+                            'No info')
+                            :
+                            'No info'
+                            }}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
