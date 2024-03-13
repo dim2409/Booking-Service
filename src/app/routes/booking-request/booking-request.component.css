@@ -1,3 +1,69 @@
+#stepper-title {
+  font-size: 2vw;
+  font-weight: 500;
+  line-height: 32px;
+  font-family: Roboto, sans-serif;
+  letter-spacing: 0.0125em;
+  display: flex;
+  padding-left: 2.6%;
+  flex-wrap: nowrap;
+}
+.stepper-container {
+  margin-top: 5%;
+  margin-left: 20%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1%;
+  flex-wrap: nowrap;
+  width: 60%;
+  align-items: stretch;
+  flex-direction: column;
+}
+.mat-horizontal-content-container {
+  overflow: hidden;
+  padding: 0 12px 0 12px !important;
+  background-color: aliceblue;
+  border-radius: 10px;
+  border: 2px solid #3F51B5;
+}
+.field-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 10px 5px 10px 5px;
+}
+.field-area .area-a {
+  display: flex;
+  width: 24vw;
+  padding: 0px 10px 0px 10px;
+  margin: 0px 5px 0px 5px;
+}
+.field-area .area-a .title-field {
+  width: 22vw;
+}
+.field-area .area-b {
+  display: flex;
+  width: 20vw;
+  padding: 0px 10px 0px 10px;
+  margin: 0px 5px 0px 5px;
+  font-size: 1vw;
+  font-weight: 500;
+  align-items: center;
+}
+.field-area .area-b .recurring {
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
 .booking-request .cal-month-view .cal-cell {
   width: 10%;
   min-height: 1px;

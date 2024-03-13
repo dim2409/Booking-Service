@@ -1,22 +1,27 @@
 <div class="row navbar">
-    <button mat-button [matMenuTriggerFor]="menu" class="col-1 menu-button"><i class="fa-solid fa-bars"></i></button>
-    <mat-menu #menu="matMenu">
+    <button class="menubars" (click)="drawer.toggle()">
+        <i class="fa-solid fa-bars"></i>
+        <div class="user-container">
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </button>
+    <span class="hometitle" [routerLink]="'/'">
+        Welcome to the IEEIHU Booking System
+    </span>
+</div>
 
-        <button mat-menu-item [routerLink]="'/myBookings'">
+<mat-drawer-container class="drawer-container" [hasBackdrop]="false">
+    <mat-drawer class="sidemenu" #drawer [mode]="'over'">
+        <button mat-flat-button [routerLink]="'/myBookings'">
             My bookings
         </button>
 
-        <button mat-menu-item [routerLink]="'/makeABooking'">
+        <button mat-flat-button [routerLink]="'/makeABooking'">
             Make a booking
         </button>
 
-        <button mat-menu-item [routerLink]="'/moderator'">
-            Moderator Dashboard
+        <button mat-flat-button [routerLink]="'/moderator'">
+            Dashboard
         </button>
-
-    </mat-menu>
-    <span class="col-10 title" [routerLink]="'/'">
-        Welcome to the IEEIHU Booking System
-    </span>
-    <i class="fa-solid fa-cog settings-button col-1"></i>
-</div>
+    </mat-drawer>
+</mat-drawer-container>

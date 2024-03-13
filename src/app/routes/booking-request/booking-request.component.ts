@@ -14,6 +14,9 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
+
 import * as moment from 'moment';
 @Component({
   selector: 'app-booking-request',
@@ -31,8 +34,10 @@ import * as moment from 'moment';
     CalendarComponentModule,
     MatOptionModule,
     FormsModule,
-    CalendarComponentModule
-    ],
+    CalendarComponentModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './booking-request.component.html',
   styleUrl: './booking-request.component.less'
 })
@@ -56,6 +61,15 @@ export class BookingRequestComponent {
   @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
 
+  //stepper
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: '',
+  });
+  isOptional = false;
+
   public days: any[] = [
     { label: 'Monday', name: 1, selected: false, start: Date, end: Date },
     { label: 'Tuesday', name: 2, selected: false, start: Date, end: Date },
@@ -63,8 +77,8 @@ export class BookingRequestComponent {
     { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
-  
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService) { }
+
+  constructor(private _formBuilder: FormBuilder, private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService) { }
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
@@ -111,10 +125,10 @@ export class BookingRequestComponent {
       this.days.forEach(day => {
         if (day.selected) {
           const start = new Date(day.start);
-          day.start = moment.utc(start).tz('Europe/Athens').format(); 
+          day.start = moment.utc(start).tz('Europe/Athens').format();
           const end = new Date(day.end);
           day.end = end;
-          day.end = moment.utc(end).tz('Europe/Athens').format(); 
+          day.end = moment.utc(end).tz('Europe/Athens').format();
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
