@@ -69,6 +69,10 @@ export class ConflictComponent implements OnInit {
           day.end = end;
           day.end = moment.utc(day.end).tz('Europe/Athens').format();
         })
+      } else {
+        booking.start = moment.utc(booking.start).tz('Europe/Athens').format();
+        booking.end = moment.utc(booking.end).tz('Europe/Athens').format();
+
       }
     })
     this.conflictGroup.bookings[0].toKeep = true

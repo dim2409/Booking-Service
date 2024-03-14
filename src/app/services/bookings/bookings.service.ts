@@ -45,7 +45,7 @@ export class BookingsService {
   };
   constructor(private http: HttpClient) { }
 
-  mapBookings(data: any[], colors: any): any[] {
+  mapBookings(data: any[]): any[] {
     return data.map(item => {
       let startDate = moment.utc(item.start).tz('Europe/Athens').toDate();
       let endDate = moment.utc(item.end).tz('Europe/Athens').toDate();;
@@ -54,14 +54,14 @@ export class BookingsService {
         start: startDate,
         end: endDate,
         draggable: false,
-        color: { ...colors[item.color] },
+        color: { ...this.colors[item.color] },
       };
     });
   };
   
   getBookings(req: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getBookings', req).pipe(map((data: any) => {
-      const resp = {bookings: this.mapBookings(data.bookings, this.colors), total: data.total};
+      const resp = {bookings: this.mapBookings(data.bookings), total: data.total};
       return resp;
     }))
   }
@@ -74,7 +74,7 @@ export class BookingsService {
     return this.http.post<any>('http://localhost:8000/api/getConflicts', req).pipe(map((data: any) => {
       const resp = data
       for (const item of resp.data) {
-        item.bookings = this.mapBookings(item.bookings, this.colors);
+        item.bookings = this.mapBookings(item.bookings);
       }
       return resp
     }))
@@ -90,6 +90,7 @@ export class BookingsService {
   }
 
   resolveConflict(req: any): Observable<any> {
+    console.log(req)
     return this.http.post<any>('http://localhost:8000/api/resolveConflict', req)
   }
   resolveRecurringConflict(req: any): Observable<any> {
@@ -98,7 +99,7 @@ export class BookingsService {
 
   getActiveBookings(req:any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/getActiveBookings', req).pipe(map((data: any) => {
-      const resp = this.mapBookings(data, this.colors);
+      const resp = this.mapBookings(data);
       return resp;        
     }))
   }
