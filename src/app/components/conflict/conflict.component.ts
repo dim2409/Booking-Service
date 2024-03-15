@@ -56,7 +56,6 @@ export class ConflictComponent implements OnInit {
   constructor(private bookingsService: BookingsService, private dialogService: DialogService,) { }
 
   ngOnInit() {
-    console.log(this.conflictGroup)
     this.conflictGroup.bookings.forEach((booking: any) => {
       booking.resolved = false;
       booking.toKeep = false;

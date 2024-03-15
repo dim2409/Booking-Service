@@ -58,7 +58,6 @@ export class BookingsService {
   }
 
   resolveConflict(req: any): Observable<any> {
-    console.log(req)
     return this.http.post<any>('http://localhost:8000/api/resolveConflict', req)
   }
   resolveRecurringConflict(req: any): Observable<any> {
