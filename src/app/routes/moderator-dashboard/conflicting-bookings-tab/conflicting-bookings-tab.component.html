@@ -1,25 +1,27 @@
 <!-- Filters -->
 <app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms"></app-filters>
 <!-- Conflicts -->
-<div class="moderator-list-container">
-    <div class="moderator-list-title">
-        Normal Conflicts
+<div class="tab">
+    <div class="moderator-list-container">
+        <div class="moderator-list-title">
+            Normal Conflicts
+        </div>
+        <!-- Paginator -->
+        <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+            (page)="onPageChange($event)">
+        </mat-paginator>
+        <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="false" (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
     </div>
-    <!-- Paginator -->
-    <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-        (page)="onPageChange($event)">
-    </mat-paginator>
-    <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="false" (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
-</div>
-
-<!-- Recurring Conflicts -->
-<div class="moderator-list-container">
-    <div class="moderator-list-title">
-        Recurring Conflicts
+    
+    <!-- Recurring Conflicts -->
+    <div class="moderator-list-container">
+        <div class="moderator-list-title">
+            Recurring Conflicts
+        </div>
+        <!-- Paginator -->
+        <mat-paginator [length]="recurringTotalItems" [pageSizeOptions]="recurringPageSizeOptions" [pageSize]="10"
+            (page)="onRecurringPageChange($event)">
+        </mat-paginator>
+        <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true" (bookingUpdated)="updateBooking($event)" *ngFor="let group of recurringConflicts"></app-conflict>
     </div>
-    <!-- Paginator -->
-    <mat-paginator [length]="recurringTotalItems" [pageSizeOptions]="recurringPageSizeOptions" [pageSize]="10"
-        (page)="onRecurringPageChange($event)">
-    </mat-paginator>
-    <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true" (bookingUpdated)="updateBooking($event)" *ngFor="let group of recurringConflicts"></app-conflict>
 </div>

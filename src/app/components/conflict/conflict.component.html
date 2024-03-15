@@ -32,7 +32,8 @@
                     <mat-card-header>
                         <mat-card-title>     
                             <p class="title-text">
-                                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': booking?.color?.primary}"></i>
+                                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': booking?.color}" *ngIf="!isRecurring"></i>
+                                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of conflictGroup.conflictingRooms"></i>
                                 {{booking.title}}
                             </p>
                         </mat-card-title>

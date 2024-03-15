@@ -12,37 +12,6 @@ import * as moment from 'moment-timezone';
 })
 export class BookingsService {
 
-
-  colors: Record<string, EventColor> = {
-    blue: {
-      primary: '#86b6f6',
-      secondary: '#46B95C',
-    },
-    pink: {
-      primary: '#a393e8',
-      secondary: '#B99646',
-    },
-    green: {
-      primary: '#6edec5',
-      secondary: '#A3B946',
-    },
-    red: {
-      primary: '#f66a6a',
-      secondary: '#B94646',
-    },
-    orange: {
-      primary: '#f6b26a',
-      secondary: '#B94646',
-    },
-    purple: {
-      primary: '#b66af6',
-      secondary: '#B94646',
-    },
-    yellow: {
-      primary: '#edce1c',
-      secondary: '#B94646',
-    }
-  };
   constructor(private http: HttpClient) { }
 
   mapBookings(data: any[]): any[] {
@@ -54,7 +23,6 @@ export class BookingsService {
         start: startDate,
         end: endDate,
         draggable: false,
-        color: { ...this.colors[item.color] },
       };
     });
   };
@@ -118,7 +86,6 @@ export class BookingsService {
             start: startDate,
             end: endDate,
             draggable: false,
-            color: { ...this.colors[item.color] },
           }
         })
         resolve(resp);

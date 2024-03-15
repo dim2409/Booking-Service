@@ -1,7 +1,13 @@
-<mat-form-field class="col-2 mt-5">
+<!-- <mat-form-field class="col-2 mt-5">
     <mat-label>Select Room</mat-label>
     <mat-select (selectionChange)="selectRoom($event)">
         <mat-option value="">All Rooms</mat-option>
         <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
     </mat-select>
-</mat-form-field>
+</mat-form-field> -->
+<div class="filter-container">
+    <mat-chip-listbox aria-label="Room selection" multiple #roomList>
+        <mat-chip-option value="">All Rooms</mat-chip-option>
+        <mat-chip-option *ngFor="let room of rooms" [value]="room.id" [selected]="room.selected" (click)="toggleSelect(room)">{{room.name}}</mat-chip-option>
+    </mat-chip-listbox>
+</div>

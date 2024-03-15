@@ -1,3 +1,9 @@
+/* @import 'conflicting-bookings-tab/conflicting-bookings-tab.component.less';
+@import 'recurring-bookings-tab/recurring-bookings-tab.component.less';
+@import 'normal-bookings-tab/normal-bookings-tab.component.less'; */
+.tab {
+  margin-left: 20vw;
+}
 .conflict-container {
   border-radius: 0.5rem;
   border-style: solid;

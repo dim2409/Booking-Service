@@ -11,7 +11,8 @@
     <div class="recurring">
       <mat-card *ngFor="let group of recurrings">
         <mat-card-header>
-          <mat-card-title>
+          <mat-card-title>            
+            <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of group.rooms"></i>
             {{group.title}}
           </mat-card-title>
           <mat-card-subtitle>
