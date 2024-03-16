@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
 import dayGridPlugin from '@fullcalendar/daygrid';
 
@@ -13,4 +14,15 @@ export class AppComponent {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin]
   };
+  isModeratorRoute!: boolean;
+  constructor(private router: Router) { }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isModeratorRoute = event.url === '/moderator';
+      }
+    });
+  }
 }

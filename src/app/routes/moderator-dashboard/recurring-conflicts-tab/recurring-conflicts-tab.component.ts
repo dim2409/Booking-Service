@@ -13,40 +13,41 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
-
+import { ConflictComponent } from "../../../components/conflict/conflict.component";
 @Component({
-  selector: 'app-normal-bookings-tab',
+  selector: 'app-recurring-conflicts-tab',
   standalone: true,
-  templateUrl: './normal-bookings-tab.component.html',
-  styleUrl: './normal-bookings-tab.component.less',
   imports: [
-    MatTabsModule, 
-    BookingListComponent, 
-    MatOptionModule, 
-    CommonModule, 
-    MatExpansionModule, 
-    DayNamePipe, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatDatepickerModule, 
-    MatPaginatorModule, 
-    FiltersComponent
-  ]
+    MatTabsModule,
+    BookingListComponent,
+    MatOptionModule,
+    CommonModule,
+    MatExpansionModule,
+    DayNamePipe,
+    MatCardModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatPaginatorModule,
+    FiltersComponent,
+    ConflictComponent
+  ],
+  templateUrl: './recurring-conflicts-tab.component.html',
+  styleUrl: './recurring-conflicts-tab.component.less'
 })
-export class NormalBookingsTabComponent implements OnInit {
-
-  
+export class RecurringConflictsTabComponent {
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
-  @Input() rooms!: any;
+
+  conflicts: any;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   
   pageSizeOptions: number[] = [10, 25, 50];
   totalItems: number = 0;
 
-  bookings!: any[];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
+  @Input() rooms!: any[];
   
   buttons = [
     {
@@ -66,6 +67,7 @@ export class NormalBookingsTabComponent implements OnInit {
       action: 'cancelBooking',
     },
   ]
+
   req: any = {
     page: 1,
     perPage: 10,
@@ -85,11 +87,12 @@ export class NormalBookingsTabComponent implements OnInit {
     this.getData();
   }
   getData() {
-    this.BookingsService.getBookings(this.req).subscribe((resp: any) => {
-      this.bookings = resp.bookings;
+    this.BookingsService.getRecurringConflicts(this.req).subscribe((resp: any) => {
+      this.conflicts = resp.data;
       this.totalItems = resp.total
     })
   }
+  
   onPageChange(event: PageEvent): void {
     // Check if the page index has changed
     if (event.pageIndex + 1 !== this.req.page) {
@@ -103,7 +106,7 @@ export class NormalBookingsTabComponent implements OnInit {
     this.getData();
   }
 
-  updateBooking(event: Event) {
+  updateBooking(event: any) {
     this.bookingUpdate.emit(event);
   }
 }

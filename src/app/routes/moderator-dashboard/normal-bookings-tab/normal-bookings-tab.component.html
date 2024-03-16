@@ -1,13 +1,15 @@
 <!-- Filters -->
-<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms"></app-filters>
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="true" [monthsFilter]="true"></app-filters>
 <!-- Non-Conflicts -->
-<div class="moderator-list-container">
-    <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-        (page)="onPageChange($event)">
-    </mat-paginator>
-    <div class="moderator-list-title">
-        Non-Conflicting Bookings
+<div class="tab">    
+    <div class="moderator-list-container">
+        <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+            (page)="onPageChange($event)">
+        </mat-paginator>
+        <div class="moderator-list-title">
+            Non-Conflicting Bookings
+        </div>
+        <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
+            (bookingUpdated)="updateBooking($event)"></app-booking-list>
     </div>
-    <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-        (bookingUpdated)="updateBooking($event)"></app-booking-list>
 </div>

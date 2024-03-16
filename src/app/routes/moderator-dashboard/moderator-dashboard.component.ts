@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,20 +11,21 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NormalBookingsTabComponent } from "./normal-bookings-tab/normal-bookings-tab.component";
 import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurring-bookings-tab.component";
 import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conflicting-bookings-tab.component";
+import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurring-conflicts-tab.component";
 @Component({
-  selector: 'app-moderator-dashboard',
-  standalone: true,
-  templateUrl: './moderator-dashboard.component.html',
-  styleUrl: './moderator-dashboard.component.less',
-  imports: [MatTabsModule,
-    BookingListComponent,
-    CommonModule,
-    MatExpansionModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    NormalBookingsTabComponent,
-    RecurringBookingsTabComponent,
-    ConflictingBookingsTabComponent]
+    selector: 'app-moderator-dashboard',
+    standalone: true,
+    templateUrl: './moderator-dashboard.component.html',
+    styleUrl: './moderator-dashboard.component.less',
+    imports: [MatTabsModule,
+        BookingListComponent,
+        CommonModule,
+        MatExpansionModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        NormalBookingsTabComponent,
+        RecurringBookingsTabComponent,
+        ConflictingBookingsTabComponent, RecurringConflictsTabComponent]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -32,13 +34,21 @@ export class ModeratorDashboardComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number = 1;
   pageSize: number = 10; // Default page size
+  rooms: any;
 
-  constructor(private BookingsService: BookingsService, private dialogService: DialogService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
   @ViewChild(NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
   @ViewChild(ConflictingBookingsTabComponent) conflictingBookingsTabComponent!: ConflictingBookingsTabComponent;
   ngOnInit(): void {
+    document.body.classList.add('body-overflow');
+    this.getRooms();
+  }
+  getRooms() {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+      this.rooms = resp;
+    });
   }
 
   updateBooking(data: any) {

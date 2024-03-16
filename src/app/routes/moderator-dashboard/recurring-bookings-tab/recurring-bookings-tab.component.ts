@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { DayNamePipe } from "../../../pipes/day-name.pipe";
 import { FiltersComponent } from "../../../components/filters/filters.component";
@@ -9,7 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
@@ -24,7 +24,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
   imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule]
 })
 export class RecurringBookingsTabComponent implements OnInit {
-  rooms!: any[];
+  @Input() rooms!: any[];
   
   buttons = [
     {
@@ -59,35 +59,42 @@ export class RecurringBookingsTabComponent implements OnInit {
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, ) { }
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  req: any = {
+    page: 1,
+    perPage: 10,
+    user_id: 2
+  }
   ngOnInit(): void {
     this.getData();
-    this.getRooms();
+  }
+
+  filterUpdated(event: any) {
+    this.req.room_id = event.room_id;
+    this.req.status = event.status;
+    this.req.start = event.start;
+    this.req.page = 1;
+    this.paginator.pageIndex = 0
+    this.getData();
   }
   getData() {
-    let roomArray: number[] = [];
-    this.selectedRoom == "" ? roomArray = [] : roomArray = [this.selectedRoom];
-    this.BookingsService.getRecurringBookings({ room_id: roomArray, page: this.currentPage, perPage: this.pageSize, user_id: 2 }).subscribe((resp: any) => {
+    this.BookingsService.getRecurringBookings(this.req).subscribe((resp: any) => {
       this.recurrings = resp.recurrings;      
       this.totalItems = resp.total
     });
 
   }
-
-  getRooms() {
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
-      this.rooms = resp;
-    });
-  }
   onPageChange(event: PageEvent): void {
     // Check if the page index has changed
-    if (event.pageIndex + 1 !== this.currentPage) {
-      this.currentPage = event.pageIndex + 1;
+    if (event.pageIndex + 1 !== this.req.page) {
+      this.req.page = event.pageIndex + 1;
     }
 
     // Check if the page size has changed
-    if (event.pageSize !== this.pageSize) {
-      this.pageSize = event.pageSize;
+    if (event.pageSize !== this.req.perPage) {
+      this.req.perPage = event.pageSize;
     }
     this.getData();
   }
@@ -96,8 +103,4 @@ export class RecurringBookingsTabComponent implements OnInit {
     this.bookingUpdate.emit(event);
   }
 
-  filterUpdated(event: any) {
-    this.selectedRoom = event;
-    this.getData();
-  }
 }

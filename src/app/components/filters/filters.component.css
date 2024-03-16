@@ -1,5 +1,41 @@
-.filter-container {
+.filters-container {
   position: absolute;
+  top: 0;
   left: 0;
-  width: 10vw;
+  width: 15vw;
+  height: 100vh;
+  padding-left: 0.5vw;
+  padding-top: 0.5vw;
+}
+.filters-container .filter-container {
+  margin-top: 2vh;
+}
+.filters-container .filter-container .filter-title {
+  display: flex;
+  justify-content: space-between;
+}
+.filters-container .filter-container .filter-title .filter-controls {
+  font-size: medium;
+  color: #586d6eb0;
+}
+.filters-container .filter-container .filter-title .filter-controls .filter-control {
+  margin-left: 0.5vw;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.filters-container .filter-container .filter-title .filter-controls .filter-control:hover {
+  color: #212529;
+}
+.filters-container .filter-container .filter {
+  display: flex;
+  margin-left: 0.5vw;
+}
+::ng-deep .mat-mdc-chip-graphic {
+  display: none !important;
+}
+::ng-deep .mat-mdc-chip-action-label {
+  margin-left: 0.6vw;
+}
+.mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
+  background-color: #000000b0;
 }

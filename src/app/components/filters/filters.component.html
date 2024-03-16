@@ -5,9 +5,46 @@
         <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
     </mat-select>
 </mat-form-field> -->
-<div class="filter-container">
-    <mat-chip-listbox aria-label="Room selection" multiple #roomList>
-        <mat-chip-option value="">All Rooms</mat-chip-option>
-        <mat-chip-option *ngFor="let room of rooms" [value]="room.id" [selected]="room.selected" (click)="toggleSelect(room)">{{room.name}}</mat-chip-option>
-    </mat-chip-listbox>
+<div class="filters-container">
+    <div class="filter-container">
+        <p class="filter-title">
+            Rooms
+            <span class="filter-controls">                
+                <i class="fa-solid fa-asterisk filter-control"></i>
+                <i class="fa-solid fa-arrow-rotate-right filter-control"></i>
+            </span>
+        </p>
+        <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
+            <mat-chip-option *ngFor="let room of rooms" [value]="room.id" [selected]="room.selected"
+                (click)="toggleSelect(room)">{{room.name}}</mat-chip-option>
+        </mat-chip-listbox>
+    </div>
+
+    <div class="filter-container" *ngIf="this.status">
+        <p class="filter-title">
+            Status
+            <span class="filter-controls">                
+                <i class="fa-solid fa-asterisk filter-control"></i>
+                <i class="fa-solid fa-arrow-rotate-right filter-control"></i>
+            </span>
+        </p>
+        <mat-chip-listbox aria-label="Room selection" multiple #statusList class="filter">
+            <mat-chip-option *ngFor="let chip of statusChips" [value]="chip.value" [selected]="chip.selected"
+                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
+        </mat-chip-listbox>
+    </div>
+
+    <div class="filter-container" *ngIf="monthsFilter">
+        <p class="filter-title">
+            Months
+            <span class="filter-controls">                
+                <i class="fa-solid fa-asterisk filter-control"></i>
+                <i class="fa-solid fa-arrow-rotate-right filter-control"></i>
+            </span>
+        </p>
+        <mat-chip-listbox aria-label="Room selection" multiple #dateList class="filter">
+            <mat-chip-option *ngFor="let chip of months" [value]="chip.value" [selected]="chip.selected"
+                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
+        </mat-chip-listbox>
+    </div>
 </div>

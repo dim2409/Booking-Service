@@ -1,9 +1,9 @@
 <!-- Filters -->
-<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms"></app-filters>
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="true"></app-filters>
 <!-- Recurring -->
-<div class="moderator-list-container">
+<div class="moderator-list-container tab">
   <!-- Paginator -->
-  <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+  <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
     (page)="onPageChange($event)">
   </mat-paginator>
   <div class="moderator-list-title">
