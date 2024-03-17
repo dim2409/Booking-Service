@@ -3,8 +3,7 @@
         <p class="filter-title">
             Rooms
             <span class="filter-controls">                
-                <i (click)="filterControl('all', rooms)" class="fa-solid fa-asterisk filter-control"></i>
-                <i (click)="filterControl('clear', rooms)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+                <i (click)="filterControl(rooms, roomList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
             </span>
         </p>
         <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
@@ -17,8 +16,7 @@
         <p class="filter-title">
             Status
             <span class="filter-controls">                
-                <i (click)="filterControl('all', statusChips)" class="fa-solid fa-asterisk filter-control"></i>
-                <i (click)="filterControl('clear', statusChips)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+                <i (click)="filterControl(statusChips, statusList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
             </span>
         </p>
         <mat-chip-listbox aria-label="Room selection" multiple #statusList class="filter">
@@ -31,8 +29,7 @@
         <p class="filter-title">
             Months
             <span class="filter-controls">                
-                <i (click)="filterControl('all', months)" class="fa-solid fa-asterisk filter-control"></i>
-                <i (click)="filterControl('clear', months)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+                <i (click)="filterControl(months, dateList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
             </span>
         </p>
         <mat-chip-listbox aria-label="Room selection" multiple #dateList class="filter">

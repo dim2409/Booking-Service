@@ -115,19 +115,11 @@ export class FiltersComponent implements OnInit {
     this.filterUpdated.emit(req);
   }
 
-  filterControl(action: String, chips: any[]) {
-    switch(action){
-      case 'all':
-       chips.forEach((x)=>{
-         x.selected = true
-       })
-       break;
-       case 'clear':
-        chips.forEach((x)=>{
-          x.selected = false
-        })
-        break;
-    }
+  filterControl(chips: any[], list: any) {
+    chips.forEach((x) => {
+      x.selected = false
+    })
+    list.value = [];
     this.updateChips();
   }
 
