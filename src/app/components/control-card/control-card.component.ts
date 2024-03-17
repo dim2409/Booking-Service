@@ -29,6 +29,8 @@ export class ControlCardComponent {
   @Output() selectAllEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() sorterUpdated: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   @Input() buttons!: any;
   @Input() selectCount!: number;
   @Input() params!: any;
@@ -68,7 +70,6 @@ export class ControlCardComponent {
   }
 
   resetPageIndex() {
-    this.pageIndex = 0;
-    console.log(this.pageIndex)
+    this.paginator.pageIndex = 0;
   }
 }
