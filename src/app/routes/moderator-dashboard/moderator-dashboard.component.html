@@ -1,5 +1,8 @@
 <div class="main mt-5">
   <mat-tab-group>
+    <mat-tab label="Normal Bookings"> 
+      <app-normal-bookings-tab (bookingUpdate)="updateBooking($event)" [rooms]="rooms"></app-normal-bookings-tab>
+    </mat-tab>
     <mat-tab label="Conflicts">
       <app-conflicting-bookings-tab (bookingUpdate)="updateBooking($event)" [rooms]="rooms"></app-conflicting-bookings-tab>
     </mat-tab>
@@ -8,9 +11,6 @@
     </mat-tab>
     <mat-tab label="Recurring Bookings">      
       <app-recurring-bookings-tab (bookingUpdate)="updateBooking($event)"  [rooms]="rooms"></app-recurring-bookings-tab>
-    </mat-tab>
-    <mat-tab label="Normal Bookings"> 
-      <app-normal-bookings-tab (bookingUpdate)="updateBooking($event)" [rooms]="rooms"></app-normal-bookings-tab>
     </mat-tab>
   </mat-tab-group>
 </div>

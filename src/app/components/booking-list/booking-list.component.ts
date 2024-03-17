@@ -29,4 +29,7 @@ export class BookingListComponent {
   buttonAction(action: string, booking: any) {
     this.bookingUpdated.emit({action: action, booking: booking});
   }
+  toggleSelect(booking: any) {
+    booking.selected = !booking.selected;
+  }
 }

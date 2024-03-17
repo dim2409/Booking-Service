@@ -5,10 +5,50 @@
 }
 ::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
     height: 100vh;
-    overflow: scroll!important;
     padding-left: 1vw;
     padding-right: 1vw;
 }
-.moderator-list-container {    
-    padding: 5vw;
+::ng-deep .mat-mdc-tab-body-content {
+    padding-bottom: 7rem;
+}
+.conflict-container {
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #f34248b0;
+    padding: 0.2rem;
+
+    .conflict {
+        color: @primary-color;
+        background-color: #ff00004d;
+        border-style: solid;
+
+        .time {
+            color: @highlight-color;
+        }
+
+        .mat-mdc-card-header {
+            align-items: center;
+        }
+    }
+}
+
+.moderator-list-container {
+
+    .moderator-list-title {
+        margin-block: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .mat-expansion-panel-header {
+        font-size: unset;
+
+        .mat-expansion-panel-header-title {
+            margin-right: 0;
+        }
+
+        .mat-expansion-panel-header-description {
+            margin-right: 450px;
+            color: @highlight-color;
+        }
+    }
 }

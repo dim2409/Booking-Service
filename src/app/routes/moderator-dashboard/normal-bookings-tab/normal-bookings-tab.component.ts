@@ -13,6 +13,7 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 
 @Component({
   selector: 'app-normal-bookings-tab',
@@ -20,34 +21,40 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
   templateUrl: './normal-bookings-tab.component.html',
   styleUrl: './normal-bookings-tab.component.less',
   imports: [
-    MatTabsModule, 
-    BookingListComponent, 
-    MatOptionModule, 
-    CommonModule, 
-    MatExpansionModule, 
-    DayNamePipe, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatDatepickerModule, 
-    MatPaginatorModule, 
-    FiltersComponent
+    MatTabsModule,
+    BookingListComponent,
+    MatOptionModule,
+    CommonModule,
+    MatExpansionModule,
+    DayNamePipe,
+    MatCardModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatPaginatorModule,
+    FiltersComponent,
+    ControlCardComponent
   ]
 })
 export class NormalBookingsTabComponent implements OnInit {
 
-  
+
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Input() rooms!: any;
-
+  someSelect!: boolean;
+  
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
-
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  pageSizeOptions: number[] = [10, 25, 50];
-  totalItems: number = 0;
+  params =
+    {
+      pageSizeOptions: [10, 25, 50],
+      totalItems: 0
+    };
+
 
   bookings!: any[];
-  
+
   buttons = [
     {
       icon: 'fa-expand',
@@ -87,7 +94,7 @@ export class NormalBookingsTabComponent implements OnInit {
   getData() {
     this.BookingsService.getBookings(this.req).subscribe((resp: any) => {
       this.bookings = resp.bookings;
-      this.totalItems = resp.total
+      this.params.totalItems = resp.total
     })
   }
   onPageChange(event: PageEvent): void {

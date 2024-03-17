@@ -7,23 +7,3 @@
   padding-left: 1vw;
   padding-right: 1vw;
 }
-.moderator-list-container {
-  padding: 5vw;
-}
-.moderator-list-container {
-  margin: 2rem;
-}
-.moderator-list-container .moderator-list-title {
-  margin-block: 2rem;
-  font-size: 1.5rem;
-}
-.moderator-list-container .mat-expansion-panel-header {
-  font-size: unset;
-}
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-title {
-  margin-right: 0;
-}
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
-  margin-right: 450px;
-  color: #f14c38;
-}

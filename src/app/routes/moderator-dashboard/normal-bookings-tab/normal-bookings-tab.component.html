@@ -6,9 +6,8 @@
         <div class="moderator-list-title">
             Non-Conflicting Bookings
         </div>
-        <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-            (page)="onPageChange($event)">
-        </mat-paginator>
+       
+        <app-control-card [buttons]="buttons" [someSelect]="someSelect" [params]="params" (onPageChange)="onPageChange($event)"></app-control-card>
         <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
             (bookingUpdated)="updateBooking($event)"></app-booking-list>
     </div>

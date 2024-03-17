@@ -1,7 +1,12 @@
 <div class="container">
-    <div *ngFor="let booking of bookings" class="m-2">
-        <mat-card ngClass="{{booking.conflict_id ? 'conflict' : ''}}">
+    <div *ngFor="let booking of bookings" class="mt-2">
+        <mat-card>
             <div class="row w-100 justify-content-end position-absolute py-2">
+                <div (click)="toggleSelect(booking)" class="select-container">
+                    <button mat-mini-fab  class="select-all-icon">
+                        <i [ngClass]="booking.selected?'fa-solid fa-circle':'fa-regular fa-circle'"></i>
+                    </button>
+                </div>
                 <ng-container *ngFor="let button of buttons">
                     <button mat-mini-fab *ngIf="!(booking.status != 0 && button.icon == 'fa-check')"
                         (click)="buttonAction(button.action, booking)" class="mx-1 button-color"><i

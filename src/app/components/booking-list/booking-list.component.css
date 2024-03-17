@@ -30,3 +30,16 @@
 .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
 }
+.select-container {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+.select-container .select-all-icon {
+  font-size: medium;
+  background: #e0e0e0;
+  border-radius: 100%;
+  padding: 45%;
+  color: #000000b0;
+  transition: ease-in 0.1s;
+}

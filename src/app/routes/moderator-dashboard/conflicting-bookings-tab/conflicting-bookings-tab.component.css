@@ -1,40 +1,9 @@
-/* @import 'conflicting-bookings-tab/conflicting-bookings-tab.component.less';
-@import 'recurring-bookings-tab/recurring-bookings-tab.component.less';
-@import 'normal-bookings-tab/normal-bookings-tab.component.less'; */
 .tab {
   margin-left: 20vw;
 }
-.conflict-container {
-  border-radius: 0.5rem;
-  border-style: solid;
-  border-color: #f34248b0;
-  padding: 0.2rem;
-}
-.conflict-container .conflict {
-  color: #176b87;
-  background-color: #ff00004d;
-  border-style: solid;
-}
-.conflict-container .conflict .time {
-  color: #f14c38;
-}
-.conflict-container .conflict .mat-mdc-card-header {
-  align-items: center;
-}
-.moderator-list-container {
-  margin: 2rem;
-}
-.moderator-list-container .moderator-list-title {
-  margin-block: 2rem;
-  font-size: 1.5rem;
-}
-.moderator-list-container .mat-expansion-panel-header {
-  font-size: unset;
-}
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-title {
-  margin-right: 0;
-}
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
-  margin-right: 450px;
-  color: #f14c38;
+::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
+  height: 100vh;
+  overflow: scroll!important;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }

@@ -1,0 +1,57 @@
+.controls-container {
+  height: 15vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.controls-container .actions {
+  display: flex;
+  width: 20vw;
+  justify-content: flex-end;
+  margin-right: 2vw;
+}
+.controls-container .actions .control-buttons {
+  margin-left: 2vw;
+  right: 0.1vw;
+  display: flex;
+  flex-direction: column;
+}
+.controls-container .actions .control-buttons .buttons {
+  margin-top: 0.5vh;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.controls-container .actions .select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.controls-container .actions .select .select-container {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+.controls-container .actions .select .select-container .select-all-icon {
+  font-size: medium;
+  background: #e0e0e0;
+  border-radius: 100%;
+  padding: 45%;
+  color: #000000b0;
+  transition: ease-in 0.1s;
+}
+.controls-container .actions .mat-mdc-chip-action-label {
+  margin-left: 0 !important;
+}
+.controls-container .actions ::ng-deep .mat-mdc-chip-graphic {
+  display: none !important;
+}
+.controls-container .actions ::ng-deep .mat-mdc-chip-action-label {
+  margin-left: 0.6vw !important;
+}
+.controls-container .actions .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
+  background-color: #000000b0;
+}
+.button-color {
+  background-color: #176b87;
+}
