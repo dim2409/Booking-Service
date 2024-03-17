@@ -110,7 +110,7 @@ export class FiltersComponent implements OnInit {
     let req = {
       room_id: this.roomList.value,
       start: this.dateList?.value ?? '',
-      status: this.statusList.value
+      status: this.statusList?.value ?? '',
     }
     this.filterUpdated.emit(req);
     console.log(req);

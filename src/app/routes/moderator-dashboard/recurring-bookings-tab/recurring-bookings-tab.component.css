@@ -7,6 +7,9 @@
   padding-left: 1vw;
   padding-right: 1vw;
 }
+.moderator-list-container {
+  padding: 5vw;
+}
 .recurring .mat-mdc-card {
   margin-block: 3vh;
   width: 70vw;
@@ -21,4 +24,8 @@
 }
 .recurring .mat-mdc-card .button-color {
   background-color: #176b87;
+}
+.moderator-list-title {
+  margin-block: 2rem;
+  font-size: 1.5rem;
 }

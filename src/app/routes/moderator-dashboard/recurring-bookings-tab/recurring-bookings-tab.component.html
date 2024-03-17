@@ -3,12 +3,12 @@
 <!-- Recurring -->
 <div class="moderator-list-container tab">
   <!-- Paginator -->
-  <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-    (page)="onPageChange($event)">
-  </mat-paginator>
   <div class="moderator-list-title">
     Recurring Bookings
     <div class="recurring">
+      <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
+        (page)="onPageChange($event)">
+      </mat-paginator>
       <mat-card *ngFor="let group of recurrings">
         <mat-card-header>
           <mat-card-title>            
