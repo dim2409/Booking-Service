@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-booking-list',
   standalone: true,
@@ -26,9 +26,9 @@ export class BookingListComponent {
   @Input() buttons: any[] = [];
   @Input() removeConflicts: boolean = false;
   constructor(private BookingsService: BookingsService) { }
-  
+
   buttonAction(action: string, booking: any) {
-    this.bookingUpdated.emit({action: action, booking: booking});
+    this.bookingUpdated.emit({ action: action, selectedBookings: [booking.id], type: 'normal' , individualAction: true, booking: booking});
   }
   toggleSelect(booking: any) {
     booking.selected = !booking.selected;

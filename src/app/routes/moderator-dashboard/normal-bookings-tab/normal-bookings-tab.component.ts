@@ -113,8 +113,16 @@ export class NormalBookingsTabComponent implements OnInit {
     this.getData();
   }
 
-  updateBooking(event: Event) {
-    this.bookingUpdate.emit(event);
+  updateBooking(event: any) {
+    let selectedBookings: any[] = [];
+    if(!event.individualAction){
+      selectedBookings = this.bookings
+      .filter((booking: any) => booking.selected)
+      .map((booking: any) => booking.id);
+    }else{
+      selectedBookings = event.selectedBookings;
+    }
+    this.bookingUpdate.emit({selectedBookings, ...event, type: 'normal'});
   }
 
   selectAll(event: any) {

@@ -52,13 +52,13 @@ export class ModeratorDashboardComponent implements OnInit {
   }
 
   updateBooking(data: any) {
+    console.log(data);
     switch (data.action) {
       case 'approveBooking':
         {
           this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this booking?').subscribe((resp: any) => {
             if (resp) {
-              const idArray: number[] = [data.booking.id]
-              this.BookingsService.approveBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
+              this.BookingsService.approveBooking({ id: data.selectedBookings, type: data.type }).subscribe((resp: any) => {
                 this.dialogService.openSuccessDialog('Booking Status Updated');
                 this.updateTabs();
               })
@@ -81,7 +81,7 @@ export class ModeratorDashboardComponent implements OnInit {
           if (!resp) { return; }
           const idArray: number[] = [data.booking.id]
 
-          this.BookingsService.cancelBooking({ id: idArray, type: data.booking.type }).subscribe((resp: any) => {
+          this.BookingsService.cancelBooking({ id: data.selectedBookings, type: data.type }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Booking Canceled');
             this.updateTabs();
           })
