@@ -7,8 +7,9 @@
             Non-Conflicting Bookings
         </div>
        
-        <app-control-card [buttons]="buttons" [someSelect]="someSelect" [params]="params" (onPageChange)="onPageChange($event)"></app-control-card>
+        <app-control-card [buttons]="buttons" [selectCount]="selectCount" [params]="params" (onPageChange)="onPageChange($event)" 
+            (selectAllEvent)="selectAll($event)" (sorterUpdated)="sorterUpdated($event)" #controlCard></app-control-card>
         <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-            (bookingUpdated)="updateBooking($event)"></app-booking-list>
+            (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-booking-list>
     </div>
 </div>

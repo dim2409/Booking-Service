@@ -40,12 +40,15 @@ export class NormalBookingsTabComponent implements OnInit {
 
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Input() rooms!: any;
-  someSelect!: boolean;
-  
+
+  @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
+
+  pageIndex: number = 0;
+
+  selectCount: number = 0;
+
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
-  
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  
+
   params =
     {
       pageSizeOptions: [10, 25, 50],
@@ -84,11 +87,11 @@ export class NormalBookingsTabComponent implements OnInit {
   }
 
   filterUpdated(event: any) {
-    this.req.room_id = event.room_id;
-    this.req.status = event.status;
-    this.req.start = event.start;
+    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
+    event.status !== '' ? this.req.status = event.status : delete this.req.status;
+    event.start !== '' ? this.req.start = event.start : delete this.req.start;
     this.req.page = 1;
-    this.paginator.pageIndex = 0
+    this.controlCard.resetPageIndex();   
     this.getData();
   }
   getData() {
@@ -112,5 +115,30 @@ export class NormalBookingsTabComponent implements OnInit {
 
   updateBooking(event: Event) {
     this.bookingUpdate.emit(event);
+  }
+
+  selectAll(event: any) {
+    this.bookings.forEach((booking: any) => {
+      booking.selected = event
+    })
+    this.selectCount = 0
+  }
+  selectBooking(event: any) {
+    if (event) {
+      this.selectCount++
+    } else {
+      this.selectCount--
+    }
+  }
+  sorterUpdated(event: any) {
+    if(event.selected){
+      this.req.sortBy = event.value
+      this.req.sortOrder = event.asc ? 'asc' : 'desc'
+    }else{
+      delete this.req.sortBy;
+      delete this.req.sortOrder;
+    }    
+    this.req.page = 1;     
+    this.getData();
   }
 }

@@ -108,11 +108,27 @@ export class FiltersComponent implements OnInit {
   }
   updateChips() {
     let req = {
-      room_id: this.roomList.value,
+      room_id: this.roomList?.value ?? '',
       start: this.dateList?.value ?? '',
       status: this.statusList?.value ?? '',
     }
     this.filterUpdated.emit(req);
-    console.log(req);
   }
+
+  filterControl(action: String, chips: any[]) {
+    switch(action){
+      case 'all':
+       chips.forEach((x)=>{
+         x.selected = true
+       })
+       break;
+       case 'clear':
+        chips.forEach((x)=>{
+          x.selected = false
+        })
+        break;
+    }
+    this.updateChips();
+  }
+
 }

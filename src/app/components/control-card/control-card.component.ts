@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 import {MatChipsModule} from '@angular/material/chips';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-control-card',
   standalone: true,
@@ -20,33 +20,55 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 })
 export class ControlCardComponent {
   chips = [
-    {label: 'Day created', value: 'day_created',selected: false},
-    {label: 'Alphabetical', value: 'Alphabetical',selected: false},
-    {label: 'Date', value: 'date',selected: false},
+    {label: 'Day created', value: 'day_created',selected: false, asc: false},
+    {label: 'Alphabetical', value: 'title',selected: false, asc: false},
+    {label: 'Date', value: 'start',selected: false, asc: false},
   ]
   @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
   @Output() onPageChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectAllEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sorterUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() buttons!: any;
-  @Input() someSelect!: boolean;
+  @Input() selectCount!: number;
   @Input() params!: any;
+  
 
   selectAll: boolean = false;
+  pageIndex!: number;
   buttonAction(action: string) {
     this.bookingUpdated.emit({action: action});
   }
-
+  
   toggleSelect(){
     this.selectAll = !this.selectAll
+    this.selectAllEvent.emit(this.selectAll)
   }
   toggleSorter(chip: any){
-    chip.selected = !chip.selected
+    console.log(chip.selected)
+    if(chip.selected){
+      if(!chip.asc){
+        chip.asc = true
+      }else{
+        chip.selected = false;
+        chip.asc = false
+      }
+    }else{
+      chip.selected = true;
+    }
     this.chips.filter((x)=>x.value != chip.value).forEach((x)=>{
       x.selected = false
     });
+    this.resetPageIndex()
+    this.sorterUpdated.emit(chip)
   }
 
   pageChange(event: PageEvent): void {
    this.onPageChange.emit(event)
+  }
+
+  resetPageIndex() {
+    this.pageIndex = 0;
+    console.log(this.pageIndex)
   }
 }

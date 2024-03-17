@@ -19,6 +19,7 @@ export class BookingListComponent {
   }
 
   @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() bookingSelected: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() bookings: any[] = [];
   @Input() rooms: any[] = [];
@@ -31,5 +32,6 @@ export class BookingListComponent {
   }
   toggleSelect(booking: any) {
     booking.selected = !booking.selected;
+    this.bookingSelected.emit(booking.selected);
   }
 }

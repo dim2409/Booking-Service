@@ -40,18 +40,24 @@
   color: #000000b0;
   transition: ease-in 0.1s;
 }
-.controls-container .actions .mat-mdc-chip-action-label {
+.controls-container .mat-mdc-chip-action-label {
   margin-left: 0 !important;
+  display: flex;
+  justify-content: start;
 }
-.controls-container .actions ::ng-deep .mat-mdc-chip-graphic {
+.controls-container ::ng-deep .mat-mdc-chip-graphic {
   display: none !important;
 }
-.controls-container .actions ::ng-deep .mat-mdc-chip-action-label {
-  margin-left: 0.6vw !important;
-}
-.controls-container .actions .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
+.controls-container .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
   background-color: #000000b0;
 }
 .button-color {
   background-color: #176b87;
+}
+.selected {
+  background-color: #000000b0 !important;
+}
+.selected .chip {
+  color: #e0e0e0 !important;
+  display: flex;
 }

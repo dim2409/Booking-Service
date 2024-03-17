@@ -51,27 +51,31 @@
             }
         }
 
-        .mat-mdc-chip-action-label {
-            margin-left: 0 !important;
-        }
+        
+    }
+    & .mat-mdc-chip-action-label {
+        margin-left: 0 !important;
+        display: flex;
+        justify-content: start;
+    }
 
-        ::ng-deep .mat-mdc-chip-graphic {
-            display: none !important;
-        }
+    & ::ng-deep .mat-mdc-chip-graphic {
+        display: none !important;
+    }
 
-        ::ng-deep .mat-mdc-chip-action-label {
-
-            margin-left: 0.6vw !important;
-        }
-
-        .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
-            background-color: #000000b0;
-        }
-
+    & .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
+        background-color: #000000b0;
     }
 
 }
 
 .button-color {
     background-color: @primary-color;
+}
+.selected{
+    background-color: #000000b0!important;    
+    .chip{
+        color: #e0e0e0!important;
+        display: flex;
+    }
 }

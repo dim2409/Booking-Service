@@ -1,9 +1,14 @@
 <div class="controls-container">
     <div>
         Sort by
-        <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
-            <mat-chip-option *ngFor="let chip of chips" [value]="chip.value" [selected]="chip.selected"
-                (click)="toggleSorter(chip)">{{chip.label}}</mat-chip-option>
+        <mat-chip-listbox aria-label="Room selection" multiple #roomList>
+            <mat-chip *ngFor="let chip of chips" [value]="chip.value" [ngClass]="chip.selected?'selected':''"
+                (click)="toggleSorter(chip)">
+                <div [ngStyle]="chip.asc ? {'align-items': 'flex-end'} : {'align-items': 'flex-start'}" class="chip">
+                    {{chip.label}}&nbsp;
+                    <i *ngIf="chip.selected" class="fa-solid" [ngClass]="chip.asc?'fa-sort-up':'fa-sort-down'"></i>
+                </div>
+            </mat-chip>
         </mat-chip-listbox>
     </div>
     <div class="actions">
@@ -11,7 +16,7 @@
             Select All
             <div (click)="toggleSelect()" class="select-container">
                 <button mat-mini-fab  class="select-all-icon" [ngClass]="selectAll?'selectAll':''">
-                    <i [ngClass]="selectAll?'fa-solid fa-circle':someSelect?'fa-regular fa-circle-dot':'fa-regular fa-circle'"></i>
+                    <i [ngClass]="selectAll?'fa-solid fa-circle':selectCount>0?'fa-regular fa-circle-dot':'fa-regular fa-circle'"></i>
                 </button>
             </div>
         </div>
@@ -27,6 +32,6 @@
         </div>
     </div>
 </div>
-<mat-paginator #paginator [length]="params.totalItems" [pageSizeOptions]="params.pageSizeOptions" [pageSize]="10"
+<mat-paginator #paginator [pageIndex]="pageIndex" [length]="params.totalItems" [pageSizeOptions]="params.pageSizeOptions" [pageSize]="10"
     (page)="pageChange($event)">
 </mat-paginator>
