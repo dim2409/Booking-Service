@@ -14,6 +14,7 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ConflictComponent } from "../../../components/conflict/conflict.component";
+import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 @Component({
   selector: 'app-conflicting-bookings-tab',
   standalone: true,
@@ -31,7 +32,8 @@ import { ConflictComponent } from "../../../components/conflict/conflict.compone
     MatDatepickerModule,
     MatPaginatorModule,
     FiltersComponent,
-    ConflictComponent
+    ConflictComponent,
+    ControlCardComponent
   ]
 })
 export class ConflictingBookingsTabComponent {
@@ -42,11 +44,18 @@ export class ConflictingBookingsTabComponent {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
+  chips = [
+    { label: 'Day created', value: 'created_at', selected: true, asc: false },
+    { label: 'Date', value: 'start', selected: false, asc: false },
+  ]
 
-  pageSizeOptions: number[] = [10, 25, 50];
-  totalItems: number = 0;
+  params =
+    {
+      pageSizeOptions: [10, 25, 50],
+      totalItems: 0
+    };
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
   @Input() rooms!: any[];
 
@@ -56,17 +65,9 @@ export class ConflictingBookingsTabComponent {
       action: 'openInfo',
     },
     {
-      icon: 'fa-check',
-      action: 'approveBooking',
-    },
-    {
       icon: 'fa-pencil',
       action: 'editBooking',
-    },
-    {
-      icon: 'fa-xmark',
-      action: 'cancelBooking',
-    },
+    }
   ]
 
   req: any = {
@@ -80,18 +81,18 @@ export class ConflictingBookingsTabComponent {
   }
 
   filterUpdated(event: any) {
-    this.req.room_id = event.room_id;
-    this.req.status = event.status;
-    this.req.start = event.start;
+    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
+    event.status !== '' ? this.req.status = event.status : delete this.req.status;
+    event.start !== '' ? this.req.start = event.start : delete this.req.start;
     this.req.page = 1;
-    this.paginator.pageIndex = 0
+    this.controlCard.resetPageIndex();
     this.getData();
   }
 
   getData() {
     this.BookingsService.getConflicts(this.req).subscribe((resp: any) => {
       this.conflicts = resp.data;
-      this.totalItems = resp.total
+      this.params.totalItems = resp.total
     })
   }
   onPageChange(event: PageEvent): void {
@@ -109,5 +110,17 @@ export class ConflictingBookingsTabComponent {
 
   updateBooking(event: any) {
     this.bookingUpdate.emit(event);
+  }
+
+  sorterUpdated(event: any) {
+    if (event.selected) {
+      this.req.sortBy = event.value
+      this.req.sortOrder = event.asc ? 'asc' : 'desc'
+    } else {
+      delete this.req.sortBy;
+      delete this.req.sortOrder;
+    }
+    this.req.page = 1;
+    this.getData();
   }
 }

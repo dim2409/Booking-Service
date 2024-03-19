@@ -1,16 +1,12 @@
 <!-- Filters -->
-<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="false"></app-filters>
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="false" [daysFilter]="true"></app-filters>
 <!-- Recurring Conflicts -->
 <div class="tab">
 
     <div class="moderator-list-container">
-        <div class="moderator-list-title">
-            Recurring Conflicts
-        </div>
-        <!-- Paginator -->
-        <mat-paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-            (page)="onPageChange($event)">
-        </mat-paginator>
+        <app-control-card [chips]="chips" [params]="params" (onPageChange)="onPageChange($event)"
+            (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
+            #controlCard></app-control-card>
         <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true"
             (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
     </div>

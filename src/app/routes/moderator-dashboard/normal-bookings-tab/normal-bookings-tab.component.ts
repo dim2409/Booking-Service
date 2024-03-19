@@ -49,6 +49,12 @@ export class NormalBookingsTabComponent implements OnInit {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
+  chips = [
+    {label: 'Day created', value: 'created_at',selected: true, asc: false},
+    {label: 'Alphabetical', value: 'title',selected: false, asc: false},
+    {label: 'Date', value: 'start',selected: false, asc: false},
+  ]
+
   params =
     {
       pageSizeOptions: [10, 25, 50],

@@ -15,17 +15,30 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 
 @Component({
-  selector: 'app-recurring-bookings-tab',
-  standalone: true,
-  templateUrl: './recurring-bookings-tab.component.html',
-  styleUrl: './recurring-bookings-tab.component.less',
-  imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule]
+    selector: 'app-recurring-bookings-tab',
+    standalone: true,
+    templateUrl: './recurring-bookings-tab.component.html',
+    styleUrl: './recurring-bookings-tab.component.less',
+    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent]
 })
 export class RecurringBookingsTabComponent implements OnInit {
   @Input() rooms!: any[];
   
+
+  chips = [
+    {label: 'Day created', value: 'created_at',selected: true, asc: false},
+    {label: 'Date', value: 'start',selected: false, asc: false},
+  ]
+
+  params =
+    {
+      pageSizeOptions: [10, 25, 50],
+      totalItems: 0
+    };
+
   buttons = [
     {
       icon: 'fa-expand',
@@ -60,7 +73,9 @@ export class RecurringBookingsTabComponent implements OnInit {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, ) { }
   
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
+  @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
+
 
   req: any = {
     page: 1,
@@ -72,11 +87,12 @@ export class RecurringBookingsTabComponent implements OnInit {
   }
 
   filterUpdated(event: any) {
-    this.req.room_id = event.room_id;
-    this.req.status = event.status;
-    this.req.start = event.start;
+    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
+    event.status !== '' ? this.req.status = event.status : delete this.req.status;
+    event.start !== '' ? this.req.start = event.start : delete this.req.start;
+    event.days !== '' ? this.req.days = event.days : delete this.req.days;
     this.req.page = 1;
-    this.paginator.pageIndex = 0
+    this.controlCard.resetPageIndex(); 
     this.getData();
   }
   getData() {
@@ -101,6 +117,18 @@ export class RecurringBookingsTabComponent implements OnInit {
 
   updateBooking(event: any) {
     this.bookingUpdate.emit(event);
+  }
+
+  sorterUpdated(event: any) {
+    if(event.selected){
+      this.req.sortBy = event.value
+      this.req.sortOrder = event.asc ? 'asc' : 'desc'
+    }else{
+      delete this.req.sortBy;
+      delete this.req.sortOrder;
+    }    
+    this.req.page = 1;     
+    this.getData();
   }
 
 }

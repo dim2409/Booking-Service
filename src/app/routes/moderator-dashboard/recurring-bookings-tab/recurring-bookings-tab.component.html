@@ -1,14 +1,10 @@
 <!-- Filters -->
-<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="true"></app-filters>
+<app-filters (filterUpdated)="filterUpdated($event)" [rooms]="rooms" [status]="true" [daysFilter]="true"></app-filters>
 <!-- Recurring -->
 <div class="moderator-list-container tab">
-  <!-- Paginator -->
-  <div class="moderator-list-title">
-    Recurring Bookings
     <div class="recurring">
-      <mat-paginator #paginator [length]="totalItems" [pageSizeOptions]="pageSizeOptions" [pageSize]="10"
-        (page)="onPageChange($event)">
-      </mat-paginator>
+      <app-control-card [chips]="chips" [params]="params" (onPageChange)="onPageChange($event)" 
+      (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
       <mat-card *ngFor="let group of recurrings">
         <mat-card-header>
           <mat-card-title>            
@@ -36,5 +32,4 @@
         </mat-card-content>
       </mat-card>
     </div>
-  </div>
 </div>

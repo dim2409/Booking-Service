@@ -21,10 +21,13 @@ export class FiltersComponent implements OnInit {
   @ViewChild('roomList') roomList!: MatChipListbox;
   @ViewChild('statusList') statusList!: MatChipListbox;
   @ViewChild('dateList') dateList!: MatChipListbox;
+  @ViewChild('dayList') daylist!: MatChipListbox;
 
   @Input() rooms: any[] = [];
   @Input() status!: boolean;
   @Input() monthsFilter!: boolean;
+  @Input() daysFilter!: boolean;
+
   statusChips!: { label: string; selected: boolean; value: number; }[];
   months: any = [
     {
@@ -76,6 +79,9 @@ export class FiltersComponent implements OnInit {
       value: 12
     },
   ];
+  dayChips!: { label: string; selected: boolean; value: number; }[];
+
+  constructor() { }
 
 
   ngOnInit(): void {
@@ -98,6 +104,35 @@ export class FiltersComponent implements OnInit {
         }
       ]
     }
+    if(this.daysFilter){
+      this.dayChips = [
+        {
+          label: 'Monday',
+          selected: false,
+          value: 1
+        },
+        {
+          label: 'Tuesday',
+          selected: false,
+          value: 2
+        },
+        {
+          label: 'Wednesday',
+          selected: false,
+          value: 3
+        },
+        {
+          label: 'Thursday',
+          selected: false,
+          value: 4
+        },
+        {
+          label: 'Friday',
+          selected: false,
+          value: 5
+        },        
+      ]
+    }
   }
   selectRoom(event: MatSelectChange) {
     this.filterUpdated.emit(event.value);
@@ -111,6 +146,7 @@ export class FiltersComponent implements OnInit {
       room_id: this.roomList?.value ?? '',
       start: this.dateList?.value ?? '',
       status: this.statusList?.value ?? '',
+      days: this.daylist?.value ?? '',
     }
     this.filterUpdated.emit(req);
   }

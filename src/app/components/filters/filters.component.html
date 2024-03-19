@@ -37,4 +37,17 @@
                 (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
         </mat-chip-listbox>
     </div>
+
+    <div class="filter-container" *ngIf="daysFilter">
+        <p class="filter-title">
+            Days
+            <span class="filter-controls">                
+                <i (click)="filterControl(dayChips, dayList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+            </span>
+        </p>
+        <mat-chip-listbox aria-label="Room selection" multiple #dayList class="filter">
+            <mat-chip-option *ngFor="let chip of dayChips" [value]="chip.value" [selected]="chip.selected"
+                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
+        </mat-chip-listbox>
+    </div>
 </div>

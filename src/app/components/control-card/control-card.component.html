@@ -11,7 +11,7 @@
             </mat-chip>
         </mat-chip-listbox>
     </div>
-    <div class="actions">
+    <div class="actions" *ngIf="buttons">
         <div class="select">
             Select All
             <div (click)="toggleSelect()" class="select-container">

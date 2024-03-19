@@ -19,11 +19,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
   styleUrl: './control-card.component.less'
 })
 export class ControlCardComponent {
-  chips = [
-    {label: 'Day created', value: 'day_created',selected: false, asc: false},
-    {label: 'Alphabetical', value: 'title',selected: false, asc: false},
-    {label: 'Date', value: 'start',selected: false, asc: false},
-  ]
+  @Input() chips!: any[]
   @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
   @Output() onPageChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() selectAllEvent: EventEmitter<any> = new EventEmitter<any>();
