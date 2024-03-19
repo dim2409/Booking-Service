@@ -24,6 +24,19 @@
                 (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
         </mat-chip-listbox>
     </div>
+    
+    <div class="filter-container" *ngIf="this.type">
+        <p class="filter-title">
+            Type
+            <span class="filter-controls">                
+                <i (click)="filterControl(typeChips, typeList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+            </span>
+        </p>
+        <mat-chip-listbox aria-label="Room selection" multiple #typeList class="filter">
+            <mat-chip-option *ngFor="let chip of typeChips" [value]="chip.value" [selected]="chip.selected"
+                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
+        </mat-chip-listbox>
+    </div>
 
     <div class="filter-container" *ngIf="monthsFilter">
         <p class="filter-title">

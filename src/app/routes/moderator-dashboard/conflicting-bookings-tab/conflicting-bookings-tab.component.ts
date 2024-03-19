@@ -84,6 +84,8 @@ export class ConflictingBookingsTabComponent {
     event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
     event.status !== '' ? this.req.status = event.status : delete this.req.status;
     event.start !== '' ? this.req.start = event.start : delete this.req.start;
+    event.days !== '' ? this.req.days = event.days : delete this.req.days;
+    event.type !== '' ? this.req.type = event.type : delete this.req.type;
     this.req.page = 1;
     this.controlCard.resetPageIndex();
     this.getData();

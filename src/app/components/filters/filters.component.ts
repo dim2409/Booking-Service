@@ -20,15 +20,18 @@ export class FiltersComponent implements OnInit {
 
   @ViewChild('roomList') roomList!: MatChipListbox;
   @ViewChild('statusList') statusList!: MatChipListbox;
+  @ViewChild('typeList') typeList!: MatChipListbox;
   @ViewChild('dateList') dateList!: MatChipListbox;
   @ViewChild('dayList') daylist!: MatChipListbox;
 
   @Input() rooms: any[] = [];
   @Input() status!: boolean;
+  @Input() type!: boolean;
   @Input() monthsFilter!: boolean;
   @Input() daysFilter!: boolean;
 
   statusChips!: { label: string; selected: boolean; value: number; }[];
+  typeChips!: { label: string; selected: boolean; value: string; }[];
   months: any = [
     {
       label: 'JAN',
@@ -104,6 +107,20 @@ export class FiltersComponent implements OnInit {
         }
       ]
     }
+    if (this.type) {
+      this.typeChips = [
+        {
+          label: 'Normal',
+          selected: false,
+          value: 'normal'
+        },
+        {
+          label: 'Recurring',
+          selected: false,
+          value: 'recurring'
+        },
+      ]
+    }
     if(this.daysFilter){
       this.dayChips = [
         {
@@ -138,15 +155,18 @@ export class FiltersComponent implements OnInit {
     this.filterUpdated.emit(event.value);
   }
   toggleSelect(chip: any) {
+    console.log(chip)
     chip.selected = !chip.selected;
     this.updateChips();
   }
   updateChips() {
+    console.log(this.typeList?.value)
     let req = {
       room_id: this.roomList?.value ?? '',
       start: this.dateList?.value ?? '',
       status: this.statusList?.value ?? '',
       days: this.daylist?.value ?? '',
+      type: this.typeList?.value ?? '',
     }
     this.filterUpdated.emit(req);
   }
