@@ -15,7 +15,6 @@
         <div class="select">
             Select All
             <div (click)="toggleSelect()" class="select-container">
-                {{selectCount}}
                 <button mat-mini-fab  class="select-all-icon" [ngClass]="selectAll?'selectAll':''">
                     <i [ngClass]="selectAll?'fa-solid fa-circle':selectCount>0?'fa-regular fa-circle-dot':'fa-regular fa-circle'"></i>
                 </button>
