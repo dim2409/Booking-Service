@@ -4,6 +4,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import moment from 'moment';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
 @Component({
   selector: 'app-filters',
   standalone: true,
@@ -24,7 +25,6 @@ export class FiltersComponent implements OnInit {
   @ViewChild('dateList') dateList!: MatChipListbox;
   @ViewChild('dayList') daylist!: MatChipListbox;
 
-  @Input() rooms: any[] = [];
   @Input() status!: boolean;
   @Input() type!: boolean;
   @Input() monthsFilter!: boolean;
@@ -83,11 +83,15 @@ export class FiltersComponent implements OnInit {
     },
   ];
   dayChips!: { label: string; selected: boolean; value: number; }[];
+  roomChips: any;
 
-  constructor() { }
+  constructor(private roomService: RoomsService) { }
 
 
   ngOnInit(): void {
+    this.roomService.getRooms().subscribe((data: any) => {
+      this.roomChips = data;
+    })
     if (this.status) {
       this.statusChips = [
         {

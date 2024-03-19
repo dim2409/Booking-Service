@@ -3,11 +3,11 @@
         <p class="filter-title">
             Rooms
             <span class="filter-controls">                
-                <i (click)="filterControl(rooms, roomList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+                <i (click)="filterControl(roomChips, roomList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
             </span>
         </p>
         <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
-            <mat-chip-option *ngFor="let room of rooms" [value]="room.id" [selected]="room.selected"
+            <mat-chip-option *ngFor="let room of roomChips" [value]="room.id" [selected]="room.selected"
                 (click)="toggleSelect(room)">{{room.name}}</mat-chip-option>
         </mat-chip-listbox>
     </div>

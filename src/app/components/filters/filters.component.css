@@ -8,6 +8,7 @@
   padding-top: 0.5vw;
   overflow: auto;
   padding-bottom: 20vh;
+  padding-right: 1vw;
 }
 .filters-container .filter-container {
   margin-top: 2vh;
