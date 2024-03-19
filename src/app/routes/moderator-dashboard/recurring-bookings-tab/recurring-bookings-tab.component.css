@@ -3,12 +3,42 @@
 }
 ::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
   height: 100vh;
-  overflow: scroll!important;
   padding-left: 1vw;
   padding-right: 1vw;
 }
-.moderator-list-container {
-  padding: 5vw;
+::ng-deep .mat-mdc-tab-body-content {
+  padding-bottom: 7rem;
+}
+.conflict-container {
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: #f34248b0;
+  padding: 0.2rem;
+}
+.conflict-container .conflict {
+  color: #176b87;
+  background-color: #ff00004d;
+  border-style: solid;
+}
+.conflict-container .conflict .time {
+  color: #f14c38;
+}
+.conflict-container .conflict .mat-mdc-card-header {
+  align-items: center;
+}
+.moderator-list-container .moderator-list-title {
+  margin-block: 2rem;
+  font-size: 1.5rem;
+}
+.moderator-list-container .mat-expansion-panel-header {
+  font-size: unset;
+}
+.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-title {
+  margin-right: 0;
+}
+.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
+  margin-right: 450px;
+  color: #f14c38;
 }
 .recurring .mat-mdc-card {
   margin-block: 3vh;
@@ -21,6 +51,7 @@
 .recurring .mat-mdc-card .buttons {
   position: absolute;
   right: 0.1rem;
+  display: flex;
 }
 .recurring .mat-mdc-card .button-color {
   background-color: #176b87;
@@ -28,4 +59,17 @@
 .moderator-list-title {
   margin-block: 2rem;
   font-size: 1.5rem;
+}
+.select-container {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+.select-container .select-all-icon {
+  font-size: medium;
+  background: #e0e0e0;
+  border-radius: 100%;
+  padding: 45%;
+  color: #000000b0;
+  transition: ease-in 0.1s;
 }

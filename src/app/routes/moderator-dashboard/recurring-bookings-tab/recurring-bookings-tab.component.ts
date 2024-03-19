@@ -70,6 +70,8 @@ export class RecurringBookingsTabComponent implements OnInit {
 
   
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
+  
+  selectCount: number = 0;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, ) { }
   
@@ -116,7 +118,15 @@ export class RecurringBookingsTabComponent implements OnInit {
   }
 
   updateBooking(event: any) {
-    this.bookingUpdate.emit(event);
+    let selectedBookings: any[] = [];
+    if(!event.individualAction){
+      selectedBookings = this.recurrings
+      .filter((booking: any) => booking.selected)
+      .map((booking: any) => booking.id);
+    }else{
+      selectedBookings = event.selectedBookings;
+    }
+    this.bookingUpdate.emit({selectedBookings, ...event, type: 'recurringGroup'});
   }
 
   sorterUpdated(event: any) {
@@ -129,6 +139,26 @@ export class RecurringBookingsTabComponent implements OnInit {
     }    
     this.req.page = 1;     
     this.getData();
+  }
+
+  toggleSelect(booking: any) {
+    booking.selected = !booking.selected;
+    this.selectBooking(booking.selected)
+  }
+  selectBooking(event: any) {
+    console.log(event)
+    if (event) {
+      this.selectCount++
+    } else {
+      this.selectCount--
+    }
+  }
+
+  selectAll(event: any) {
+    this.recurrings.forEach((booking: any) => {
+      booking.selected = event
+    })
+    this.selectCount = 0
   }
 
 }
