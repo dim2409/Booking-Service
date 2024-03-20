@@ -10,4 +10,7 @@
         <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true"
             (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
     </div>
+    <div class="noDataMsg" *ngIf="conflicts.length===0 || !conflicts">
+        No Data
+      </div>
 </div>

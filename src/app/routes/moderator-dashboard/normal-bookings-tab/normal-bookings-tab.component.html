@@ -12,4 +12,7 @@
         <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
             (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-booking-list>
     </div>
+    <div class="noDataMsg" *ngIf="bookings.length===0 || !bookings">
+        No Data
+    </div>
 </div>

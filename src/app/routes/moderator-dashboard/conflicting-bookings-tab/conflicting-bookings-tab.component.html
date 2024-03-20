@@ -8,4 +8,7 @@
         (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
         <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="false" (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
     </div>
+    <div class="noDataMsg" *ngIf="conflicts.length===0 || !conflicts">
+        No Data
+    </div>
 </div>

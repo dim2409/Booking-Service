@@ -6,6 +6,14 @@
 @import '/src/app/routes/booking-request/booking-request.component.less';
 @import '/src/app/components/control-card/control-card.component.less';
 @import '/src/app/components/calendar/calendar.component.less';
+@import '/src/app/routes/home/home.component.less';
+@import '/src/app/routes/moderator-dashboard/moderator-dashboard.component.less';
+@import '/src/app/routes/moderator-dashboard/recurring-bookings-tab/recurring-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/conflicting-bookings-tab/conflicting-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/normal-bookings-tab/normal-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/recurring-conflicts-tab/recurring-conflicts-tab.component.less';
+
+
 html,
 body {
     height: 100%;
@@ -58,4 +66,10 @@ button {
 }
 .body-overflow{
     overflow: hidden;
+}
+.noDataMsg{
+    width: 100%;
+    font-size: 2rem;
+    color: #888;
+    text-align: center;
 }
