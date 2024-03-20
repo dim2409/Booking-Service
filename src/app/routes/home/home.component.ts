@@ -14,12 +14,13 @@ import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { get } from 'lodash';
+import { FiltersComponent } from "../../components/filters/filters.component";
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.less'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.less',
+    imports: [CommonModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule, FiltersComponent]
 })
 export class HomeComponent {
   roomIds: any = "";
@@ -34,9 +35,8 @@ export class HomeComponent {
     });
     this.getBookings();
   }
-  selectRoom(event: MatSelectChange) {
-    this.roomIds = event.value;
-    this.getBookings();
+  filterUpdated(event: any) {
+    this.getBookings(event);
   }
   openInfo(booking: any) {
     this.dialogService.openInfoDialog(booking);
@@ -47,10 +47,8 @@ export class HomeComponent {
     this.getBookings();
   }
 
-  getBookings() {
-    let roomArray: number[] = [];
-    this.roomIds == "" ? roomArray = [] : roomArray = [this.roomIds];
-    this.BookingsService.getActiveBookings({ room_id: roomArray, date: this.date }).subscribe((resp: any) => {
+  getBookings(req?: any) {
+    this.BookingsService.getActiveBookings(req).subscribe((resp: any) => {
       this.bookings = resp;
     });
   }

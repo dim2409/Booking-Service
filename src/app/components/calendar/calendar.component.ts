@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatChipListbox } from '@angular/material/chips';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { FlatpickrModule } from 'angularx-flatpickr';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
 
@@ -15,6 +15,11 @@ export class CalendarComponent {
   
   @Output() scrollCalendarEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() bookingClicked: EventEmitter<any> = new EventEmitter<any>();
+
+  
+  @Output() filterUpdated: EventEmitter<any> = new EventEmitter<any>();
+  @Input() roomChips!: any;
+
   selectedValue!: string;
   handleEvent(arg0: string, event: CalendarEvent) {
     this.bookingClicked.emit(event);
@@ -27,6 +32,9 @@ export class CalendarComponent {
     throw new Error('Method not implemented.');
   }
 
+
+  @ViewChild('roomList') roomList!: MatChipListbox;
+  
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -73,5 +81,24 @@ export class CalendarComponent {
   }
   scrollCalendar(event: any) {
     this.scrollCalendarEvent.emit(event);
+  }
+
+  toggleSelect(chip: any) {
+    chip.selected = !chip.selected;
+    this.updateChips();
+  }
+  updateChips() {
+    let req = {
+      room_id: this.roomList?.value ?? '',
+    }
+    this.filterUpdated.emit(req);
+  }
+
+  filterControl(chips: any[], list: any) {
+    chips.forEach((x) => {
+      x.selected = false
+    })
+    list.value = [];
+    this.updateChips();
   }
 }

@@ -1,14 +1,7 @@
-<div class="row mt-5 main justify-content-center">
+<div class="row mt-5 main justify-content-center home">
 
   <p class="col-12 h2 pt-5 text-center">
     Conference Hall Schedule 
   </p>
-  <mat-form-field class="col-2">
-    <mat-label>Select Room</mat-label>
-    <mat-select (selectionChange)="selectRoom($event)">
-      <mat-option value="">All Rooms</mat-option>
-      <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <app-calendar [bookings]="bookings" (scrollCalendarEvent)="scrollCalendar($event)" (bookingClicked)="openInfo($event)"></app-calendar>
+  <app-calendar [bookings]="bookings" [roomChips]="rooms" (filterUpdated)="filterUpdated($event)" (scrollCalendarEvent)="scrollCalendar($event)" (bookingClicked)="openInfo($event)"></app-calendar>
 </div>

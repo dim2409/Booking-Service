@@ -43,7 +43,6 @@ export class ControlCardComponent {
     this.selectAllEvent.emit(this.selectAll)
   }
   toggleSorter(chip: any){
-    console.log(chip.selected)
     if(chip.selected){
       if(!chip.asc){
         chip.asc = true

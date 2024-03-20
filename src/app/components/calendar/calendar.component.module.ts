@@ -6,9 +6,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarComponent } from './calendar.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -18,14 +18,14 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommonModule,
     FormsModule,
     NgbModalModule,
-    FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
     MatButtonModule,
     MatButtonToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule,
   ],
   exports: [CalendarComponent]
 })

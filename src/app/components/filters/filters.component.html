@@ -8,7 +8,7 @@
         </p>
         <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
             <mat-chip-option *ngFor="let room of roomChips" [value]="room.id" [selected]="room.selected"
-                (click)="toggleSelect(room)">{{room.name}}</mat-chip-option>
+            (click)="toggleSelect(room)"><i [ngStyle]="{'color': room.color}" class="fa-solid fa-circle"></i>&nbsp;{{room.name}}</mat-chip-option>
         </mat-chip-listbox>
     </div>
 
