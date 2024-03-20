@@ -27,6 +27,9 @@ export class HomeComponent {
   date: any;
   bookings: any;
   rooms: any;
+  req: any = {
+    
+  }
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
   ngOnInit(): void {
@@ -36,19 +39,20 @@ export class HomeComponent {
     this.getBookings();
   }
   filterUpdated(event: any) {
-    this.getBookings(event);
+    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
+    this.getBookings();
   }
   openInfo(booking: any) {
     this.dialogService.openInfoDialog(booking);
   }
 
   scrollCalendar(event: any) {
-    this.date = event.viewDate;
+    this.req.date = event.viewDate;
     this.getBookings();
   }
 
-  getBookings(req?: any) {
-    this.BookingsService.getActiveBookings(req).subscribe((resp: any) => {
+  getBookings() {
+    this.BookingsService.getActiveBookings(this.req).subscribe((resp: any) => {
       this.bookings = resp;
     });
   }

@@ -43,8 +43,5 @@
   background-color: #000000b0;
 }
 .home {
-  padding-left: 10vw;
-}
-.home ::ng-deep .filters-container {
-  top: 5vh;
+  overflow: scroll;
 }
