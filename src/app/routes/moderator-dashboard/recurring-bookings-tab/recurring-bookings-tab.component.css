@@ -26,6 +26,9 @@
 .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
 }
+.moderator-list-container {
+  position: relative;
+}
 .moderator-list-container .moderator-list-title {
   margin-block: 2rem;
   font-size: 1.5rem;
@@ -39,6 +42,9 @@
 .moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
   margin-right: 450px;
   color: #f14c38;
+}
+.recurring {
+  position: relative;
 }
 .recurring .mat-mdc-card {
   margin-block: 3vh;

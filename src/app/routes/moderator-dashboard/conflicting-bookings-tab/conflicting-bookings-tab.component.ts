@@ -15,32 +15,35 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ConflictComponent } from "../../../components/conflict/conflict.component";
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
+import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 @Component({
-  selector: 'app-conflicting-bookings-tab',
-  standalone: true,
-  templateUrl: './conflicting-bookings-tab.component.html',
-  styleUrl: './conflicting-bookings-tab.component.less',
-  imports: [
-    MatTabsModule,
-    BookingListComponent,
-    MatOptionModule,
-    CommonModule,
-    MatExpansionModule,
-    DayNamePipe,
-    MatCardModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatPaginatorModule,
-    FiltersComponent,
-    ConflictComponent,
-    ControlCardComponent
-  ]
+    selector: 'app-conflicting-bookings-tab',
+    standalone: true,
+    templateUrl: './conflicting-bookings-tab.component.html',
+    styleUrl: './conflicting-bookings-tab.component.less',
+    imports: [
+        MatTabsModule,
+        BookingListComponent,
+        MatOptionModule,
+        CommonModule,
+        MatExpansionModule,
+        DayNamePipe,
+        MatCardModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatPaginatorModule,
+        FiltersComponent,
+        ConflictComponent,
+        ControlCardComponent,
+        LoadingSpinnerComponent
+    ]
 })
 export class ConflictingBookingsTabComponent {
 
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   conflicts: any;
+  loading!: boolean;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
@@ -92,9 +95,11 @@ export class ConflictingBookingsTabComponent {
   }
 
   getData() {
+    this.loading = true;
     this.BookingsService.getConflicts(this.req).subscribe((resp: any) => {
       this.conflicts = resp.data;
       this.params.totalItems = resp.total
+      this.loading = false;
     })
   }
   onPageChange(event: PageEvent): void {

@@ -2,17 +2,17 @@
 <app-filters (filterUpdated)="filterUpdated($event)" [status]="true"
     [monthsFilter]="true" [daysFilter]="true" [type]="true"></app-filters>
 <!-- Non-Conflicts -->
-<div class="tab">
-    <div class="moderator-list-container">
-
-        <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
-            (onPageChange)="onPageChange($event)" (selectAllEvent)="selectAll($event)"
-            (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
-            #controlCard></app-control-card>
+<div class="tab">    
+    <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
+    (onPageChange)="onPageChange($event)" (selectAllEvent)="selectAll($event)"
+    (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
+    #controlCard></app-control-card>
+    <div class="moderator-list-container">        
         <app-booking-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-            (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-booking-list>
-    </div>
-    <div class="noDataMsg" *ngIf="bookings.length===0 || !bookings">
-        No Data
+        (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-booking-list>
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+        <div class="noDataMsg" *ngIf="bookings?.length===0 || !bookings && !loading">
+            No Data
+        </div>
     </div>
 </div>

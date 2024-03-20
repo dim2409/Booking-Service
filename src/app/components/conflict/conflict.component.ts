@@ -14,9 +14,12 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { Observable } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import moment from 'moment';
+import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.component";
 @Component({
   selector: 'app-conflict',
   standalone: true,
+  templateUrl: './conflict.component.html',
+  styleUrl: './conflict.component.less',
   imports: [
     BookingListComponent,
     MatOptionModule,
@@ -27,10 +30,9 @@ import moment from 'moment';
     MatButtonModule,
     MatDatepickerModule,
     MatPaginatorModule,
-    MatDividerModule
-  ],
-  templateUrl: './conflict.component.html',
-  styleUrl: './conflict.component.less'
+    MatDividerModule,
+    LoadingSpinnerComponent
+  ]
 })
 export class ConflictComponent implements OnInit {
 
@@ -51,6 +53,7 @@ export class ConflictComponent implements OnInit {
       action: 'editBooking',
     },
   ]
+  drawerLoading!: boolean;
 
 
   constructor(private bookingsService: BookingsService, private dialogService: DialogService,) { }
@@ -115,14 +118,18 @@ export class ConflictComponent implements OnInit {
 
   checkResolved() {
     this.conflictGroup.bookings.forEach((booking: any) => {
+      this.drawerLoading = true
       this.checkConflicts(booking).subscribe((resp) => {
         if (!resp) {
           if (!this.checkEditingConflict(booking)) {
+            this.drawerLoading = false
             booking.resolved = true
           } else {
+            this.drawerLoading = false
             booking.resolved = false
           }
         } else {
+          this.drawerLoading = false
           booking.resolved = false
         }
       })

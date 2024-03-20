@@ -14,26 +14,30 @@ import { FiltersComponent } from "../../../components/filters/filters.component"
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs';
+import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 
 @Component({
-  selector: 'app-normal-bookings-tab',
-  standalone: true,
-  templateUrl: './normal-bookings-tab.component.html',
-  styleUrl: './normal-bookings-tab.component.less',
-  imports: [
-    MatTabsModule,
-    BookingListComponent,
-    MatOptionModule,
-    CommonModule,
-    MatExpansionModule,
-    DayNamePipe,
-    MatCardModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatPaginatorModule,
-    FiltersComponent,
-    ControlCardComponent
-  ]
+    selector: 'app-normal-bookings-tab',
+    standalone: true,
+    templateUrl: './normal-bookings-tab.component.html',
+    styleUrl: './normal-bookings-tab.component.less',
+    imports: [
+        MatTabsModule,
+        BookingListComponent,
+        MatOptionModule,
+        CommonModule,
+        MatExpansionModule,
+        DayNamePipe,
+        MatCardModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatPaginatorModule,
+        FiltersComponent,
+        ControlCardComponent,
+        LoadingSpinnerComponent
+    ]
 })
 export class NormalBookingsTabComponent implements OnInit {
 
@@ -46,6 +50,7 @@ export class NormalBookingsTabComponent implements OnInit {
   pageIndex: number = 0;
 
   selectCount: number = 0;
+  loading!: boolean;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
 
@@ -103,9 +108,11 @@ export class NormalBookingsTabComponent implements OnInit {
     this.getData();
   }
   getData() {
+    this.loading = true;
     this.BookingsService.getBookings(this.req).subscribe((resp: any) => {
       this.bookings = resp.bookings;
       this.params.totalItems = resp.total
+      this.loading = false
     })
   }
   onPageChange(event: PageEvent): void {

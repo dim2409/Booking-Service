@@ -26,6 +26,9 @@
 .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
 }
+.moderator-list-container {
+  position: relative;
+}
 .moderator-list-container .moderator-list-title {
   margin-block: 2rem;
   font-size: 1.5rem;

@@ -17,7 +17,7 @@
         <button mat-raised-button color="warn"
             (click)="resolve({action: 'resolveConflict', conflictGroup: conflictGroup, recurring: false})">
             Resolve Conflict <i class="fa-solid fa-list-check"></i></button>
-        <div class="container">
+        <div class="container position-relative">
             <div *ngFor="let booking of conflictGroup.bookings" class="conflict-container m-2"
                 ngClass="{{booking.toKeep ? 'to-keep' : booking.resolved ? 'resolved' : ''}}"
                 (click)="selectToKeep(booking)">
@@ -63,6 +63,7 @@
                     </mat-card-content>
                 </mat-card>
             </div>
+            <app-loading-spinner *ngIf="drawerLoading"></app-loading-spinner>
         </div>
     </mat-expansion-panel>
 </mat-accordion>

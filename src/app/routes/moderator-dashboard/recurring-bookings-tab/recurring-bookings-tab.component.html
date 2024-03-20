@@ -2,10 +2,10 @@
 <app-filters (filterUpdated)="filterUpdated($event)" [status]="true" [daysFilter]="true"></app-filters>
 <!-- Recurring -->
 <div class="moderator-list-container tab">
+  <app-control-card [chips]="chips" [buttons]="buttons" [params]="params" [selectCount]="selectCount"
+    (selectAllEvent)="selectAll($event)" (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
+    (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
   <div class="recurring">
-    <app-control-card [chips]="chips" [buttons]="buttons" [params]="params" [selectCount]="selectCount"
-      (selectAllEvent)="selectAll($event)" (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
-      (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
     <mat-card *ngFor="let group of recurrings">
       <mat-card-header>
         <mat-card-title>
@@ -38,8 +38,9 @@
         {{group.info}}
       </mat-card-content>
     </mat-card>
-  </div>
-  <div class="noDataMsg" *ngIf="recurrings.length===0 || !recurrings">
-    No Data
+    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <div class="noDataMsg" *ngIf="recurrings?.length===0 || !recurrings && !loading">
+      No Data
+    </div>
   </div>
 </div>

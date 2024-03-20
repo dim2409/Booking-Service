@@ -12,6 +12,7 @@ import { NormalBookingsTabComponent } from "./normal-bookings-tab/normal-booking
 import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurring-bookings-tab.component";
 import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conflicting-bookings-tab.component";
 import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurring-conflicts-tab.component";
+import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 @Component({
     selector: 'app-moderator-dashboard',
     standalone: true,
@@ -25,7 +26,7 @@ import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurr
         MatDatepickerModule,
         NormalBookingsTabComponent,
         RecurringBookingsTabComponent,
-        ConflictingBookingsTabComponent, RecurringConflictsTabComponent]
+        ConflictingBookingsTabComponent, RecurringConflictsTabComponent, LoadingSpinnerComponent]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -35,6 +36,7 @@ export class ModeratorDashboardComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10; // Default page size
   rooms: any;
+  loading!: boolean;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
 
@@ -42,6 +44,7 @@ export class ModeratorDashboardComponent implements OnInit {
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
   @ViewChild(ConflictingBookingsTabComponent) conflictingBookingsTabComponent!: ConflictingBookingsTabComponent;
   ngOnInit(): void {
+    this.loading = true;
     document.body.classList.add('body-overflow');
     this.getRooms();
   }
@@ -52,7 +55,6 @@ export class ModeratorDashboardComponent implements OnInit {
   }
 
   updateBooking(data: any) {
-    console.log(data);
     switch (data.action) {
       case 'approveBooking':
         {

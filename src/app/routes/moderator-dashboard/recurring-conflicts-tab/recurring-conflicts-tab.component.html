@@ -2,15 +2,16 @@
 <app-filters (filterUpdated)="filterUpdated($event)" [status]="false" [daysFilter]="true"></app-filters>
 <!-- Recurring Conflicts -->
 <div class="tab">
+    <app-control-card [chips]="chips" [params]="params" (onPageChange)="onPageChange($event)"
+        (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
+        #controlCard></app-control-card>
 
     <div class="moderator-list-container">
-        <app-control-card [chips]="chips" [params]="params" (onPageChange)="onPageChange($event)"
-            (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
-            #controlCard></app-control-card>
         <app-conflict [conflictGroup]="group" [rooms]="rooms" [isRecurring]="true"
             (bookingUpdated)="updateBooking($event)" *ngFor="let group of conflicts"></app-conflict>
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+        <div class="noDataMsg" *ngIf="conflicts?.length===0 || !conflicts && !loading">
+            No Data
+        </div>
     </div>
-    <div class="noDataMsg" *ngIf="conflicts.length===0 || !conflicts">
-        No Data
-      </div>
 </div>

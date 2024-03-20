@@ -16,13 +16,14 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
+import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 
 @Component({
     selector: 'app-recurring-bookings-tab',
     standalone: true,
     templateUrl: './recurring-bookings-tab.component.html',
     styleUrl: './recurring-bookings-tab.component.less',
-    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent]
+    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent, LoadingSpinnerComponent]
 })
 export class RecurringBookingsTabComponent implements OnInit {
   @Input() rooms!: any[];
@@ -72,6 +73,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
   
   selectCount: number = 0;
+  loading!: boolean;
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, ) { }
   
@@ -98,9 +100,11 @@ export class RecurringBookingsTabComponent implements OnInit {
     this.getData();
   }
   getData() {
+    this.loading = true
     this.BookingsService.getRecurringBookings(this.req).subscribe((resp: any) => {
       this.recurrings = resp.recurrings;      
       this.totalItems = resp.total
+      this.loading = false
     });
 
   }
@@ -146,7 +150,6 @@ export class RecurringBookingsTabComponent implements OnInit {
     this.selectBooking(booking.selected)
   }
   selectBooking(event: any) {
-    console.log(event)
     if (event) {
       this.selectCount++
     } else {

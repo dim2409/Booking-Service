@@ -37,6 +37,7 @@ export class HomeComponent {
       this.rooms = resp;
     });
     this.getBookings();
+    document.body.classList.remove('body-overflow');
   }
   filterUpdated(event: any) {
     event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
