@@ -98,11 +98,12 @@ export class NormalBookingsTabComponent implements OnInit {
   }
 
   filterUpdated(event: any) {
-    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
-    event.status !== '' ? this.req.status = event.status : delete this.req.status;
-    event.start !== '' ? this.req.start = event.start : delete this.req.start;
-    event.days !== '' ? this.req.days = event.days : delete this.req.days;
-    event.type !== '' ? this.req.type = event.type : delete this.req.type;
+    console.log(event)
+    event.room_id.length > 0 ? this.req.room_id = event.room_id : delete this.req.room_id;
+    event.status.length > 0 ? this.req.status = event.status : delete this.req.status;
+    event.start.length > 0 ? this.req.start = event.start : delete this.req.start;
+    event.days.length > 0 ? this.req.days = event.days : delete this.req.days;
+    event.type.length > 0 ? this.req.type = event.type : delete this.req.type;
     this.req.page = 1;
     this.controlCard.resetPageIndex();   
     this.getData();

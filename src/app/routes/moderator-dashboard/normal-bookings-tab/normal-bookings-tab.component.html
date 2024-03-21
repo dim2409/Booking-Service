@@ -8,7 +8,7 @@
     (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateBooking($event)"
     #controlCard></app-control-card>
     <div class="moderator-list-container">        
-        <app-card-list [bookings]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
+        <app-card-list [elements]="bookings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
         (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-card-list>
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
         <div class="noDataMsg" *ngIf="bookings?.length===0 || !bookings && !loading">

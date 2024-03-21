@@ -1,4 +1,3 @@
-
 @import '../../../variables.less';
 
 .main {
@@ -13,34 +12,39 @@
     background-color: @primary-color;
 }
 
-.conflict-container {
-    border-radius: 0.5rem;
-    border-style  : solid;
-    border-color  : #f34248b0;
-    padding: 0.2rem;
-    .conflict {
-        color           : @primary-color;
-        background-color: #ff00004d;
-        border-style    : solid;
+&.card-list-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-        .time{
-            color: @highlight-color;
+    .mat-mdc-card {
+        margin-block: 3vh;
+        width: 70vw;
+
+        .mat-mdc-card-content {
+            margin-top: 1vh;
+            font-size: medium;
         }
-        .icon{
-            border-radius: 1rem;
-            border-style  : solid;
-            border-color  :  @highlight-color;
-            padding: 0.1rem;
+
+        .buttons {
+            position: absolute;
+            right: 0.1rem;
+            display: flex;
         }
-        .mat-mdc-card-header{
-            align-items: center;
+
+        .button-color {
+            background-color: @primary-color;
         }
     }
 }
+
 .select-container {
     width: fit-content;
     height: fit-content;
     cursor: pointer;
+    margin-right: 0.5vw;
 
     .select-all-icon {
         font-size: medium;

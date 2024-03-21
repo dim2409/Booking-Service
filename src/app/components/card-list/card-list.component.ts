@@ -5,12 +5,13 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DayNamePipe } from "../../pipes/day-name.pipe";
 @Component({
-  selector: 'app-card-list',
-  standalone: true,
-  imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule],
-  templateUrl: './card-list.component.html',
-  styleUrl: './card-list.component.less'
+    selector: 'app-card-list',
+    standalone: true,
+    templateUrl: './card-list.component.html',
+    styleUrl: './card-list.component.less',
+    imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule, DayNamePipe]
 })
 export class CardListComponent {
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
@@ -21,7 +22,7 @@ export class CardListComponent {
   @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
   @Output() bookingSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() bookings: any[] = [];
+  @Input() elements: any[] = [];
   @Input() rooms: any[] = [];
   @Input() buttons: any[] = [];
   @Input() removeConflicts: boolean = false;

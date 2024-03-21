@@ -1,49 +1,45 @@
-<div class="container">
-    <div *ngFor="let booking of bookings" class="mt-2">
-        <mat-card>
-            <div class="row w-100 justify-content-end position-absolute py-2">
-                <div (click)="toggleSelect(booking)" class="select-container">
-                    <button mat-mini-fab  class="select-all-icon">
-                        <i [ngClass]="booking.selected?'fa-solid fa-circle':'fa-regular fa-circle'"></i>
+<div class="card-list-container">
+    <mat-card *ngFor="let element of elements">
+
+        <mat-card-header>
+            <mat-card-title>
+                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of element.rooms"></i>
+                {{element.title}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span *ngFor="let day of element.days">
+                    {{ rooms[day.room_id-1]?.name }} |
+                    {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                </span>
+                {{rooms[0]?.name}} |
+                {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
+                {{ element.end | date: 'HH:mm' }} |
+                {{element?.status==0 ? 'Pending' : 'Active'}}
+            </mat-card-subtitle>
+            <!-- Buttons -->
+            <div class="buttons">
+                <div (click)="toggleSelect(element)" class="select-container">
+                    <button mat-mini-fab class="select-all-icon">
+                        <i [ngClass]="element.selected?'fa-solid fa-circle':'fa-regular fa-circle'"></i>
                     </button>
                 </div>
                 <ng-container *ngFor="let button of buttons">
-                    <button mat-mini-fab *ngIf="!(booking.status != 0 && button.icon == 'fa-check')"
-                        (click)="buttonAction(button.action, booking)" class="mx-1 button-color"><i
+                    <button mat-mini-fab *ngIf="!(element.status != 0 && button.icon == 'fa-check')"
+                        (click)="buttonAction(button.action, element)" class="mx-1 button-color"><i
                             class="fa-solid {{button.icon}}"></i></button>
                 </ng-container>
-
             </div>
-            <mat-card-header>
-                <p class="h4 title-text">
-                    <i class="fa-solid fa-circle icon" [ngStyle]="{'color': booking?.color}"></i>
-                    {{booking.title}}
-                </p>
-                <p class="h4 time mx-5 title-text">
-                    {{ booking.start | date: 'EEEE d/MM yyyy' }} {{ booking.start | date: 'HH:mm' }} -
-                    {{ booking.end | date: 'HH:mm' }}
-                </p>
-                <p class="h4" *ngIf="rooms && removeConflicts">
-                    {{rooms[booking.room_id-1]?.name}}
-                </p>
-                <p class="h4 mx-3 title-text">
-                    Status: <span class="primary-color">
-                        {{booking?.status==0 ? 'Pending' : 'Approved'}}
-                    </span>
-                </p>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-divider></mat-divider>
-                <p class="my-2">
-                    {{
-                    booking?.info ?
-                    (booking.info.length > 0 ? booking.info?.slice(0, 50) + (booking.info.length > 50 ? '...' : '') :
-                    'No info')
-                    :
-                    'No info'
-                    }}
-                </p>
-            </mat-card-content>
-        </mat-card>
-    </div>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="my-2">
+                {{
+                element?.info ?
+                (element.info.length > 0 ? element.info?.slice(0, 50) + (element.info.length > 50 ? '...' : '') :
+                'No info')
+                :
+                'No info'
+                }}
+            </p>
+        </mat-card-content>
+    </mat-card>
 </div>

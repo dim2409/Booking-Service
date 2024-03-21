@@ -5,42 +5,10 @@
   <app-control-card [chips]="chips" [buttons]="buttons" [params]="params" [selectCount]="selectCount"
     (selectAllEvent)="selectAll($event)" (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
     (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
-  <div class="recurring">
-    <mat-card *ngFor="let group of recurrings">
-      <mat-card-header>
-        <mat-card-title>
-          <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of group.rooms"></i>
-          {{group.title}}
-        </mat-card-title>
-        <mat-card-subtitle>
-          <span *ngFor="let day of group.days">
-            {{ rooms[day.room_id-1]?.name }} -
-            {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
-          </span>
-          {{group.status == 0 ? 'Pending' : 'Approved'}}
-        </mat-card-subtitle>
-
-        <div class="buttons">
-          <div (click)="toggleSelect(group)" class="select-container">
-            <button mat-mini-fab class="select-all-icon">
-              <i [ngClass]="group.selected?'fa-solid fa-circle':'fa-regular fa-circle'"></i>
-            </button>
-          </div>
-          <ng-container *ngFor="let button of buttons">
-            <button mat-mini-fab *ngIf="!(group.status != 0 && button.icon == 'fa-check')"
-              (click)="updateBooking({action: button.action, booking: group})" class="mx-1 button-color">
-              <i class="fa-solid {{button.icon}}"></i>
-            </button>
-          </ng-container>
-        </div>
-      </mat-card-header>
-      <mat-card-content>
-        {{group.info}}
-      </mat-card-content>
-    </mat-card>
-    <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-    <div class="noDataMsg" *ngIf="recurrings?.length===0 || !recurrings && !loading">
-      No Data
-    </div>
+  <app-card-list [elements]="recurrings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
+    (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)"></app-card-list>
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <div class="noDataMsg" *ngIf="recurrings?.length===0 || !recurrings && !loading">
+    No Data
   </div>
 </div>
