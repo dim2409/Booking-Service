@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DayNamePipe } from "../../../pipes/day-name.pipe";
 import { FiltersComponent } from "../../../components/filters/filters.component";
 import { MatOptionModule } from '@angular/material/core';
-import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
@@ -23,7 +23,7 @@ import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loa
     standalone: true,
     templateUrl: './recurring-bookings-tab.component.html',
     styleUrl: './recurring-bookings-tab.component.less',
-    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, BookingListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent, LoadingSpinnerComponent]
+    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, CardListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent, LoadingSpinnerComponent]
 })
 export class RecurringBookingsTabComponent implements OnInit {
   @Input() rooms!: any[];

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatOptionModule } from '@angular/material/core';
-import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DayNamePipe } from "../../../pipes/day-name.pipe";
 import { MatCardModule } from '@angular/material/card';
@@ -23,7 +23,7 @@ import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loa
     styleUrl: './recurring-conflicts-tab.component.less',
     imports: [
         MatTabsModule,
-        BookingListComponent,
+        CardListComponent,
         MatOptionModule,
         CommonModule,
         MatExpansionModule,

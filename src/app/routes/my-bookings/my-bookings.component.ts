@@ -5,14 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 @Component({
   selector: 'app-my-bookings',
   standalone: true,
-  imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule, BookingListComponent],
+  imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule, CardListComponent],
   templateUrl: './my-bookings.component.html',
   styleUrl: './my-bookings.component.less'
 })

@@ -15,7 +15,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BookingListComponent } from './components/booking-list/booking-list.component';
+import { CardListComponent } from './components/card-list/card-list.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
@@ -40,7 +40,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         }),
         FontAwesomeModule,
         NavbarComponent,
-        BookingListComponent,
+        CardListComponent,
         HttpClientModule,
         MatDialogModule,
         MatNativeDateModule

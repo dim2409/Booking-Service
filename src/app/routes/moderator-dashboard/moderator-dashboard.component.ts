@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -19,7 +19,7 @@ import { LoadingSpinnerComponent } from "../../components/loading-spinner/loadin
     templateUrl: './moderator-dashboard.component.html',
     styleUrl: './moderator-dashboard.component.less',
     imports: [MatTabsModule,
-        BookingListComponent,
+      CardListComponent,
         CommonModule,
         MatExpansionModule,
         MatButtonModule,

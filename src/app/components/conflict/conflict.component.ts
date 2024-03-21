@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatOptionModule } from '@angular/material/core';
-import { BookingListComponent } from 'src/app/components/booking-list/booking-list.component';
+import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DayNamePipe } from "../../pipes/day-name.pipe";
 import { MatCardModule } from '@angular/material/card';
@@ -21,7 +21,7 @@ import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.comp
   templateUrl: './conflict.component.html',
   styleUrl: './conflict.component.less',
   imports: [
-    BookingListComponent,
+    CardListComponent,
     MatOptionModule,
     CommonModule,
     MatExpansionModule,

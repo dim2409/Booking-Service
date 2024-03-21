@@ -6,13 +6,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
-  selector: 'app-booking-list',
+  selector: 'app-card-list',
   standalone: true,
   imports: [MatCardModule, CommonModule, MatDividerModule, MatButtonModule, MatProgressBarModule],
-  templateUrl: './booking-list.component.html',
-  styleUrl: './booking-list.component.less'
+  templateUrl: './card-list.component.html',
+  styleUrl: './card-list.component.less'
 })
-export class BookingListComponent {
+export class CardListComponent {
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
   alert(arg0: string) {
     alert(arg0)
