@@ -9,8 +9,12 @@ export class RoomsService {
 
   constructor(private http: HttpClient) { }
 
-  getRooms(): Observable <any> {
-    return this.http.get('http://localhost:8000/api/getRooms');
+  getRooms(req: any): Observable <any> {
+    return this.http.post('http://localhost:8000/api/getRooms', req);
+  }
+
+  getAllRooms(): Observable <any> {
+    return this.http.get('http://localhost:8000/api/getAllRooms');
   }
 
   getModeratedRooms(id: number): Observable <any> {

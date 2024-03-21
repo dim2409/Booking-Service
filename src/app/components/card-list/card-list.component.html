@@ -5,16 +5,29 @@
             <mat-card-title>
                 <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of element.rooms"></i>
                 {{element.title}}
+                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': element.color}" *ngIf="element.color"></i>
+                {{element.name}}
             </mat-card-title>
             <mat-card-subtitle>
+                <!-- Recurring fields -->
                 <span *ngFor="let day of element.days">
                     {{ rooms[day.room_id-1]?.name }} |
                     {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
                 </span>
-                {{rooms[0]?.name}} |
-                {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
-                {{ element.end | date: 'HH:mm' }} |
-                {{element?.status==0 ? 'Pending' : 'Active'}}
+                <!-- Normal fields -->
+                <span *ngIf="!element.isRoom">
+                    {{rooms[0]?.name}} |
+                    {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
+                    {{ element.end | date: 'HH:mm' }} |
+                    {{element?.status==0 ? 'Pending' : 'Active'}}
+                </span>
+                <!-- Room fields -->
+                <span *ngIf="element.isRoom">
+                    {{element.number}} | 
+                    {{element.capacity}} |
+                    {{element.building}} |
+                    {{element.department}}
+                </span>
             </mat-card-subtitle>
             <!-- Buttons -->
             <div class="buttons">

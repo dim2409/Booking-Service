@@ -89,7 +89,7 @@ export class FiltersComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.roomService.getRooms().subscribe((data: any) => {
+    this.roomService.getModeratedRooms(2).subscribe((data: any) => {
       this.roomChips = data;
     })
     if (this.status) {

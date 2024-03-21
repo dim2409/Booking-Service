@@ -70,7 +70,7 @@ export class BookingRequestComponent {
   }
 
   ngOnInit() {
-    this.RoomsService.getRooms().subscribe((resp: any) => {
+    this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
       this.roomIds = this.rooms.map((room: any) => room.id);
       this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {

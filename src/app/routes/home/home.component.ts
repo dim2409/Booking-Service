@@ -33,7 +33,7 @@ export class HomeComponent {
 
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
   ngOnInit(): void {
-    this.RoomsService.getRooms().subscribe((resp: any) => {
+    this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
     });
     this.getBookings();
