@@ -1,15 +1,14 @@
 <div class="main mt-5 pt-2 pb-2">
-    <!-- Filters -->
-    <!-- <app-filters (filterUpdated)="filterUpdated($event)"></app-filters> -->
     <!-- Non-Conflicts -->
-    <div class="tab">    
+    <div class="tab">
+        <!-- Filters -->
+        <app-filters (filterUpdated)="filterUpdated($event)" [filters]="filters"></app-filters>
         <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
-        (onPageChange)="onPageChange($event)"
-        (sorterUpdated)="sorterUpdated($event)" (bookingUpdated)="updateRoom($event)"
-        #controlCard></app-control-card>
-        <div class="room-list-container">        
+            (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
+            (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
+        <div class="room-list-container">
             <app-card-list [elements]="rooms" [buttons]="buttons" [removeConflicts]="true"
-            (bookingUpdated)="updateRoom($event)"></app-card-list>
+                (bookingUpdated)="updateRoom($event)"></app-card-list>
             <app-loading-spinner *ngIf="loading"></app-loading-spinner>
             <div class="noDataMsg" *ngIf="rooms?.length===0 || !rooms && !loading">
                 No Data

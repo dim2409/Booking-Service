@@ -71,7 +71,6 @@ export class NormalBookingsTabComponent implements OnInit {
       totalItems: 0
     };
 
-
   bookings!: any[];
 
   buttons = [
@@ -97,7 +96,6 @@ export class NormalBookingsTabComponent implements OnInit {
     perPage: 10,
     user_id: 2
   }
-
 
   @ViewChild('roomList') roomList: any;
 

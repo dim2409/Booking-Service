@@ -158,6 +158,16 @@ export class FiltersService {
       id: 'daysFilter',
       field: 'days'
     },
+    departments: {
+      title: 'Departments',
+      id: 'departmentList',
+      field: 'department'
+    },
+    buildings: {
+      title: 'Buildings',
+      id: 'buildingList',
+      field: 'building'
+    },
     // Add more filters as needed
   };
 
@@ -166,6 +176,15 @@ export class FiltersService {
   getFilters(filterNames: string[], rooms?: any): any[] {
     if(rooms) {
       this.filters['rooms'].chips = rooms
+    }
+    return filterNames.map(name => this.filters[name]);
+  }
+  getRoomFilters(filterNames: string[], departments?: any, buildings?: any): any[] {
+    if(departments) {
+      this.filters['departments'].chips = departments
+    }
+    if(buildings) {
+      this.filters['buildings'].chips = buildings
     }
     return filterNames.map(name => this.filters[name]);
   }

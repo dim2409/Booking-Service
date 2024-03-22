@@ -1,17 +1,23 @@
 @import url('../../../variables.less');
-.room-list-container {
-    position: relative;
+.tab{
+    margin-left: 20vw;
+    .room-list-container {
+        position: relative;
     
-    .mat-expansion-panel-header {
-        font-size: unset;
-
-        .mat-expansion-panel-header-title {
-            margin-right: 0;
+        .mat-expansion-panel-header {
+            font-size: unset;
+    
+            .mat-expansion-panel-header-title {
+                margin-right: 0;
+            }
+    
+            .mat-expansion-panel-header-description {
+                margin-right: 450px;
+                color: @highlight-color;
+            }
         }
-
-        .mat-expansion-panel-header-description {
-            margin-right: 450px;
-            color: @highlight-color;
-        }
+    }
+    ::ng-deep .filters-container {
+        padding-top: 6vh!important;
     }
 }

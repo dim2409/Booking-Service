@@ -6,6 +6,7 @@ import { CardListComponent } from "../../components/card-list/card-list.componen
 import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 import { PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
+import { FiltersService } from 'src/app/services/filters/filters.service';
 
 @Component({
     selector: 'app-room-management',
@@ -58,25 +59,41 @@ export class RoomManagementComponent {
     id: 2
   }
   rooms: any;
-  constructor(private RoomService: RoomsService) {
+  buildings: any;
+  departments: any;
+  filters: any;
+  constructor(private RoomService: RoomsService, private filterService: FiltersService) {
   }
 
   ngOnInit() {
+    this.RoomService.getDepartments({user_id: 2}).subscribe((resp: any) => {
+      this.departments = resp
+      this.RoomService.getBuildings({user_id: 2}).subscribe((resp: any) => {
+        this.buildings = resp
+        this.filters = this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings);
+      })
+    })
     this.getData();
   }
-
-
   
   filterUpdated(event: any) {
-    event.room_id.length > 0 ? this.req.room_id = event.room_id : delete this.req.room_id;
-    event.status.length > 0 ? this.req.status = event.status : delete this.req.status;
-    event.start.length > 0 ? this.req.start = event.start : delete this.req.start;
-    event.days.length > 0 ? this.req.days = event.days : delete this.req.days;
-    event.type.length > 0 ? this.req.type = event.type : delete this.req.type;
-    this.req.page = 1;
-    this.controlCard.resetPageIndex();   
+    console.log(event)
+    if(event.department.length > 0){
+      this.RoomService.getBuildings({user_id: 2, department: event.department}).subscribe((resp: any) => {
+        this.buildings = resp
+        this.filters = this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings);
+      })
+    }
+    this.req = {
+      page: 1,
+      perPage: 10,
+      id: 2
+    }
+    this.req = { ...this.req, ...event }
+    this.controlCard.resetPageIndex();
     this.getData();
   }
+
   getData() {
     this.loading = true;
     this.RoomService.getRooms(this.req).subscribe((resp: any) => {

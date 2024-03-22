@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { get } from 'lodash';
 import { FiltersComponent } from "../../components/filters/filters.component";
+import { FiltersService } from 'src/app/services/filters/filters.service';
 @Component({
     selector: 'app-home',
     standalone: true,
@@ -30,11 +31,13 @@ export class HomeComponent {
   req: any = {
     
   }
+  filters: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService, private filterService: FiltersService) { }
   ngOnInit(): void {
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
+      this.filters = this.filterService.getFilters(['rooms'], this.rooms);
     });
     this.getBookings();
     document.body.classList.remove('body-overflow');

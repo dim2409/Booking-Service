@@ -12,6 +12,12 @@ export class RoomsService {
   getRooms(req: any): Observable <any> {
     return this.http.post('http://localhost:8000/api/getRooms', req);
   }
+  getDepartments(req: any): Observable <any> {
+    return this.http.post('http://localhost:8000/api/getDepartments', req);
+  }
+  getBuildings(req: any): Observable <any> {
+    return this.http.post('http://localhost:8000/api/getBuildings', req);
+  }
 
   getAllRooms(): Observable <any> {
     return this.http.get('http://localhost:8000/api/getAllRooms');
