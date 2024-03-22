@@ -49,12 +49,11 @@ export class FiltersComponent implements OnInit {
     this.filterUpdated.emit(this.req);
   }
 
-  filterControl(chips: any[], list: any) {
+  filterControl(chips: any[], field: any) {
     chips.forEach((x) => {
       x.selected = false
     })
-    list.value = [];
-    //this.updateChips();
+    this.updateChips(chips,field);
   }
 
 }
