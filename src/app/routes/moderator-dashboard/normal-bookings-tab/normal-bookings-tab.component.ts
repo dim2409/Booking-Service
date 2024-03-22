@@ -17,33 +17,36 @@ import { ControlCardComponent } from "../../../components/control-card/control-c
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs';
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
+import { FiltersService } from 'src/app/services/filters/filters.service';
 
 @Component({
-    selector: 'app-normal-bookings-tab',
-    standalone: true,
-    templateUrl: './normal-bookings-tab.component.html',
-    styleUrl: './normal-bookings-tab.component.less',
-    imports: [
-        MatTabsModule,
-        CardListComponent,
-        MatOptionModule,
-        CommonModule,
-        MatExpansionModule,
-        DayNamePipe,
-        MatCardModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatPaginatorModule,
-        FiltersComponent,
-        ControlCardComponent,
-        LoadingSpinnerComponent
-    ]
+  selector: 'app-normal-bookings-tab',
+  standalone: true,
+  templateUrl: './normal-bookings-tab.component.html',
+  styleUrl: './normal-bookings-tab.component.less',
+  imports: [
+    MatTabsModule,
+    CardListComponent,
+    MatOptionModule,
+    CommonModule,
+    MatExpansionModule,
+    DayNamePipe,
+    MatCardModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatPaginatorModule,
+    FiltersComponent,
+    ControlCardComponent,
+    LoadingSpinnerComponent
+  ]
 })
 export class NormalBookingsTabComponent implements OnInit {
 
 
+
+
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
-  @Input() rooms!: any;
+  //@Input() rooms!: any;
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
@@ -51,13 +54,15 @@ export class NormalBookingsTabComponent implements OnInit {
 
   selectCount: number = 0;
   loading!: boolean;
+  filters!: any[];
+  rooms: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService) { }
 
   chips = [
-    {label: 'Day created', value: 'created_at',selected: true, asc: false},
-    {label: 'Alphabetical', value: 'title',selected: false, asc: false},
-    {label: 'Date', value: 'start',selected: false, asc: false},
+    { label: 'Day created', value: 'created_at', selected: true, asc: false },
+    { label: 'Alphabetical', value: 'title', selected: false, asc: false },
+    { label: 'Date', value: 'start', selected: false, asc: false },
   ]
 
   params =
@@ -93,19 +98,27 @@ export class NormalBookingsTabComponent implements OnInit {
     user_id: 2
   }
 
+
+  @ViewChild('roomList') roomList: any;
+
   ngOnInit(): void {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+      this.rooms = resp;
+      this.filters = this.filterService.getFilters(['rooms', 'status', 'type', 'months', 'days'], this.rooms);
+    })
+
+
     this.getData();
   }
 
   filterUpdated(event: any) {
-    console.log(event)
-    event.room_id.length > 0 ? this.req.room_id = event.room_id : delete this.req.room_id;
-    event.status.length > 0 ? this.req.status = event.status : delete this.req.status;
-    event.start.length > 0 ? this.req.start = event.start : delete this.req.start;
-    event.days.length > 0 ? this.req.days = event.days : delete this.req.days;
-    event.type.length > 0 ? this.req.type = event.type : delete this.req.type;
-    this.req.page = 1;
-    this.controlCard.resetPageIndex();   
+    this.req = {
+      page: 1,
+      perPage: 10,
+      user_id: 2
+    }
+    this.req = { ...this.req, ...event }
+    this.controlCard.resetPageIndex();
     this.getData();
   }
   getData() {
@@ -131,14 +144,14 @@ export class NormalBookingsTabComponent implements OnInit {
 
   updateBooking(event: any) {
     let selectedBookings: any[] = [];
-    if(!event.individualAction){
+    if (!event.individualAction) {
       selectedBookings = this.bookings
-      .filter((booking: any) => booking.selected)
-      .map((booking: any) => booking.id);
-    }else{
+        .filter((booking: any) => booking.selected)
+        .map((booking: any) => booking.id);
+    } else {
       selectedBookings = event.selectedBookings;
     }
-    this.bookingUpdate.emit({selectedBookings, ...event, type: 'normal'});
+    this.bookingUpdate.emit({ selectedBookings, ...event, type: 'normal' });
   }
 
   selectAll(event: any) {
@@ -155,14 +168,14 @@ export class NormalBookingsTabComponent implements OnInit {
     }
   }
   sorterUpdated(event: any) {
-    if(event.selected){
+    if (event.selected) {
       this.req.sortBy = event.value
       this.req.sortOrder = event.asc ? 'asc' : 'desc'
-    }else{
+    } else {
       delete this.req.sortBy;
       delete this.req.sortOrder;
-    }    
-    this.req.page = 1;     
+    }
+    this.req.page = 1;
     this.getData();
   }
 }

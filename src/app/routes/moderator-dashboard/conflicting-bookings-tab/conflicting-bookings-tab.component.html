@@ -1,6 +1,5 @@
 <!-- Filters -->
-<app-filters (filterUpdated)="filterUpdated($event)" [status]="false" [monthsFilter]="true"
-[daysFilter]="true" [type]="true"></app-filters>
+<app-filters (filterUpdated)="filterUpdated($event)" [filters]="filters"></app-filters>
 <!-- Conflicts -->
 <div class="tab">
     <app-control-card [chips]="chips" [params]="params" (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)" 

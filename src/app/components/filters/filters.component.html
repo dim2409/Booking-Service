@@ -1,66 +1,17 @@
 <div class="filters-container">
-    <div class="filter-container">
-        <p class="filter-title">
-            Rooms
-            <span class="filter-controls">                
-                <i (click)="filterControl(roomChips, roomList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-            </span>
-        </p>
-        <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
-            <mat-chip-option *ngFor="let room of roomChips" [value]="room.id" [selected]="room.selected"
-            (click)="toggleSelect(room)"><i [ngStyle]="{'color': room.color}" class="fa-solid fa-circle"></i>&nbsp;{{room.name}}</mat-chip-option>
-        </mat-chip-listbox>
+    <div class="filter-container" *ngFor="let filter of filters">
+      <p class="filter-title">
+        {{ filter.title }}
+        <span class="filter-controls">                
+          <i (click)="filterControl(filter.chips, filter.list)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
+        </span>
+      </p>
+      <mat-chip-listbox multiple  [attr.id]="filter.id"  class="filter">
+        <mat-chip-option *ngFor="let chip of filter.chips" [value]="chip.id" [selected]="chip.selected"
+          (click)="toggleSelect(chip, filter.chips, filter.field)">
+          <i class="fa-solid fa-circle icon" [ngStyle]="{'color': chip.color}" *ngIf="chip.color"></i>
+          {{ chip.name }}
+        </mat-chip-option>
+      </mat-chip-listbox>
     </div>
-
-    <div class="filter-container" *ngIf="this.status">
-        <p class="filter-title">
-            Status
-            <span class="filter-controls">                
-                <i (click)="filterControl(statusChips, statusList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-            </span>
-        </p>
-        <mat-chip-listbox aria-label="Room selection" multiple #statusList class="filter">
-            <mat-chip-option *ngFor="let chip of statusChips" [value]="chip.value" [selected]="chip.selected"
-                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
-        </mat-chip-listbox>
-    </div>
-    
-    <div class="filter-container" *ngIf="this.type">
-        <p class="filter-title">
-            Type
-            <span class="filter-controls">                
-                <i (click)="filterControl(typeChips, typeList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-            </span>
-        </p>
-        <mat-chip-listbox aria-label="Room selection" multiple #typeList class="filter">
-            <mat-chip-option *ngFor="let chip of typeChips" [value]="chip.value" [selected]="chip.selected"
-                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
-        </mat-chip-listbox>
-    </div>
-
-    <div class="filter-container" *ngIf="monthsFilter">
-        <p class="filter-title">
-            Months
-            <span class="filter-controls">                
-                <i (click)="filterControl(months, dateList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-            </span>
-        </p>
-        <mat-chip-listbox aria-label="Room selection" multiple #dateList class="filter">
-            <mat-chip-option *ngFor="let chip of months" [value]="chip.value" [selected]="chip.selected"
-                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
-        </mat-chip-listbox>
-    </div>
-
-    <div class="filter-container" *ngIf="daysFilter">
-        <p class="filter-title">
-            Days
-            <span class="filter-controls">                
-                <i (click)="filterControl(dayChips, dayList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-            </span>
-        </p>
-        <mat-chip-listbox aria-label="Room selection" multiple #dayList class="filter">
-            <mat-chip-option *ngFor="let chip of dayChips" [value]="chip.value" [selected]="chip.selected"
-                (click)="toggleSelect(chip)">{{chip.label}}</mat-chip-option>
-        </mat-chip-listbox>
-    </div>
-</div>
+  </div>

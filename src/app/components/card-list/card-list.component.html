@@ -16,7 +16,7 @@
                 </span>
                 <!-- Normal fields -->
                 <span *ngIf="!element.isRoom">
-                    {{rooms[0]?.name}} |
+                    {{element.rooms[0]?.name}} |
                     {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
                     {{ element.end | date: 'HH:mm' }} |
                     {{element?.status==0 ? 'Pending' : 'Active'}}

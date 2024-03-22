@@ -17,21 +17,22 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
+import { FiltersService } from 'src/app/services/filters/filters.service';
 
 @Component({
-    selector: 'app-recurring-bookings-tab',
-    standalone: true,
-    templateUrl: './recurring-bookings-tab.component.html',
-    styleUrl: './recurring-bookings-tab.component.less',
-    imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, CardListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent, LoadingSpinnerComponent]
+  selector: 'app-recurring-bookings-tab',
+  standalone: true,
+  templateUrl: './recurring-bookings-tab.component.html',
+  styleUrl: './recurring-bookings-tab.component.less',
+  imports: [CommonModule, MatCardModule, DayNamePipe, FiltersComponent, MatTabsModule, CardListComponent, MatOptionModule, CommonModule, MatExpansionModule, DayNamePipe, MatCardModule, MatButtonModule, MatDatepickerModule, MatPaginatorModule, ControlCardComponent, LoadingSpinnerComponent]
 })
 export class RecurringBookingsTabComponent implements OnInit {
   @Input() rooms!: any[];
-  
+
 
   chips = [
-    {label: 'Day created', value: 'created_at',selected: true, asc: false},
-    {label: 'Date', value: 'start',selected: false, asc: false},
+    { label: 'Day created', value: 'created_at', selected: true, asc: false },
+    { label: 'Date', value: 'start', selected: false, asc: false },
   ]
 
   params =
@@ -62,22 +63,15 @@ export class RecurringBookingsTabComponent implements OnInit {
   recurrings: any;
   selectedRoom: any = "";
 
-  dataSource: any[] = [];
-  pageSizeOptions: number[] = [10, 25, 50];
-  totalItems: number = 0;
-  currentPage: number = 1;
-  pageSize: number = 10; // Default page size
-  roomIds!: any[];
-
-  
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
-  
+
   selectCount: number = 0;
   loading!: boolean;
+  filters: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, ) { }
-  
-  
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService) { }
+
+
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
 
@@ -87,23 +81,30 @@ export class RecurringBookingsTabComponent implements OnInit {
     user_id: 2
   }
   ngOnInit(): void {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+      this.rooms = resp;
+      this.filters = this.filterService.getFilters(['rooms', 'status', 'days'], this.rooms);
+    })
+
+
     this.getData();
   }
 
   filterUpdated(event: any) {
-    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
-    event.status !== '' ? this.req.status = event.status : delete this.req.status;
-    event.start !== '' ? this.req.start = event.start : delete this.req.start;
-    event.days !== '' ? this.req.days = event.days : delete this.req.days;
-    this.req.page = 1;
-    this.controlCard.resetPageIndex(); 
+    this.req = {
+      page: 1,
+      perPage: 10,
+      user_id: 2
+    }
+    this.req = { ...this.req, ...event }
+    this.controlCard.resetPageIndex();
     this.getData();
   }
   getData() {
     this.loading = true
     this.BookingsService.getRecurringBookings(this.req).subscribe((resp: any) => {
-      this.recurrings = resp.recurrings;      
-      this.totalItems = resp.total
+      this.recurrings = resp.recurrings;
+      this.params.totalItems = resp.total
       this.loading = false
     });
 
@@ -123,25 +124,25 @@ export class RecurringBookingsTabComponent implements OnInit {
 
   updateBooking(event: any) {
     let selectedBookings: any[] = [];
-    if(!event.individualAction){
+    if (!event.individualAction) {
       selectedBookings = this.recurrings
-      .filter((booking: any) => booking.selected)
-      .map((booking: any) => booking.id);
-    }else{
+        .filter((booking: any) => booking.selected)
+        .map((booking: any) => booking.id);
+    } else {
       selectedBookings = event.selectedBookings;
     }
-    this.bookingUpdate.emit({selectedBookings, ...event, type: 'recurringGroup'});
+    this.bookingUpdate.emit({ selectedBookings, ...event, type: 'recurringGroup' });
   }
 
   sorterUpdated(event: any) {
-    if(event.selected){
+    if (event.selected) {
       this.req.sortBy = event.value
       this.req.sortOrder = event.asc ? 'asc' : 'desc'
-    }else{
+    } else {
       delete this.req.sortBy;
       delete this.req.sortOrder;
-    }    
-    this.req.page = 1;     
+    }
+    this.req.page = 1;
     this.getData();
   }
 

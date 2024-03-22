@@ -16,6 +16,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ConflictComponent } from "../../../components/conflict/conflict.component";
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
+import { FiltersService } from 'src/app/services/filters/filters.service';
 @Component({
     selector: 'app-recurring-conflicts-tab',
     standalone: true,
@@ -43,8 +44,9 @@ export class RecurringConflictsTabComponent {
 
   conflicts: any;
   loading!: boolean;
+  filters: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService) { }
 
   chips = [
     { label: 'Day created', value: 'created_at', selected: true, asc: false },
@@ -88,15 +90,21 @@ export class RecurringConflictsTabComponent {
   }
 
   ngOnInit(): void {
+    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+      this.rooms = resp;
+      this.filters = this.filterService.getFilters(['rooms', 'days'], this.rooms);
+    })
+
     this.getData();
   }
 
   filterUpdated(event: any) {
-    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
-    event.status !== '' ? this.req.status = event.status : delete this.req.status;
-    event.start !== '' ? this.req.start = event.start : delete this.req.start;
-    event.days !== '' ? this.req.days = event.days : delete this.req.days;
-    this.req.page = 1;
+    this.req = {
+      page: 1,
+      perPage: 10,
+      user_id: 2
+    }
+    this.req = { ...this.req, ...event }
     this.controlCard.resetPageIndex();
     this.getData();
   }
