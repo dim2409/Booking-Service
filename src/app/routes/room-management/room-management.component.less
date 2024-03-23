@@ -15,21 +15,23 @@
         padding: 0.5rem;
 
         transition: transform 0.1s ease-out;
-
+        
         .add {
             color: @primary-color;
+            transition: transform 0.1s ease-out;
             font-size: 3vw;
         }
     }
 
     .add-container:hover {
-        transform: scale(1.01);
+        transform: scale(1.005);
         transition: transform 0.2s ease-out;
         cursor: pointer;
         
         border-color: @primary-color-hover;
-
+        
         .add {
+            transform: scale(1.1);
             transition: transform 0.2s ease-out;
             color: @primary-color-hover;
         }
