@@ -7,6 +7,7 @@ import { LoadingSpinnerComponent } from "../../components/loading-spinner/loadin
 import { PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { FiltersService } from 'src/app/services/filters/filters.service';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 
 @Component({
     selector: 'app-room-management',
@@ -62,7 +63,7 @@ export class RoomManagementComponent {
   buildings: any;
   departments: any;
   filters: any;
-  constructor(private RoomService: RoomsService, private filterService: FiltersService) {
+  constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -129,5 +130,11 @@ export class RoomManagementComponent {
     }    
     this.req.page = 1;     
     this.getData();
+  }
+
+  addRoom() {
+    this.dialogService.openCreateRoomDialog().subscribe((resp: any) => {
+      
+    })
   }
 }

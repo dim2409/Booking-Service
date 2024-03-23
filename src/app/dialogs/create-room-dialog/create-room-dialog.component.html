@@ -1,12 +1,25 @@
-<form>
-    <mat-form-field>
-      <mat-label>Room name</mat-label>
-      <input matInput>
+<form #createRoomForm="ngForm" class="form">
+    <mat-form-field >
+        <mat-label>Room name</mat-label>
+        <input name="name" matInput>
     </mat-form-field>
-  
+
+    <mat-form-field >
+        <mat-label>Room number</mat-label>
+        <input name="number" matInput>
+    </mat-form-field>
+
     <mat-form-field class="example-full-width">
-      <mat-label>Room info</mat-label>
-      <textarea></textarea>
+        <mat-label>Room info</mat-label>
+        <textarea name="info" matInput></textarea>
     </mat-form-field>
-    
-  </form>
+
+    <mat-form-field >
+        <input matInput [ngxMatColorPicker]="picker" name="color" [formControl]="colorControl">
+        <ngx-mat-color-toggle matSuffix [for]="picker">
+            <mat-icon ngxMatColorpickerToggleIcon fontIcon="circle" [ngStyle]="{'color': colorControl.value}"></mat-icon>            
+        </ngx-mat-color-toggle>
+        <ngx-mat-color-picker #picker [color]="color"></ngx-mat-color-picker>
+    </mat-form-field>
+
+</form>

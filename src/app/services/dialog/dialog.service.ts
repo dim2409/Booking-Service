@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
+import { CreateRoomDialogComponent } from 'src/app/dialogs/create-room-dialog/create-room-dialog.component';
 import { EditBookingDialogComponent } from 'src/app/dialogs/edit-booking-dialog/edit-booking-dialog.component';
 import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
 
@@ -49,6 +50,15 @@ export class DialogService {
   openEditBookingDialog(booking: any) {
     const dialogRef = this.dialog.open(EditBookingDialogComponent, {
       data: booking,
+      autoFocus: false,
+      width: "90vw",
+      height: "90%",
+      disableClose: true,
+    });
+    return dialogRef.afterClosed();
+  }
+  openCreateRoomDialog() {
+    const dialogRef = this.dialog.open(CreateRoomDialogComponent, {
       autoFocus: false,
       width: "90vw",
       height: "90%",

@@ -18,12 +18,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
+
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
     declarations: [
         AppComponent,
     ],
     providers: [
-        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }, // Provide default dialog options if needed
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }, 
+        { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
         ],
     bootstrap: [AppComponent],
     imports: [
@@ -43,7 +48,12 @@ import { MatNativeDateModule } from '@angular/material/core';
         CardListComponent,
         HttpClientModule,
         MatDialogModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        NgxMatColorPickerModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
     ]
 })
 export class AppModule { }

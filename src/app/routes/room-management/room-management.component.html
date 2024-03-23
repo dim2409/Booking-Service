@@ -7,7 +7,8 @@
         <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
             (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
-        <div class="add-container">
+        <!-- Add Room -->
+        <div class="add-container" (click)="addRoom()">
             <i class="fa-solid fa-plus-circle add"></i>
         </div>
         <!-- Room List -->
