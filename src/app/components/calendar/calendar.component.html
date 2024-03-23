@@ -1,17 +1,5 @@
 <div class="calendar-container">
   <div class="calendar">
-    <div class="filter-container" *ngIf="this.roomChips">
-      <p class="filter-title">
-        <span class="filter-controls">
-          <i (click)="filterControl(roomChips, roomList)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-        </span>
-      </p>
-      <mat-chip-listbox aria-label="Room selection" multiple #roomList class="filter">
-        <mat-chip-option *ngFor="let room of roomChips" [value]="room.id" [selected]="room.selected"
-          (click)="toggleSelect(room)"><i [ngStyle]="{'color': room.color}"
-            class="fa-solid fa-circle"></i>&nbsp;{{room.name}}</mat-chip-option>
-      </mat-chip-listbox>
-    </div>
     <!-- Set view kind to month, week or day -->
     <div class="view-kind-controls-contaier">
       <mat-button-toggle-group name="viewKind" aria-label="Kind of View" [(ngModel)]="selectedValue">

@@ -3,9 +3,14 @@
     <div class="tab">
         <!-- Filters -->
         <app-filters (filterUpdated)="filterUpdated($event)" [filters]="filters"></app-filters>
+        <!-- Controls -->
         <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
             (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
+        <div class="add-container">
+            <i class="fa-solid fa-plus-circle add"></i>
+        </div>
+        <!-- Room List -->
         <div class="room-list-container">
             <app-card-list [elements]="rooms" [buttons]="buttons" [removeConflicts]="true"
                 (bookingUpdated)="updateRoom($event)"></app-card-list>

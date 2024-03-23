@@ -83,22 +83,4 @@ export class CalendarComponent {
     this.scrollCalendarEvent.emit(event);
   }
 
-  toggleSelect(chip: any) {
-    chip.selected = !chip.selected;
-    this.updateChips();
-  }
-  updateChips() {
-    let req = {
-      room_id: this.roomList?.value ?? '',
-    }
-    this.filterUpdated.emit(req);
-  }
-
-  filterControl(chips: any[], list: any) {
-    chips.forEach((x) => {
-      x.selected = false
-    })
-    list.value = [];
-    this.updateChips();
-  }
 }

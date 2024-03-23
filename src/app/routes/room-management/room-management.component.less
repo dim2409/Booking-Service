@@ -1,23 +1,59 @@
 @import url('../../../variables.less');
-.tab{
+
+.tab {
     margin-left: 20vw;
+
+    .add-container {
+        width: 70VW;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2vh;
+        border-radius: 0.5rem;
+        border-style: solid;
+        border-color: @primary-color;
+        padding: 0.5rem;
+
+        transition: transform 0.1s ease-out;
+
+        .add {
+            color: @primary-color;
+            font-size: 3vw;
+        }
+    }
+
+    .add-container:hover {
+        transform: scale(1.01);
+        transition: transform 0.2s ease-out;
+        cursor: pointer;
+        
+        border-color: @primary-color-hover;
+
+        .add {
+            transition: transform 0.2s ease-out;
+            color: @primary-color-hover;
+        }
+
+    }
+
     .room-list-container {
         position: relative;
-    
+
         .mat-expansion-panel-header {
             font-size: unset;
-    
+
             .mat-expansion-panel-header-title {
                 margin-right: 0;
             }
-    
+
             .mat-expansion-panel-header-description {
                 margin-right: 450px;
                 color: @highlight-color;
             }
         }
     }
+
     ::ng-deep .filters-container {
-        padding-top: 6vh!important;
+        padding-top: 6vh !important;
     }
 }
