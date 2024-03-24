@@ -26,4 +26,8 @@ export class RoomsService {
   getModeratedRooms(id: number): Observable <any> {
     return this.http.get('http://localhost:8000/api/getModeratedRooms/'+id);
   }
+
+  createRoom(req: any): Observable <any> {
+    return this.http.post('http://localhost:8000/api/createRoom', req);
+  }
 }

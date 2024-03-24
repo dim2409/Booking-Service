@@ -8,7 +8,7 @@
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
             (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
         <!-- Add Room -->
-        <div class="add-container" (click)="addRoom()">
+        <div class="add-container" (click)="addRoom()" *ngIf="!loading">
             <i class="fa-solid fa-plus-circle add"></i>
         </div>
         <!-- Room List -->

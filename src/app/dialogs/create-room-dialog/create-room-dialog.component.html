@@ -1,25 +1,49 @@
-<form #createRoomForm="ngForm" class="form">
-    <mat-form-field >
+<form #createRoomForm="ngForm" class="form" (ngSubmit)="onSubmit(createRoomForm)">
+    <mat-form-field>
         <mat-label>Room name</mat-label>
-        <input name="name" matInput>
+        <input name="name" matInput ngModel>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
         <mat-label>Room number</mat-label>
-        <input name="number" matInput>
+        <input name="number" matInput ngModel>
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Room capacity</mat-label>
+        <input name="capacity" matInput ngModel>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
         <mat-label>Room info</mat-label>
-        <textarea name="info" matInput></textarea>
+        <textarea name="info" matInput ngModel></textarea>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
+        <mat-label>Select Department</mat-label>
+        <mat-select name="department_id" (selectionChange)="selectDepartment($event)" matInput ngModel>
+            <mat-option *ngFor="let department of departments" [value]="department.id">{{department.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="buildings?.length>0">
+        <mat-label>Select Building</mat-label>
+        <mat-select name="building_id" matInput ngModel>
+            <mat-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
         <input matInput [ngxMatColorPicker]="picker" name="color" [formControl]="colorControl">
         <ngx-mat-color-toggle matSuffix [for]="picker">
-            <mat-icon ngxMatColorpickerToggleIcon fontIcon="circle" [ngStyle]="{'color': colorControl.value}"></mat-icon>            
+            <mat-icon ngxMatColorpickerToggleIcon fontIcon="circle"
+                [ngStyle]="{'color': colorControl.value}"></mat-icon>
         </ngx-mat-color-toggle>
         <ngx-mat-color-picker #picker [color]="color"></ngx-mat-color-picker>
     </mat-form-field>
+
+    <button mat-raised-button type="submit" [disabled]="!createRoomForm.valid" color="primary">
+        Create Room
+    </button>
 
 </form>
