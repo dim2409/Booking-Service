@@ -43,3 +43,12 @@
   margin-right: 450px;
   color: #f14c38;
 }
+.badge {
+  background-color: #f14c38;
+  color: #ffffff;
+  font-size: 1vw;
+  font-weight: 500;
+  border-radius: 50%;
+  padding: 0.8vh;
+  padding-inline: 1.2vh;
+}

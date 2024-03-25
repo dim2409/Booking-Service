@@ -13,6 +13,7 @@ import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurrin
 import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conflicting-bookings-tab.component";
 import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurring-conflicts-tab.component";
 import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
+import {MatBadgeModule} from '@angular/material/badge';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
@@ -26,7 +27,11 @@ import { LoadingSpinnerComponent } from "../../components/loading-spinner/loadin
     MatDatepickerModule,
     NormalBookingsTabComponent,
     RecurringBookingsTabComponent,
-    ConflictingBookingsTabComponent, RecurringConflictsTabComponent, LoadingSpinnerComponent]
+    ConflictingBookingsTabComponent, 
+    RecurringConflictsTabComponent, 
+    LoadingSpinnerComponent,
+    MatBadgeModule
+  ]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -42,6 +47,7 @@ export class ModeratorDashboardComponent implements OnInit {
 
   @ViewChild(NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
+  @ViewChild(RecurringConflictsTabComponent) recurringConflictsTabComponent!: RecurringConflictsTabComponent;
   @ViewChild(ConflictingBookingsTabComponent) conflictingBookingsTabComponent!: ConflictingBookingsTabComponent;
   ngOnInit(): void {
     this.loading = true;
@@ -99,6 +105,6 @@ export class ModeratorDashboardComponent implements OnInit {
     this.normalBookingsTab.getData();
     this.recurringBookingsTabComponent.getData();
     this.conflictingBookingsTabComponent.getData();
+    this.recurringConflictsTabComponent.getData();
   }
-
 }
