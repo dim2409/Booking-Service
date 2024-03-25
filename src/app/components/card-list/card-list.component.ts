@@ -21,6 +21,7 @@ export class CardListComponent {
 
   @Output() bookingUpdated: EventEmitter<any> = new EventEmitter<any>();
   @Output() bookingSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addEvent: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() elements: any[] = [];
   @Input() rooms: any[] = [];
@@ -34,5 +35,9 @@ export class CardListComponent {
   toggleSelect(booking: any) {
     booking.selected = !booking.selected;
     this.bookingSelected.emit(booking.selected);
+  }
+
+  add() {
+    this.addEvent.emit();
   }
 }

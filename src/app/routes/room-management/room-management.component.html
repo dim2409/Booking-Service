@@ -7,14 +7,11 @@
         <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
             (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
-        <!-- Add Room -->
-        <div class="add-container" (click)="addRoom()" *ngIf="!loading">
-            <i class="fa-solid fa-plus-circle add"></i>
-        </div>
+        
         <!-- Room List -->
         <div class="room-list-container">
             <app-card-list [elements]="rooms" [buttons]="buttons" [removeConflicts]="true"
-                (bookingUpdated)="updateRoom($event)"></app-card-list>
+                (bookingUpdated)="updateRoom($event)" *ngIf="!loading" (addEvent)="addRoom()"></app-card-list>
             <app-loading-spinner *ngIf="loading"></app-loading-spinner>
             <div class="noDataMsg" *ngIf="rooms?.length===0 || !rooms && !loading">
                 No Data

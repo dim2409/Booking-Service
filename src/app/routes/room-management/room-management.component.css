@@ -1,34 +1,6 @@
 .tab {
   margin-left: 20vw;
 }
-.tab .add-container {
-  width: 70VW;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2vh;
-  border-radius: 0.5rem;
-  border-style: solid;
-  border-color: #176b87;
-  padding: 0.5rem;
-  transition: transform 0.1s ease-out;
-}
-.tab .add-container .add {
-  color: #176b87;
-  transition: transform 0.1s ease-out;
-  font-size: 3vw;
-}
-.tab .add-container:hover {
-  transform: scale(1.005);
-  transition: transform 0.2s ease-out;
-  cursor: pointer;
-  border-color: #60a3b9;
-}
-.tab .add-container:hover .add {
-  transform: scale(1.1);
-  transition: transform 0.2s ease-out;
-  color: #60a3b9;
-}
 .tab .room-list-container {
   position: relative;
 }
