@@ -81,8 +81,6 @@ export class ModeratorDashboardComponent implements OnInit {
       case 'cancelBooking':
         this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to cancel this booking?').subscribe((resp: any) => {
           if (!resp) { return; }
-          const idArray: number[] = [data.booking.id]
-
           this.BookingsService.cancelBooking({ id: data.selectedBookings, type: data.type }).subscribe((resp: any) => {
             this.dialogService.openSuccessDialog('Booking Canceled');
             this.updateTabs();

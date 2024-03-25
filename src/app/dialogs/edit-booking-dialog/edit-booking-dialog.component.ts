@@ -84,13 +84,20 @@ export class EditBookingDialogComponent implements OnInit {
     this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
       this.bookings = resp;
     });
-    this.bookingTitle = this.data.booking.title;
-    this.selectedRoom = this.data.booking.rooms[0].id;
-    this.recurringCheck = this.data.booking.type === 'recurringGroup';
-    this.selectedDate = new Date(this.data.booking.start);
-
-    this.bookingInfo = this.data.booking.info;
+    
     this.initializeTimeOptions();
+    this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
+    
+    if(this.data.booking) {
+      this.bookingTitle = this.data.booking.title;
+      this.selectedRoom = this.data.booking.rooms[0].id;
+      this.recurringCheck = this.data.booking.type === 'recurringGroup';
+      this.selectedDate = new Date(this.data.booking.start);
+  
+      this.bookingInfo = this.data.booking.info;
+      this.selectedStart = this.getTimeOption(this.data.booking.start);
+      this.selectedEnd = this.getTimeOption(this.data.booking.end);
+    }
     if (this.recurringCheck) {
       this.data.booking.days.forEach((bookingDay: any) => {
         this.days.forEach((day: any) => {
@@ -169,9 +176,8 @@ export class EditBookingDialogComponent implements OnInit {
       date.setHours(i, 0, 0);
       this.timeOptions.push(date);
     }
-    this.selectedStart = this.getTimeOption(this.data.booking.start);
-    this.selectedEnd = this.getTimeOption(this.data.booking.end);
-
+    this.selectedStart = this.timeOptions[0];
+    this.selectedEnd = this.timeOptions[1];
   }
 
   getTimeOption(timeInput: Date) {

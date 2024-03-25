@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs';
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
+import { DialogService } from 'src/app/services/dialog/dialog.service';
 
 @Component({
   selector: 'app-normal-bookings-tab',
@@ -42,11 +43,14 @@ import { FiltersService } from 'src/app/services/filters/filters.service';
 })
 export class NormalBookingsTabComponent implements OnInit {
 
-
-
+  constructor(
+    private BookingsService: BookingsService,
+    private RoomsService: RoomsService,
+    private filterService: FiltersService,
+    private dialogService: DialogService
+  ) { }
 
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
-  //@Input() rooms!: any;
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
@@ -56,8 +60,6 @@ export class NormalBookingsTabComponent implements OnInit {
   loading!: boolean;
   filters!: any[];
   rooms: any;
-
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService) { }
 
   chips = [
     { label: 'Day created', value: 'created_at', selected: true, asc: false },
@@ -91,6 +93,7 @@ export class NormalBookingsTabComponent implements OnInit {
       action: 'cancelBooking',
     },
   ]
+
   req: any = {
     page: 1,
     perPage: 10,
@@ -104,7 +107,6 @@ export class NormalBookingsTabComponent implements OnInit {
       this.rooms = resp;
       this.filters = this.filterService.getFilters(['rooms', 'status', 'type', 'months', 'days'], this.rooms);
     })
-
 
     this.getData();
   }
@@ -132,7 +134,6 @@ export class NormalBookingsTabComponent implements OnInit {
     if (event.pageIndex + 1 !== this.req.page) {
       this.req.page = event.pageIndex + 1;
     }
-
     // Check if the page size has changed
     if (event.pageSize !== this.req.perPage) {
       this.req.perPage = event.pageSize;
@@ -175,5 +176,15 @@ export class NormalBookingsTabComponent implements OnInit {
     }
     this.req.page = 1;
     this.getData();
+  }
+
+  add() {
+    this.dialogService.openEditBookingDialog({rooms:this.rooms}).subscribe((resp: any) => {
+      if(resp){
+        this.BookingsService.createBooking(resp).subscribe((resp: any) => {
+          this.getData();
+        })
+      }
+    })
   }
 }

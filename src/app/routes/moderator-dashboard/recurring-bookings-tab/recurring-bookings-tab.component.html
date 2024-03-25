@@ -7,7 +7,8 @@
     (bookingUpdated)="updateBooking($event)" #controlCard></app-control-card>
   <div class="moderator-list-container">
     <app-card-list [elements]="recurrings" [rooms]="rooms" [buttons]="buttons" [removeConflicts]="true"
-      (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)" *ngIf="!loading && recurrings.length"></app-card-list>
+      (bookingUpdated)="updateBooking($event)" (bookingSelected)="selectBooking($event)" (addEvent)="add()"
+      *ngIf="!loading"></app-card-list>
     <app-loading-spinner *ngIf="loading"></app-loading-spinner>
     <div class="noDataMsg" *ngIf="recurrings?.length===0 || !recurrings && !loading">
       No Data

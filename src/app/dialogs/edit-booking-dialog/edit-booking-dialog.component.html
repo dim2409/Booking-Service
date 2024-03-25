@@ -104,8 +104,9 @@
   <br>
   <div class="col-12 mb-5 row justify-content-center">
     <button mat-raised-button class="button button-color" type="button" (click)="close()">Cancel</button>
-    <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color"> Save
-      Changes </button>
+    <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color"> 
+    {{this.data.booking ? 'Update Booking' : 'Create Booking'}}  
+    </button>
   </div>
 
 </form>

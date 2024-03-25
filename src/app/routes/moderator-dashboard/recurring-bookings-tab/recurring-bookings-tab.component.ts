@@ -69,7 +69,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   loading!: boolean;
   filters: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) { }
 
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
@@ -164,5 +164,13 @@ export class RecurringBookingsTabComponent implements OnInit {
     })
     this.selectCount = 0
   }
-
+  add() {
+    this.dialogService.openEditBookingDialog({rooms:this.rooms, recurringCheck: true}).subscribe((resp: any) => {
+      if(resp){
+        this.BookingsService.createBooking(resp).subscribe((resp: any) => {
+          this.getData();
+        })
+      }
+    })
+  }
 }
