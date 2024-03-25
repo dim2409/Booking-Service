@@ -131,6 +131,7 @@ export class EditBookingDialogComponent implements OnInit {
     this.end = moment.utc(this.end).tz('Europe/Athens').format();
 
     var booking = {
+      ...this.data.booking,
       ...this.data,
       ...bookingRequestForm.value,
       start: this.start,

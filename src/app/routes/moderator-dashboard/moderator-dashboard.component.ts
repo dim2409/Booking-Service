@@ -13,7 +13,8 @@ import { RecurringBookingsTabComponent } from "./recurring-bookings-tab/recurrin
 import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conflicting-bookings-tab.component";
 import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurring-conflicts-tab.component";
 import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
@@ -27,10 +28,11 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatDatepickerModule,
     NormalBookingsTabComponent,
     RecurringBookingsTabComponent,
-    ConflictingBookingsTabComponent, 
-    RecurringConflictsTabComponent, 
+    ConflictingBookingsTabComponent,
+    RecurringConflictsTabComponent,
     LoadingSpinnerComponent,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSnackBarModule
   ]
 })
 export class ModeratorDashboardComponent implements OnInit {
@@ -43,7 +45,7 @@ export class ModeratorDashboardComponent implements OnInit {
   rooms: any;
   loading!: boolean;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService) { }
+  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService, private _snackBar: MatSnackBar) { }
 
   @ViewChild(NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
@@ -62,12 +64,18 @@ export class ModeratorDashboardComponent implements OnInit {
 
   updateBooking(data: any) {
     switch (data.action) {
+      case 'createBooking':
+        this.BookingsService.createBooking(data.req).subscribe((resp: any) => {
+          this.openSnackBar('Booking Created');
+          this.updateTabs();
+        })
+        break
       case 'approveBooking':
         {
           this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to confirm this booking?').subscribe((resp: any) => {
             if (resp) {
               this.BookingsService.approveBooking({ id: data.selectedBookings, type: data.type }).subscribe((resp: any) => {
-                this.dialogService.openSuccessDialog('Booking Status Updated');
+                this.openSnackBar('Booking Status Updated');
                 this.updateTabs();
               })
             }
@@ -78,7 +86,7 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openEditBookingDialog({ booking: data.booking, rooms: this.rooms }).subscribe((resp: any) => {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
-              this.dialogService.openSuccessDialog('Booking Updated');
+              this.openSnackBar('Booking Updated');
               this.updateTabs();
             })
           }
@@ -88,7 +96,7 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openConfirmDialog(data.booking, 'Are you sure you want to cancel this booking?').subscribe((resp: any) => {
           if (!resp) { return; }
           this.BookingsService.cancelBooking({ id: data.selectedBookings, type: data.type }).subscribe((resp: any) => {
-            this.dialogService.openSuccessDialog('Booking Canceled');
+            this.openSnackBar('Booking Canceled');
             this.updateTabs();
           })
         })
@@ -97,9 +105,14 @@ export class ModeratorDashboardComponent implements OnInit {
         this.dialogService.openInfoDialog(data.booking);
         break;
       case 'resolveConflict':
+        this.openSnackBar('Conflict Resolved');
         this.updateTabs();
         break;
     }
+  }
+
+  openSnackBar(message: string, action?: string) {
+    this._snackBar.open(message, action ? action : 'Dismiss')._dismissAfter(3000);
   }
   updateTabs() {
     this.normalBookingsTab.getData();

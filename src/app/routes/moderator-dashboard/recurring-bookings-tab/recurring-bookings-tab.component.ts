@@ -167,9 +167,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   add() {
     this.dialogService.openEditBookingDialog({rooms:this.rooms, recurringCheck: true}).subscribe((resp: any) => {
       if(resp){
-        this.BookingsService.createBooking(resp).subscribe((resp: any) => {
-          this.getData();
-        })
+        this.bookingUpdate.emit({req:resp, action:'createBooking'})
       }
     })
   }

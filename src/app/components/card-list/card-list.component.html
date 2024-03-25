@@ -14,16 +14,20 @@
             </mat-card-title>
             <mat-card-subtitle>
                 <!-- Recurring fields -->
-                <span *ngFor="let day of element.days">
-                    {{ rooms[day.room_id-1]?.name }} |
-                    {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                <span *ngIf="!element.isRoom && element.type == 'recurringGroup'">
+                    <span *ngFor="let day of element.days">
+                        {{ rooms[day.room_id-1]?.name }} 
+                        {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                    </span>
+                    {{element?.status==0 ? 'Pending' : element?.status==1 ? 'Active' : 'Cancelled'}}
                 </span>
+                
                 <!-- Normal fields -->
-                <span *ngIf="!element.isRoom">
+                <span *ngIf="!element.isRoom && element.type != 'recurringGroup'">
                     {{element.rooms[0]?.name}} |
                     {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
                     {{ element.end | date: 'HH:mm' }} |
-                    {{element?.status==0 ? 'Pending' : 'Active'}}
+                    {{element?.status==0 ? 'Pending' : element?.status==1 ? 'Active' : 'Cancelled'}}
                 </span>
                 <!-- Room fields -->
                 <span *ngIf="element.isRoom">

@@ -176,13 +176,11 @@ export class ConflictComponent implements OnInit {
         if (!this.isRecurring) {
           this.bookingsService.resolveConflict(this.conflictGroup).subscribe((resp: any) => {
             this.updateBooking(event)
-            this.dialogService.openSuccessDialog('Conflict resolved successfully')
           })
 
         } else {
           this.bookingsService.resolveRecurringConflict(this.conflictGroup).subscribe((resp: any) => {
             this.updateBooking(event)
-            this.dialogService.openSuccessDialog('Conflict resolved successfully')
           })
         }
       }
