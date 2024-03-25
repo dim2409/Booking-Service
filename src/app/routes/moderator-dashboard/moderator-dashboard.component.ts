@@ -14,19 +14,19 @@ import { ConflictingBookingsTabComponent } from "./conflicting-bookings-tab/conf
 import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurring-conflicts-tab.component";
 import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 @Component({
-    selector: 'app-moderator-dashboard',
-    standalone: true,
-    templateUrl: './moderator-dashboard.component.html',
-    styleUrl: './moderator-dashboard.component.less',
-    imports: [MatTabsModule,
-      CardListComponent,
-        CommonModule,
-        MatExpansionModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        NormalBookingsTabComponent,
-        RecurringBookingsTabComponent,
-        ConflictingBookingsTabComponent, RecurringConflictsTabComponent, LoadingSpinnerComponent]
+  selector: 'app-moderator-dashboard',
+  standalone: true,
+  templateUrl: './moderator-dashboard.component.html',
+  styleUrl: './moderator-dashboard.component.less',
+  imports: [MatTabsModule,
+    CardListComponent,
+    CommonModule,
+    MatExpansionModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    NormalBookingsTabComponent,
+    RecurringBookingsTabComponent,
+    ConflictingBookingsTabComponent, RecurringConflictsTabComponent, LoadingSpinnerComponent]
 })
 export class ModeratorDashboardComponent implements OnInit {
 
@@ -69,7 +69,7 @@ export class ModeratorDashboardComponent implements OnInit {
         }
         break;
       case 'editBooking':
-        this.dialogService.openEditBookingDialog(data.booking).subscribe((resp: any) => {
+        this.dialogService.openEditBookingDialog({ booking: data.booking, rooms: this.rooms }).subscribe((resp: any) => {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.dialogService.openSuccessDialog('Booking Updated');

@@ -66,29 +66,33 @@ export class EditBookingDialogComponent implements OnInit {
 
   bookingInfo: any;
 
-  constructor(private cdr: ChangeDetectorRef, private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService, public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private BookingsService: BookingsService, 
+    private RoomsService: RoomsService, 
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
 
   ngOnInit() {
+    console.log(this.data)
 
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
-      this.rooms = resp;
-      this.roomIds = this.rooms.map((room: any) => room.id);
-      this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-        this.bookings = resp;
-      });
+    this.rooms = this.data.rooms;
+    this.roomIds = this.rooms.map((room: any) => room.id);
+    this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
+      this.bookings = resp;
     });
-    this.bookingTitle = this.data.title;
-    this.selectedRoom = this.data.room_id;
-    this.recurringCheck = this.data.type === 'recurringGroup';
-    this.selectedDate = new Date(this.data.start);
+    this.bookingTitle = this.data.booking.title;
+    this.selectedRoom = this.data.booking.rooms[0].id;
+    this.recurringCheck = this.data.booking.type === 'recurringGroup';
+    this.selectedDate = new Date(this.data.booking.start);
 
-    this.bookingInfo = this.data.info;
+    this.bookingInfo = this.data.booking.info;
     this.initializeTimeOptions();
     if (this.recurringCheck) {
-      this.data.days.forEach((bookingDay: any) => {
+      this.data.booking.days.forEach((bookingDay: any) => {
         this.days.forEach((day: any) => {
           if (day.name == bookingDay.name) {
             day.id = bookingDay.id;
@@ -165,8 +169,8 @@ export class EditBookingDialogComponent implements OnInit {
       date.setHours(i, 0, 0);
       this.timeOptions.push(date);
     }
-    this.selectedStart = this.getTimeOption(this.data.start);
-    this.selectedEnd = this.getTimeOption(this.data.end);
+    this.selectedStart = this.getTimeOption(this.data.booking.start);
+    this.selectedEnd = this.getTimeOption(this.data.booking.end);
 
   }
 
