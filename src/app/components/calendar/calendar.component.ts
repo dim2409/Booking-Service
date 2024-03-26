@@ -1,3 +1,11 @@
+import {
+  trigger,
+  style,
+  state,
+  transition,
+  animate,
+  AnimationTriggerMetadata,
+} from '@angular/animations'; 
 import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { MatChipListbox } from '@angular/material/chips';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
@@ -5,13 +13,38 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameMonth, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
 
+
+const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
+  state(
+    'void',
+    style({
+      height: 0,
+      overflow: 'hidden',
+      'padding-top': 0,
+      'padding-bottom': 0,
+    })
+  ),
+  state(
+    '*',
+    style({
+      height: '*',
+      overflow: 'hidden',
+      'padding-top': '*',
+      'padding-bottom': '*',
+    })
+  ),
+  transition('* => void', animate('150ms ease-out')),
+  transition('void => *', animate('150ms ease-in')),
+]);
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.less'
+  styleUrl: './calendar.component.less',
+  animations: [collapseAnimation]
 })
-
 export class CalendarComponent {
+
+
   isSmallScreen!: boolean;
 
   @Output() scrollCalendarEvent: EventEmitter<any> = new EventEmitter<any>();
