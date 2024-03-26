@@ -2,35 +2,41 @@
 @import '../../../variables.less';
 
 .calendar-container {
-    width: 100%;
-    display: flex;
+    width          : 100%;
+    display        : flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap      : wrap;
 }
 
 .calendar {
-    border: 0.13rem;
-    border-color: @primary-color;
-    border-style: solid;
-    padding: 1rem;
+
+    .currentTitle {
+        text-align: center;
+        font-size : 2vw;
+    }
+
+    border       : 0.13rem;
+    border-color : @primary-color;
+    border-style : solid;
+    padding      : 1rem;
     border-radius: 2%;
-    width: 75%;
+    width        : 75%;
 }
 
 .controls-container {
-    width: 100%;
-    display: flex;
+    width          : 100%;
+    display        : flex;
     justify-content: center;
-    align-items: center;
+    align-items    : center;
 }
 
 .controls {
-    margin: 0.5rem;
+    margin   : 0.5rem;
     font-size: 1rem;
 }
 
 .view-kind-controls-contaier {
-    display: flex;
+    display        : flex;
     justify-content: end;
 }
 
@@ -43,12 +49,12 @@
     .cel-title {
 
         .event {
-            color: @primaryElementTextColor;
-            width: 90%;
-            padding: 2px 7px;
-            margin: 2px;
+            color        : @primaryElementTextColor;
+            width        : 90%;
+            padding      : 2px 7px;
+            margin       : 2px;
             border-radius: 1rem;
-            font-size: medium;
+            font-size    : medium;
         }
     }
 
@@ -56,9 +62,9 @@
 }
 
 .cal-month-view .cal-open-day-events {
-    color: #fff;
+    color           : #fff;
     background-color: @primary-color;
-    box-shadow: inset 0 0 8px 0 @primary-color;
+    box-shadow      : inset 0 0 8px 0 @primary-color;
 }
 
 .cal-week-view .cal-event {
@@ -68,6 +74,111 @@
 .cal-day-view .cal-event {
     color: #fff;
 }
+
 .filter-controls {
     cursor: pointer;
-  }
+}
+
+@media only screen and (max-width: 600px) {
+    .calendar-container {
+        margin-left: 1vw;
+
+        .calendar {
+            width    : 95vw;
+            font-size: 5vw !important;
+
+            .view-kind-controls-contaier {
+                margin-bottom: 2vh;
+                .mat-button-toggle-button {
+                    height   : 4vh;
+                    font-size: 2vh;
+
+                    .mat-button-toggle-label-content {
+                        line-height: normal;
+                    }
+                }
+            }
+
+            .currentTitle {
+                font-size: 5vw;
+            }
+
+            .view-kind-controls-contaier {
+                & .mat-button-toggle-appearance-standard {
+                    font-size: 5vw !important;
+                    height   : 4vh;
+                }
+            }
+
+            .controls-container {
+                height: 6vh;
+
+                .controls {
+                    margin   : 0;
+                    margin-inline: 7vw;
+                    font-size: 2vh;
+
+                    &.mdc-button {
+                        height: 4vh;
+                    }
+                }
+            }
+
+            .h5 {
+                font-size: 4vw !important;
+            }
+
+            & .cal-cell-row {
+                height: 7vh;
+
+                &.cal-header {
+                    height   : 4vh;
+                    font-size: 3vw !important;
+                }
+
+            }
+
+            .cal-open-day-events {
+                position: relative;
+            }
+
+            & .cal-cell-top {
+                width: 1vw;
+
+                .cal-day-number {
+                    margin-top   : 0;
+                    margin-bottom: 0;
+                    margin-right : 0;
+                }
+            }
+
+
+            & .cal-month-view .cal-day-cell.cal-in-month,
+            .cal-month-view .cal-day-cell.cal-out-month {
+                overflow      : hidden;
+                display       : flex;
+                flex-direction: row-reverse;
+                height        : 7vh;
+                min-height    : 7vh;
+
+                & .cel-title {
+                    height  : 7vh;
+                    overflow: hidden;
+                }
+
+
+                .cal-day-badge {
+                    display: none;
+                }
+
+                .event {
+                    text-overflow: ellipsis;
+                    overflow     : hidden;
+                    white-space  : nowrap;
+                    width        : 1vw;
+                    height       : 1vh;
+                }
+            }
+        }
+    }
+}

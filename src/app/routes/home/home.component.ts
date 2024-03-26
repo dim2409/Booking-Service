@@ -16,6 +16,7 @@ import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { get } from 'lodash';
 import { FiltersComponent } from "../../components/filters/filters.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
+import _ from 'lodash';
 @Component({
     selector: 'app-home',
     standalone: true,
@@ -37,7 +38,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = this.filterService.getFilters(['rooms'], this.rooms);
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms'], this.rooms));
     });
     this.getBookings();
     document.body.classList.remove('body-overflow');

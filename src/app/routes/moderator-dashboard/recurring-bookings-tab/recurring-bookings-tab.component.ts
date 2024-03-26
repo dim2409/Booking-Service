@@ -18,6 +18,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-recurring-bookings-tab',
@@ -83,7 +84,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   ngOnInit(): void {
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = this.filterService.getFilters(['rooms', 'status', 'days'], this.rooms);
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'status', 'days'], this.rooms));
     })
 
 

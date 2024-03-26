@@ -12,6 +12,10 @@
   border-radius: 2%;
   width: 75%;
 }
+.calendar .currentTitle {
+  text-align: center;
+  font-size: 2vw;
+}
 .controls-container {
   width: 100%;
   display: flex;
@@ -53,4 +57,87 @@
 }
 .filter-controls {
   cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .calendar-container {
+    margin-left: 1vw;
+  }
+  .calendar-container .calendar {
+    width: 95vw;
+    font-size: 5vw !important;
+  }
+  .calendar-container .calendar .view-kind-controls-contaier {
+    margin-bottom: 2vh;
+  }
+  .calendar-container .calendar .view-kind-controls-contaier .mat-button-toggle-button {
+    height: 4vh;
+    font-size: 2vh;
+  }
+  .calendar-container .calendar .view-kind-controls-contaier .mat-button-toggle-button .mat-button-toggle-label-content {
+    line-height: normal;
+  }
+  .calendar-container .calendar .currentTitle {
+    font-size: 5vw;
+  }
+  .calendar-container .calendar .view-kind-controls-contaier .mat-button-toggle-appearance-standard {
+    font-size: 5vw !important;
+    height: 4vh;
+  }
+  .calendar-container .calendar .controls-container {
+    height: 6vh;
+  }
+  .calendar-container .calendar .controls-container .controls {
+    margin: 0;
+    margin-inline: 7vw;
+    font-size: 2vh;
+  }
+  .calendar-container .calendar .controls-container .controls.mdc-button {
+    height: 4vh;
+  }
+  .calendar-container .calendar .h5 {
+    font-size: 4vw !important;
+  }
+  .calendar-container .calendar .cal-cell-row {
+    height: 7vh;
+  }
+  .calendar-container .calendar .cal-cell-row.cal-header {
+    height: 4vh;
+    font-size: 3vw !important;
+  }
+  .calendar-container .calendar .cal-open-day-events {
+    position: relative;
+  }
+  .calendar-container .calendar .cal-cell-top {
+    width: 1vw;
+  }
+  .calendar-container .calendar .cal-cell-top .cal-day-number {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-in-month,
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-out-month {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+    height: 7vh;
+    min-height: 7vh;
+  }
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-in-month .cel-title,
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-out-month .cel-title {
+    height: 7vh;
+    overflow: hidden;
+  }
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-in-month .cal-day-badge,
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-out-month .cal-day-badge {
+    display: none;
+  }
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-in-month .event,
+  .calendar-container .calendar .cal-month-view .cal-day-cell.cal-out-month .event {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1vw;
+    height: 1vh;
+  }
 }

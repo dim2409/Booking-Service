@@ -18,6 +18,25 @@
       </mat-button-toggle-group>
     </div>
 
+    <ng-template #customHeader>
+      <div role="row" class="cal-cell-row cal-header ng-star-inserted">
+        <div tabindex="0" role="columnheader" class="cal-cell cal-past cal-weekend ng-star-inserted"> {{isSmallScreen?
+          "Sun": 'Sunday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-past ng-star-inserted"> {{isSmallScreen? "Mon":
+          'Monday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-today ng-star-inserted"> {{isSmallScreen? "Tue":
+          'Tuesday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-future ng-star-inserted"> {{isSmallScreen? "Wed":
+          'Wednesday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-future ng-star-inserted"> {{isSmallScreen? "Thu":
+          'Thursday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-future ng-star-inserted"> {{isSmallScreen? "Fri":
+          'Friday'}} </div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-future cal-weekend ng-star-inserted"> {{isSmallScreen?
+          "Sat": 'Saturday'}}</div>
+      </div>
+    </ng-template>
+
     <ng-template #customCellTemplate let-day="day" let-locale="locale">
       <div class="cal-cell-top">
         <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
@@ -29,16 +48,50 @@
       </div>
       <div class="cel-title">
         <div *ngFor="let event of day.events" class="event" [ngStyle]="{'background-color': event.color}">
-          {{event.title}} - {{event.start.getHours()+':'}}{{event.start.getMinutes()>10 ? event.start.getMinutes() :
-          event.start.getMinutes()+'0'}}
-
+          <div *ngIf="!isSmallScreen">
+            {{event.title}} - {{event.start.getHours()+':'}}{{event.start.getMinutes()>10 ? event.start.getMinutes() :
+            event.start.getMinutes()+'0'}}
+          </div>
         </div>
       </div>
     </ng-template>
 
+    <ng-template #customOpenDay let-events="events"
+    let-eventClicked="eventClicked"
+    let-isOpen="isOpen"
+    let-trackByEventId="trackByEventId"
+    let-validateDrag="validateDrag">
+      <!-- <span class="cal-event-title" *ngFor="let event of openDay?.events">{{event.title}}</span> -->
+      <div class="cal-open-day-events" [@collapse] *ngIf="isOpen" role="application">
+        <span tabindex="-1" role="alert"></span>
+        <span tabindex="0" role="landmark" ></span>
+        <div *ngFor="let event of events; trackBy: trackByEventId" [ngClass]="event?.cssClass" mwlDraggable
+          [class.cal-draggable]="event.draggable" dragActiveClass="cal-drag-active" [dropData]="{ event: event }"
+          [dragAxis]="{ x: event.draggable, y: event.draggable }" [validateDrag]="validateDrag"
+          [touchStartLongPress]="{ delay: 300, delta: 30 }">
+          <span class="cal-event" [ngStyle]="{ backgroundColor: event.color?.primary }">
+          </span>
+          &ngsp;
+          <mwl-calendar-event-title [event]="event"  view="month" (mwlClick)="
+              eventClicked.emit({ event: event, sourceEvent: $event })
+            " (mwlKeydownEnter)="
+              eventClicked.emit({ event: event, sourceEvent: $event })
+            " tabindex="0" [attr.aria-label]="
+              { event: event }
+                | calendarA11y : 'eventDescription'
+            ">
+          </mwl-calendar-event-title>
+          &ngsp;
+          <mwl-calendar-event-actions [event]="event">
+          </mwl-calendar-event-actions>
+        </div>
+      </div>
+    </ng-template>
+    
+
     <!-- Current month, week or day -->
-    <div mat-label class="text-center">
-      <h1>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
+    <div mat-label class="currentTitle">
+      {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
     </div>
 
     <!-- Previous, current and next buttons -->
@@ -64,7 +117,7 @@
       <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
         (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
-        [cellTemplate]="customCellTemplate">
+        [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay">
       </mwl-calendar-month-view>
       <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"

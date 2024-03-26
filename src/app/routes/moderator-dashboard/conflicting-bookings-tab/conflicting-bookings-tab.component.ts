@@ -17,6 +17,7 @@ import { ConflictComponent } from "../../../components/conflict/conflict.compone
 import { ControlCardComponent } from "../../../components/control-card/control-card.component";
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
+import _ from 'lodash';
 @Component({
     selector: 'app-conflicting-bookings-tab',
     standalone: true,
@@ -84,7 +85,7 @@ export class ConflictingBookingsTabComponent {
   ngOnInit(): void {
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = this.filterService.getFilters(['rooms', 'type', 'months', 'days'], this.rooms);
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'type', 'months', 'days'], this.rooms));
     })
 
     this.getData();
