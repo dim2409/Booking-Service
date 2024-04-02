@@ -197,13 +197,15 @@ export class FiltersService {
     }
     return filterNames.map(name => this.filters[name]);
   }
-  getRoomFilters(filterNames: string[], departments?: any, buildings?: any): any[] {
-    if(departments) {
-      this.filters['departments'].chips = departments
-    }
-    if(buildings) {
-      this.filters['buildings'].chips = buildings
-    }
-    return filterNames.map(name => this.filters[name]);
+  getRoomFilters(filterNames: string[], chips?: any): any[] {
+    
+    if (chips) {
+      this.filters[filterNames[0]].chips = chips
+    }chips
+    return filterNames.map(name => {
+      const filter = this.filters[name];
+      filter.chips = chips; // assuming `chips` is defined somewhere in your code
+      return filter;
+    });
   }
 }

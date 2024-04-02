@@ -5,13 +5,16 @@ import {
   transition,
   animate,
   AnimationTriggerMetadata,
-} from '@angular/animations'; 
+} from '@angular/animations';
 import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { MatChipListbox } from '@angular/material/chips';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameMonth, isSameDay } from 'date-fns';
+import _ from 'lodash';
 import { Subject } from 'rxjs';
+import { FiltersService } from 'src/app/services/filters/filters.service';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
 
 const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
@@ -43,18 +46,17 @@ const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
   animations: [collapseAnimation]
 })
 export class CalendarComponent {
-
-
   isSmallScreen!: boolean;
 
   @Output() scrollCalendarEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() bookingClicked: EventEmitter<any> = new EventEmitter<any>();
-
-
   @Output() filterUpdated: EventEmitter<any> = new EventEmitter<any>();
   @Input() roomChips!: any;
 
   selectedValue!: string;
+  departments: any;
+  buildings: any;
+  filters!: any[];
   handleEvent(arg0: string, event: CalendarEvent) {
     this.bookingClicked.emit(event);
   }
@@ -65,7 +67,6 @@ export class CalendarComponent {
   }: CalendarEventTimesChangedEvent): void {
     throw new Error('Method not implemented.');
   }
-
 
   @ViewChild('roomList') roomList!: MatChipListbox;
 
@@ -83,7 +84,7 @@ export class CalendarComponent {
   events: any;
 
 
-  constructor() {
+  constructor(private RoomService: RoomsService, private filterService: FiltersService) {
     this.isSmallScreen = window.innerWidth < 600;
   }
 
@@ -95,9 +96,30 @@ export class CalendarComponent {
   ngOnInit(): void {
     this.setView(CalendarView.Month);
 
+    this.RoomService.getBuildings({ user_id: 2 }).subscribe((resp: any) => {
+      this.buildings = resp
+      this.filters = _.cloneDeep(this.filterService.getRoomFilters(['buildings'], this.buildings));
+    })
+
     this.selectedValue = 'Month';
   }
 
+  updateFilter(event: any) {
+    if (event.building?.length > 0) {
+      this.RoomService.getRooms({ building: event.building }).subscribe((resp: any) => {
+        if (resp.rooms.length > 0) {
+          this.filters[1] = this.filterService.getRoomFilters(['rooms'], resp.rooms)[0];
+          if (event.room_id?.length > 0) {
+            event.room_id.forEach((element: any) => {
+              this.filters[1].chips.find((x: any) => x.id == element).selected = true
+            });
+          }
+          console.log(this.filters)
+        }
+      })
+    }
+    this.filterUpdated.emit(event);
+  }
   //Set view kind to month, week or day
   setView(view: CalendarView) {
     this.view = view;

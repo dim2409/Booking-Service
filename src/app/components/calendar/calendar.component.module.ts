@@ -9,24 +9,26 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { FiltersComponent } from "../filters/filters.component";
 
 
 
 @NgModule({
-  declarations: [CalendarComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModalModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatDialogModule,
-    MatChipsModule,
-  ],
-  exports: [CalendarComponent]
+    declarations: [CalendarComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgbModalModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }),
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatDialogModule,
+        MatChipsModule,
+        FiltersComponent
+    ],
+    exports: [CalendarComponent],
 })
 export class CalendarComponentModule { }

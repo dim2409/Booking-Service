@@ -1,21 +1,24 @@
 <div class="calendar-container">
   <div class="calendar">
     <!-- Set view kind to month, week or day -->
-    <div class="view-kind-controls-contaier">
-      <mat-button-toggle-group name="viewKind" aria-label="Kind of View" [(ngModel)]="selectedValue">
-        <mat-button-toggle color="accent" (click)="setView(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month" value="Month">
-          Month
-        </mat-button-toggle>
-        <mat-button-toggle color="accent" (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week" value="Week">
-          Week
-        </mat-button-toggle>
-        <mat-button-toggle color="accent" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"
-          value="Day">
-          Day
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+    <div class="filter-view-kind-container">      
+      <app-filters (filterUpdated)="updateFilter($event)" [filters]="filters"></app-filters>
+      <div class="view-kind-controls-container">
+        <mat-button-toggle-group name="viewKind" aria-label="Kind of View" [(ngModel)]="selectedValue">
+          <mat-button-toggle color="accent" (click)="setView(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month" value="Month">
+            Month
+          </mat-button-toggle>
+          <mat-button-toggle color="accent" (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week" value="Week">
+            Week
+          </mat-button-toggle>
+          <mat-button-toggle color="accent" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"
+            value="Day">
+            Day
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
     </div>
 
     <ng-template #customHeader>

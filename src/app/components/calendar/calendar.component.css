@@ -4,7 +4,7 @@
   justify-content: center;
   flex-wrap: wrap;
 }
-.calendar {
+.calendar-container .calendar {
   border: 0.13rem;
   border-color: #176b87;
   border-style: solid;
@@ -12,9 +12,33 @@
   border-radius: 2%;
   width: 75%;
 }
-.calendar .currentTitle {
+.calendar-container .calendar .currentTitle {
   text-align: center;
   font-size: 2vw;
+}
+.calendar-container .calendar .filter-view-kind-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2vh;
+}
+.calendar-container .calendar .filter-view-kind-container .view-kind-controls-container {
+  display: flex;
+  justify-content: end;
+  height: 5vh;
+}
+.calendar-container .calendar .filter-view-kind-container .filters-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.calendar-container .calendar .filter-view-kind-container .filters-container .filter-container {
+  width: 100%;
+}
+.calendar-container .calendar .filter-view-kind-container .filters-container .filter-container .filter-title {
+  width: 6%;
 }
 .controls-container {
   width: 100%;
@@ -25,10 +49,6 @@
 .controls {
   margin: 0.5rem;
   font-size: 1rem;
-}
-.view-kind-controls-contaier {
-  display: flex;
-  justify-content: end;
 }
 .cal-day-badge {
   background-color: #f14c38;

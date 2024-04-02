@@ -44,7 +44,7 @@ export class HomeComponent {
     document.body.classList.remove('body-overflow');
   }
   filterUpdated(event: any) {
-    event.room_id !== '' ? this.req.room_id = event.room_id : delete this.req.room_id;
+    this.req = event;
     this.getBookings();
   }
   openInfo(booking: any) {

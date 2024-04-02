@@ -72,7 +72,7 @@ export class RoomManagementComponent {
       this.departments = resp
       this.RoomService.getBuildings({user_id: 2}).subscribe((resp: any) => {
         this.buildings = resp
-        this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
+        //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
       })
     })
     this.getData();
@@ -82,7 +82,7 @@ export class RoomManagementComponent {
     if(event.department.length > 0){
       this.RoomService.getBuildings({user_id: 2, department: event.department}).subscribe((resp: any) => {
         this.buildings = resp
-        this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
+        //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
       })
     }
     this.req = {
