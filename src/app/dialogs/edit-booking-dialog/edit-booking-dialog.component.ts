@@ -52,6 +52,7 @@ export class EditBookingDialogComponent implements OnInit {
   selectedRoom: number = 1;
 
   recurringCheck: boolean = false;
+  publicityCheck: boolean = false;
 
   @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
@@ -72,13 +73,12 @@ export class EditBookingDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ConfirmDialogComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any) { }
     
+    
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
 
   ngOnInit() {
-    console.log(this.data)
-
     this.rooms = this.data.rooms;
     this.roomIds = this.rooms.map((room: any) => room.id);
     this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
@@ -87,6 +87,8 @@ export class EditBookingDialogComponent implements OnInit {
     
     this.initializeTimeOptions();
     this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
+    
+    this.data.booking.publicity==1 ? this.publicityCheck = true : this.publicityCheck = false;
     
     if(this.data.booking) {
       this.bookingTitle = this.data.booking.title;
@@ -138,6 +140,7 @@ export class EditBookingDialogComponent implements OnInit {
       end: this.end,
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
+      publicity: this.publicityCheck ? 1 : 0,
       days: []
     }
     if (this.recurringCheck) {

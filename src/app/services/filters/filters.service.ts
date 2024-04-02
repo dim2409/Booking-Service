@@ -66,6 +66,18 @@ export class FiltersService {
       id: 'recurring'
     },
   ]
+  publicityChips = [
+    {
+      name: 'Public',
+      selected: false,
+      id: 1
+    },
+    {
+      name: 'Private',
+      selected: false,
+      id: 0 
+    },
+  ]
   monthChips = [
     {
       name: 'JAN',
@@ -145,6 +157,12 @@ export class FiltersService {
       chips: this.typeChips, // Example chips data
       id: 'type',
       field: 'type'
+    },
+    publicity: {
+      title: 'Publicity',
+      chips: this.publicityChips, // Example chips data
+      id: 'publicity',
+      field: 'publicity'
     },
     months: {
       title: 'Months',

@@ -32,7 +32,7 @@ import * as moment from 'moment';
     MatOptionModule,
     FormsModule,
     CalendarComponentModule
-    ],
+  ],
   templateUrl: './booking-request.component.html',
   styleUrl: './booking-request.component.less'
 })
@@ -52,6 +52,7 @@ export class BookingRequestComponent {
   selectedRoom: number = 1;
 
   recurringCheck: boolean = false;
+  publicityCheck: boolean = false;
 
   @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
@@ -63,7 +64,7 @@ export class BookingRequestComponent {
     { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
-  
+
   constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private router: Router, private dialogService: DialogService) { }
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
@@ -104,6 +105,7 @@ export class BookingRequestComponent {
       end: this.end,
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
+      publicity: this.publicityCheck ? 1 : 0,
       days: []
     }
     if (this.recurringCheck) {
@@ -111,10 +113,10 @@ export class BookingRequestComponent {
       this.days.forEach(day => {
         if (day.selected) {
           const start = new Date(day.start);
-          day.start = moment.utc(start).tz('Europe/Athens').format(); 
+          day.start = moment.utc(start).tz('Europe/Athens').format();
           const end = new Date(day.end);
           day.end = end;
-          day.end = moment.utc(end).tz('Europe/Athens').format(); 
+          day.end = moment.utc(end).tz('Europe/Athens').format();
           booking.days.push(day);
           booking.start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           booking.end = new Date(today.getFullYear(), today.getMonth(), today.getDate());

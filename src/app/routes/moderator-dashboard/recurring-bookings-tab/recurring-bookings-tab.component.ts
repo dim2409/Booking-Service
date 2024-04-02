@@ -84,7 +84,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   ngOnInit(): void {
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'status', 'days'], this.rooms));
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'status', 'days', 'publicity'], this.rooms));
     })
 
 

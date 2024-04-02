@@ -79,7 +79,6 @@ export class RoomManagementComponent {
   }
   
   filterUpdated(event: any) {
-    console.log(event)
     if(event.department.length > 0){
       this.RoomService.getBuildings({user_id: 2, department: event.department}).subscribe((resp: any) => {
         this.buildings = resp
