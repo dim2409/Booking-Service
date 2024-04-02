@@ -5,7 +5,7 @@
   width: 20vw;
   height: 100vh;
   padding-left: 0.5vw;
-  padding-top: 0.5vw;
+  padding-top: 0.5vh;
   overflow: auto;
   padding-bottom: 20vh;
   padding-right: 1vw;
@@ -43,5 +43,5 @@
   background-color: #000000b0;
 }
 .home {
-  overflow: scroll;
+  padding: 1vh;
 }

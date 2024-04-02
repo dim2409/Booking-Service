@@ -2,41 +2,42 @@
 @import '../../../variables.less';
 
 .calendar-container {
-    width          : 100%;
-    display        : flex;
-    justify-content: center;
-    flex-wrap      : wrap;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 
     .calendar {
-        border       : 0.13rem;
-        border-color : @primary-color;
-        border-style : solid;
-        padding      : 1rem;
-        border-radius: 2%;
-        width        : 75%;
+        width: 100%;
 
         .currentTitle {
             text-align: center;
-            font-size : 2vw;
+            font-size: 2vw;
         }
 
-        .filter-view-kind-container {
-            display        : flex;
-            justify-content: space-between;
-            margin-bottom: 2vh;
+        .top-container {
+            display: flex;
+            flex-wrap: nowrap;
+            margin-top: 5vh;
+            align-items: center;
+            justify-content: flex-end;
+
+            .controls-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: unset;
+            }
             .view-kind-controls-container {
-                display        : flex;
+                display: flex;
                 justify-content: end;
-                height         : 5vh;
+                height: 5vh;
             }
 
             .filters-container {
-                position : relative;
-                display  : flex;
-                flex-wrap: wrap;
-                padding  : 0;
-                width    : 100%;
-                height   : 100%;
+                padding-top: 3%;
+                width: 10%;
+                height: 100%;
 
                 .filter-container {
                     width: 100%;
@@ -53,15 +54,69 @@
     }
 }
 
-.controls-container {
-    width          : 100%;
-    display        : flex;
-    justify-content: center;
-    align-items    : center;
+mwl-calendar-month-view {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .cal-month-view {
+        width: 90%;
+
+        .cal-header .cal-cell {
+            height: 2vw !important;
+        }
+
+        .cal-cell-top {
+            flex: none !important;
+            min-height: 0px;
+            height: 2vw;
+
+            .cal-day-badge {
+                margin-top: 5px;
+                margin-left: 10px;
+                min-width: 0px;
+                padding: 3px 7px;
+                font-size: 12px;
+                border-radius: 10px;
+                
+            }
+
+            .cal-day-number {
+                margin: 0px;
+            }
+        }
+
+        .cal-cell {
+            height: calc(65vh / 6) !important;
+        }
+
+        .cal-has-events {
+
+            .cel-title {
+                display: flex;
+                overflow-y: scroll;
+                flex-wrap: wrap;
+
+                .event {
+                    color: @primaryElementTextColor;
+                    width: 80%;
+                    padding: 2px 7px;
+                    margin: 2px;
+                    border-radius: 1rem;
+                    font-size: medium;
+                }
+            }
+        }
+
+
+    }
 }
 
+
+
 .controls {
-    margin   : 0.5rem;
+    margin: 0.5rem;
     font-size: 1rem;
 }
 
@@ -69,30 +124,14 @@
     background-color: @highlight-color;
 }
 
-.cal-has-events {
-
-    .cel-title {
-
-        .event {
-            color        : @primaryElementTextColor;
-            width        : 90%;
-            padding      : 2px 7px;
-            margin       : 2px;
-            border-radius: 1rem;
-            font-size    : medium;
-        }
-    }
-
-    padding-bottom: 1vh;
-}
 
 .cal-month-view .cal-open-day-events {
-    color           : #fff;
+    color: #fff;
     background-color: @primary-color;
-    box-shadow      : inset 0 0 8px 0 @primary-color;
+    box-shadow: inset 0 0 8px 0 @primary-color;
 
     .open-day-event:hover {
-        cursor         : pointer;
+        cursor: pointer;
         text-decoration: underline;
     }
 }
@@ -114,14 +153,14 @@
         margin-left: 1vw;
 
         .calendar {
-            width    : 95vw;
+            width: 95vw;
             font-size: 5vw !important;
 
             .view-kind-controls-contaier {
                 margin-bottom: 2vh;
 
                 .mat-button-toggle-button {
-                    height   : 4vh;
+                    height: 4vh;
                     font-size: 2vh;
 
                     .mat-button-toggle-label-content {
@@ -137,7 +176,7 @@
             .view-kind-controls-contaier {
                 & .mat-button-toggle-appearance-standard {
                     font-size: 5vw !important;
-                    height   : 4vh;
+                    height: 4vh;
                 }
             }
 
@@ -145,9 +184,9 @@
                 height: 6vh;
 
                 .controls {
-                    margin       : 0;
+                    margin: 0;
                     margin-inline: 7vw;
-                    font-size    : 2vh;
+                    font-size: 2vh;
 
                     &.mdc-button {
                         height: 4vh;
@@ -163,7 +202,7 @@
                 height: 7vh;
 
                 &.cal-header {
-                    height   : 4vh;
+                    height: 4vh;
                     font-size: 3vw !important;
                 }
 
@@ -177,23 +216,23 @@
                 width: 1vw;
 
                 .cal-day-number {
-                    margin-top   : 0;
+                    margin-top: 0;
                     margin-bottom: 0;
-                    margin-right : 0;
+                    margin-right: 0;
                 }
             }
 
 
             & .cal-month-view .cal-day-cell.cal-in-month,
             .cal-month-view .cal-day-cell.cal-out-month {
-                overflow      : hidden;
-                display       : flex;
+                overflow: hidden;
+                display: flex;
                 flex-direction: row-reverse;
-                height        : 7vh;
-                min-height    : 7vh;
+                height: 7vh;
+                min-height: 7vh;
 
                 & .cel-title {
-                    height  : 7vh;
+                    height: 7vh;
                     overflow: hidden;
                 }
 
@@ -204,10 +243,10 @@
 
                 .event {
                     text-overflow: ellipsis;
-                    overflow     : hidden;
-                    white-space  : nowrap;
-                    width        : 1vw;
-                    height       : 1vh;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    width: 1vw;
+                    height: 1vh;
                 }
             }
         }

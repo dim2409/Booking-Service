@@ -1,7 +1,7 @@
 <div class="calendar-container">
   <div class="calendar">
     <!-- Set view kind to month, week or day -->
-    <div class="filter-view-kind-container">      
+    <div class="top-container">
       <app-filters (filterUpdated)="updateFilter($event)" [filters]="filters"></app-filters>
       <div class="view-kind-controls-container">
         <mat-button-toggle-group name="viewKind" aria-label="Kind of View" [(ngModel)]="selectedValue">
@@ -13,12 +13,34 @@
             [class.active]="view === CalendarView.Week" value="Week">
             Week
           </mat-button-toggle>
-          <mat-button-toggle color="accent" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"
-            value="Day">
+          <mat-button-toggle color="accent" (click)="setView(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day" value="Day">
             Day
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
+      <!-- Current month, week or day -->
+      <div mat-label class="currentTitle">
+        {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+      </div>
+
+      <!-- Previous, current and next buttons -->
+      <div class="controls-container">
+        <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'previous', viewDate: viewDate})"
+          class="controls">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button mat-stroked-button mwlCalendarToday [(viewDate)]="viewDate" class="controls">
+          Today
+        </button>
+        <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'next', viewDate: viewDate})"
+          class="controls">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
     </div>
 
     <ng-template #customHeader>
@@ -62,56 +84,35 @@
     <ng-template #customOpenDay let-events="events" let-eventClicked="eventClicked" let-isOpen="isOpen"
       let-trackByEventId="trackByEventId" let-validateDrag="validateDrag">
       <!-- <span class="cal-event-title" *ngFor="let event of openDay?.events">{{event.title}}</span> -->
-      <div class="cal-open-day-events"  [@collapse] *ngIf="isOpen" role="application">
+      <div class="cal-open-day-events" [@collapse] *ngIf="isOpen" role="application">
         <span tabindex="-1" role="alert"></span>
         <span tabindex="0" role="landmark"></span>
-        <div *ngFor="let event of events; trackBy: trackByEventId" [ngClass]="event?.cssClass" mwlDraggable class="open-day-event"
-          [class.cal-draggable]="event.draggable" dragActiveClass="cal-drag-active" [dropData]="{ event: event }"
-          [dragAxis]="{ x: event.draggable, y: event.draggable }" [validateDrag]="validateDrag"
-          [touchStartLongPress]="{ delay: 300, delta: 30 }" (mwlClick)="eventClicked.emit({ event: event, sourceEvent: $event })">
+        <div *ngFor="let event of events; trackBy: trackByEventId" [ngClass]="event?.cssClass" mwlDraggable
+          class="open-day-event" [class.cal-draggable]="event.draggable" dragActiveClass="cal-drag-active"
+          [dropData]="{ event: event }" [dragAxis]="{ x: event.draggable, y: event.draggable }"
+          [validateDrag]="validateDrag" [touchStartLongPress]="{ delay: 300, delta: 30 }"
+          (mwlClick)="eventClicked.emit({ event: event, sourceEvent: $event })">
           <span class="cal-event" [ngStyle]="{ backgroundColor: event.color }">
           </span>
           &ngsp;
-          <mwl-calendar-event-title [event]="event" view="month" 
-           (mwlKeydownEnter)="eventClicked.emit({ event: event, sourceEvent: $event })" tabindex="0"
+          <mwl-calendar-event-title [event]="event" view="month"
+            (mwlKeydownEnter)="eventClicked.emit({ event: event, sourceEvent: $event })" tabindex="0"
             [attr.aria-label]="{ event: event }| calendarA11y : 'eventDescription'">
-          </mwl-calendar-event-title> 
-          - 
+          </mwl-calendar-event-title>
+          -
           &ngsp;
           {{event.room_name}}
           &ngsp;
-          {{event.start.getHours()+':'}}{{event.start.getMinutes()>10 ? event.start.getMinutes() : event.start.getMinutes()+'0'}}
-          - 
-          {{event.end.getHours()+':'}}{{event.end.getMinutes()>10 ? event.end.getMinutes() : event.end.getMinutes()+'0'}} 
+          {{event.start.getHours()+':'}}{{event.start.getMinutes()>10 ? event.start.getMinutes() :
+          event.start.getMinutes()+'0'}}
+          -
+          {{event.end.getHours()+':'}}{{event.end.getMinutes()>10 ? event.end.getMinutes() :
+          event.end.getMinutes()+'0'}}
           <mwl-calendar-event-actions [event]="event">
           </mwl-calendar-event-actions>
         </div>
       </div>
     </ng-template>
-
-
-    <!-- Current month, week or day -->
-    <div mat-label class="currentTitle">
-      {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
-    </div>
-
-    <!-- Previous, current and next buttons -->
-    <div class="controls-container">
-      <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'previous', viewDate: viewDate})"
-        class="controls">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <button mat-stroked-button mwlCalendarToday [(viewDate)]="viewDate" class="controls">
-        Today
-      </button>
-      <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()" (click)="scrollCalendar({action:'next', viewDate: viewDate})"
-        class="controls">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
-
 
     <!-- The calendars to switch between -->
     <div [ngSwitch]="view" class="h5">
