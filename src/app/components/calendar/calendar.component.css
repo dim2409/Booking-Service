@@ -55,7 +55,6 @@ mwl-calendar-month-view .cal-month-view .cal-header .cal-cell {
 mwl-calendar-month-view .cal-month-view .cal-cell-top {
   flex: none !important;
   min-height: 0px;
-  height: 2vw;
 }
 mwl-calendar-month-view .cal-month-view .cal-cell-top .cal-day-badge {
   margin-top: 5px;

@@ -119,7 +119,7 @@
       <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
         (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
-        [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay">
+        [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay" [weekStartsOn]="0">
       </mwl-calendar-month-view>
       <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"

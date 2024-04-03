@@ -6,17 +6,27 @@ import {
   animate,
   AnimationTriggerMetadata,
 } from '@angular/animations';
-import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Injectable, Input, Output, ViewChild } from '@angular/core';
 import { MatChipListbox } from '@angular/material/chips';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { isSameMonth, isSameDay } from 'date-fns';
+import { isSameMonth, isSameDay, subWeeks, startOfMonth, addWeeks, endOfMonth } from 'date-fns';
 import _ from 'lodash';
 import { Subject } from 'rxjs';
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { GetMonthViewArgs, MonthView } from 'calendar-utils';
+import { CalendarUtils } from 'angular-calendar';
 
-
+@Injectable()
+export class MyCalendarUtils extends CalendarUtils {
+  //ToDo: add check for last day of month to show same number of rows 
+  override getMonthView(args: GetMonthViewArgs): MonthView {
+    args.viewStart = subWeeks(startOfMonth(args.viewDate), 1);
+    args.viewEnd = addWeeks(endOfMonth(args.viewDate), 0);
+    return super.getMonthView(args);
+  }
+}
 const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
   state(
     'void',
@@ -43,7 +53,13 @@ const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.less',
-  animations: [collapseAnimation]
+  animations: [collapseAnimation],
+  providers: [
+    {
+      provide: CalendarUtils,
+      useClass: MyCalendarUtils,
+    },
+  ],
 })
 export class CalendarComponent {
   isSmallScreen!: boolean;
@@ -122,8 +138,12 @@ export class CalendarComponent {
   }
   //Set view kind to month, week or day
   setView(view: CalendarView) {
+    /* if(view=='month'){
+      getMonthView
+    } */
     this.view = view;
   }
+  
 
   //Toggle day accordion
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
