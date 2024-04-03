@@ -45,8 +45,6 @@
 
     <ng-template #customHeader>
       <div role="row" class="cal-cell-row cal-header ng-star-inserted">
-        <div tabindex="0" role="columnheader" class="cal-cell cal-past cal-weekend ng-star-inserted"> {{isSmallScreen?
-          "Sun": 'Sunday'}} </div>
         <div tabindex="0" role="columnheader" class="cal-cell cal-past ng-star-inserted"> {{isSmallScreen? "Mon":
           'Monday'}} </div>
         <div tabindex="0" role="columnheader" class="cal-cell cal-today ng-star-inserted"> {{isSmallScreen? "Tue":
@@ -59,6 +57,8 @@
           'Friday'}} </div>
         <div tabindex="0" role="columnheader" class="cal-cell cal-future cal-weekend ng-star-inserted"> {{isSmallScreen?
           "Sat": 'Saturday'}}</div>
+        <div tabindex="0" role="columnheader" class="cal-cell cal-past cal-weekend ng-star-inserted"> {{isSmallScreen?
+          "Sun": 'Sunday'}} </div>
       </div>
     </ng-template>
 
@@ -119,7 +119,8 @@
       <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
         (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
-        [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay" [weekStartsOn]="0">
+        [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay"
+        [weekStartsOn]="1">
       </mwl-calendar-month-view>
       <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"

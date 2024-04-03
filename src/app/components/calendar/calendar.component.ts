@@ -22,8 +22,20 @@ import { CalendarUtils } from 'angular-calendar';
 export class MyCalendarUtils extends CalendarUtils {
   //ToDo: add check for last day of month to show same number of rows 
   override getMonthView(args: GetMonthViewArgs): MonthView {
-    args.viewStart = subWeeks(startOfMonth(args.viewDate), 1);
+    let startAberration = 1;
+
+    const days = [1, 2, 3, 4, 5, 6, 7];
+    const dayName = days[startOfMonth(args.viewDate).getDay()];
+    const dateNumber = startOfMonth(args.viewDate).getDate();
+    if(dayName > 4 && dateNumber <= 3) startAberration = 0
+    
+    console.log(dayName)
+    console.log(dateNumber)
+    console.log(startAberration)
+    console.log(args)
+    args.viewStart = subWeeks(startOfMonth(args.viewDate), startAberration);
     args.viewEnd = addWeeks(endOfMonth(args.viewDate), 0);
+    console.log(args)
     return super.getMonthView(args);
   }
 }
@@ -143,7 +155,7 @@ export class CalendarComponent {
     } */
     this.view = view;
   }
-  
+
 
   //Toggle day accordion
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
