@@ -6,7 +6,7 @@ import {
   animate,
   AnimationTriggerMetadata,
 } from '@angular/animations';
-import { Component, EventEmitter, HostListener, Injectable, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Injectable, Input, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { MatChipListbox } from '@angular/material/chips';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarModule, CalendarView, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -15,25 +15,7 @@ import _ from 'lodash';
 import { Subject } from 'rxjs';
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
-import { GetMonthViewArgs, MonthView } from 'calendar-utils';
-import { CalendarUtils } from 'angular-calendar';
 
-@Injectable()
-export class MyCalendarUtils extends CalendarUtils {
-  //ToDo: add check for last day of month to show same number of rows 
-  override getMonthView(args: GetMonthViewArgs): MonthView {
-    let startAberration = 1;
-
-    const days = [1, 2, 3, 4, 5, 6, 7];
-    const dayName = startOfMonth(args.viewDate).getDay();
-    const dateNumber = endOfMonth(args.viewDate).getDate();
-    if (((dayName >= 6 || dayName == 0) && dateNumber > 29)&&!(dayName == 6 && dateNumber == 30)) startAberration = 0
-
-    args.viewStart = subWeeks(startOfMonth(args.viewDate), startAberration);
-    args.viewEnd = addWeeks(endOfMonth(args.viewDate), 0);
-    return super.getMonthView(args);
-  }
-}
 const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
   state(
     'void',
@@ -61,12 +43,6 @@ const collapseAnimation: AnimationTriggerMetadata = trigger('collapse', [
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.less',
   animations: [collapseAnimation],
-  providers: [
-    {
-      provide: CalendarUtils,
-      useClass: MyCalendarUtils,
-    },
-  ],
 })
 export class CalendarComponent {
   isSmallScreen!: boolean;
@@ -107,8 +83,9 @@ export class CalendarComponent {
   events: any;
 
 
-  constructor(private RoomService: RoomsService, private filterService: FiltersService) {
-    this.isSmallScreen = window.innerWidth < 600;
+  constructor(private RoomService: RoomsService, private filterService: FiltersService, private renderer: Renderer2) {
+    this.isSmallScreen = window.innerWidth < 600;    
+    document.documentElement.style.setProperty('--cellCount', `${5}`);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -125,6 +102,17 @@ export class CalendarComponent {
     })
 
     this.selectedValue = 'Month';
+  }
+
+  viewDateUpadate(event: any) {    
+    const dayName = startOfMonth(event).getDay();
+    const dateNumber = endOfMonth(event).getDate();
+    console.log(dayName, dateNumber);
+    if((dayName == 0  && dateNumber >= 30) || (dayName == 6 && dateNumber > 30)) {
+      document.documentElement.style.setProperty('--cellCount', `${6}`);
+    }else{
+      document.documentElement.style.setProperty('--cellCount', `${5}`);
+    }
   }
 
   updateFilter(event: any) {
