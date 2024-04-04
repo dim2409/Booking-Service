@@ -25,17 +25,12 @@ export class MyCalendarUtils extends CalendarUtils {
     let startAberration = 1;
 
     const days = [1, 2, 3, 4, 5, 6, 7];
-    const dayName = days[startOfMonth(args.viewDate).getDay()];
-    const dateNumber = startOfMonth(args.viewDate).getDate();
-    if(dayName > 4 && dateNumber <= 3) startAberration = 0
-    
-    console.log(dayName)
-    console.log(dateNumber)
-    console.log(startAberration)
-    console.log(args)
+    const dayName = startOfMonth(args.viewDate).getDay();
+    const dateNumber = endOfMonth(args.viewDate).getDate();
+    if (((dayName >= 6 || dayName == 0) && dateNumber > 29)&&!(dayName == 6 && dateNumber == 30)) startAberration = 0
+
     args.viewStart = subWeeks(startOfMonth(args.viewDate), startAberration);
     args.viewEnd = addWeeks(endOfMonth(args.viewDate), 0);
-    console.log(args)
     return super.getMonthView(args);
   }
 }
