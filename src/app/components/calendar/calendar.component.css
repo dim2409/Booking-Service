@@ -68,7 +68,7 @@ mwl-calendar-month-view .cal-month-view .cal-cell-top .cal-day-number {
   margin: 0px;
 }
 mwl-calendar-month-view .cal-month-view .cal-cell {
-  height: calc(80vh / var(--cellCount)) !important;
+  height: calc(75vh / var(--cellCount)) !important;
 }
 mwl-calendar-month-view .cal-month-view .cal-has-events .cel-title {
   display: flex;

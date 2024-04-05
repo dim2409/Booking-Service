@@ -17,10 +17,11 @@ export class DialogService {
     const dialogRef = this.dialog.open(BookingInfoDialogComponent, {
       data: booking,
       autoFocus: false,
-      width: "100vw",
-      height: "90%",
-      maxWidth: "90vw",
+      width: "40vw",
+      height: "50%",
+      maxWidth: "30vw",
       disableClose: true,
+      hasBackdrop: false
     });
     return dialogRef.afterClosed();
   }
