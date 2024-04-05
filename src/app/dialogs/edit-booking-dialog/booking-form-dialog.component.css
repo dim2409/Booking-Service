@@ -1,0 +1,71 @@
+.booking-form-dialog {
+  padding: 1.1vw;
+}
+.booking-form-dialog .drag-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5%;
+  background: #176b87;
+  display: flex;
+  align-items: center;
+  cursor: move;
+  flex-direction: row-reverse;
+}
+.booking-form-dialog .drag-bar i {
+  cursor: pointer;
+  color: #ffffff;
+  padding: 1vh;
+}
+.booking-form-dialog .booking-form .top {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.booking-form-dialog .booking-form .check {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding-bottom: 1.1vh;
+}
+.booking-form-dialog .booking-form .check .label {
+  margin-right: 1vw;
+  font-size: 1.3vw;
+}
+.booking-form-dialog .booking-form .room-date-time {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.booking-form-dialog .booking-form .recurring-options {
+  width: 35vw;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.booking-form-dialog .booking-form .recurring-options .day-chips {
+  width: 6vw;
+  margin-right: 10vh;
+}
+.booking-form-dialog .booking-form .recurring-options .hour-select-container .hour-select {
+  width: 31vw;
+}
+.booking-form-dialog .booking-form .recurring-options .hour-select-container .hour-select mat-form-field {
+  margin-inline: 1rem;
+}
+.booking-form-dialog .booking-form .mat-mdc-slide-toggle {
+  display: grid;
+}
+.booking-form-dialog .booking-form .mat-mdc-slide-toggle .mdc-form-field {
+  display: grid;
+}
+.booking-form-dialog .booking-form .button-color {
+  background-color: #176b87;
+  color: #ffffff;
+}
+.booking-form-dialog .booking-form .mat-mdc-raised-button[disabled][disabled] {
+  background-color: #b9b9b9;
+  color: #ffffff;
+}

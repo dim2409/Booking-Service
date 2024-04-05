@@ -67,6 +67,9 @@
         <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
           {{ day.badgeTotal }}
         </span>
+        <span class="add-button" (click)="handleEvent('add', day)">
+          <i class="fa-solid fa-add"></i>
+        </span>
         <span class="cal-day-number">
           {{ day.date | calendarDate:'monthViewDayNumber':locale }}
         </span>
@@ -118,7 +121,7 @@
     <div [ngSwitch]="view" class="h5">
       <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="bookings"
         [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+        (eventClicked)="handleEvent('eventClicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
         [cellTemplate]="customCellTemplate" [headerTemplate]="customHeader" [openDayEventsTemplate]="customOpenDay"
         [weekStartsOn]="1">
       </mwl-calendar-month-view>

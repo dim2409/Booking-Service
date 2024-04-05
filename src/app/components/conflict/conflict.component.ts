@@ -106,7 +106,7 @@ export class ConflictComponent implements OnInit {
     let booking = data
     booking.type = this.isRecurring ? 'recurringGroup' : ''
     const bookingIndex = this.conflictGroup.bookings.findIndex((b: any) => b.id === booking.id)
-    this.dialogService.openEditBookingDialog({ booking: booking, rooms: this.rooms }).subscribe((resp: any) => {
+    this.dialogService.openBookingFormDialog({ booking: booking, rooms: this.rooms }).subscribe((resp: any) => {
       if (resp) {
         booking = resp
         this.conflictGroup.bookings[bookingIndex] = resp

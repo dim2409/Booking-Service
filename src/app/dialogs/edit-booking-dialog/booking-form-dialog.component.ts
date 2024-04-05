@@ -7,19 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { CalendarComponentModule } from 'src/app/components/calendar/calendar.component.module';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import * as moment from 'moment-timezone';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-edit-booking-dialog',
+  selector: 'app-booking-form-dialog',
   standalone: true,
   imports: [CommonModule,
     MatChipsModule,
@@ -29,14 +28,15 @@ import * as moment from 'moment-timezone';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     MatButtonModule,
-    CalendarComponentModule,
     MatOptionModule,
-    FormsModule,],
-  templateUrl: './edit-booking-dialog.component.html',
-  styleUrl: './edit-booking-dialog.component.less'
+    FormsModule,
+    DragDropModule],
+  templateUrl: './booking-form-dialog.component.html',
+  styleUrl: './booking-form-dialog.component.less'
 })
-export class EditBookingDialogComponent implements OnInit {
+export class BookingFormDialogComponent implements OnInit {
   start!: any;
   end!: any;
   selectedStart!: Date;
@@ -65,6 +65,8 @@ export class EditBookingDialogComponent implements OnInit {
     { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
   ];
 
+  public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+
   bookingInfo: any;
 
   constructor(
@@ -79,11 +81,15 @@ export class EditBookingDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rooms = this.data.rooms;
+    console.log(this.data)
+    /* this.rooms = this.data.rooms;
     this.roomIds = this.rooms.map((room: any) => room.id);
     this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
       this.bookings = resp;
     });
+ */
+    this.selectedDate = this.data.date || new Date();
+    console.log(this.selectedDate)
     
     this.initializeTimeOptions();
     this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
@@ -175,6 +181,7 @@ export class EditBookingDialogComponent implements OnInit {
   }
 
   initializeTimeOptions() {
+    console.log('here')
     for (let i = 8; i <= 20; i++) {
       const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
       date.setHours(i, 0, 0);
@@ -182,6 +189,7 @@ export class EditBookingDialogComponent implements OnInit {
     }
     this.selectedStart = this.timeOptions[0];
     this.selectedEnd = this.timeOptions[1];
+    console.log(this.timeOptions)
   }
 
   getTimeOption(timeInput: Date) {

@@ -180,7 +180,7 @@ export class NormalBookingsTabComponent implements OnInit {
   }
 
   add() {
-    this.dialogService.openEditBookingDialog({rooms:this.rooms}).subscribe((resp: any) => {
+    this.dialogService.openBookingFormDialog({rooms:this.rooms}).subscribe((resp: any) => {
       if(resp){
         this.bookingUpdate.emit({req:resp, action:'createBooking'});
       }

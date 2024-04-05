@@ -83,7 +83,7 @@ export class ModeratorDashboardComponent implements OnInit {
         }
         break;
       case 'editBooking':
-        this.dialogService.openEditBookingDialog({ booking: data.booking, rooms: this.rooms }).subscribe((resp: any) => {
+        this.dialogService.openBookingFormDialog({ booking: data.booking, rooms: this.rooms }).subscribe((resp: any) => {
           if (resp) {
             this.BookingsService.editBooking(resp).subscribe((resp: any) => {
               this.openSnackBar('Booking Updated');
