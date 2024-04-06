@@ -44,13 +44,13 @@
           <mat-form-field *ngIf="day.selected">
             <mat-label>Start Time</mat-label>
             <mat-select required [name]="day.label+'Start'" ngModel [(ngModel)]="day.start">
-              <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="day.selected">
             <mat-label>End Time</mat-label>
             <mat-select required [name]="day.label+'End'" ngModel [(ngModel)]="day.end">
-              <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -65,14 +65,16 @@
           </mat-form-field>
           <!-- Start end hours -->
           <mat-form-field>
-            <mat-select required name="start" [(ngModel)]="selectedStart">
-              <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+            <input matInput  (input)="onInputChange(startInput.value)" #startInput [value]="selectedStart | date: 'HH:mm'" (click)="startSelect.open()" class="times">
+            <mat-select required #startSelect matInput (selectionChange)="selectedStart=startSelect.value; onInputChange(startSelect.value)">
+              <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
             </mat-select>
           </mat-form-field>
           -
           <mat-form-field>
-            <mat-select required name="end" [(ngModel)]="selectedEnd">
-              <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+            <input matInput [value]="selectedEnd | date: 'HH:mm'" (click)="endSelect.open()" class="times">
+            <mat-select required #endSelect>
+              <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
             </mat-select>
           </mat-form-field>
         <!-- Room Select -->

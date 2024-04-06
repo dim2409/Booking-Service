@@ -15,7 +15,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import * as moment from 'moment-timezone';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-booking-form-dialog',
@@ -32,16 +33,18 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonModule,
     MatOptionModule,
     FormsModule,
-    DragDropModule],
+    DragDropModule,
+    MatMenuModule],
   templateUrl: './booking-form-dialog.component.html',
   styleUrl: './booking-form-dialog.component.less'
 })
 export class BookingFormDialogComponent implements OnInit {
   start!: any;
   end!: any;
-  selectedStart!: Date;
-  selectedEnd!: Date;
-  timeOptions: Date[] = [];
+  selectedStart: Date = new Date();
+  selectedEnd: Date = new Date();
+  startOptions: Date[] = [];
+  endOptions: Date[] = [];
   selectedDate: Date = new Date();
   bookingTitle: any;
   bookings: any;
@@ -56,6 +59,7 @@ export class BookingFormDialogComponent implements OnInit {
 
   @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('bookingRequestForm') myForm!: NgForm;
+  @ViewChild('timeMenu') timeMenu!: MatMenu;
 
   public days: any[] = [
     { label: 'Monday', name: 1, selected: false, start: Date, end: Date },
@@ -70,12 +74,12 @@ export class BookingFormDialogComponent implements OnInit {
   bookingInfo: any;
 
   constructor(
-    private BookingsService: BookingsService, 
-    private RoomsService: RoomsService, 
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>, 
+    private BookingsService: BookingsService,
+    private RoomsService: RoomsService,
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-    
-    
+
+
   toggleSelectDay(day: any) {
     day.selected = !day.selected;
   }
@@ -87,32 +91,32 @@ export class BookingFormDialogComponent implements OnInit {
     this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
       this.bookings = resp;
     });
- */
-    this.selectedDate = this.data.date || new Date();
-    console.log(this.selectedDate)
-    
-    this.initializeTimeOptions();
+    */
+
+    this.initializeTimeOptions(this.startOptions, this.selectedStart);
+    this.initializeTimeOptions(this.endOptions, this.selectedEnd, this.selectedStart);
+    this.selectedEnd.setHours(this.selectedEnd.getHours() + 1);
     this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
-    
-    this.data.booking.publicity==1 ? this.publicityCheck = true : this.publicityCheck = false;
-    
-    if(this.data.booking) {
+
+    this.data.booking?.publicity == 1 ? this.publicityCheck = true : this.publicityCheck = false;
+
+    if (this.data.booking) {
       this.bookingTitle = this.data.booking.title;
       this.selectedRoom = this.data.booking.rooms[0].id;
       this.recurringCheck = this.data.booking.type === 'recurringGroup';
       this.selectedDate = new Date(this.data.booking.start);
-  
+
       this.bookingInfo = this.data.booking.info;
-      this.selectedStart = this.getTimeOption(this.data.booking.start);
-      this.selectedEnd = this.getTimeOption(this.data.booking.end);
+      this.selectedStart = this.getTimeOption(this.data.booking.start, this.startOptions);
+      this.selectedEnd = this.getTimeOption(this.data.booking.end, this.endOptions);
     }
     if (this.recurringCheck) {
       this.data.booking.days.forEach((bookingDay: any) => {
         this.days.forEach((day: any) => {
           if (day.name == bookingDay.name) {
             day.id = bookingDay.id;
-            day.start = this.getTimeOption(bookingDay.start);
-            day.end = this.getTimeOption(bookingDay.end);
+            day.start = this.getTimeOption(bookingDay.start, this.startOptions);
+            day.end = this.getTimeOption(bookingDay.end, this.endOptions);
             day.room_id = bookingDay.room_id;
             day.selected = true;
           }
@@ -180,24 +184,43 @@ export class BookingFormDialogComponent implements OnInit {
 
   }
 
-  initializeTimeOptions() {
-    console.log('here')
-    for (let i = 8; i <= 20; i++) {
-      const date = new Date(Date.UTC(2022, 0, 1, i, 0, 0));
-      date.setHours(i, 0, 0);
-      this.timeOptions.push(date);
-    }
-    this.selectedStart = this.timeOptions[0];
-    this.selectedEnd = this.timeOptions[1];
-    console.log(this.timeOptions)
-  }
 
-  getTimeOption(timeInput: Date) {
+  initializeTimeOptions(timeOptions: Date[], selectedTime: Date, pivot: Date | null = null) {
+    timeOptions.length = 0;
+    const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
+
+    for (let i = start.hours(); i <= 18; i++) {
+      const startMinute = (i === start.hours()) ? start.minutes() : 0;
+      for (let j = startMinute; j < 60; j += 15) {
+        const date = moment.tz('2022-01-01T00:00:00', 'Europe/Athens').add(i, 'hours').add(j, 'minutes').toDate();
+        timeOptions.push(date);
+      }
+    }
+    // Update selectedTime to match the first time option
+    selectedTime.setTime(timeOptions[0].getTime());
+  }
+  onInputChange(value: any) {
+    console.log(value);
+    // Parse the input value using Moment.js
+    const parsedTime = moment(value, 'HH:mm');
+
+    // Check if the parsed time is valid
+    if (parsedTime.isValid()) {
+      // Create a Date object from the parsed time
+      const pivotDate = parsedTime.toDate();
+
+      // Call the initializeTimeOptions function with the pivotDate
+      this.initializeTimeOptions(this.endOptions, this.selectedEnd, pivotDate);
+    } else {
+      console.error('Invalid input format. Please use the format "HH:mm".');
+    }
+  }
+  getTimeOption(timeInput: Date, timeOptions: Date[]) {
     const hours = new Date(timeInput).getHours();
     const minutes = new Date(timeInput).getMinutes();
-    const timeIndex = this.timeOptions.findIndex(time => {
+    const timeIndex = timeOptions.findIndex(time => {
       return time.getHours() === hours && time.getMinutes() === minutes;
     })
-    return this.timeOptions[timeIndex];
+    return timeOptions[timeIndex];
   }
 }

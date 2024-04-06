@@ -40,6 +40,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.booking-form-dialog .booking-form .room-date-time .times {
+  position: absolute;
+}
+.booking-form-dialog .booking-form .room-date-time .mat-mdc-select {
+  display: none;
+}
 .booking-form-dialog .booking-form .recurring-options {
   width: 35vw;
   display: flex;

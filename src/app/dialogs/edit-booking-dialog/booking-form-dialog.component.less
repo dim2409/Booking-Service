@@ -2,7 +2,7 @@
 @import '../../../variables.less';
 
 .booking-form-dialog {
-    padding: 1.1vw; 
+    padding: 1.1vw;
 
     .drag-bar {
         position: absolute;
@@ -42,11 +42,19 @@
                 font-size: 1.3vw;
             }
         }
-        .room-date-time{
+
+        .room-date-time {
             display: flex;
             flex-wrap: nowrap;
             align-items: center;
             justify-content: space-between;
+            .times{
+                position: absolute;
+            }
+            
+            .mat-mdc-select{
+                display: none;
+            }
         }
 
         .recurring-options {
