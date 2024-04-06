@@ -60,23 +60,30 @@
       <div class="room-date-time">
         <!-- Date picker -->
           <mat-form-field>
+            <mat-label>Date</mat-label>
             <input matInput [matDatepicker]="picker" ngModel name="date" [(ngModel)]="selectedDate" (click)="picker.open()">
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <!-- Start end hours -->
-          <mat-form-field>
-            <input matInput  (input)="onInputChange(startInput.value)" #startInput [value]="selectedStart | date: 'HH:mm'" (click)="startSelect.open()" class="times">
-            <mat-select required #startSelect matInput (selectionChange)="selectedStart=startSelect.value; onInputChange(startSelect.value)">
-              <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          -
-          <mat-form-field>
-            <input matInput [value]="selectedEnd | date: 'HH:mm'" (click)="endSelect.open()" class="times">
-            <mat-select required #endSelect>
-              <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <span class="times-container">
+            <mat-form-field>
+              <mat-label>Start</mat-label>
+              <input matInput placeholder="hh:mm" (input)="onInputChange(startInput.value)" #startInput [value]="selectedStart | date: 'HH:mm'" (click)="startSelect.open()" class="times">
+              <mat-select required #startSelect matInput (selectionChange)="selectedStart=startSelect.value; onInputChange(startSelect.value)">
+                <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span class="dash">
+              -
+            </span>
+            <mat-form-field>
+              <mat-label>End</mat-label>
+              <input matInput placeholder="hh:mm" [value]="selectedEnd | date: 'HH:mm'" (click)="endSelect.open()" class="times">
+              <mat-select required #endSelect>
+                <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
         <!-- Room Select -->
         <mat-form-field>
           <mat-label>Room</mat-label>
@@ -86,10 +93,13 @@
         </mat-form-field>
       </div>
     </span>
-    <mat-form-field>
-      <mat-label>Booking info</mat-label>
-      <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo" required></textarea>
-    </mat-form-field>
+    <span>
+      ToDo Add Url
+      <mat-form-field>
+        <mat-label>Booking info</mat-label>
+        <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo" required></textarea>
+      </mat-form-field>
+    </span>
 
     <div>
       <button mat-raised-button class="button-color" type="button" (click)="close()">Cancel</button>

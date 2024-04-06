@@ -39,11 +39,27 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5vw;
 }
-.booking-form-dialog .booking-form .room-date-time .times {
+.booking-form-dialog .booking-form .room-date-time .times-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.booking-form-dialog .booking-form .room-date-time .times-container .mat-mdc-form-field {
+  width: 5.1vw;
+}
+.booking-form-dialog .booking-form .room-date-time .times-container .times {
   position: absolute;
 }
-.booking-form-dialog .booking-form .room-date-time .mat-mdc-select {
+.booking-form-dialog .booking-form .room-date-time .times-container .dash {
+  font-size: 5vh;
+  font-weight: 100;
+  text-align: center;
+  padding-bottom: 1vw;
+}
+.booking-form-dialog .booking-form .room-date-time .times-container .mat-mdc-select {
   display: none;
 }
 .booking-form-dialog .booking-form .recurring-options {

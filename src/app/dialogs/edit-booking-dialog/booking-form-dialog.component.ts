@@ -86,12 +86,16 @@ export class BookingFormDialogComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data)
-    /* this.rooms = this.data.rooms;
-    this.roomIds = this.rooms.map((room: any) => room.id);
-    this.BookingsService.getActiveBookings({ room_id: this.roomIds }).subscribe((resp: any) => {
-      this.bookings = resp;
-    });
-    */
+    if (this.data.rooms) {
+      this.rooms = this.data.rooms;
+    } else {
+      this.RoomsService.getAllRooms().subscribe((resp: any) => {
+        this.rooms = resp;
+      });
+    }
+    console.log(this.rooms)
+    
+   
 
     this.initializeTimeOptions(this.startOptions, this.selectedStart);
     this.initializeTimeOptions(this.endOptions, this.selectedEnd, this.selectedStart);
