@@ -29,17 +29,34 @@
             flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
+
+            .mat-mdc-form-field {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                width: 48%;
+            }
         }
 
-        .check {
+        .checks {
             display: flex;
             flex-wrap: nowrap;
             align-items: center;
-            padding-bottom: 1.1vh;
+            justify-content: space-between;
 
-            .label {
-                margin-right: 1vw;
-                font-size: 1.3vw;
+            .check {
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: flex-start;
+                width: 100%;
+                padding-bottom: 1.1vh;
+                padding-left: 1vh;
+
+                .label {
+                    margin-right: 1vw;
+                    font-size: 1.3vw;
+                }
             }
         }
 
@@ -48,13 +65,14 @@
             flex-wrap: nowrap;
             align-items: center;
             justify-content: space-between;
-            gap:0.5vw;
+            gap: 0.5vw;
 
             .times-container {
                 display: flex;
                 flex-wrap: nowrap;
                 align-items: center;
                 justify-content: space-between;
+
                 .mat-mdc-form-field {
                     width: 5.1vw;
                 }
@@ -76,23 +94,77 @@
             }
         }
 
-        .recurring-options {
-            width: 35vw;
-            display: flex;
-            flex-wrap: nowrap;
+        .info {
+            display: block;
+            width: 100%;
 
-            .day-chips {
-                width: 6vw;
-                margin-right: 10vh;
+            .mat-mdc-form-field {
+                width: 100%;
             }
+        }
 
-            .hour-select-container {
+        .recurring-options {
+            display: flex;
+            flex-direction: column;
 
-                .hour-select {
-                    width: 31vw;
+            .days {
+                margin-right: 10vh;
 
-                    mat-form-field {
-                        margin-inline: 1rem;
+                .day-chip {
+                    display: flex;
+                    justify-content: center;
+                    width: 1.9vw;
+                    font-size: 1vw;
+                    padding: 0.3vw;
+                    margin-block: 0.5vw;
+                    background: #e0e4e4;
+                    border-radius: 1rem;
+                    color: #767979;
+                    transition: ease-in 0.1s;
+
+                    &:hover {
+                        cursor: pointer;
+                        background: #d7dada;
+                        color: #5d5f5f;
+                    }
+
+                    &.selected {
+                        background: @primary-color!important;
+                        color: @primaryElementTextColor!important;
+                    }
+                }
+
+                .room-date-time {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 0.5vw;
+        
+                    .times-container {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        align-items: center;
+                        justify-content: space-between;
+        
+                        .mat-mdc-form-field {
+                            width: 5.1vw;
+                        }
+        
+                        .times {
+                            position: absolute;
+                        }
+        
+                        .dash {
+                            font-size: 5vh;
+                            font-weight: 100;
+                            text-align: center;
+                            padding-bottom: 1vw;
+                        }
+        
+                        .mat-mdc-select {
+                            display: none;
+                        }
                     }
                 }
             }

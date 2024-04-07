@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { ChangeDetectorRef, Component, Inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
-import { MatInputModule } from '@angular/material/input';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +45,8 @@ export class BookingFormDialogComponent implements OnInit {
   selectedEnd: Date = new Date();
   startOptions: Date[] = [];
   endOptions: Date[] = [];
+  reqStartOptions: Date[][] = [[]];
+  reqEndOptions:  Date[][] = [[]];
   selectedDate: Date = new Date();
   bookingTitle: any;
   bookings: any;
@@ -61,12 +63,16 @@ export class BookingFormDialogComponent implements OnInit {
   @ViewChild('bookingRequestForm') myForm!: NgForm;
   @ViewChild('timeMenu') timeMenu!: MatMenu;
 
+  @ViewChildren(MatSelect) matSelects!: QueryList<MatSelect>;
+  @ViewChildren(MatInput) matInputs!: QueryList<MatInput>;
+
+
   public days: any[] = [
-    { label: 'Monday', name: 1, selected: false, start: Date, end: Date },
-    { label: 'Tuesday', name: 2, selected: false, start: Date, end: Date },
-    { label: 'Wednesday', name: 3, selected: false, start: Date, end: Date },
-    { label: 'Thursday', name: 4, selected: false, start: Date, end: Date },
-    { label: 'Friday', name: 5, selected: false, start: Date, end: Date },
+    { label: 'M', name: 1, selected: false, start: new Date(), end: new Date() },
+    { label: 'T', name: 2, selected: false, start: new Date(), end: new Date() },
+    { label: 'W', name: 3, selected: false, start: new Date(), end: new Date() },
+    { label: 'T', name: 4, selected: false, start: new Date(), end: new Date() },
+    { label: 'F', name: 5, selected: false, start: new Date(), end: new Date() },
   ];
 
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -93,9 +99,6 @@ export class BookingFormDialogComponent implements OnInit {
         this.rooms = resp;
       });
     }
-    console.log(this.rooms)
-    
-   
 
     this.initializeTimeOptions(this.startOptions, this.selectedStart);
     this.initializeTimeOptions(this.endOptions, this.selectedEnd, this.selectedStart);
@@ -188,11 +191,10 @@ export class BookingFormDialogComponent implements OnInit {
 
   }
 
-
   initializeTimeOptions(timeOptions: Date[], selectedTime: Date, pivot: Date | null = null) {
-    timeOptions.length = 0;
+    console.log(timeOptions)
+    timeOptions?.length ? timeOptions.length = 0: timeOptions;
     const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
-
     for (let i = start.hours(); i <= 18; i++) {
       const startMinute = (i === start.hours()) ? start.minutes() : 0;
       for (let j = startMinute; j < 60; j += 15) {
@@ -204,7 +206,6 @@ export class BookingFormDialogComponent implements OnInit {
     selectedTime.setTime(timeOptions[0].getTime());
   }
   onInputChange(value: any) {
-    console.log(value);
     // Parse the input value using Moment.js
     const parsedTime = moment(value, 'HH:mm');
 
@@ -226,5 +227,54 @@ export class BookingFormDialogComponent implements OnInit {
       return time.getHours() === hours && time.getMinutes() === minutes;
     })
     return timeOptions[timeIndex];
+  }
+
+  onReqToggleChange(event: MatSlideToggleChange) {
+    this.recurringCheck = event.checked;
+    this.days.forEach((day: any) => {
+      day.selected = false;      
+      this.initializeTimeOptions(this.reqStartOptions[day.name - 1], day.start);
+      this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.end, day.start);
+      console.log(this.reqStartOptions)
+      day.end.setHours(day.end.getHours() + 1);
+    })
+  }
+  openSelect(selectId: string) {
+    const select = this.matSelects.find(item => item.id === selectId);
+    if (select) {
+      select.open();
+    } else {
+      console.error('MatSelect not found with ID:', selectId);
+    }
+  }
+
+  onReqInputChange(value: any, id: number) {
+    console.log(value)
+    value = value.target?.value??value;
+    console.log(value)
+    const input = this.matInputs.find(item => item.id == id + 'StartInput');
+    if (input) {
+      this.days[id - 1].start = moment(value, 'HH:mm');
+      const parsedTime = moment(value, 'HH:mm');
+      console.log(parsedTime)
+      if (parsedTime.isValid()) {
+        // Create a Date object from the parsed time
+        const pivotDate = parsedTime.toDate();
+        // Call the initializeTimeOptions function with the pivotDate
+        this.initializeTimeOptions(this.reqEndOptions[id - 1], this.days[id - 1].end, pivotDate);
+      }
+    } else {
+      console.error('MatInput not found with ID:', id);
+    }
+  }
+  onSelectionChange(selectedValue: any, id: number, start: boolean) {
+    const day = this.days.find(day => day.name == id);
+    const startInput = this.matInputs.find(item => item.id == id + 'StartInput');
+    if (start) {
+      day.start = selectedValue;
+      startInput!.value = selectedValue;
+    } else {
+      day.end = selectedValue;
+    }
   }
 }

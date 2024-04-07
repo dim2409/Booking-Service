@@ -10,50 +10,57 @@
         <mat-label>Booking Title</mat-label>
         <input matInput type="text" name="title" [(ngModel)]="bookingTitle" required>
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>Url</mat-label>
+        <input matInput type="text" name="url">
+      </mat-form-field>
+    </span>
+    <span class="checks">
+      <!-- Recurring Check -->
+      <div class="check">
+        <mat-label class="label">Recurring</mat-label>
+        <mat-slide-toggle [(ngModel)]="recurringCheck" name="recurring" (change)="onReqToggleChange($event)">
+        </mat-slide-toggle>
+      </div>
       <!-- Publicity Check -->
       <div class="check">
         <mat-label class="label">Public</mat-label>
         <mat-checkbox [(ngModel)]="publicityCheck" name="publicity"></mat-checkbox>
       </div>
     </span>
-    <!-- Recurring Check -->
-    <div class="check">
-      <mat-label class="label">Recurring</mat-label>
-      <mat-slide-toggle [(ngModel)]="recurringCheck"
-        name="recurring">
-      </mat-slide-toggle>
-    </div>
     <div *ngIf="recurringCheck" class="recurring-options">
       <!-- Recurring Days input -->
-      <div class="day-chips">
-        <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Day Selection" multiple #chipList>
-          <mat-chip-option *ngFor="let chip of days" [selected]="chip.selected"
-            (click)="toggleSelectDay(chip)">{{chip.label}}
-          </mat-chip-option>
-        </mat-chip-listbox>
-      </div>
-      <div class="hour-select-container">
-        <div *ngFor="let day of days; let i = index" class="hour-select">
-          <p *ngIf="day.selected">{{day.label}} Options</p>
-          <mat-form-field *ngIf="day.selected">
-            <mat-label>Select Room</mat-label>
-            <mat-select required [name]="day.label+day.room_id" ngModel [(ngModel)]="day.room_id">
-              <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngIf="day.selected">
-            <mat-label>Start Time</mat-label>
-            <mat-select required [name]="day.label+'Start'" ngModel [(ngModel)]="day.start">
-              <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngIf="day.selected">
-            <mat-label>End Time</mat-label>
-            <mat-select required [name]="day.label+'End'" ngModel [(ngModel)]="day.end">
-              <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div class="days" *ngFor="let chip of days">
+          <div  [ngClass]="chip.selected?'selected':''" 
+            (click)="toggleSelectDay(chip)" class="day-chip">{{chip.label}}
+          </div>
+          <div class="room-date-time" *ngIf="chip.selected">
+          <span class="times-container">
+            <mat-form-field>
+              <mat-label>Start</mat-label>
+              <input matInput placeholder="hh:mm" [value]="chip.start | date: 'HH:mm'" [id]="chip.name+'StartInput'" (input)="onReqInputChange($event,chip.name)" (click)="openSelect(chip.name+'startSelect')" class="times">
+              <mat-select required [id]="chip.name+'startSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, true); onReqInputChange(chip.start,chip.name)">
+                <mat-option *ngFor="let time of reqStartOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>            
+            <span class="dash">
+              -
+            </span>
+            <mat-form-field>
+              <mat-label>End</mat-label>
+              <input matInput placeholder="hh:mm" [value]="chip.end | date: 'HH:mm'" [id]="chip.name+'endInput'" (click)="openSelect(chip.name+'endSelect')" class="times">
+              <mat-select required [id]="chip.name+'endSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, false)">
+                <mat-option *ngFor="let time of reqEndOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Room</mat-label>
+              <mat-select required [name]="chip.label+chip.room_id" ngModel [(ngModel)]="chip.room_id">
+                <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+              </mat-select>
+            </mat-form-field> 
+          </span>
+          </div>
       </div>
     </div>    
     <span *ngIf="!recurringCheck">
@@ -79,7 +86,7 @@
             <mat-form-field>
               <mat-label>End</mat-label>
               <input matInput placeholder="hh:mm" [value]="selectedEnd | date: 'HH:mm'" (click)="endSelect.open()" class="times">
-              <mat-select required #endSelect>
+              <mat-select required #endSelect (selectionChange)="selectedEnd=endSelect.value;">
                 <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -93,11 +100,10 @@
         </mat-form-field>
       </div>
     </span>
-    <span>
-      ToDo Add Url
+    <span class="info">      
       <mat-form-field>
         <mat-label>Booking info</mat-label>
-        <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo" required></textarea>
+        <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo"></textarea>
       </mat-form-field>
     </span>
 
