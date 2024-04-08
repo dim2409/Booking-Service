@@ -17,6 +17,7 @@ import * as moment from 'moment-timezone';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-booking-form-dialog',
@@ -34,7 +35,8 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
     MatOptionModule,
     FormsModule,
     DragDropModule,
-    MatMenuModule],
+    MatMenuModule,
+    MatCardModule],
   templateUrl: './booking-form-dialog.component.html',
   styleUrl: './booking-form-dialog.component.less'
 })
@@ -45,8 +47,8 @@ export class BookingFormDialogComponent implements OnInit {
   selectedEnd: Date = new Date();
   startOptions: Date[] = [];
   endOptions: Date[] = [];
-  reqStartOptions: Date[][] = [[]];
-  reqEndOptions:  Date[][] = [[]];
+  reqStartOptions = Array.from({ length: 5 }, () => []);
+  reqEndOptions = Array.from({ length: 5 }, () => []);
   selectedDate: Date = new Date();
   bookingTitle: any;
   bookings: any;
@@ -193,7 +195,7 @@ export class BookingFormDialogComponent implements OnInit {
 
   initializeTimeOptions(timeOptions: Date[], selectedTime: Date, pivot: Date | null = null) {
     console.log(timeOptions)
-    timeOptions?.length ? timeOptions.length = 0: timeOptions;
+    timeOptions?.length ? timeOptions.length = 0 : timeOptions;
     const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
     for (let i = start.hours(); i <= 18; i++) {
       const startMinute = (i === start.hours()) ? start.minutes() : 0;
@@ -232,7 +234,7 @@ export class BookingFormDialogComponent implements OnInit {
   onReqToggleChange(event: MatSlideToggleChange) {
     this.recurringCheck = event.checked;
     this.days.forEach((day: any) => {
-      day.selected = false;      
+      day.selected = false;
       this.initializeTimeOptions(this.reqStartOptions[day.name - 1], day.start);
       this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.end, day.start);
       console.log(this.reqStartOptions)
@@ -250,7 +252,7 @@ export class BookingFormDialogComponent implements OnInit {
 
   onReqInputChange(value: any, id: number) {
     console.log(value)
-    value = value.target?.value??value;
+    value = value.target?.value ?? value;
     console.log(value)
     const input = this.matInputs.find(item => item.id == id + 'StartInput');
     if (input) {

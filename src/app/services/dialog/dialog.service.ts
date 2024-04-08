@@ -53,7 +53,7 @@ export class DialogService {
       data: booking,
       autoFocus: false,
       width: "40vw",
-      height: "80%",
+      height: "85%",
       maxWidth: "30vw",
       disableClose: true,
       hasBackdrop: false

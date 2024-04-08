@@ -11,11 +11,6 @@
 .booking-request .cal-month-view .cal-day-cell.cal-today .cal-day-number {
   font-size: 1.2rem;
 }
-.recurring-options {
-  width: 35vw;
-  display: flex;
-  flex-wrap: nowrap;
-}
 .recurring-options .day-chips {
   width: 6vw;
   margin-right: 10vh;
