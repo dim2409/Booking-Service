@@ -13,6 +13,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameMonth, isSameDay, subWeeks, startOfMonth, addWeeks, endOfMonth } from 'date-fns';
 import _ from 'lodash';
 import { Subject } from 'rxjs';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
@@ -79,7 +80,7 @@ export class CalendarComponent {
   activeDayIsOpen: boolean = false;
 
 
-  constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) {
+  constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService, private bookingsService: BookingsService) {
     this.isSmallScreen = window.innerWidth < 600;    
     document.documentElement.style.setProperty('--cellCount', `${5}`);
   }
@@ -159,7 +160,15 @@ export class CalendarComponent {
         this.dialogService.openInfoDialog(event);
         break;
       case 'add':
-        this.dialogService.openBookingFormDialog(event);
+        this.dialogService.openBookingFormDialog(event).subscribe((resp: any) => {
+          if (resp) {
+            this.bookingsService.createBooking(resp).subscribe((resp: any) => {
+              if(resp) {
+                this.dialogService.openSuccessDialog(resp.message);
+              }
+            })
+          }
+        });
         break;
     }
   }

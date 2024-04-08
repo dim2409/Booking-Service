@@ -80,6 +80,7 @@ export class BookingFormDialogComponent implements OnInit {
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 
   bookingInfo: any;
+bookingUrl: any;
 
   constructor(
     private BookingsService: BookingsService,
@@ -160,6 +161,7 @@ export class BookingFormDialogComponent implements OnInit {
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
       publicity: this.publicityCheck ? 1 : 0,
+      url: this.bookingUrl,
       days: []
     }
     if (this.recurringCheck) {
