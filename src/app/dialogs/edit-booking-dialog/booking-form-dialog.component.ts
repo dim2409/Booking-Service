@@ -18,6 +18,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-booking-form-dialog',
@@ -103,36 +104,46 @@ bookingUrl: any;
       });
     }
 
-    this.initializeTimeOptions(this.startOptions, this.selectedStart);
-    this.initializeTimeOptions(this.endOptions, this.selectedEnd, this.selectedStart);
-    this.selectedEnd.setHours(this.selectedEnd.getHours() + 1);
-    this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
-
-    this.data.booking?.publicity == 1 ? this.publicityCheck = true : this.publicityCheck = false;
-
     if (this.data.booking) {
       this.bookingTitle = this.data.booking.title;
       this.selectedRoom = this.data.booking.rooms[0].id;
       this.recurringCheck = this.data.booking.type === 'recurringGroup';
       this.selectedDate = new Date(this.data.booking.start);
+      
+      this.bookingUrl = this.data.booking.url
 
       this.bookingInfo = this.data.booking.info;
-      this.selectedStart = this.getTimeOption(this.data.booking.start, this.startOptions);
-      this.selectedEnd = this.getTimeOption(this.data.booking.end, this.endOptions);
-    }
-    if (this.recurringCheck) {
-      this.data.booking.days.forEach((bookingDay: any) => {
-        this.days.forEach((day: any) => {
-          if (day.name == bookingDay.name) {
-            day.id = bookingDay.id;
-            day.start = this.getTimeOption(bookingDay.start, this.startOptions);
-            day.end = this.getTimeOption(bookingDay.end, this.endOptions);
-            day.room_id = bookingDay.room_id;
-            day.selected = true;
-          }
+      this.selectedStart = _.cloneDeep(this.data.booking.start);
+      this.selectedEnd = _.cloneDeep(this.data.booking.end);
+      
+      this.initializeTimeOptions(this.startOptions);
+      this.initializeTimeOptions(this.endOptions, this.selectedStart);
+
+      if (this.recurringCheck) {
+        console.log(this.data.booking.days)
+        this.data.booking.days.forEach((bookingDay: any) => {
+          this.days.forEach((day: any) => {
+            if (day.name == bookingDay.name) {
+              day.id = bookingDay.id;
+              day.start = this.getTimeOption(bookingDay.start, this.startOptions);
+              day.end = this.getTimeOption(bookingDay.end, this.endOptions);
+              day.room_id = bookingDay.room_id;
+              day.selected = true;
+            }
+          })
         })
-      })
+      }
+    }else{
+      this.initializeTimeOptions(this.startOptions);
+      this.selectedStart.setTime(this.startOptions[0].getTime());
+      this.initializeTimeOptions(this.endOptions, this.selectedStart);
+      this.selectedEnd.setTime(this.endOptions[0].getTime());
+      this.selectedEnd.setHours(this.selectedEnd.getHours() + 1);
     }
+    
+    //this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
+    this.data.booking?.publicity == 1 ? this.publicityCheck = true : this.publicityCheck = false;
+
   }
   onSave(bookingRequestForm: any) {
 
@@ -195,19 +206,17 @@ bookingUrl: any;
 
   }
 
-  initializeTimeOptions(timeOptions: Date[], selectedTime: Date, pivot: Date | null = null) {
-    console.log(timeOptions)
+  initializeTimeOptions(timeOptions: Date[], pivot: Date | null = null) {
+    //console.log(selectedTime)
     timeOptions?.length ? timeOptions.length = 0 : timeOptions;
     const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
-    for (let i = start.hours(); i <= 18; i++) {
+    for (let i = start.hours(); i <= 20; i++) {
       const startMinute = (i === start.hours()) ? start.minutes() : 0;
       for (let j = startMinute; j < 60; j += 15) {
         const date = moment.tz('2022-01-01T00:00:00', 'Europe/Athens').add(i, 'hours').add(j, 'minutes').toDate();
         timeOptions.push(date);
       }
     }
-    // Update selectedTime to match the first time option
-    selectedTime.setTime(timeOptions[0].getTime());
   }
   onInputChange(value: any) {
     // Parse the input value using Moment.js
@@ -219,7 +228,9 @@ bookingUrl: any;
       const pivotDate = parsedTime.toDate();
 
       // Call the initializeTimeOptions function with the pivotDate
-      this.initializeTimeOptions(this.endOptions, this.selectedEnd, pivotDate);
+      //this.initializeTimeOptions(this.endOptions, this.selectedEnd, pivotDate);
+      this.initializeTimeOptions(this.endOptions, pivotDate);
+      this.selectedEnd.setTime(this.endOptions[0].getTime());
     } else {
       console.error('Invalid input format. Please use the format "HH:mm".');
     }
@@ -237,10 +248,14 @@ bookingUrl: any;
     this.recurringCheck = event.checked;
     this.days.forEach((day: any) => {
       day.selected = false;
-      this.initializeTimeOptions(this.reqStartOptions[day.name - 1], day.start);
-      this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.end, day.start);
+      this.initializeTimeOptions(this.reqStartOptions[day.name - 1]);
+      this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.start);
+      //this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.end, day.start);
       console.log(this.reqStartOptions)
+      day.start.setTime(this.reqStartOptions[day.name - 1][0]);
+      day.end.setTime(this.reqStartOptions[day.name - 1][0]);
       day.end.setHours(day.end.getHours() + 1);
+      
     })
   }
   openSelect(selectId: string) {
@@ -265,7 +280,8 @@ bookingUrl: any;
         // Create a Date object from the parsed time
         const pivotDate = parsedTime.toDate();
         // Call the initializeTimeOptions function with the pivotDate
-        this.initializeTimeOptions(this.reqEndOptions[id - 1], this.days[id - 1].end, pivotDate);
+        this.initializeTimeOptions(this.reqEndOptions[id - 1], pivotDate);
+        //this.initializeTimeOptions(this.reqEndOptions[id - 1], this.days[id - 1].end, pivotDate);
       }
     } else {
       console.error('MatInput not found with ID:', id);
