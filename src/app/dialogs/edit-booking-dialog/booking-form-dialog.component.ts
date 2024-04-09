@@ -81,7 +81,7 @@ export class BookingFormDialogComponent implements OnInit {
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 
   bookingInfo: any;
-bookingUrl: any;
+  bookingUrl: any;
 
   constructor(
     private BookingsService: BookingsService,
@@ -109,13 +109,13 @@ bookingUrl: any;
       this.selectedRoom = this.data.booking.rooms[0].id;
       this.recurringCheck = this.data.booking.type === 'recurringGroup';
       this.selectedDate = new Date(this.data.booking.start);
-      
+
       this.bookingUrl = this.data.booking.url
 
       this.bookingInfo = this.data.booking.info;
       this.selectedStart = _.cloneDeep(this.data.booking.start);
       this.selectedEnd = _.cloneDeep(this.data.booking.end);
-      
+
       this.initializeTimeOptions(this.startOptions);
       this.initializeTimeOptions(this.endOptions, this.selectedStart);
 
@@ -125,23 +125,25 @@ bookingUrl: any;
           this.days.forEach((day: any) => {
             if (day.name == bookingDay.name) {
               day.id = bookingDay.id;
-              day.start = this.getTimeOption(bookingDay.start, this.startOptions);
-              day.end = this.getTimeOption(bookingDay.end, this.endOptions);
+              day.start = _.cloneDeep(bookingDay.start);
+              day.end = _.cloneDeep(bookingDay.end);
               day.room_id = bookingDay.room_id;
               day.selected = true;
+              this.initializeTimeOptions(this.reqStartOptions[day.name - 1]);
+              this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.start);
+              //day.end.setTime(this.reqStartOptions[day.name - 1][0].getTime());
             }
           })
         })
       }
-    }else{
+    } else {
       this.initializeTimeOptions(this.startOptions);
       this.selectedStart.setTime(this.startOptions[0].getTime());
       this.initializeTimeOptions(this.endOptions, this.selectedStart);
       this.selectedEnd.setTime(this.endOptions[0].getTime());
       this.selectedEnd.setHours(this.selectedEnd.getHours() + 1);
     }
-    
-    //this.data.recurringCheck ? this.recurringCheck = true : this.recurringCheck = false;
+
     this.data.booking?.publicity == 1 ? this.publicityCheck = true : this.publicityCheck = false;
 
   }
@@ -172,7 +174,7 @@ bookingUrl: any;
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
       publicity: this.publicityCheck ? 1 : 0,
-      url: this.bookingUrl,
+      url: this.bookingUrl ?? null,
       days: []
     }
     if (this.recurringCheck) {
@@ -207,7 +209,6 @@ bookingUrl: any;
   }
 
   initializeTimeOptions(timeOptions: Date[], pivot: Date | null = null) {
-    //console.log(selectedTime)
     timeOptions?.length ? timeOptions.length = 0 : timeOptions;
     const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
     for (let i = start.hours(); i <= 20; i++) {
@@ -218,23 +219,7 @@ bookingUrl: any;
       }
     }
   }
-  onInputChange(value: any) {
-    // Parse the input value using Moment.js
-    const parsedTime = moment(value, 'HH:mm');
 
-    // Check if the parsed time is valid
-    if (parsedTime.isValid()) {
-      // Create a Date object from the parsed time
-      const pivotDate = parsedTime.toDate();
-
-      // Call the initializeTimeOptions function with the pivotDate
-      //this.initializeTimeOptions(this.endOptions, this.selectedEnd, pivotDate);
-      this.initializeTimeOptions(this.endOptions, pivotDate);
-      this.selectedEnd.setTime(this.endOptions[0].getTime());
-    } else {
-      console.error('Invalid input format. Please use the format "HH:mm".');
-    }
-  }
   getTimeOption(timeInput: Date, timeOptions: Date[]) {
     const hours = new Date(timeInput).getHours();
     const minutes = new Date(timeInput).getMinutes();
@@ -249,13 +234,11 @@ bookingUrl: any;
     this.days.forEach((day: any) => {
       day.selected = false;
       this.initializeTimeOptions(this.reqStartOptions[day.name - 1]);
-      this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.start);
-      //this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.end, day.start);
-      console.log(this.reqStartOptions)
       day.start.setTime(this.reqStartOptions[day.name - 1][0]);
+      this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.start);
       day.end.setTime(this.reqStartOptions[day.name - 1][0]);
       day.end.setHours(day.end.getHours() + 1);
-      
+
     })
   }
   openSelect(selectId: string) {
@@ -266,22 +249,38 @@ bookingUrl: any;
       console.error('MatSelect not found with ID:', selectId);
     }
   }
+  onInputChange(value: any) {
+    // Parse the input value using Moment.js
+    const parsedTime = moment(value, 'HH:mm');
 
+    // Check if the parsed time is valid
+    if (parsedTime.isValid()) {
+      // Create a Date object from the parsed time
+      const pivotDate = parsedTime.toDate();
+
+      // Call the initializeTimeOptions function with the pivotDate
+      this.initializeTimeOptions(this.endOptions, pivotDate);
+      this.selectedEnd.setTime(this.endOptions[0].getTime());
+    } else {
+      console.error('Invalid input format. Please use the format "HH:mm".');
+    }
+  }
   onReqInputChange(value: any, id: number) {
-    console.log(value)
     value = value.target?.value ?? value;
-    console.log(value)
     const input = this.matInputs.find(item => item.id == id + 'StartInput');
     if (input) {
-      this.days[id - 1].start = moment(value, 'HH:mm');
+      var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+      if (regex.test(value)) {
+        this.days[id - 1].start = moment(value, 'HH:mm');
+      }
       const parsedTime = moment(value, 'HH:mm');
-      console.log(parsedTime)
       if (parsedTime.isValid()) {
         // Create a Date object from the parsed time
         const pivotDate = parsedTime.toDate();
         // Call the initializeTimeOptions function with the pivotDate
         this.initializeTimeOptions(this.reqEndOptions[id - 1], pivotDate);
-        //this.initializeTimeOptions(this.reqEndOptions[id - 1], this.days[id - 1].end, pivotDate);
+        this.days[id - 1].end = _.cloneDeep(this.reqStartOptions[id - 1][0]);
+        this.days[id - 1].end.setHours(this.days[id - 1].end.getHours() + 1);
       }
     } else {
       console.error('MatInput not found with ID:', id);
