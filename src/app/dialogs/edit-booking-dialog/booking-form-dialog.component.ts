@@ -120,7 +120,6 @@ export class BookingFormDialogComponent implements OnInit {
       this.initializeTimeOptions(this.endOptions, this.selectedStart);
 
       if (this.recurringCheck) {
-        console.log(this.data.booking.days)
         this.data.booking.days.forEach((bookingDay: any) => {
           this.days.forEach((day: any) => {
             if (day.name == bookingDay.name) {
@@ -131,7 +130,7 @@ export class BookingFormDialogComponent implements OnInit {
               day.selected = true;
               this.initializeTimeOptions(this.reqStartOptions[day.name - 1]);
               this.initializeTimeOptions(this.reqEndOptions[day.name - 1], day.start);
-              //day.end.setTime(this.reqStartOptions[day.name - 1][0].getTime());
+              //day.end.setTime(this.reqStartOptions[day.name - 1][0]);
             }
           })
         })
@@ -142,6 +141,7 @@ export class BookingFormDialogComponent implements OnInit {
       this.initializeTimeOptions(this.endOptions, this.selectedStart);
       this.selectedEnd.setTime(this.endOptions[0].getTime());
       this.selectedEnd.setHours(this.selectedEnd.getHours() + 1);
+      this.selectedDate = this.data.date;
     }
 
     this.data.booking?.publicity == 1 ? this.publicityCheck = true : this.publicityCheck = false;
@@ -169,12 +169,13 @@ export class BookingFormDialogComponent implements OnInit {
       ...this.data.booking,
       ...this.data,
       ...bookingRequestForm.value,
-      start: this.start,
+      start: this.start, 
       end: this.end,
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
       publicity: this.publicityCheck ? 1 : 0,
       url: this.bookingUrl ?? null,
+      info: this.bookingInfo ?? null,
       days: []
     }
     if (this.recurringCheck) {
@@ -193,6 +194,7 @@ export class BookingFormDialogComponent implements OnInit {
         }
       });
     }
+    console.log(booking)
     this.dialogRef.close(booking);
   }
   close() {
@@ -212,7 +214,7 @@ export class BookingFormDialogComponent implements OnInit {
     timeOptions?.length ? timeOptions.length = 0 : timeOptions;
     const start = pivot ? moment.tz(pivot, 'Europe/Athens') : moment.tz('2022-01-01T08:00:00', 'Europe/Athens');
     for (let i = start.hours(); i <= 20; i++) {
-      const startMinute = (i === start.hours()) ? start.minutes() : 0;
+      const startMinute = start.minutes();
       for (let j = startMinute; j < 60; j += 15) {
         const date = moment.tz('2022-01-01T00:00:00', 'Europe/Athens').add(i, 'hours').add(j, 'minutes').toDate();
         timeOptions.push(date);
@@ -252,6 +254,10 @@ export class BookingFormDialogComponent implements OnInit {
   onInputChange(value: any) {
     // Parse the input value using Moment.js
     const parsedTime = moment(value, 'HH:mm');
+    var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+      if (regex.test(value)) {
+        this.selectedStart = moment(value, 'HH:mm').toDate();
+      }
 
     // Check if the parsed time is valid
     if (parsedTime.isValid()) {
@@ -260,38 +266,42 @@ export class BookingFormDialogComponent implements OnInit {
 
       // Call the initializeTimeOptions function with the pivotDate
       this.initializeTimeOptions(this.endOptions, pivotDate);
-      this.selectedEnd.setTime(this.endOptions[0].getTime());
     } else {
       console.error('Invalid input format. Please use the format "HH:mm".');
     }
   }
-  onReqInputChange(value: any, id: number) {
+  onReqInputChange(value: any, id: number, start: boolean) {
     value = value.target?.value ?? value;
-    const input = this.matInputs.find(item => item.id == id + 'StartInput');
-    if (input) {
+    if(start) {
+      const input = this.matInputs.find(item => item.id == id + 'StartInput');
+      if (input) {
+        var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+        if (regex.test(value)) {
+          this.days[id - 1].start = moment(value, 'HH:mm');
+        }
+        const parsedTime = moment(value, 'HH:mm');
+        if (parsedTime.isValid()) {
+          // Create a Date object from the parsed time
+          const pivotDate = parsedTime.toDate();
+          // Call the initializeTimeOptions function with the pivotDate
+          this.initializeTimeOptions(this.reqEndOptions[id - 1], pivotDate);
+          this.days[id - 1].end = _.cloneDeep(this.reqStartOptions[id - 1][0]);
+          this.days[id - 1].end.setHours(this.days[id - 1].end.getHours() + 1);
+        }
+      } else {
+        console.error('MatInput not found with ID:', id);
+      }
+    }else{
       var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-      if (regex.test(value)) {
-        this.days[id - 1].start = moment(value, 'HH:mm');
-      }
-      const parsedTime = moment(value, 'HH:mm');
-      if (parsedTime.isValid()) {
-        // Create a Date object from the parsed time
-        const pivotDate = parsedTime.toDate();
-        // Call the initializeTimeOptions function with the pivotDate
-        this.initializeTimeOptions(this.reqEndOptions[id - 1], pivotDate);
-        this.days[id - 1].end = _.cloneDeep(this.reqStartOptions[id - 1][0]);
-        this.days[id - 1].end.setHours(this.days[id - 1].end.getHours() + 1);
-      }
-    } else {
-      console.error('MatInput not found with ID:', id);
+        if (regex.test(value)) {
+          this.days[id - 1].end = moment(value, 'HH:mm');
+        }
     }
   }
   onSelectionChange(selectedValue: any, id: number, start: boolean) {
     const day = this.days.find(day => day.name == id);
-    const startInput = this.matInputs.find(item => item.id == id + 'StartInput');
     if (start) {
       day.start = selectedValue;
-      startInput!.value = selectedValue;
     } else {
       day.end = selectedValue;
     }

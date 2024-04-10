@@ -38,8 +38,8 @@
           <span class="times-container">
             <mat-form-field subscriptSizing="dynamic">
               <mat-label>Start</mat-label>
-              <input matInput placeholder="hh:mm" [value]="chip.start | date: 'HH:mm'" [id]="chip.name+'StartInput'" (input)="onReqInputChange($event,chip.name)" (click)="openSelect(chip.name+'startSelect')" class="times">
-              <mat-select required [id]="chip.name+'startSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, true); onReqInputChange(chip.start,chip.name)">
+              <input matInput placeholder="hh:mm" [value]="chip.start | date: 'HH:mm'" [id]="chip.name+'StartInput'" (input)="onReqInputChange($event,chip.name, true)" (click)="openSelect(chip.name+'startSelect')" class="times">
+              <mat-select required [id]="chip.name+'startSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, true); onReqInputChange(chip.start,chip.name, true)">
                 <mat-option *ngFor="let time of reqStartOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
               </mat-select>
             </mat-form-field>            
@@ -48,7 +48,7 @@
             </span>
             <mat-form-field subscriptSizing="dynamic">
               <mat-label>End</mat-label>
-              <input matInput placeholder="hh:mm" [value]="chip.end | date: 'HH:mm'" [id]="chip.name+'endInput'" (click)="openSelect(chip.name+'endSelect')" class="times">
+              <input matInput placeholder="hh:mm" (input)="onReqInputChange($event,chip.name, false)" [value]="chip.end | date: 'HH:mm'" [id]="chip.name+'endInput'" (click)="openSelect(chip.name+'endSelect')" class="times">
               <mat-select required [id]="chip.name+'endSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, false)">
                 <mat-option *ngFor="let time of reqEndOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
               </mat-select>
