@@ -106,7 +106,7 @@ export class BookingFormDialogComponent implements OnInit {
 
     if (this.data.booking) {
       this.bookingTitle = this.data.booking.title;
-      this.selectedRoom = this.data.booking.rooms[0].id;
+      this.selectedRoom = this.data.booking.room_id;
       this.recurringCheck = this.data.booking.type === 'recurringGroup';
       this.selectedDate = new Date(this.data.booking.start);
 
