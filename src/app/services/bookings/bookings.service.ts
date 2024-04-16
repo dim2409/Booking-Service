@@ -5,6 +5,7 @@ import { EventColor } from 'calendar-utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import * as moment from 'moment-timezone';
 
 @Injectable({
@@ -28,18 +29,18 @@ export class BookingsService {
   };
   
   getBookings(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/getBookings', req).pipe(map((data: any) => {
+    return this.http.post<any>(environment.apiUrl + '/getBookings', req).pipe(map((data: any) => {
       const resp = {bookings: this.mapBookings(data.bookings), total: data.total};
       return resp;
     }))
   }
 
   getRecurringBookings(roomIds: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/getRecurring',roomIds)
+    return this.http.post<any>(environment.apiUrl + '/getRecurring',roomIds)
   }
 
   getConflicts(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/getConflicts', req).pipe(map((data: any) => {
+    return this.http.post<any>(environment.apiUrl + '/getConflicts', req).pipe(map((data: any) => {
       const resp = data
       for (const item of resp.data) {
         item.bookings = this.mapBookings(item.bookings);
@@ -48,24 +49,25 @@ export class BookingsService {
     }))
   }
   getRecurringConflicts(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/getRecurringConflicts', req).pipe(map((data: any) => {
+    return this.http.post<any>(environment.apiUrl + '/getRecurringConflicts', req).pipe(map((data: any) => {
       return data
     }))
   }
 
   checkConflict(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/checkConflict', req)
+    return this.http.post<any>(environment.apiUrl + '/checkConflict', req)
   }
 
   resolveConflict(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/resolveConflict', req)
+    return this.http.post<any>(environment.apiUrl + '/resolveConflict', req)
   }
   resolveRecurringConflict(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/resolveRecurringConflict', req)
+    return this.http.post<any>(environment.apiUrl + '/resolveRecurringConflict', req)
   }
 
   getActiveBookings(req:any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/getActiveBookings', req).pipe(map((data: any) => {
+    console.log(environment)
+    return this.http.post<any>(environment.apiUrl + '/getActiveBookings', req).pipe(map((data: any) => {
       const resp = this.mapBookings(data);
       return resp;        
     }))
@@ -73,7 +75,7 @@ export class BookingsService {
 
   getUserBookings(id: number) {
     return new Promise(resolve => {
-      this.http.get<any>('http://localhost:8000/getUserBookings/' + id).subscribe((data) => {
+      this.http.get<any>(environment.apiUrl + '/getUserBookings/' + id).subscribe((data) => {
         const resp = data.map((item: {
           end: string | number | Date;
           color: any; start: string | number | Date;
@@ -104,22 +106,22 @@ export class BookingsService {
       type: 'normal',
       semester_id: 1,
     }
-    return this.http.post<any>('http://localhost:8000/createBooking', booking, { headers });
+    return this.http.post<any>(environment.apiUrl + '/createBooking', booking, { headers });
   }
 
   approveBooking(req: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    return this.http.post<any>('http://localhost:8000/approveBooking', req, { headers });
+    return this.http.post<any>(environment.apiUrl + '/approveBooking', req, { headers });
   }
 
   cancelBooking(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/cancelBooking', req)
+    return this.http.post<any>(environment.apiUrl + '/cancelBooking', req)
   }
 
   editBooking(req: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/editBooking', req)
+    return this.http.post<any>(environment.apiUrl + '/editBooking', req)
   }
 
   sortBookings(bookings: any[], key: string): any {
