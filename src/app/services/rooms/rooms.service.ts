@@ -10,24 +10,24 @@ export class RoomsService {
   constructor(private http: HttpClient) { }
 
   getRooms(req: any): Observable <any> {
-    return this.http.post('http://localhost:8000/api/getRooms', req);
+    return this.http.post('http://localhost:8000/getRooms', req);
   }
   getDepartments(req: any): Observable <any> {
-    return this.http.post('http://localhost:8000/api/getDepartments', req);
+    return this.http.post('http://localhost:8000/getDepartments', req);
   }
   getBuildings(req: any): Observable <any> {
-    return this.http.post('http://localhost:8000/api/getBuildings', req);
+    return this.http.post('http://localhost:8000/getBuildings', req);
   }
 
   getAllRooms(): Observable <any> {
-    return this.http.get('http://localhost:8000/api/getAllRooms');
+    return this.http.get('http://localhost:8000/getAllRooms');
   }
 
   getModeratedRooms(id: number): Observable <any> {
-    return this.http.get('http://localhost:8000/api/getModeratedRooms/'+id);
+    return this.http.get('http://localhost:8000/getModeratedRooms/'+id);
   }
 
   createRoom(req: any): Observable <any> {
-    return this.http.post('http://localhost:8000/api/createRoom', req);
+    return this.http.post('http://localhost:8000/createRoom', req);
   }
 }
