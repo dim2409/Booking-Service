@@ -1,0 +1,23 @@
+<div class="main mt-5 pt-2 pb-2">
+    <div class="tab">
+        <!-- Filters -->
+        <app-filters (filterUpdated)="filterUpdated($event)" [filters]="filters"></app-filters>
+        <!-- Controls -->
+        <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
+            (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
+            (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
+        
+        <!-- Room List -->
+       <!--  <div class="room-list-container">
+            <app-card-list [elements]="rooms" [buttons]="buttons" [removeConflicts]="true"
+                (bookingUpdated)="updateRoom($event)" *ngIf="!loading" (addEvent)="addRoom()"></app-card-list>
+            <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+            <div class="noDataMsg" *ngIf="rooms?.length===0 || !rooms && !loading">
+                No Data
+            </div>
+        </div> -->
+    </div>
+    <div class="chart">
+        <canvas #barChart baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"> </canvas>
+    </div>
+</div>

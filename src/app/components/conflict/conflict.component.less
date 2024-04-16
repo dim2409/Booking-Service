@@ -1,0 +1,79 @@
+@import '../../../variables.less';
+
+.mat-expansion-panel-header {
+    font-size: unset;
+
+    .mat-expansion-panel-header-title {
+        margin-right: 0;
+    }
+
+    .mat-expansion-panel-header-description {
+        margin-right: 450px;
+        color       : @highlight-color;
+    }
+}
+
+.conflict-container {
+    border-radius: 0.5rem;
+    border-style : solid;
+    border-color : #f34248b0;
+    padding      : 0.2rem;
+
+    .conflict {
+        color           : @primary-color;
+        background-color: #ffcece;
+        border-style    : solid;
+
+        .time {
+            color: #8d2023b0;
+        }
+
+        .icon {
+            border-radius: 1rem;
+            border-style : solid;
+            border-color : @highlight-color;
+            padding      : 0.1rem;
+        }
+
+        .mat-mdc-card-header {
+            align-items: center;
+        }
+    }
+}
+
+.conflict-container.to-keep {
+    border-color: #51f342b0;
+
+    .conflict {
+        background-color: #49e94923;
+
+        .time {
+            color: #2d9624b0;
+        }
+
+        .icon {
+            border-color: #51f342b0;
+        }
+    }
+
+}
+.conflict-container.resolved {
+    border-color: #428ff3b0;
+
+    .conflict {
+        background-color: #4974e94d;
+
+        .time {
+            color: #26528bb0;
+        }
+
+        .icon {
+            border-color: #428ff3b0;
+        }
+    }
+
+}
+
+.button-color {
+    background-color: @primary-color;
+}

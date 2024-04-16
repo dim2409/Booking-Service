@@ -1,12 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6OO_au7B497y_3E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6OO_au7B47rx_3E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6OO_au7B4-Lw_3E.ttf) format('truetype');
+}
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
+  background-color: #ffffff;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Barlow Condensed', sans-serif !important;
 }
 button {
   margin: 5px;
+}
+.main {
+  height: 100%;
+  align-content: flex-start;
+  font-size: 1.2rem;
+}
+.close {
+  cursor: pointer;
+  width: fit-content !important;
+  font-size: 1.5rem;
 }

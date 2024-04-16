@@ -1,0 +1,68 @@
+<div class="card-list-container">
+    <!-- Add  -->
+    <div class="add-container" (click)="add()">
+        <i class="fa-solid fa-plus-circle add"></i>
+    </div>
+    <mat-card *ngFor="let element of elements">
+
+        <mat-card-header>
+            <mat-card-title>
+                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': room?.color}" *ngFor="let room of element.rooms"></i>
+                {{element.title}}
+                <i class="fa-solid fa-circle icon" [ngStyle]="{'color': element.color}" *ngIf="element.color"></i>
+                {{element.name}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <!-- Recurring fields -->
+                <span *ngIf="!element.isRoom && element.type == 'recurringGroup'">
+                    <span *ngFor="let day of element.days">
+                        {{ rooms[day.room_id-1]?.name }} 
+                        {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
+                    </span>
+                    {{element?.status==0 ? 'Pending' : element?.status==1 ? 'Active' : 'Cancelled'}} |                    
+                    {{element?.publicity==1 ? 'Public' : 'Private'}}
+                </span>
+                
+                <!-- Normal fields -->
+                <span *ngIf="!element.isRoom && element.type != 'recurringGroup'">
+                    {{element.rooms[0]?.name}} |
+                    {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
+                    {{ element.end | date: 'HH:mm' }} |
+                    {{element?.status==0 ? 'Pending' : element?.status==1 ? 'Active' : 'Cancelled'}} | 
+                    {{element?.publicity==1 ? 'Public' : 'Private'}}
+                </span>
+                <!-- Room fields -->
+                <span *ngIf="element.isRoom">
+                    {{element.number}} | 
+                    {{element.capacity}} |
+                    {{element.building}} |
+                    {{element.department}}
+                </span>
+            </mat-card-subtitle>
+            <!-- Buttons -->
+            <div class="buttons">
+                <div (click)="toggleSelect(element)" class="select-container">
+                    <button mat-mini-fab class="select-all-icon">
+                        <i [ngClass]="element.selected?'fa-solid fa-circle':'fa-regular fa-circle'"></i>
+                    </button>
+                </div>
+                <ng-container *ngFor="let button of buttons">
+                    <button mat-mini-fab *ngIf="!(element.status != 0 && button.icon == 'fa-check')"
+                        (click)="buttonAction(button.action, element)" class="mx-1 button-color"><i
+                            class="fa-solid {{button.icon}}"></i></button>
+                </ng-container>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="my-2">
+                {{
+                element?.info ?
+                (element.info.length > 0 ? element.info?.slice(0, 50) + (element.info.length > 50 ? '...' : '') :
+                'No info')
+                :
+                'No info'
+                }}
+            </p>
+        </mat-card-content>
+    </mat-card>
+</div>

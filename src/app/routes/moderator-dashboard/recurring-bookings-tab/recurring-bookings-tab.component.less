@@ -1,0 +1,45 @@
+@import '../../../../variables.less';
+@import '../moderator-dashboard.component.less';
+
+&.recurring {    
+    position: relative;
+    .mat-mdc-card {
+        margin-block: 3vh;
+        width: 70vw;
+
+        .mat-mdc-card-content {
+            margin-top: 1vh;
+            font-size: medium;
+        }
+
+        .buttons {
+            position: absolute;
+            right: 0.1rem;
+            display: flex;
+        }
+
+        .button-color {
+            background-color: @primary-color;
+        }
+    }
+}
+
+.moderator-list-title {
+    margin-block: 2rem;
+    font-size: 1.5rem;
+}
+
+.select-container {
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+
+    .select-all-icon {
+        font-size: medium;
+        background: #e0e0e0;
+        border-radius: 100%;
+        padding: 45%;
+        color: #000000b0;
+        transition: ease-in 0.1s;
+    }
+}

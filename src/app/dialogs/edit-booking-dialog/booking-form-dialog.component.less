@@ -1,0 +1,228 @@
+// src/app/styles.less
+@import '../../../variables.less';
+
+.booking-form-dialog {
+    padding: 1.1vw;
+    width  : 95%;
+    display: block;
+
+    .drag-bar {
+        position      : absolute;
+        top           : 0;
+        left          : 0;
+        width         : 100%;
+        height        : 3.5%;
+        background    : #176b87;
+        display       : flex;
+        align-items   : center;
+        cursor        : move;
+        flex-direction: row-reverse;
+
+        i {
+            cursor : pointer;
+            color  : @primaryElementTextColor;
+            padding: 1vh;
+        }
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    .booking-form {
+        .top {
+            display        : flex;
+            flex-wrap      : nowrap;
+            justify-content: space-between;
+            align-items    : center;
+
+            .mat-mdc-form-field {
+                display        : flex;
+                flex-wrap      : wrap;
+                justify-content: flex-start;
+                width          : 48%;
+            }
+        }
+
+        .checks {
+            display        : flex;
+            flex-wrap      : nowrap;
+            align-items    : center;
+            justify-content: space-between;
+            gap: 5%;
+
+
+            .check {
+                display        : flex;
+                flex-wrap      : nowrap;
+                align-items    : center;
+                justify-content: flex-start;
+                width          : 100%;
+
+                .label {
+                    margin-right: 1vw;
+                    font-size   : 1.3vw;
+                }
+            }
+        }
+
+        .room-date-time {
+            display        : flex;
+            flex-wrap      : nowrap;
+            align-items    : center;
+            justify-content: flex-start;
+            padding-bottom : 1vw;
+
+            .times-container {
+                display        : flex;
+                flex-wrap      : nowrap;
+                align-items    : center;
+                justify-content: space-between;
+                margin-left    : 10%;
+
+                .mat-mdc-form-field {
+                    width: 5.1vw;
+                }
+
+                .times {
+                    position: absolute;
+                }
+
+                .dash {
+                    font-size  : 5vh;
+                    font-weight: 100;
+                    text-align : center;
+                    padding-top: 0.5vw;
+                }
+
+                .mat-mdc-select {
+                    display: none;
+                }
+            }
+        }
+
+        .info {
+            display: block;
+            width  : 100%;
+
+            .mat-mdc-form-field {
+                width: 100%;
+            }
+
+            &.normal-info {
+                padding-top: 1vw;
+
+                textarea {
+                    height: 10vw;
+                }
+            }
+        }
+
+        .recurring-options {
+            display       : flex;
+            flex-direction: column;
+
+            .days {
+                display        : flex;
+                align-items    : flex-start;
+                justify-content: flex-start;
+                height         : 3.5vw;
+                margin-bottom  : 0.5vw;
+
+                .day-chip {
+                    margin-right   : 1vh;
+                    display        : flex;
+                    justify-content: center;
+                    width          : 6%;
+                    font-size      : 1vw;
+                    padding        : 0.3vw;
+                    margin-block   : 0.5vw;
+                    background     : #e0e4e4;
+                    border-radius  : 1rem;
+                    color          : #767979;
+                    transition     : ease-in 0.1s;
+
+                    &:hover {
+                        cursor    : pointer;
+                        background: #d7dada;
+                        color     : #5d5f5f;
+                    }
+
+                    &.selected {
+                        background: @primary-color  !important;
+                        color     : @primaryElementTextColor  !important;
+                    }
+                }
+
+                .room-date-time {
+                    display        : flex;
+                    flex-wrap      : nowrap;
+                    align-items    : center;
+                    justify-content: space-between;
+                    gap            : 0.5vw;
+
+                    .times-container {
+                        display        : flex;
+                        flex-wrap      : nowrap;
+                        align-items    : center;
+                        justify-content: space-between;
+
+                        .mat-mdc-form-field {
+                            width: 5.1vw;
+                        }
+
+                        .times {
+                            position: absolute;
+                        }
+
+                        .dash {
+                            font-size  : 5vh;
+                            font-weight: 100;
+                            text-align : center;
+                            padding-top: 0.5vw;
+                        }
+
+                        .mat-mdc-select {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .booking-form-buttons {
+            position: absolute;
+            bottom  : 1vw;
+            right   : 1vw;
+
+            button {
+                margin-left: 1vw;
+            }
+        }
+
+        .mat-mdc-slide-toggle {
+            display: grid;
+
+            .mdc-form-field {
+                display: grid;
+            }
+        }
+
+        .button-color {
+            background-color: @primary-color;
+            color           : @primaryElementTextColor;
+        }
+
+        .mat-mdc-form-field {
+            .mat-mdc-form-field-subscript-wrapper {
+                display: none;
+            }
+        }
+
+        .mat-mdc-raised-button[disabled][disabled] {
+            background-color: #b9b9b9;
+            color           : @primaryElementTextColor;
+        }
+    }
+}

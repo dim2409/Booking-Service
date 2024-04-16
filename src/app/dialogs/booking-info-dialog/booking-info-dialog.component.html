@@ -1,0 +1,12 @@
+<mat-dialog-content cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <div class="close">
+        <i class="fa-solid fa-x" (click)="close()" style="width: fit-content;"></i>
+    </div>
+    <p>
+        {{data.start.toLocaleDateString('en-GB', options)}}
+        <!-- {{data.start.toLocaleDateString('el-GR', options)}} -->
+    </p>
+    <hr>
+    <p>{{data.info}}</p>
+</mat-dialog-content>

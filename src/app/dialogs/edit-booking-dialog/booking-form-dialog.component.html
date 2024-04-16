@@ -1,0 +1,118 @@
+<mat-dialog-content cdkDrag cdkDragRootElement=".cdk-overlay-pane" class="booking-form-dialog">
+  <div class="drag-bar" cdkDragHandle>
+     <i class="fa-solid fa-xmark" (click)="close()"></i>
+  </div>
+  <h2 mat-dialog-title>{{data.date? "Create Booking on " + data.date.toLocaleDateString('en-GB', options) + "" : "Update Booking"}}</h2>
+  <form #bookingRequestForm="ngForm" (ngSubmit)="onSave(bookingRequestForm)" class="booking-form">
+    <span class="top">
+      <!-- Title Input -->
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Booking Title</mat-label>
+        <input matInput type="text" name="title" [(ngModel)]="bookingTitle" required>
+      </mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Url</mat-label>
+        <input matInput type="text" name="url" [(ngModel)]="bookingUrl">
+      </mat-form-field>
+    </span>
+    <span class="checks">
+      <!-- Recurring Check -->
+      <div class="check" *ngIf="!data.booking">
+        <mat-label class="label">Recurring</mat-label>
+        <mat-slide-toggle [(ngModel)]="recurringCheck" name="recurring" (change)="onReqToggleChange($event)">
+        </mat-slide-toggle>
+      </div>
+      <!-- Publicity Check -->
+      <div class="check">
+        <mat-label class="label">Public</mat-label>
+        <mat-checkbox [(ngModel)]="publicityCheck" name="publicity"></mat-checkbox>
+      </div>
+    </span>
+    <div *ngIf="recurringCheck" class="recurring-options">
+      <!-- Recurring Days input -->
+      <div class="days" *ngFor="let chip of days">
+          <div  [ngClass]="chip.selected?'selected':''" 
+            (click)="toggleSelectDay(chip)" class="day-chip">{{chip.label}}
+          </div>
+          <div class="room-date-time" *ngIf="chip.selected">
+          <span class="times-container">
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>Start</mat-label>
+              <input matInput placeholder="hh:mm" [value]="chip.start | date: 'HH:mm'" [id]="chip.name+'StartInput'" (input)="onReqInputChange($event,chip.name, true)" (click)="openSelect(chip.name+'startSelect')" class="times">
+              <mat-select required [id]="chip.name+'startSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, true); onReqInputChange(chip.start,chip.name, true)">
+                <mat-option *ngFor="let time of reqStartOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>            
+            <span class="dash">
+              -
+            </span>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>End</mat-label>
+              <input matInput placeholder="hh:mm" (input)="onReqInputChange($event,chip.name, false)" [value]="chip.end | date: 'HH:mm'" [id]="chip.name+'endInput'" (click)="openSelect(chip.name+'endSelect')" class="times">
+              <mat-select required [id]="chip.name+'endSelect'" (selectionChange)="onSelectionChange($event.value, chip.name, false)">
+                <mat-option *ngFor="let time of reqEndOptions[chip.name-1]" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Room</mat-label>
+            <mat-select required [name]="chip.label+chip.room_id" ngModel [(ngModel)]="chip.room_id">
+              <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+            </mat-select>
+          </mat-form-field> 
+          </div>
+      </div>
+    </div>    
+    <span *ngIf="!recurringCheck">
+      <div class="room-date-time">
+        <!-- Date picker -->
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" ngModel name="date" [(ngModel)]="selectedDate" (click)="picker.open()">
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <!-- Start end hours -->
+          <span class="times-container">
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>Start</mat-label>
+              <input matInput placeholder="hh:mm" (input)="onInputChange(startInput.value)" #startInput [value]="selectedStart | date: 'HH:mm'" (click)="startSelect.open()" class="times">
+              <mat-select required #startSelect matInput (selectionChange)="selectedStart=startSelect.value; onInputChange(startSelect.value)">
+                <mat-option *ngFor="let time of startOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span class="dash">
+              -
+            </span>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>End</mat-label>
+              <input matInput placeholder="hh:mm" [value]="selectedEnd | date: 'HH:mm'" (click)="endSelect.open()" class="times">
+              <mat-select required #endSelect (selectionChange)="selectedEnd=endSelect.value;">
+                <mat-option *ngFor="let time of endOptions" [value]="time">{{ time | date: 'HH:mm' }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
+        </div>
+        <!-- Room Select -->
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Room</mat-label>
+          <mat-select (selectionChange)="selectRoom($event)" [(ngModel)]="selectedRoom" name="room">
+            <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </span>
+    <span class="info" [ngClass]="{'normal-info': !recurringCheck}">      
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Booking info</mat-label>
+        <textarea matInput type="text" name="info" ngModel [(ngModel)]="bookingInfo"></textarea>
+      </mat-form-field>
+    </span>
+
+    <div class="booking-form-buttons">
+      <button mat-raised-button class="button-color" type="button" (click)="close()">Cancel</button>
+      <button mat-raised-button type="submit" [disabled]="!bookingRequestForm.valid" class=" button button-color">
+        {{this.data.booking ? 'Update' : 'Create'}}
+      </button>
+    </div>
+
+  </form>
+</mat-dialog-content>

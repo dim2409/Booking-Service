@@ -1,7 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'variables.less';
+@import 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;500&display=swap';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-button{
+
+@import '/src/app/routes/booking-request/booking-request.component.less';
+@import '/src/app/components/control-card/control-card.component.less';
+@import '/src/app/components/calendar/calendar.component.less';
+@import '/src/app/routes/home/home.component.less';
+@import '/src/app/routes/moderator-dashboard/moderator-dashboard.component.less';
+@import '/src/app/routes/moderator-dashboard/recurring-bookings-tab/recurring-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/conflicting-bookings-tab/conflicting-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/normal-bookings-tab/normal-bookings-tab.component.less';
+@import '/src/app/routes/moderator-dashboard/recurring-conflicts-tab/recurring-conflicts-tab.component.less';
+
+
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+    //font-family: 'Barlow Condensed', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+button {
     margin: 5px;
+}
+.main {
+    height: 100%;
+    align-content: flex-start;
+    font-size: 1.2rem;
+}
+.close{
+    cursor: pointer;
+    width: fit-content!important;
+    font-size: 1.5rem;
+}
+
+.button-color{
+    background-color: @primary-color;
+}
+.primary-color{
+    color: @primary-color;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 1rem;
+    height: 90%;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    height: 90%;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #bebebe;
+    border-radius: 10px;
+    height: 90%;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a3a3a3;
+  }
+  
+.cdk-global-scrollblock{
+    position: static !important;
+    width: initial !important;
+    overflow-y: inherit !important;
+}
+.body-overflow{
+    overflow: hidden;
+}
+.noDataMsg{
+    width: 100%;
+    font-size: 2rem;
+    color: #888;
+    text-align: center;
 }

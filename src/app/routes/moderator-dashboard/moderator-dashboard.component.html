@@ -1,0 +1,24 @@
+<div class="main mt-5 pt-2 pb-2">
+  <mat-tab-group>
+    <mat-tab label="Normal Bookings" matBadge="2" matBadgeColor="warn" > 
+      <app-normal-bookings-tab (bookingUpdate)="updateBooking($event)"></app-normal-bookings-tab>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span>Conflicts</span>
+        <span *ngIf="conflictingBookingsTabComponent && conflictingBookingsTabComponent.params.totalItems > 0" class="badge">{{ conflictingBookingsTabComponent.params.totalItems }}</span>
+      </ng-template>
+      <app-conflicting-bookings-tab (bookingUpdate)="updateBooking($event)" [rooms]="rooms"></app-conflicting-bookings-tab>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span>Recurring Conflicts</span>
+        <span *ngIf="recurringConflictsTabComponent && recurringConflictsTabComponent.params.totalItems > 0" class="badge">{{ recurringConflictsTabComponent.params.totalItems }}</span>
+      </ng-template>
+      <app-recurring-conflicts-tab (bookingUpdate)="updateBooking($event)" [rooms]="rooms"></app-recurring-conflicts-tab>
+    </mat-tab>
+    <mat-tab label="Recurring Bookings">      
+      <app-recurring-bookings-tab (bookingUpdate)="updateBooking($event)"  [rooms]="rooms"></app-recurring-bookings-tab>
+    </mat-tab>
+  </mat-tab-group>
+</div>
