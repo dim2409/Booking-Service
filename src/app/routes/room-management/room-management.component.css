@@ -17,3 +17,7 @@
 .tab ::ng-deep .filters-container {
   padding-top: 6vh !important;
 }
+.chart {
+  width: auto;
+  height: 70%;
+}

@@ -9,29 +9,61 @@ import { CommonModule } from '@angular/common';
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import _ from 'lodash';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartData } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import { StatisticsService } from 'src/app/services/statistics/statistics.service';
+import { Chart } from 'chart.js/dist';
 
 @Component({
-    selector: 'app-room-management',
-    standalone: true,
-    templateUrl: './room-management.component.html',
-    styleUrl: './room-management.component.less',
-    imports: [CommonModule ,FiltersComponent, ControlCardComponent, CardListComponent, LoadingSpinnerComponent]
+  selector: 'app-room-management',
+  standalone: true,
+  templateUrl: './room-management.component.html',
+  styleUrl: './room-management.component.less',
+  imports: [CommonModule, FiltersComponent, ControlCardComponent, CardListComponent, LoadingSpinnerComponent, BaseChartDirective]
 })
 
 export class RoomManagementComponent {
-  
+
   @Output() roomUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
+
+  @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
+
+
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 0,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      }
+    },
+  };
+  public barChartType = 'bar' as const;
+
+  public barChartData: ChartData<'bar'> = {
+    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    datasets: [
+      { data: [], label: 'Room Day Frequency' },
+    ],
+  };
+
 
   pageIndex: number = 0;
 
   selectCount: number = 0;
   loading!: boolean;
   chips = [
-    {label: 'Day created', value: 'created_at',selected: true, asc: false},
-    {label: 'Alphabetical', value: 'title',selected: false, asc: false},
-    {label: 'Date', value: 'start',selected: false, asc: false},
+    { label: 'Day created', value: 'created_at', selected: true, asc: false },
+    { label: 'Alphabetical', value: 'title', selected: false, asc: false },
+    { label: 'Date', value: 'start', selected: false, asc: false },
   ]
 
   params =
@@ -64,23 +96,33 @@ export class RoomManagementComponent {
   buildings: any;
   departments: any;
   filters: any;
-  constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) {
+  roomDayFrequency: any;
+  constructor(private RoomService: RoomsService, private statisticsService: StatisticsService,private filterService: FiltersService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
-    this.RoomService.getDepartments({user_id: 2}).subscribe((resp: any) => {
+    this.RoomService.getDepartments({ user_id: 2 }).subscribe((resp: any) => {
       this.departments = resp
-      this.RoomService.getBuildings({user_id: 2}).subscribe((resp: any) => {
+      this.RoomService.getBuildings({ user_id: 2 }).subscribe((resp: any) => {
         this.buildings = resp
         //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
       })
     })
     this.getData();
+    this.statisticsService.roomDayFrequency(1).subscribe((resp: any) => {
+      this.roomDayFrequency = resp;
+      resp.forEach((element: any) => {
+        //this.barChartData.labels?.push(element.day_of_week);
+        this.barChartData.datasets[0].data?.push(element.frequency);
+        this.barChart?.update();
+        console.log(this.barChartData)
+      })
+    })
   }
-  
+
   filterUpdated(event: any) {
-    if(event.department.length > 0){
-      this.RoomService.getBuildings({user_id: 2, department: event.department}).subscribe((resp: any) => {
+    if (event.department.length > 0) {
+      this.RoomService.getBuildings({ user_id: 2, department: event.department }).subscribe((resp: any) => {
         this.buildings = resp
         //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
       })
@@ -121,20 +163,20 @@ export class RoomManagementComponent {
   }
 
   sorterUpdated(event: any) {
-    if(event.selected){
+    if (event.selected) {
       this.req.sortBy = event.value
       this.req.sortOrder = event.asc ? 'asc' : 'desc'
-    }else{
+    } else {
       delete this.req.sortBy;
       delete this.req.sortOrder;
-    }    
-    this.req.page = 1;     
+    }
+    this.req.page = 1;
     this.getData();
   }
 
   addRoom() {
     this.dialogService.openCreateRoomDialog().subscribe((resp: any) => {
-      
+
     })
   }
 }

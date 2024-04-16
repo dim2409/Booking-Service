@@ -22,13 +22,16 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 @NgModule({
     declarations: [
         AppComponent,
     ],
     providers: [
         { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }, 
-        { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
+        { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
+        provideCharts(withDefaultRegisterables())
         ],
     bootstrap: [AppComponent],
     imports: [
