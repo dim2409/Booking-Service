@@ -1,4 +1,4 @@
 export const environment = {    
   production: true,
-  apiUrl: 'http://api.booking.iee.ihu.gr'
+  apiUrl: 'http://booking.iee.ihu.gr'
 };
