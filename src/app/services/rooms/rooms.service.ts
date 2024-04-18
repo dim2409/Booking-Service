@@ -17,11 +17,11 @@ export class RoomsService {
     return this.http.post(environment.apiUrl + '/getDepartments', req);
   }
   getBuildings(req: any): Observable <any> {
-    return this.http.post('/api/getBuildings', req);
+    return this.http.post(environment.apiUrl + '/getBuildings', req);
   }
 
   getAllRooms(): Observable <any> {
-    return this.http.get('api/getAllRooms');
+    return this.http.get(environment.apiUrl + '/getAllRooms');
   }
 
   getModeratedRooms(id: number): Observable <any> {

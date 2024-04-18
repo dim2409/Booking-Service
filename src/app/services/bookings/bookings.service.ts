@@ -66,8 +66,7 @@ export class BookingsService {
   }
 
   getActiveBookings(req:any): Observable<any> {
-    console.log(environment)
-    return this.http.post<any>('/api/getActiveBookings', req).pipe(map((data: any) => {
+    return this.http.post<any>(environment.apiUrl +'/getActiveBookings', req).pipe(map((data: any) => {
       const resp = this.mapBookings(data);
       return resp;        
     }))
