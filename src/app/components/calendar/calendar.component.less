@@ -8,7 +8,7 @@
     justify-content: flex-end;
 
     .calendar {
-        width: 100%;
+        width: 95%;
 
         .currentTitle {
             text-align: center;
@@ -37,7 +37,7 @@
 
             .filters-container {
                 padding-top: 3%;
-                width: 10%;
+                width: 15%;
                 height: 100%;
 
                 .filter-container {
@@ -70,7 +70,7 @@ mwl-calendar-month-view {
         }
 
         .cal-has-events {
-            .cal-cell-top { 
+            .cal-cell-top {
                 .add-button {
                     left: -4%;
                 }
@@ -141,7 +141,8 @@ mwl-calendar-month-view {
                     padding: 2px 7px;
                     margin: 2px;
                     border-radius: 1rem;
-                    font-size: medium;
+                    font-size: 0.8vw;
+                    font-weight: normal;
                 }
             }
         }
@@ -152,18 +153,22 @@ mwl-calendar-month-view {
 
 .cal-month-view .cal-day-cell.cal-today {
     background: #e0f5f3;
+
     &:hover {
-        .add-button {            
+        .add-button {
             background: #d1d4d4;
-            &:hover{
+
+            &:hover {
                 background: #aaadad;
             }
         }
     }
 }
+
 .cal-month-view .cal-day-cell.cal-today .cal-day-number {
     font-size: 1.5rem;
 }
+
 .cal-month-view .cal-day-cell.cal-today .add-button {
     background: #d2e7e5;
 }

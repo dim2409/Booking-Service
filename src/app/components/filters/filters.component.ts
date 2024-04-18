@@ -5,6 +5,7 @@ import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import moment from 'moment';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { MatRippleModule } from '@angular/material/core';
 @Component({
   selector: 'app-filters',
   standalone: true,
@@ -12,6 +13,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
     MatSelectModule,
     MatChipsModule,
     MatCardModule,
+    MatRippleModule
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.less'

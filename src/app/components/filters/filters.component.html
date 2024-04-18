@@ -7,7 +7,7 @@
         </span>
       </p>
       <mat-chip-listbox multiple  [attr.id]="filter.id"  class="filter">
-        <mat-chip-option *ngFor="let chip of filter.chips" [value]="chip.id" [selected]="chip.selected"
+        <mat-chip-option *ngFor="let chip of filter.chips" [value]="chip.id" [selected]="chip.selected"  
           (click)="toggleSelect(chip, filter.chips, filter.field)">
           <i class="fa-solid fa-circle icon" [ngStyle]="{'color': chip.color}" *ngIf="chip.color"></i>
           {{ chip.name }}

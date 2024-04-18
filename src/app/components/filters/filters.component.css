@@ -37,8 +37,40 @@
   display: none !important;
 }
 ::ng-deep .mat-mdc-chip-action-label {
+  font-size: 0.9vw !important;
   margin-left: 0.6vw;
 }
+.mat-mdc-chip-focus-overlay {
+  background: white!important;
+}
+.mat-mdc-chip {
+  height: fit-content;
+  padding: 0.25vw;
+  background: #e9ebec !important;
+  transition: transform 3s ease-out;
+}
+.mat-mdc-chip .mat-mdc-chip-action-label {
+  text-wrap: wrap;
+  color: black !important;
+}
+.mat-mdc-standard-chip {
+  background-color: #ffffffb0 !important;
+  border-style: solid;
+  border-color: #e2e9ec;
+  color: black;
+  border-width: 0.2vw;
+  transition: transform 3s ease-out;
+}
+.mat-mdc-standard-chip:hover {
+  transition: transform 3s ease-out;
+  background-color: #ffffffb0 !important;
+  border-color: #bdc8d3;
+  color: black;
+}
 .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
-  background-color: #000000b0;
+  background-color: #ffffffb0 !important;
+  border-color: #b5d4e6;
+  color: black;
+  box-shadow: 2px 2px 2px #eaedf0;
+  transition: transform 3s ease-out;
 }
