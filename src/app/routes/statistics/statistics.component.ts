@@ -4,15 +4,22 @@ import { ChartConfiguration, ChartData } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { StatisticsService } from 'src/app/services/statistics/statistics.service';
 import { Chart } from 'chart.js/dist';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [
+    BaseChartDirective,
+    MatDividerModule
+  ],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.less'
 })
 export class StatisticsComponent implements OnInit{
+addStat() {
+throw new Error('Method not implemented.');
+}
 
   constructor(private statisticsService: StatisticsService) { }
   public roomDayFrequency: any = [];
@@ -42,9 +49,7 @@ export class StatisticsComponent implements OnInit{
     ],
   };
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.statisticsService.roomDayFrequency(1).subscribe((resp: any) => {
+    /* this.statisticsService.roomHourOfDayOfWeekFrequency(1).subscribe((resp: any) => {
       this.roomDayFrequency = resp;
       resp.forEach((element: any) => {
         //this.barChartData.labels?.push(element.day_of_week);
@@ -52,6 +57,6 @@ export class StatisticsComponent implements OnInit{
         this.barChart?.update();
         console.log(this.barChartData)
       })
-    })
+    }) */
   }
 }
