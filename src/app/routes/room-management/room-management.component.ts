@@ -29,32 +29,7 @@ export class RoomManagementComponent {
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
-  @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
-
-
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 0,
-      },
-    },
-    plugins: {
-      legend: {
-        display: true,
-      }
-    },
-  };
-  public barChartType = 'bar' as const;
-
-  public barChartData: ChartData<'bar'> = {
-    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    datasets: [
-      { data: [], label: 'Room Day Frequency' },
-    ],
-  };
-
+  
 
   pageIndex: number = 0;
 
@@ -109,15 +84,7 @@ export class RoomManagementComponent {
       })
     })
     this.getData();
-    this.statisticsService.roomDayFrequency(1).subscribe((resp: any) => {
-      this.roomDayFrequency = resp;
-      resp.forEach((element: any) => {
-        //this.barChartData.labels?.push(element.day_of_week);
-        this.barChartData.datasets[0].data?.push(element.frequency);
-        this.barChart?.update();
-        console.log(this.barChartData)
-      })
-    })
+    
   }
 
   filterUpdated(event: any) {
