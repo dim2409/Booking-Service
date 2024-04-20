@@ -1,0 +1,10 @@
+<div class="static-container">
+    <mat-form-field>
+        <mat-label>Pick Statistic</mat-label>
+        <mat-select (selectionChange)="getData($event)">
+            <mat-option *ngFor="let stat of statOptions" value="{{stat.value}}">
+                {{stat.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

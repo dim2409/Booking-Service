@@ -5,27 +5,29 @@ import 'chartjs-adapter-date-fns';
 import { StatisticsService } from 'src/app/services/statistics/statistics.service';
 import { Chart } from 'chart.js/dist';
 import { MatDividerModule } from '@angular/material/divider';
+import { StatisticComponent } from 'src/app/components/statistic/statistic.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
   imports: [
     BaseChartDirective,
-    MatDividerModule
+    MatDividerModule,
+    StatisticComponent,
+    CommonModule
   ],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.less'
 })
-export class StatisticsComponent implements OnInit{
-addStat() {
-throw new Error('Method not implemented.');
-}
+export class StatisticsComponent implements OnInit {
 
-  constructor(private statisticsService: StatisticsService) { }
+
+  constructor() { }
   public roomDayFrequency: any = [];
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
 
-
+  stats: any = [];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
@@ -58,5 +60,12 @@ throw new Error('Method not implemented.');
         console.log(this.barChartData)
       })
     }) */
+  }
+
+  addStat() {
+    this.stats.push({});
+  }
+  removeStat(index: number) {
+    this.stats.splice(index, 1);
   }
 }
