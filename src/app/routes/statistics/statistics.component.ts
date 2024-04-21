@@ -42,12 +42,13 @@ export class StatisticsComponent implements OnInit {
       }
     },
   };
+
   public barChartType = 'bar' as const;
 
   public barChartData: ChartData<'bar'> = {
     labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     datasets: [
-      { data: [], label: 'Room Day Frequency' },
+      { data: [1, 2, 3, 4, 5, 6], label: 'Room Day Frequency' },
     ],
   };
   ngOnInit(): void {

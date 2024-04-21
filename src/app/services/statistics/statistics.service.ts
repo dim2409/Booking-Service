@@ -48,10 +48,6 @@ export class StatisticsService {
       label: 'Occupancy by Semester',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyBySemester', req)
     },
-    calculateSemesterCapacity: {
-      label: 'Calculate Semester Capacity',
-      action: (req: any) => this.http.post<any>(environment.apiUrl + '/calculateSemesterCapacity', req)
-    },
     roomOccupancyByDateRange: {
       label: 'Occupancy by Date Range',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyByDateRange', req)
