@@ -28,7 +28,7 @@ export class StatisticComponent implements OnInit {
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
   
   public max = 100;
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {},
@@ -43,14 +43,15 @@ export class StatisticComponent implements OnInit {
       }
     },
   };
-  public barChartType = 'bar' as const;
 
-  public barChartData: ChartData<'bar'> = {
+  public barChartData: ChartData = {
     labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     datasets: [
       { data: [], label: 'Room Day Frequency' },
     ],
   };
+
+  public chartType:any = 'line';
 
   statOptions: { label: string, value: string }[] = [];
 
@@ -70,8 +71,8 @@ export class StatisticComponent implements OnInit {
   udpateChart(data: any) {
     let i = 0;
     this.barChartData.datasets[0].data = [];
+    
     data.forEach((element: any) => {
-      console.log(element.data.frequency)
       this.barChartData.datasets[0].data = element.data.frequency;
     })
     this.barChartData.labels = data[0].data.labels
@@ -81,10 +82,10 @@ export class StatisticComponent implements OnInit {
         y: {
           max: this.max
         },
+        
       }
     }
-    console.log(this.max)
-    console.log(this.barChartOptions)
+    this.chartType = data[0].options.chartType;
     this.barChart?.update();
     
     /* data[0].data[0].datasets.forEach((element: any) => {
