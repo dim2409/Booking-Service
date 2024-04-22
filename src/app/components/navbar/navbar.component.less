@@ -1,24 +1,26 @@
-@import '../../../variables.less';
+@import "../../../variables.less";
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: @primary-color;
-    font-size: 1.5rem!important;
-    color: @primaryElementTextColor;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7%;
+  background-color: white;
+  font-size: 1.5rem !important;
+  color: @primary-color;
+  z-index: 100;
+  border-top: 4px solid @primary-color;
+  border-bottom: 1px solid #dfdfdf;
+  box-shadow: 0 0 0px -100px #4242421f, 0 0 23px #4242421f, 0 0px 0 #4242421f;
+  padding: 0% 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
 }
 
-i {
-    color: @primaryElementTextColor;
-    font-size: 1.2rem!important;
-}
-.menu-button{
-    width: fit-content;
-}
-.settings-button{
-    display: flex;
-    flex-direction: row-reverse;
-    margin-right: 0.5rem;
+.navbar button {
+  height: 100%;
+  width: 15%;
+  font-size: 1vw;
 }

@@ -16,12 +16,12 @@
   padding: 0.2rem;
 }
 .conflict-container .conflict {
-  color: #176b87;
+  color: #0051d4;
   background-color: #ff00004d;
   border-style: solid;
 }
 .conflict-container .conflict .time {
-  color: #f14c38;
+  color: #c14e69;
 }
 .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
@@ -41,14 +41,15 @@
 }
 .moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
   margin-right: 450px;
-  color: #f14c38;
+  color: #c14e69;
 }
 .badge {
-  background-color: #f14c38;
+  background-color: #c14e69;
   color: #ffffff;
   font-size: 1vw;
   font-weight: 500;
-  border-radius: 50%;
+  border-radius: 20px;
   padding: 0.8vh;
   padding-inline: 1.2vh;
+  margin-left: 10px;
 }

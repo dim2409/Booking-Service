@@ -2,7 +2,9 @@
   <div class="calendar">
     <!-- Set view kind to month, week or day -->
     <div class="top-container">
+
       <app-filters (filterUpdated)="updateFilter($event)" [filters]="filters"></app-filters>
+
       <!-- 
       <div class="view-kind-controls-container">
         <mat-button-toggle-group name="viewKind" aria-label="Kind of View" [(ngModel)]="selectedValue">
@@ -20,6 +22,7 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div> -->
+
       <!-- Current month, week or day -->
       <div mat-label class="currentTitle">
         {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
