@@ -10,7 +10,7 @@
         </mat-form-field>
         <mat-form-field *ngIf="roomPicker">
             <mat-label>Room</mat-label>
-            <mat-select (selectionChange)="roomOptionChange($event)" multiple>
+            <mat-select (selectionChange)="roomOptionChange($event)" multiple #roomSelect>
                 <mat-option *ngFor="let room of rooms" value="{{room.id}}">
                     {{room.name}}
                 </mat-option>
@@ -18,15 +18,23 @@
         </mat-form-field>
         <mat-form-field *ngIf="daypicker">
             <mat-label>Day of Week</mat-label>
-            <mat-select (selectionChange)="dayOptionChange($event)" multiple>
+            <mat-select (selectionChange)="dayOptionChange($event)" multiple #daySelect>
                 <mat-option *ngFor="let day of dayOptions" value="{{day.value}}">
                     {{day.label}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field *ngIf="monthPicker">
+            <mat-label>Month</mat-label>
+            <mat-select (selectionChange)="monthOptionChange($event)" multiple #monthSelect>
+                <mat-option *ngFor="let month of monthOptions" value="{{month.value}}">
+                    {{month.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field *ngIf="semesterPicker">
             <mat-label>Semester Sample</mat-label>
-            <mat-select (selectionChange)="dayOptionChange($event)" multiple>
+            <mat-select (selectionChange)="semesterOptionChange($event)" multiple #semesterSelect>
                 <mat-option *ngFor="let semester of semesters" value="{{semester.id}}">
                     {{semester.name}}
                 </mat-option>

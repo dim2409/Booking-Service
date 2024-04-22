@@ -8,6 +8,7 @@ interface Action {
   action: (req: any) => Observable<any>;
   daypicker?: boolean;
   semesterPicker?: boolean;
+  monthPicker?: boolean;
 }
 
 interface ActionsMap {
@@ -30,9 +31,12 @@ export class StatisticsService {
     },
     roomDayOfWeekFrequency: {
       label: 'Day of Week Frequency',
+      semesterPicker: true,
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDayOfWeekFrequency', req)
     },
     roomDayOfMonthFrequency: {
+      monthPicker: true,
+      semesterPicker: true,
       label: 'Day of Month Frequency',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDayOfMonthFrequency', req)
     },
@@ -82,6 +86,7 @@ export class StatisticsService {
       label: this.actionsMap[key].label,
       value: key,
       daypicker: this.actionsMap[key].daypicker,
+      monthPicker: this.actionsMap[key].monthPicker,
       semesterPicker: this.actionsMap[key].semesterPicker
     }));
   }

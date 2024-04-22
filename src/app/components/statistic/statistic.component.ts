@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Observable } from 'rxjs';
@@ -28,6 +28,11 @@ import { StatisticsService } from 'src/app/services/statistics/statistics.servic
 export class StatisticComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective | undefined;
+
+  @ViewChild('roomSelect') roomSelect?: MatSelect;
+  @ViewChild('daySelect') daySelect?: MatSelect;
+  @ViewChild('monthSelect') monthSelect?: MatSelect;
+  @ViewChild('semesterSelect') semesterSelect?: MatSelect;
 
   public max = 100;
   public chartOptions: ChartConfiguration['options'] = {
@@ -64,17 +69,34 @@ export class StatisticComponent implements OnInit {
     { label: 'Friday', value: '5' },
   ];
 
+  monthOptions: { label: string, value: string }[] = [
+    { label: 'January', value: '1' },
+    { label: 'February', value: '2' },
+    { label: 'March', value: '3' },
+    { label: 'April', value: '4' },
+    { label: 'May', value: '5' },
+    { label: 'June', value: '6' },
+    { label: 'July', value: '7' },
+    { label: 'August', value: '8' },
+    { label: 'September', value: '9' },
+    { label: 'October', value: '10' },
+    { label: 'November', value: '11' },
+    { label: 'December', value: '12' },
+  ];
+
   rooms: any[] = [];
   semesters: any[] = [];
-  statOptions: { daypicker?: boolean, label: string, value: string, semesterPicker?: boolean }[] = [];
+  statOptions: { daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean }[] = [];
   req = {
     days: [],
+    months: [],
     semesterIds: [],
     roomIds: []
   }
   selectedAction = ''
   roomPicker = false;
   daypicker = false;
+  monthPicker = false;
   semesterPicker = false;
   constructor(private RoomsService: RoomsService, private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
 
@@ -95,12 +117,18 @@ export class StatisticComponent implements OnInit {
     })
   }
   chartOptionChange($event: MatSelectChange) {
+    this.roomSelect? this.roomSelect.value = null: null;
+    this.daySelect? this.daySelect.value = null: null;
+    this.monthSelect? this.monthSelect.value = null: null;
+    this.semesterSelect? this.semesterSelect.value = null: null;
     this.req = {
       days: [],
+      months: [],
       semesterIds: [],
       roomIds: []
     }
     this.statOptions.find(option => option.value == $event.value)?.daypicker ? this.daypicker = true : this.daypicker = false;
+    this.statOptions.find(option => option.value == $event.value)?.monthPicker ? this.monthPicker = true : this.monthPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
     console.log(this.statOptions.find(option => option.value == $event.value))
     this.selectedAction = $event.value
@@ -117,8 +145,13 @@ export class StatisticComponent implements OnInit {
     this.req.days = $event.value
     this.getData()
   }
+  monthOptionChange($event: MatSelectChange) {
+    this.req.months = []
+    this.req.months = $event.value
+    this.getData()
+  }
   semesterOptionChange($event: MatSelectChange) {
-    this.req.semesterIds
+    this.req.semesterIds = []
     this.req.semesterIds = $event.value
     this.getData()
   }
@@ -130,8 +163,6 @@ export class StatisticComponent implements OnInit {
       this.chartData.datasets[0].data = element.data.accumulatedDataset; */
     let datasets: { data: any; backgroundColor: any; label: any; }[] = []
     data.forEach((element: any) => {
-      console.log(element)
-      console.log(this.chartData)
       datasets[i] = {
         data: element.data.frequency,
         backgroundColor: this.rooms[element.room_id - 1].color,
@@ -141,8 +172,6 @@ export class StatisticComponent implements OnInit {
     })
     this.chartData.datasets = datasets;
     this.chartData.labels = data[0].data.labels
-    data[0].options.chartType == ('bar' || 'line') ? this.max = data[0].options.frequencyMax : this.max = 100;
-    data[0].options.chartType == ('bar' || 'line') ? this.chartData.datasets[0].backgroundColor = ['#3366ff'] : this.chartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'];
     this.chartType = data[0].options.chartType;
     this.barChart?.update();
   }
