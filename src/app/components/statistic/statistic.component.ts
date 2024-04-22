@@ -7,6 +7,8 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Observable } from 'rxjs';
+import { GeneralRequestService } from 'src/app/services/general/general-request.service';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { StatisticsService } from 'src/app/services/statistics/statistics.service';
 
 @Component({
@@ -28,7 +30,7 @@ export class StatisticComponent implements OnInit {
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective | undefined;
 
   public max = 100;
-  public barChartOptions: ChartConfiguration['options'] = {
+  public chartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {},
@@ -44,45 +46,97 @@ export class StatisticComponent implements OnInit {
     },
   };
 
-  public barChartData: ChartData = {
+  public chartData: ChartData = {
     labels: [],
     datasets: [
-      { data: [], backgroundColor: [],},
+      {
+        label: 'Sample Chart', data: [], backgroundColor: [],
+      },
     ],
   };
 
   public chartType: any = 'line';
+  dayOptions: { label: string, value: string }[] = [
+    { label: 'Monday', value: '1' },
+    { label: 'Tuesday', value: '2' },
+    { label: 'Wednesday', value: '3' },
+    { label: 'Thursday', value: '4' },
+    { label: 'Friday', value: '5' },
+  ];
 
-  statOptions: { label: string, value: string }[] = [];
-
-  constructor(private statisticsService: StatisticsService) {
+  rooms: any[] = [];
+  semesters: any[] = [];
+  statOptions: { daypicker?: boolean, label: string, value: string, semesterPicker?: boolean }[] = [];
+  req = {}
+  selectedAction = ''
+  roomPicker = false;
+  daypicker = false;
+  semesterPicker = false;
+  constructor(private RoomsService: RoomsService,private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
 
   }
   ngOnInit(): void {
     this.statOptions = this.statisticsService.getActions();
-    console.log(this.barChartData)
+    this.generalRequestService.getAllSemesters().subscribe((resp: any) => {
+      this.semesters = resp;
+    });
+    this.RoomsService.getAllRooms().subscribe((resp: any) => {
+      this.rooms = resp
+    })
+    console.log(this.statOptions)
   }
-  getData($event: MatSelectChange) {
-    let req = {};
-    this.statisticsService.callAction($event.value, req).subscribe((resp: any) => {
+  getData() {
+    this.statisticsService.callAction(this.selectedAction, this.req).subscribe((resp: any) => {
       this.udpateChart(resp)
     })
   }
+  chartOptionChange($event: MatSelectChange) {
+    this.req = {};
+    this.statOptions.find(option => option.value == $event.value)?.daypicker ? this.daypicker = true : this.daypicker = false;
+    this.statOptions.find(option => option.value == $event.value)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
+    console.log(this.statOptions.find(option => option.value == $event.value))
+    this.selectedAction = $event.value
+    this.roomPicker = true;
+    this.getData()
+  }
+  roomOptionChange($event: MatSelectChange) {
+    this.req = {};
+    this.req = {
+      roomIds: $event.value
+    }
+    this.getData()
+  }
+  dayOptionChange($event: MatSelectChange) {
+    console.log($event.value)
+    this.req = {
+      days: ''
+    };
+    this.req = {
+      days: $event.value
+    }
+    this.getData()
+  }
+  semesterOptionChange($event: MatSelectChange) {
+    this.req = {
+      semesterIds: ''
+    };
+    this.req = {
+      semesterIds: $event.value
+    }
+    this.getData()
+  }
   udpateChart(data: any) {
-    let i = 0;
-    this.barChartData.datasets[0].data = [];
+    this.chartData.datasets[0].data = [];
 
     data.forEach((element: any) => {
-      console.log(element.data.accumulatedDataset)
-      console.log(element.data.frequency)
       element.options.chartType == 'bar' || element.options.chartType == 'line' ?
-        this.barChartData.datasets[0].data = element.data.frequency :
-        this.barChartData.datasets[0].data = element.data.accumulatedDataset;
+        this.chartData.datasets[0].data = element.data.frequency :
+        this.chartData.datasets[0].data = element.data.accumulatedDataset;
     })
-    this.barChartData.labels = data[0].data.labels
+    this.chartData.labels = data[0].data.labels
     data[0].options.chartType == ('bar' || 'line') ? this.max = data[0].options.frequencyMax : this.max = 100;
-    data[0].options.chartType == ('bar' || 'line') ? this.barChartData.datasets[0].backgroundColor = ['rgb(54, 162, 235)'] : this.barChartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)','rgb(54, 162, 235)'];
-    this.barChartOptions = {
+    data[0].options.chartType == ('bar' || 'line') ? this.chartData.datasets[0].backgroundColor = ['rgb(54, 162, 235)'] : this.chartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'];
+    this.chartOptions = {
       scales: {
         y: {
           max: this.max
@@ -91,14 +145,7 @@ export class StatisticComponent implements OnInit {
       }
     }
     this.chartType = data[0].options.chartType;
+    this.chartData.datasets[0].label = data[0].options.label
     this.barChart?.update();
-    console.log(this.barChartData)
-
-
-    /* data[0].data[0].datasets.forEach((element: any) => {
-      this.barChartData.datasets[0].data[i] = element.datasetFrequency;
-      i++;
-    });
-     */
   }
 }

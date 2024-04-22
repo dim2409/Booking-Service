@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 interface Action {
   label: string;
   action: (req: any) => Observable<any>;
+  daypicker?: boolean;
+  semesterPicker?: boolean;
 }
 
 interface ActionsMap {
@@ -21,6 +23,8 @@ export class StatisticsService {
 
   private actionsMap: ActionsMap = {
     roomHourOfDayOfWeekFrequency: {
+      daypicker: true,
+      semesterPicker: true,
       label: 'Hour of Day of Week Frequency',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomHourOfDayOfWeekFrequency', req)
     },
@@ -76,7 +80,9 @@ export class StatisticsService {
   getActions(): { label: string, value: string }[] {
     return Object.keys(this.actionsMap).map(key => ({
       label: this.actionsMap[key].label,
-      value: key
+      value: key,
+      daypicker: this.actionsMap[key].daypicker,
+      semesterPicker: this.actionsMap[key].semesterPicker
     }));
   }
 }

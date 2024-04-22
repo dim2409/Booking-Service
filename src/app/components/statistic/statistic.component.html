@@ -1,13 +1,39 @@
 <div class="static-container">
-    <mat-form-field>
-        <mat-label>Pick Statistic</mat-label>
-        <mat-select (selectionChange)="getData($event)">
-            <mat-option *ngFor="let stat of statOptions" value="{{stat.value}}">
-                {{stat.label}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div class="options-container">
+        <mat-form-field>
+            <mat-label>Pick Statistic</mat-label>
+            <mat-select (selectionChange)="chartOptionChange($event)">
+                <mat-option *ngFor="let stat of statOptions" value="{{stat.value}}">
+                    {{stat.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="roomPicker">
+            <mat-label>Room</mat-label>
+            <mat-select (selectionChange)="roomOptionChange($event)" multiple>
+                <mat-option *ngFor="let room of rooms" value="{{room.id}}">
+                    {{room.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="daypicker">
+            <mat-label>Day of Week</mat-label>
+            <mat-select (selectionChange)="dayOptionChange($event)" multiple>
+                <mat-option *ngFor="let day of dayOptions" value="{{day.value}}">
+                    {{day.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="semesterPicker">
+            <mat-label>Semester Sample</mat-label>
+            <mat-select (selectionChange)="dayOptionChange($event)" multiple>
+                <mat-option *ngFor="let semester of semesters" value="{{semester.id}}">
+                    {{semester.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
     <div class="chart">
-        <canvas #barChart baseChart [data]="barChartData" [options]="barChartOptions" [type]="chartType"> </canvas>
+        <canvas #barChart baseChart [data]="chartData" [options]="chartOptions" [type]="chartType"> </canvas>
     </div>
 </div>
