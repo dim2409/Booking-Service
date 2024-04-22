@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDateRangeInput, MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
@@ -14,13 +16,17 @@ import { StatisticsService } from 'src/app/services/statistics/statistics.servic
 @Component({
   selector: 'app-statistic',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     FormsModule,
     MatInputModule,
     MatFormFieldModule,
     BaseChartDirective,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatDateRangeInput
   ],
   templateUrl: './statistic.component.html',
   styleUrl: './statistic.component.less'
@@ -30,6 +36,7 @@ export class StatisticComponent implements OnInit {
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective | undefined;
 
   @ViewChild('roomSelect') roomSelect?: MatSelect;
+  @ViewChild('singleRoomSelect') singleRoomSelect?: MatSelect;
   @ViewChild('daySelect') daySelect?: MatSelect;
   @ViewChild('monthSelect') monthSelect?: MatSelect;
   @ViewChild('semesterSelect') semesterSelect?: MatSelect;
@@ -61,43 +68,50 @@ export class StatisticComponent implements OnInit {
   };
 
   public chartType: any = 'line';
-  dayOptions: { label: string, value: string }[] = [
-    { label: 'Monday', value: '1' },
-    { label: 'Tuesday', value: '2' },
-    { label: 'Wednesday', value: '3' },
-    { label: 'Thursday', value: '4' },
-    { label: 'Friday', value: '5' },
+  dayOptions: { label: string, value: number }[] = [
+    { label: 'Monday', value: 1 },
+    { label: 'Tuesday', value: 2 },
+    { label: 'Wednesday', value: 3 },
+    { label: 'Thursday', value: 4 },
+    { label: 'Friday', value: 5 },
   ];
 
-  monthOptions: { label: string, value: string }[] = [
-    { label: 'January', value: '1' },
-    { label: 'February', value: '2' },
-    { label: 'March', value: '3' },
-    { label: 'April', value: '4' },
-    { label: 'May', value: '5' },
-    { label: 'June', value: '6' },
-    { label: 'July', value: '7' },
-    { label: 'August', value: '8' },
-    { label: 'September', value: '9' },
-    { label: 'October', value: '10' },
-    { label: 'November', value: '11' },
-    { label: 'December', value: '12' },
+  monthOptions: { label: string, value: number }[] = [
+    { label: 'January', value: 1 },
+    { label: 'February', value: 2 },
+    { label: 'March', value: 3 },
+    { label: 'April', value: 4 },
+    { label: 'May', value: 5 },
+    { label: 'June', value: 6 },
+    { label: 'July', value: 7 },
+    { label: 'August', value: 8 },
+    { label: 'September', value: 9 },
+    { label: 'October', value: 10 },
+    { label: 'November', value: 11 },
+    { label: 'December', value: 12 },
   ];
 
   rooms: any[] = [];
   semesters: any[] = [];
-  statOptions: { daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean }[] = [];
+  statOptions: { datePicker?: boolean, roomPicker?: boolean, singleRoomPicker?: boolean, daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean }[] = [];
   req = {
     days: [],
     months: [],
     semesterIds: [],
-    roomIds: []
+    roomIds: [],
+    singleRoomId: '',
+    dateRange: {
+      start: '',
+      end: ''
+    }
   }
   selectedAction = ''
   roomPicker = false;
+  singleRoomPicker = false;
   daypicker = false;
   monthPicker = false;
   semesterPicker = false;
+  datePicker = false;
   constructor(private RoomsService: RoomsService, private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
 
   }
@@ -117,27 +131,49 @@ export class StatisticComponent implements OnInit {
     })
   }
   chartOptionChange($event: MatSelectChange) {
-    this.roomSelect? this.roomSelect.value = null: null;
-    this.daySelect? this.daySelect.value = null: null;
-    this.monthSelect? this.monthSelect.value = null: null;
-    this.semesterSelect? this.semesterSelect.value = null: null;
+    this.roomSelect ? this.roomSelect.value = null : null;
+    this.singleRoomSelect ? this.singleRoomSelect.value = null : null;
+    this.daySelect ? this.daySelect.value = null : null;
+    this.monthSelect ? this.monthSelect.value = null : null;
+    this.semesterSelect ? this.semesterSelect.value = null : null;
     this.req = {
       days: [],
       months: [],
       semesterIds: [],
-      roomIds: []
+      roomIds: [],
+      singleRoomId: '',
+      dateRange: {
+        start: '',
+        end: ''
+      }
     }
     this.statOptions.find(option => option.value == $event.value)?.daypicker ? this.daypicker = true : this.daypicker = false;
     this.statOptions.find(option => option.value == $event.value)?.monthPicker ? this.monthPicker = true : this.monthPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
-    console.log(this.statOptions.find(option => option.value == $event.value))
+    this.statOptions.find(option => option.value == $event.value)?.roomPicker ? this.roomPicker = true : this.roomPicker = false;
+    this.statOptions.find(option => option.value == $event.value)?.singleRoomPicker ? this.singleRoomPicker = true : this.singleRoomPicker = false;
+    this.statOptions.find(option => option.value == $event.value)?.singleRoomPicker ? this.datePicker = true : this.datePicker = false;
+
     this.selectedAction = $event.value
-    this.roomPicker = true;
+    this.getData()
+  }
+  dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
+    console.log(dateRangeStart.value);
+    console.log(dateRangeEnd.value);
+    this.req.dateRange = {
+      start: dateRangeStart.value,
+      end: dateRangeEnd.value
+    }
     this.getData()
   }
   roomOptionChange($event: MatSelectChange) {
     this.req.roomIds = []
     this.req.roomIds = $event.value
+    this.getData()
+  }
+  singleRoomOptionChange($event: MatSelectChange) {
+    this.req.singleRoomId = ''
+    this.req.singleRoomId = $event.value
     this.getData()
   }
   dayOptionChange($event: MatSelectChange) {
@@ -157,21 +193,31 @@ export class StatisticComponent implements OnInit {
   }
   udpateChart(data: any) {
     let i = 0;
-    //for pie charts 
-    /* element.options.chartType == 'bar' || element.options.chartType == 'line' ?
-      this.chartData.datasets[0].data = element.data.frequency :
-      this.chartData.datasets[0].data = element.data.accumulatedDataset; */
-    let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
-    data.forEach((element: any) => {
-      datasets[i] = {
-        data: element.data.frequency,
-        backgroundColor: this.rooms[element.room_id - 1].color,
-        borderColor: this.rooms[element.room_id - 1].color,
-        label: element.options.label
-      }
-      i++;
-    })
-    this.chartData.datasets = datasets;
+    if (data[0].options.chartType == 'doughnut') {
+      let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
+
+      data.forEach((element: any) => {
+        datasets[0] = {
+          data: element.data.accumulatedDataset,
+          backgroundColor: [this.rooms[element.room_id - 1].color, '#98d5f6'],
+          borderColor: '#98d5f6',
+          label: element.options.label
+        }
+      })
+      this.chartData.datasets = datasets;
+    } else {
+      let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
+      data.forEach((element: any) => {
+        datasets[i] = {
+          data: element.data.frequency,
+          backgroundColor: this.rooms[element.room_id - 1].color,
+          borderColor: this.rooms[element.room_id - 1].color,
+          label: element.options.label
+        }
+        i++;
+      })
+      this.chartData.datasets = datasets;
+    }
     this.chartData.labels = data[0].data.labels
     this.chartType = data[0].options.chartType;
     this.barChart?.update();

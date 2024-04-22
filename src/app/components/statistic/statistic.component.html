@@ -16,6 +16,14 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field *ngIf="singleRoomPicker">
+            <mat-label>Room</mat-label>
+            <mat-select (selectionChange)="singleRoomOptionChange($event)" #singleRoomSelect>
+                <mat-option *ngFor="let room of rooms" value="{{room.id}}">
+                    {{room.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field *ngIf="daypicker">
             <mat-label>Day of Week</mat-label>
             <mat-select (selectionChange)="dayOptionChange($event)" multiple #daySelect>
@@ -24,6 +32,17 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field *ngIf="datePicker">
+            <mat-label>Dynamic Date Range</mat-label>
+            <mat-date-range-input [rangePicker]="datePicker" >
+                <input matStartDate placeholder="Start date" #dateRangeStart>
+                <input matEndDate placeholder="End date" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #datePicker></mat-date-range-picker>
+        </mat-form-field>
+
         <mat-form-field *ngIf="monthPicker">
             <mat-label>Month</mat-label>
             <mat-select (selectionChange)="monthOptionChange($event)" multiple #monthSelect>
