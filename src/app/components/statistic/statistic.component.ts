@@ -93,7 +93,7 @@ export class StatisticComponent implements OnInit {
 
   rooms: any[] = [];
   semesters: any[] = [];
-  statOptions: { datePicker?: boolean, roomPicker?: boolean, singleRoomPicker?: boolean, daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean }[] = [];
+  statOptions: { roomPicker?: boolean, singleRoomPicker?: boolean, daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean , datePicker?: boolean,}[] = [];
   req = {
     days: [],
     months: [],
@@ -152,7 +152,8 @@ export class StatisticComponent implements OnInit {
     this.statOptions.find(option => option.value == $event.value)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.roomPicker ? this.roomPicker = true : this.roomPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.singleRoomPicker ? this.singleRoomPicker = true : this.singleRoomPicker = false;
-    this.statOptions.find(option => option.value == $event.value)?.singleRoomPicker ? this.datePicker = true : this.datePicker = false;
+    this.statOptions.find(option => option.value == $event.value)?.datePicker ? this.datePicker = true : this.datePicker = false;
+    console.log(this.datePicker)
 
     this.selectedAction = $event.value
     this.getData()

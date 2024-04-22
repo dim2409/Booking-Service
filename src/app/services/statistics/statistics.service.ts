@@ -90,6 +90,18 @@ export class StatisticsService {
       datePicker: true,
       label: 'Occupancy by Date Range',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyByDateRange', req)
+    },
+    roomDateRangeFrequency: {
+      roomPicker: true,
+      datePicker: true,
+      label: 'Date Range Frequency',
+      action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDateRangeFrequency', req)
+    },
+    roomDateRangeDurationFrequency: {
+      roomPicker: true,
+      datePicker: true,
+      label: 'Date Range Duration Frequency',
+      action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDateRangeDurationFrequency', req)
     }
   };
 
