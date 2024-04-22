@@ -40,7 +40,8 @@ export class StatisticsService {
       label: 'Day of Month Frequency',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDayOfMonthFrequency', req)
     },
-    roomMonthOfSemesterFrequency: {
+    roomMonthOfSemesterFrequency: {      
+      semesterPicker: true,
       label: 'Month of Semester Frequency',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomMonthOfSemesterFrequency', req)
     },
