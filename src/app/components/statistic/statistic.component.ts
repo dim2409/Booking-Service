@@ -67,12 +67,16 @@ export class StatisticComponent implements OnInit {
   rooms: any[] = [];
   semesters: any[] = [];
   statOptions: { daypicker?: boolean, label: string, value: string, semesterPicker?: boolean }[] = [];
-  req = {}
+  req = {
+    days: [],
+    semesterIds: [],
+    roomIds: []
+  }
   selectedAction = ''
   roomPicker = false;
   daypicker = false;
   semesterPicker = false;
-  constructor(private RoomsService: RoomsService,private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
+  constructor(private RoomsService: RoomsService, private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
 
   }
   ngOnInit(): void {
@@ -91,7 +95,11 @@ export class StatisticComponent implements OnInit {
     })
   }
   chartOptionChange($event: MatSelectChange) {
-    this.req = {};
+    this.req = {
+      days: [],
+      semesterIds: [],
+      roomIds: []
+    }
     this.statOptions.find(option => option.value == $event.value)?.daypicker ? this.daypicker = true : this.daypicker = false;
     this.statOptions.find(option => option.value == $event.value)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
     console.log(this.statOptions.find(option => option.value == $event.value))
@@ -100,52 +108,42 @@ export class StatisticComponent implements OnInit {
     this.getData()
   }
   roomOptionChange($event: MatSelectChange) {
-    this.req = {};
-    this.req = {
-      roomIds: $event.value
-    }
+    this.req.roomIds = []
+    this.req.roomIds = $event.value
     this.getData()
   }
   dayOptionChange($event: MatSelectChange) {
-    console.log($event.value)
-    this.req = {
-      days: ''
-    };
-    this.req = {
-      days: $event.value
-    }
+    this.req.days = []
+    this.req.days = $event.value
     this.getData()
   }
   semesterOptionChange($event: MatSelectChange) {
-    this.req = {
-      semesterIds: ''
-    };
-    this.req = {
-      semesterIds: $event.value
-    }
+    this.req.semesterIds
+    this.req.semesterIds = $event.value
     this.getData()
   }
   udpateChart(data: any) {
-    this.chartData.datasets[0].data = [];
-
+    let i = 0;
+    //for pie charts 
+    /* element.options.chartType == 'bar' || element.options.chartType == 'line' ?
+      this.chartData.datasets[0].data = element.data.frequency :
+      this.chartData.datasets[0].data = element.data.accumulatedDataset; */
+    let datasets: { data: any; backgroundColor: any; label: any; }[] = []
     data.forEach((element: any) => {
-      element.options.chartType == 'bar' || element.options.chartType == 'line' ?
-        this.chartData.datasets[0].data = element.data.frequency :
-        this.chartData.datasets[0].data = element.data.accumulatedDataset;
+      console.log(element)
+      console.log(this.chartData)
+      datasets[i] = {
+        data: element.data.frequency,
+        backgroundColor: this.rooms[element.room_id - 1].color,
+        label: element.options.label
+      }
+      i++;
     })
+    this.chartData.datasets = datasets;
     this.chartData.labels = data[0].data.labels
     data[0].options.chartType == ('bar' || 'line') ? this.max = data[0].options.frequencyMax : this.max = 100;
-    data[0].options.chartType == ('bar' || 'line') ? this.chartData.datasets[0].backgroundColor = ['rgb(54, 162, 235)'] : this.chartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'];
-    this.chartOptions = {
-      scales: {
-        y: {
-          max: this.max
-        },
-
-      }
-    }
+    data[0].options.chartType == ('bar' || 'line') ? this.chartData.datasets[0].backgroundColor = ['#3366ff'] : this.chartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'];
     this.chartType = data[0].options.chartType;
-    this.chartData.datasets[0].label = data[0].options.label
     this.barChart?.update();
   }
 }
