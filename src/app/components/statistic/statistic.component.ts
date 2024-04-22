@@ -25,8 +25,8 @@ import { StatisticsService } from 'src/app/services/statistics/statistics.servic
 })
 export class StatisticComponent implements OnInit {
 
-  @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
-  
+  @ViewChild(BaseChartDirective) barChart: BaseChartDirective | undefined;
+
   public max = 100;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
@@ -45,13 +45,13 @@ export class StatisticComponent implements OnInit {
   };
 
   public barChartData: ChartData = {
-    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    labels: [],
     datasets: [
-      { data: [], label: 'Room Day Frequency' },
+      { data: [], backgroundColor: [],},
     ],
   };
 
-  public chartType:any = 'line';
+  public chartType: any = 'line';
 
   statOptions: { label: string, value: string }[] = [];
 
@@ -71,23 +71,30 @@ export class StatisticComponent implements OnInit {
   udpateChart(data: any) {
     let i = 0;
     this.barChartData.datasets[0].data = [];
-    
+
     data.forEach((element: any) => {
-      this.barChartData.datasets[0].data = element.data.frequency;
+      console.log(element.data.accumulatedDataset)
+      console.log(element.data.frequency)
+      element.options.chartType == 'bar' || element.options.chartType == 'line' ?
+        this.barChartData.datasets[0].data = element.data.frequency :
+        this.barChartData.datasets[0].data = element.data.accumulatedDataset;
     })
     this.barChartData.labels = data[0].data.labels
-    this.max = data[0].options.frequencyMax;
+    data[0].options.chartType == ('bar' || 'line') ? this.max = data[0].options.frequencyMax : this.max = 100;
+    data[0].options.chartType == ('bar' || 'line') ? this.barChartData.datasets[0].backgroundColor = ['rgb(54, 162, 235)'] : this.barChartData.datasets[0].backgroundColor = ['rgb(255, 99, 132)','rgb(54, 162, 235)'];
     this.barChartOptions = {
       scales: {
         y: {
           max: this.max
         },
-        
+
       }
     }
     this.chartType = data[0].options.chartType;
     this.barChart?.update();
-    
+    console.log(this.barChartData)
+
+
     /* data[0].data[0].datasets.forEach((element: any) => {
       this.barChartData.datasets[0].data[i] = element.datasetFrequency;
       i++;
