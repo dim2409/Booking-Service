@@ -55,7 +55,7 @@ export class StatisticComponent implements OnInit {
     labels: [],
     datasets: [
       {
-        label: 'Sample Chart', data: [], backgroundColor: [],
+        label: 'Sample Chart', data: [], backgroundColor: [], borderColor: [],
       },
     ],
   };
@@ -161,11 +161,12 @@ export class StatisticComponent implements OnInit {
     /* element.options.chartType == 'bar' || element.options.chartType == 'line' ?
       this.chartData.datasets[0].data = element.data.frequency :
       this.chartData.datasets[0].data = element.data.accumulatedDataset; */
-    let datasets: { data: any; backgroundColor: any; label: any; }[] = []
+    let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
     data.forEach((element: any) => {
       datasets[i] = {
         data: element.data.frequency,
         backgroundColor: this.rooms[element.room_id - 1].color,
+        borderColor: this.rooms[element.room_id - 1].color,
         label: element.options.label
       }
       i++;

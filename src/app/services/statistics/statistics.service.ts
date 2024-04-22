@@ -46,12 +46,15 @@ export class StatisticsService {
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomMonthOfSemesterFrequency', req)
     },
     roomDayOfWeekDurationFrequency: {
+      semesterPicker: true,
       label: 'Day of Week Duration Frequency',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDayOfWeekDurationFrequency', req)
     },
-    roomMonthOfYearDurationFrequency: {
-      label: 'Month of Year Duration Frequency',
-      action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomMonthOfYearDurationFrequency', req)
+    roomMonthDurationFrequency: {
+      semesterPicker: true,
+      monthPicker: true,
+      label: 'Month Duration Frequency',
+      action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomMonthDurationFrequency', req)
     },
     roomOccupancyByDayOfWeekPercentage: {
       label: 'Occupancy by Day of Week Percentage',
