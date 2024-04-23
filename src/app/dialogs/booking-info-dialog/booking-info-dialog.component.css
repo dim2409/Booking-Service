@@ -2,3 +2,30 @@
   cursor: pointer;
   font-size: 1.5rem;
 }
+.drag-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6%;
+  background: #0051d4;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: move;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1vw 1vw;
+}
+.drag-bar i {
+  cursor: pointer;
+  padding: 1vh;
+}
+h2 {
+  margin: 0;
+}
+.info {
+  width: 100%;
+  height: 100%;
+  padding: 1vw 1vw;
+}

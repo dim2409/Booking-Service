@@ -1,49 +1,59 @@
-.tab {
+.moderator-container {
+  padding-bottom: 3.3vw !important;
+  padding-top: 3.3vw !important;
+}
+.moderator-container .tab {
   margin-left: 20vw;
 }
-::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
+.moderator-container ::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
   height: 100vh;
   padding-left: 1vw;
   padding-right: 1vw;
 }
-::ng-deep .mat-mdc-tab-body-content {
+.moderator-container ::ng-deep .mat-mdc-tab-body-content {
   padding-bottom: 7rem;
 }
-.conflict-container {
+.moderator-container .mat-mdc-tab-header {
+  border-bottom: 1px solid #dfdfdf;
+}
+.moderator-container .mdc-tab-indicator__content--underline {
+  --mdc-tab-indicator-active-indicator-color: #0051d4;
+}
+.moderator-container .conflict-container {
   border-radius: 0.5rem;
   border-style: solid;
   border-color: #f34248b0;
   padding: 0.2rem;
 }
-.conflict-container .conflict {
+.moderator-container .conflict-container .conflict {
   color: #0051d4;
   background-color: #ff00004d;
   border-style: solid;
 }
-.conflict-container .conflict .time {
+.moderator-container .conflict-container .conflict .time {
   color: #c14e69;
 }
-.conflict-container .conflict .mat-mdc-card-header {
+.moderator-container .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
 }
-.moderator-list-container {
+.moderator-container .moderator-list-container {
   position: relative;
 }
-.moderator-list-container .moderator-list-title {
+.moderator-container .moderator-list-container .moderator-list-title {
   margin-block: 2rem;
   font-size: 1.5rem;
 }
-.moderator-list-container .mat-expansion-panel-header {
+.moderator-container .moderator-list-container .mat-expansion-panel-header {
   font-size: unset;
 }
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-title {
+.moderator-container .moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-title {
   margin-right: 0;
 }
-.moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
+.moderator-container .moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
   margin-right: 450px;
   color: #c14e69;
 }
-.badge {
+.moderator-container .badge {
   background-color: #c14e69;
   color: #ffffff;
   font-size: 1vw;
