@@ -260,11 +260,22 @@ export class StatisticComponent implements OnInit {
       //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
 
       data.forEach((element: any) => {
+        console.log(element)
         this.datasets[0] = {
           data: element.data.accumulatedDataset,
-          backgroundColor: [this.rooms[element.room_id - 1].color, '#98d5f6'],
+          backgroundColor: '',//[this.rooms[element.room_id - 1].color, ],
           borderColor: '#98d5f6',
           label: element.options.label
+        }
+        element.roomIds.forEach((room: any) => {
+          this.datasets[0] = {
+            ...this.datasets[0],
+            backgroundColor: [...this.datasets[0].backgroundColor, this.rooms[room - 1].color],
+          }
+        })
+        this.datasets[0] = {
+          ...this.datasets[0],
+          backgroundColor: [...this.datasets[0].backgroundColor, '#98d5f6'],
         }
         this.frequencyData[0] = element.data.accumulatedDataset;
         this.percentageData[0] = element.data.percentageDataset;
