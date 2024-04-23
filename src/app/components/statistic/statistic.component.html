@@ -1,6 +1,6 @@
 <div class="static-container">
     <div class="options-container">
-        <mat-form-field>
+        <mat-form-field class="option-select">
             <mat-label>Pick Statistic</mat-label>
             <mat-select (selectionChange)="chartOptionChange($event)">
                 <mat-option *ngFor="let stat of statOptions" value="{{stat.value}}">
@@ -8,7 +8,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="roomPicker">
+        <mat-form-field *ngIf="roomPicker" class="option-select">
             <mat-label>Room</mat-label>
             <mat-select (selectionChange)="roomOptionChange($event)" multiple #roomSelect>
                 <mat-option *ngFor="let room of rooms" value="{{room.id}}">
@@ -16,7 +16,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="singleRoomPicker">
+        <mat-form-field *ngIf="singleRoomPicker" class="option-select">
             <mat-label>Room</mat-label>
             <mat-select (selectionChange)="singleRoomOptionChange($event)" #singleRoomSelect>
                 <mat-option *ngFor="let room of rooms" value="{{room.id}}">
@@ -24,7 +24,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="daypicker">
+        <mat-form-field *ngIf="daypicker" class="option-select">
             <mat-label>Day of Week</mat-label>
             <mat-select (selectionChange)="dayOptionChange($event)" multiple #daySelect>
                 <mat-option *ngFor="let day of dayOptions" value="{{day.value}}">
@@ -32,7 +32,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="datePicker">
+        <mat-form-field *ngIf="datePicker" class="option-select">
             <mat-label>Dynamic Date Range</mat-label>
             <mat-date-range-input [rangePicker]="datePicker">
                 <input matStartDate placeholder="Start date" #dateRangeStart>
@@ -44,7 +44,7 @@
             <mat-date-range-picker #datePicker></mat-date-range-picker>
         </mat-form-field>
 
-        <mat-form-field *ngIf="monthPicker">
+        <mat-form-field *ngIf="monthPicker" class="option-select">
             <mat-label>Month</mat-label>
             <mat-select (selectionChange)="monthOptionChange($event)" multiple #monthSelect>
                 <mat-option *ngFor="let month of monthOptions" value="{{month.value}}">
@@ -52,7 +52,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="semesterPicker">
+        <mat-form-field *ngIf="semesterPicker" class="option-select">
             <mat-label>Semester Sample</mat-label>
             <mat-select (selectionChange)="semesterOptionChange($event)" multiple #semesterSelect>
                 <mat-option *ngFor="let semester of semesters" value="{{semester.id}}">
@@ -61,11 +61,13 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <mat-chip-listbox>
-        <mat-chip-option (click)="toggleFrequency()" [selected]="toggleFrequencyFlag">
-            <i class="fa-solid fa-percent"></i>
-        </mat-chip-option>
-    </mat-chip-listbox>
+    <div class="percentage-toggle-container" *ngIf="datasets.length>0">
+        <mat-chip-listbox>
+            <mat-chip-option (click)="toggleFrequency()" [selected]="toggleFrequencyFlag">
+                <i class="fa-solid fa-percent"></i>
+            </mat-chip-option>
+        </mat-chip-listbox>
+    </div>
     <div class="chart">
         <canvas #barChart baseChart [data]="chartData" [options]="chartOptions" [type]="chartType"> </canvas>
     </div>

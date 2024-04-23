@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import { tr } from 'date-fns/locale';
 import { BaseChartDirective } from 'ng2-charts';
 import { Observable } from 'rxjs';
 import { GeneralRequestService } from 'src/app/services/general/general-request.service';
@@ -58,7 +59,10 @@ export class StatisticComponent implements OnInit {
         display: true,
       }
     },
+    maintainAspectRatio:false,
+    responsive:true
   };
+  
 
   public chartData: ChartData = {
     labels: [],

@@ -1,32 +1,33 @@
 @import url('../../../variables.less');
 
 .statistics-route-container {
-    margin-top: 5vw;
-    margin-left: 20vw;
-    width: 80%;
+    width         : 100%;
+    padding-inline: 1vw;
+    padding-block : 5vw;
 
     .stat-controls-container {
-        width: 30%;
-        display: flex;
-        flex-wrap: nowrap;
+        width          : 30%;
+        display        : flex;
+        flex-wrap      : nowrap;
         justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1vw;
+        align-items    : center;
+        margin-bottom  : 1vw;
+
         .add-button {
-            display: flex;
+            display        : flex;
             justify-content: center;
-            font-size: smaller;
-            width: fit-content;
-            padding: 0.3vw;
-            background: #e0e4e4;
-            border-radius: 1rem;
-            color: #767979;
-            transition: ease-in 0.1s;
+            font-size      : smaller;
+            width          : fit-content;
+            padding        : 0.3vw;
+            background     : #e0e4e4;
+            border-radius  : 1rem;
+            color          : #767979;
+            transition     : ease-in 0.1s;
 
             &:hover {
-                cursor: pointer;
+                cursor    : pointer;
                 background: #d7dada;
-                color: #5d5f5f;
+                color     : #5d5f5f;
             }
 
             & i {
@@ -35,4 +36,15 @@
         }
 
     }
+
+    .stat-cont {
+
+        height: 40vw;
+        .stats-container {
+            margin-top     : 1vw;
+            display        : flex;
+            justify-content: space-around;
+        }
+    }
+
 }

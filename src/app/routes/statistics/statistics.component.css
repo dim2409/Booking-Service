@@ -1,7 +1,7 @@
 .statistics-route-container {
-  margin-top: 5vw;
-  margin-left: 20vw;
-  width: 80%;
+  width: 100%;
+  padding-inline: 1vw;
+  padding-block: 5vw;
 }
 .statistics-route-container .stat-controls-container {
   width: 30%;
@@ -29,4 +29,12 @@
 }
 .statistics-route-container .stat-controls-container .add-button i {
   font-size: 1.5vw;
+}
+.statistics-route-container .stat-cont {
+  height: 40vw;
+}
+.statistics-route-container .stat-cont .stats-container {
+  margin-top: 1vw;
+  display: flex;
+  justify-content: space-around;
 }
