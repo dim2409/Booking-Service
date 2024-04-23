@@ -34,9 +34,10 @@
         </mat-form-field>
         <mat-form-field *ngIf="datePicker">
             <mat-label>Dynamic Date Range</mat-label>
-            <mat-date-range-input [rangePicker]="datePicker" >
+            <mat-date-range-input [rangePicker]="datePicker">
                 <input matStartDate placeholder="Start date" #dateRangeStart>
-                <input matEndDate placeholder="End date" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+                <input matEndDate placeholder="End date" #dateRangeEnd
+                    (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
             </mat-date-range-input>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -60,6 +61,11 @@
             </mat-select>
         </mat-form-field>
     </div>
+    <mat-chip-listbox>
+        <mat-chip-option (click)="toggleFrequency()" [selected]="toggleFrequencyFlag">
+            <i class="fa-solid fa-percent"></i>
+        </mat-chip-option>
+    </mat-chip-listbox>
     <div class="chart">
         <canvas #barChart baseChart [data]="chartData" [options]="chartOptions" [type]="chartType"> </canvas>
     </div>

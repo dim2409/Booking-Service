@@ -1,3 +1,6 @@
 .static-container {
   width: 50%;
 }
+::ng-deep .mat-mdc-chip-graphic {
+  display: none !important;
+}

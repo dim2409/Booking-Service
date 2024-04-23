@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDateRangeInput, MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +27,7 @@ import { StatisticsService } from 'src/app/services/statistics/statistics.servic
     MatSelectModule,
     MatDatepickerModule,
     ReactiveFormsModule,
+    MatChipsModule,
     MatDateRangeInput
   ],
   templateUrl: './statistic.component.html',
@@ -105,6 +107,11 @@ export class StatisticComponent implements OnInit {
       end: ''
     }
   }
+  datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
+  frequencyData: any[] = [];
+  percentageData: any[] = [];
+  toggleFrequencyFlag: boolean = false;
+
   selectedAction = ''
   roomPicker = false;
   singleRoomPicker = false;
@@ -153,14 +160,11 @@ export class StatisticComponent implements OnInit {
     this.statOptions.find(option => option.value == $event.value)?.roomPicker ? this.roomPicker = true : this.roomPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.singleRoomPicker ? this.singleRoomPicker = true : this.singleRoomPicker = false;
     this.statOptions.find(option => option.value == $event.value)?.datePicker ? this.datePicker = true : this.datePicker = false;
-    console.log(this.datePicker)
 
     this.selectedAction = $event.value
     this.getData()
   }
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-    console.log(dateRangeStart.value);
-    console.log(dateRangeEnd.value);
     this.req.dateRange = {
       start: dateRangeStart.value,
       end: dateRangeEnd.value
@@ -195,32 +199,63 @@ export class StatisticComponent implements OnInit {
   udpateChart(data: any) {
     let i = 0;
     if (data[0].options.chartType == 'doughnut') {
-      let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
+      //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
 
       data.forEach((element: any) => {
-        datasets[0] = {
+        this.datasets[0] = {
           data: element.data.accumulatedDataset,
           backgroundColor: [this.rooms[element.room_id - 1].color, '#98d5f6'],
           borderColor: '#98d5f6',
           label: element.options.label
         }
+        this.frequencyData[0] = element.data.accumulatedDataset;
+        this.percentageData[0] = element.data.percentageDataset;
       })
-      this.chartData.datasets = datasets;
+      this.chartData.datasets = this.datasets;
     } else {
-      let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
+      //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
       data.forEach((element: any) => {
-        datasets[i] = {
+        this.datasets[i] = {
           data: element.data.frequency,
           backgroundColor: this.rooms[element.room_id - 1].color,
           borderColor: this.rooms[element.room_id - 1].color,
           label: element.options.label
-        }
+        }        
+        this.frequencyData[i] = element.data.frequency;
+        this.percentageData[i] = element.data.percentage;
         i++;
       })
-      this.chartData.datasets = datasets;
+      this.chartData.datasets = this.datasets;
     }
+    console.log(this.frequencyData)
+    console.log(this.percentageData)
     this.chartData.labels = data[0].data.labels
     this.chartType = data[0].options.chartType;
     this.barChart?.update();
+    this.toggleFrequencyFlag = false;
+  }
+  toggleFrequency() {
+    let i = 0;
+    if(this.toggleFrequencyFlag){
+      this.frequencyData.forEach((element: any) => {
+        this.datasets[i] = {
+          ...this.datasets[i],
+          data: element,
+        }
+        this.chartData.datasets = this.datasets;
+        i++;
+      })
+    } else {
+      this.percentageData.forEach((element: any) => {
+        this.datasets[i] = {
+          ...this.datasets[i],
+          data: element,
+        }
+        this.chartData.datasets = this.datasets;
+        i++;
+      })
+    }    
+    this.barChart?.update();
+    this.toggleFrequencyFlag = !this.toggleFrequencyFlag;   
   }
 }
