@@ -35,6 +35,4 @@
 }
 .statistics-route-container .stat-cont .stats-container {
   margin-top: 1vw;
-  display: flex;
-  justify-content: space-around;
 }
