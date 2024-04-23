@@ -22,18 +22,27 @@ import { CommonModule } from '@angular/common';
 })
 export class StatisticsComponent implements OnInit {
 
-
-  constructor() { }
-  public roomDayFrequency: any = [];
-  @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
-
-  stats: any = [];
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  /* CHART SHIT START */
+  data = {
+    labels: [],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4,
+    }]
+  };
+  public chartOptions: any['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      x: {},
+      x: { display: false, },
       y: {
-        min: 0,
+        min: 0, display: false,
+        //max: this.max
       },
     },
     plugins: {
@@ -41,26 +50,36 @@ export class StatisticsComponent implements OnInit {
         display: true,
       }
     },
+    //cutout : '90%',
+    maintainAspectRatio: false,
+    responsive: true
   };
+  public doughnut: any = 'doughnut';
 
-  public barChartType = 'bar' as const;
+  constructor(private statisticsService: StatisticsService) { }
+  public roomDayFrequency: any = [];
+  @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
 
-  public barChartData: ChartData<'bar'> = {
-    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    datasets: [
-      { data: [1, 2, 3, 4, 5, 6], label: 'Room Day Frequency' },
-    ],
-  };
+  stats: any = [];
+
+  totals: {} = {}
+  meanDuration: number = 0;
+  bussiestRoomsThisSemester: any[] = [];
+  bussiestRoomsThisWeek: any[] = [];
+  weekCapacityIndicator: {} = {};
+  monthCapacityIndicator: {} = {};
+  approvalRate: {} = {};
+
   ngOnInit(): void {
-    /* this.statisticsService.roomHourOfDayOfWeekFrequency(1).subscribe((resp: any) => {
-      this.roomDayFrequency = resp;
-      resp.forEach((element: any) => {
-        //this.barChartData.labels?.push(element.day_of_week);
-        this.barChartData.datasets[0].data?.push(element.frequency);
-        this.barChart?.update();
-        console.log(this.barChartData)
-      })
-    }) */
+    this.statisticsService.getGeneralStatistics().subscribe((resp: any) => {
+      this.totals = resp.totals;
+      this.meanDuration = resp.meanDuration;
+      this.bussiestRoomsThisSemester = resp.bussiestRoomsThisSemester;
+      this.bussiestRoomsThisWeek = resp.bussiestRoomsThisWeek;
+      this.weekCapacityIndicator = resp.weekCapacityIndicator;
+      this.monthCapacityIndicator = resp.monthCapacityIndicator;
+      this.approvalRate = resp.approvalRate;
+    })
   }
 
   addStat() {

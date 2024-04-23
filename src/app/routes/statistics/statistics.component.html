@@ -12,6 +12,17 @@
                 <i class="fa-solid fa-add"></i>
             </span>
         </span>
+        <div class="chart-container">
+            <div class="chart">
+                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+            </div>
+            <div class="chart">
+                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+            </div>
+            <div class="chart">
+                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+            </div>
+        </div>
         <mat-divider></mat-divider>
         <div class="row stat-cont"
             [ngStyle]="{ 'height': stats.length > 1 ? stats.length > 2 ? '70vw':'35vw' : '40vw' }">

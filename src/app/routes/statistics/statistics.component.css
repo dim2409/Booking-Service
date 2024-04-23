@@ -36,3 +36,10 @@
 .statistics-route-container .stat-cont .stats-container {
   margin-top: 1vw;
 }
+.statistics-route-container .chart-container {
+  display: flex;
+}
+.statistics-route-container .chart-container .chart {
+  margin-inline: 1vw;
+  width: 10vw;
+}

@@ -128,4 +128,8 @@ export class StatisticsService {
       datePicker: this.actionsMap[key].datePicker
     }));
   }
+
+  getGeneralStatistics(): Observable<any> {
+    return this.http.get<any>(environment.apiUrl + '/generalStatistics');
+  }
 }
