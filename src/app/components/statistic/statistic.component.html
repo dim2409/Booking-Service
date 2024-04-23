@@ -1,65 +1,56 @@
 <div class="static-container">
     <div class="options-container">
-        <mat-form-field class="option-select">
-            <mat-label>Pick Statistic</mat-label>
-            <mat-select (selectionChange)="chartOptionChange($event)">
-                <mat-option *ngFor="let stat of statOptions" value="{{stat.value}}">
-                    {{stat.label}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field *ngIf="roomPicker" class="option-select">
-            <mat-label>Room</mat-label>
-            <mat-select (selectionChange)="roomOptionChange($event)" multiple #roomSelect>
-                <mat-option *ngFor="let room of rooms" value="{{room.id}}">
+        <button mat-button [matMenuTriggerFor]="optionsMenu">Pick Statistic</button>
+        <mat-menu #optionsMenu="matMenu">
+            <button mat-menu-item *ngFor="let stat of statOptions"
+                (click)="chartOptionChange(stat.value)">{{stat.label}}</button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="roomMenu" *ngIf="roomPicker" >Room</button>
+        <mat-menu #roomMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let room of rooms" (click)="roomOptionChange($event, room)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': room.checked, 'fa-circle': !room.checked}"></i>
                     {{room.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field *ngIf="singleRoomPicker" class="option-select">
-            <mat-label>Room</mat-label>
-            <mat-select (selectionChange)="singleRoomOptionChange($event)" #singleRoomSelect>
-                <mat-option *ngFor="let room of rooms" value="{{room.id}}">
+                 </button>     
+        </mat-menu>        
+        <button mat-button [matMenuTriggerFor]="singleRoom" *ngIf="singleRoomPicker" >Room</button>
+        <mat-menu #singleRoom="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let room of rooms" (click)="singleRoomOptionChange($event, room)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': room.checked, 'fa-circle': !room.checked}"></i>
                     {{room.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field *ngIf="daypicker" class="option-select">
-            <mat-label>Day of Week</mat-label>
-            <mat-select (selectionChange)="dayOptionChange($event)" multiple #daySelect>
-                <mat-option *ngFor="let day of dayOptions" value="{{day.value}}">
+                 </button>     
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="daypickerMenu" *ngIf="daypicker" >asdDay of Week</button>
+        <mat-menu #daypickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let day of dayOptions" (click)="dayOptionChange($event, day)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': day.checked, 'fa-circle': !day.checked}"></i>
                     {{day.label}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field *ngIf="datePicker" class="option-select">
-            <mat-label>Dynamic Date Range</mat-label>
-            <mat-date-range-input [rangePicker]="datePicker">
+                 </button>     
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="monthPickerMenu" *ngIf="monthPicker" >Month</button>
+        <mat-menu #monthPickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let month of monthOptions" (click)="monthOptionChange($event, month)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': month.checked, 'fa-circle': !month.checked}"></i>
+                    {{month.label}}
+                 </button>     
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="semesterPickerMenu" *ngIf="semesterPicker" >Day of Week</button>
+        <mat-menu #semesterPickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let semester of semesters" (click)="semesterOptionChange($event, semester)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': semester.checked, 'fa-circle': !semester.checked}"></i>
+                    {{semester.name}}
+                 </button>     
+        </mat-menu>
+        <div *ngIf="datePicker">
+            <mat-date-range-input [rangePicker]="datePickerCallendar" class="option-select hide">
                 <input matStartDate placeholder="Start date" #dateRangeStart>
                 <input matEndDate placeholder="End date" #dateRangeEnd
                     (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
             </mat-date-range-input>
-            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
-            <mat-date-range-picker #datePicker></mat-date-range-picker>
-        </mat-form-field>
-
-        <mat-form-field *ngIf="monthPicker" class="option-select">
-            <mat-label>Month</mat-label>
-            <mat-select (selectionChange)="monthOptionChange($event)" multiple #monthSelect>
-                <mat-option *ngFor="let month of monthOptions" value="{{month.value}}">
-                    {{month.label}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field *ngIf="semesterPicker" class="option-select">
-            <mat-label>Semester Sample</mat-label>
-            <mat-select (selectionChange)="semesterOptionChange($event)" multiple #semesterSelect>
-                <mat-option *ngFor="let semester of semesters" value="{{semester.id}}">
-                    {{semester.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+            <mat-datepicker-toggle matIconSuffix [for]="datePickerCallendar"></mat-datepicker-toggle>
+            <mat-date-range-picker #datePickerCallendar></mat-date-range-picker>
+        </div>
         <div class="option-select" *ngIf="datasets.length>0">
             <mat-chip-listbox>
                 <mat-chip-option (click)="toggleFrequency()" [selected]="toggleFrequencyFlag">

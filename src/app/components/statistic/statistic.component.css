@@ -5,6 +5,7 @@
 }
 .static-container .options-container {
   display: flex;
+  align-items: center;
 }
 .static-container .options-container .option-select {
   margin-left: 1vw;
@@ -17,6 +18,9 @@
 .static-container .percentage-toggle-container i {
   font-size: 1.2vw !important;
 }
+i.fa-circle-check {
+  color: #f14c38 !important;
+}
 ::ng-deep .mat-mdc-chip-graphic {
   display: none !important;
 }
@@ -27,4 +31,7 @@
 .chart {
   width: 100%;
   height: 70%;
+}
+.hide {
+  display: none !important;
 }
