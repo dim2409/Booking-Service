@@ -208,7 +208,6 @@ export class StatisticComponent implements OnInit {
     this.getData()
   }
   singleRoomOptionChange($event: any, roomId: any) {    
-    $event.stopPropagation();
     this.req.singleRoomId = ''
     this.req.singleRoomId = roomId;
     this.getData()

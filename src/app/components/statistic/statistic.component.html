@@ -14,13 +14,12 @@
         </mat-menu>        
         <button mat-button [matMenuTriggerFor]="singleRoom" *ngIf="singleRoomPicker" >Room</button>
         <mat-menu #singleRoom="matMenu"  (opened)="true">
-                <button mat-menu-item *ngFor="let room of rooms" (click)="singleRoomOptionChange($event, room)">
-                    <i class="fa-regular" [ngClass]="{'fa-circle-check': room.checked, 'fa-circle': !room.checked}"></i>
+                <button mat-menu-item *ngFor="let room of rooms" (click)="singleRoomOptionChange($event, room.id)">
                     {{room.name}}
                  </button>     
         </mat-menu>
 
-        <button mat-button [matMenuTriggerFor]="daypickerMenu" *ngIf="daypicker" >asdDay of Week</button>
+        <button mat-button [matMenuTriggerFor]="daypickerMenu" *ngIf="daypicker" >Day of Week</button>
         <mat-menu #daypickerMenu="matMenu"  (opened)="true">
                 <button mat-menu-item *ngFor="let day of dayOptions" (click)="dayOptionChange($event, day)">
                     <i class="fa-regular" [ngClass]="{'fa-circle-check': day.checked, 'fa-circle': !day.checked}"></i>
@@ -35,7 +34,7 @@
                  </button>     
         </mat-menu>
 
-        <button mat-button [matMenuTriggerFor]="semesterPickerMenu" *ngIf="semesterPicker" >Day of Week</button>
+        <button mat-button [matMenuTriggerFor]="semesterPickerMenu" *ngIf="semesterPicker">Semester</button>
         <mat-menu #semesterPickerMenu="matMenu"  (opened)="true">
                 <button mat-menu-item *ngFor="let semester of semesters" (click)="semesterOptionChange($event, semester)">
                     <i class="fa-regular" [ngClass]="{'fa-circle-check': semester.checked, 'fa-circle': !semester.checked}"></i>
