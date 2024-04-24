@@ -6,22 +6,26 @@
 .statistics-route-container .statistics-header {
   display: flex;
 }
-.statistics-route-container .statistics-header .total-cards {
+.statistics-route-container .statistics-header .cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.statistics-route-container .statistics-header .cards .total-cards {
   display: flex;
 }
-.statistics-route-container .statistics-header .total-cards .totals-card {
+.statistics-route-container .statistics-header .cards .total-cards .totals-card {
   width: fit-content;
   height: fit-content;
   margin-inline: 0.3vw;
 }
-.statistics-route-container .statistics-header .total-cards .totals-card mat-card-title {
+.statistics-route-container .statistics-header .cards .total-cards .totals-card mat-card-title {
   padding-inline: 0.5vw;
 }
-.statistics-route-container .statistics-header .total-cards .totals-card .totals {
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals {
   display: flex;
   margin-top: 1vw;
 }
-.statistics-route-container .statistics-header .total-cards .totals-card .totals .total {
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals .total {
   margin-inline: 1vw;
   display: flex;
   flex-direction: column;
@@ -30,24 +34,28 @@
   color: #95b9e9;
   text-align: center;
 }
-.statistics-route-container .statistics-header .total-cards .totals-card .totals .total h1 {
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals .total h1 {
   color: #89c9f3;
   font-size: 2vw;
   font-weight: 500;
 }
-.statistics-route-container .statistics-header .mean-card {
+.statistics-route-container .statistics-header .cards .bottom-cards {
+  display: flex;
+  margin-top: 1vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card {
   width: fit-content;
   height: fit-content;
   margin-inline: 0.3vw;
 }
-.statistics-route-container .statistics-header .mean-card mat-card-title {
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card mat-card-title {
   padding-inline: 0.5vw;
 }
-.statistics-route-container .statistics-header .mean-card .mean-content {
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content {
   display: flex;
   margin-top: 1vw;
 }
-.statistics-route-container .statistics-header .mean-card .mean-content .mean {
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content .mean {
   margin-inline: 1vw;
   display: flex;
   flex-direction: column;
@@ -56,10 +64,34 @@
   color: #e9be95;
   text-align: center;
 }
-.statistics-route-container .statistics-header .mean-card .mean-content .mean h1 {
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content .mean h1 {
   color: #e9b15e;
   font-size: 2vw;
   font-weight: 500;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #ab95e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator h2 {
+  margin: 0 !important;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .chart {
+  width: 5vw;
+  height: 4.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .indicator-value {
+  position: absolute;
+  font-size: 1.1vw;
+  bottom: 3.4vw;
+  right: 3.1vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .indicator-value .symbol {
+  font-size: 0.71vw;
 }
 .statistics-route-container .statistics-header .stat-controls-container {
   width: 30%;

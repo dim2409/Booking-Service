@@ -1,89 +1,112 @@
 <div class="main" [ngStyle]="{ 'height': (stats.length+1) * 15 + 'vw' }">
     <div class="statistics-route-container">
         <div class="statistics-header"> 
-            <div class="total-cards">
-                <mat-card class="totals-card">
-                    <mat-card-title>Total Bookings</mat-card-title>
-                    <mat-divider></mat-divider>
-                    <mat-card-content class="totals">
-                        <span class="total">
-                            <h2>
-                                Month
-                            </h2>
-                            <h1>
-                                {{totals.totalMonth}}
-                            </h1>
-                            Bookings
-                            
-                        </span>
-                        <span class="total">
-                            <h2>
-                                Semester
-                            </h2>
-                            <h1>
-                                {{totals.totalSemester}}
-                            </h1>
-                            Bookings
-                        </span>
-                        <span class="total">
-                            <h2>
-                                Week
-                            </h2>
-                            <h1>
-                                {{totals.totalWeek}}
-                            </h1>
-                            Bookings
-                        </span>
-                    </mat-card-content>
-                </mat-card>
-                <mat-card class="totals-card">
-                    <mat-card-title>Busiest this Semester</mat-card-title>
-                    <mat-divider></mat-divider>
-                    <mat-card-content class="totals">
-                        <span class="total" *ngFor="let room of bussiestRoomsThisSemester">
-                            <h2>
-                                {{room.name}}
-                            </h2>
-                            <h1>
-    
-                                {{room.frequency}}<br>
-                            </h1>
-                            Bookings
-                        </span>
-                    </mat-card-content>
-                </mat-card>
-                <mat-card class="totals-card">
-                    <mat-card-title>This Week</mat-card-title>
-                    <mat-divider></mat-divider>
-                    <mat-card-content class="totals">
-                        <span class="total">
-                            <h2>
-                                {{bussiestRoomsThisWeek.name}}
-                            </h2>
-                            <h1>
-    
-                                {{bussiestRoomsThisWeek.frequency}}<br>
-                            </h1>
-                            Bookings
-                        </span>
-                    </mat-card-content>
-                </mat-card>
-            </div>           
-            <mat-card class="mean-card">
-                <mat-card-title>Mean Duration</mat-card-title>
-                <mat-divider></mat-divider>
-                <mat-card-content class="mean-content">
-                    <span class="mean">
-                        <h2>
-                            Semester
-                        </h2>
-                        <h1>
-                            {{meanDuration}}<br>
-                        </h1>
-                        Hours
-                    </span>
-                </mat-card-content>
-            </mat-card>
+            <div class="cards">
+
+                <div class="total-cards">
+                    <mat-card class="totals-card">
+                        <mat-card-title>Total Bookings</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total">
+                                <h2>
+                                    Month
+                                </h2>
+                                <h1>
+                                    {{totals.totalMonth}}
+                                </h1>
+                                Bookings
+                                
+                            </span>
+                            <span class="total">
+                                <h2>
+                                    Semester
+                                </h2>
+                                <h1>
+                                    {{totals.totalSemester}}
+                                </h1>
+                                Bookings
+                            </span>
+                            <span class="total">
+                                <h2>
+                                    Week
+                                </h2>
+                                <h1>
+                                    {{totals.totalWeek}}
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="totals-card">
+                        <mat-card-title>Busiest this Semester</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total" *ngFor="let room of bussiestRoomsThisSemester">
+                                <h2>
+                                    {{room.name}}
+                                </h2>
+                                <h1>
+        
+                                    {{room.frequency}}<br>
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="totals-card">
+                        <mat-card-title>This Week</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total">
+                                <h2>
+                                    {{bussiestRoomsThisWeek.name}}
+                                </h2>
+                                <h1>
+        
+                                    {{bussiestRoomsThisWeek.frequency}}<br>
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                </div>        
+                <div class="bottom-cards">
+                    <mat-card class="mean-card">
+                        <mat-card-title>Mean Duration</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="mean-content">
+                            <span class="mean">
+                                <h2>
+                                    Semester
+                                </h2>
+                                <h1>
+                                    {{meanDuration}}<br>
+                                </h1>
+                                Hours
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="mean-card">
+                        <mat-card-title>Indicators</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="indicator-content">
+                            <span class="indicator">
+                                <h2>
+                                    Week
+                                </h2>
+                                <div class="chart">
+                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="indicator-value">
+                                    {{weekCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
+                                </span>
+                                Capacity Indicator
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                </div>   
+            </div>
             
             <div class="chart-container">
                 <div class="chart">

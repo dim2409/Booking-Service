@@ -56,8 +56,37 @@ export class StatisticsComponent implements OnInit {
     maintainAspectRatio: false,
     responsive: true
   };
+  weekCapacityIndicatorData = {
+    labels: [],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [90, 10],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgba(255, 99, 132, 0)'  // Transparent color
+      ],
+      hoverOffset: 4,
+    }]
+  };
   public doughnut: any = 'doughnut';
-
+  public indicatorOptions: any['options'] = {
+    scales: {
+      x: { display: false, },
+      y: {
+        min: 0, display: false,
+        //max: this.max
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      }
+    },
+    cutout: '80%',
+    //cutout : '90%',
+    maintainAspectRatio: false,
+    responsive: true
+  }
   constructor(private statisticsService: StatisticsService) { }
   public roomDayFrequency: any = [];
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
@@ -68,7 +97,7 @@ export class StatisticsComponent implements OnInit {
   meanDuration: number = 0;
   bussiestRoomsThisSemester: any[] = [];
   bussiestRoomsThisWeek!: { name: string, frequency: number };
-  weekCapacityIndicator: {} = {};
+  weekCapacityIndicator!: {capacityIndicator: number};
   monthCapacityIndicator: {} = {};
   approvalRate: {} = {};
 
