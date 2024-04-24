@@ -1,33 +1,116 @@
 <div class="main" [ngStyle]="{ 'height': (stats.length+1) * 15 + 'vw' }">
     <div class="statistics-route-container">
-        <h1>
-            Statistcs Page
-        </h1>
+        <div class="statistics-header"> 
+            <div class="total-cards">
+                <mat-card class="totals-card">
+                    <mat-card-title>Total Bookings</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content class="totals">
+                        <span class="total">
+                            <h2>
+                                Month
+                            </h2>
+                            <h1>
+                                {{totals.totalMonth}}
+                            </h1>
+                            Bookings
+                            
+                        </span>
+                        <span class="total">
+                            <h2>
+                                Semester
+                            </h2>
+                            <h1>
+                                {{totals.totalSemester}}
+                            </h1>
+                            Bookings
+                        </span>
+                        <span class="total">
+                            <h2>
+                                Week
+                            </h2>
+                            <h1>
+                                {{totals.totalWeek}}
+                            </h1>
+                            Bookings
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="totals-card">
+                    <mat-card-title>Busiest this Semester</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content class="totals">
+                        <span class="total" *ngFor="let room of bussiestRoomsThisSemester">
+                            <h2>
+                                {{room.name}}
+                            </h2>
+                            <h1>
+    
+                                {{room.frequency}}<br>
+                            </h1>
+                            Bookings
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="totals-card">
+                    <mat-card-title>This Week</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content class="totals">
+                        <span class="total">
+                            <h2>
+                                {{bussiestRoomsThisWeek.name}}
+                            </h2>
+                            <h1>
+    
+                                {{bussiestRoomsThisWeek.frequency}}<br>
+                            </h1>
+                            Bookings
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+            </div>           
+            <mat-card class="mean-card">
+                <mat-card-title>Mean Duration</mat-card-title>
+                <mat-divider></mat-divider>
+                <mat-card-content class="mean-content">
+                    <span class="mean">
+                        <h2>
+                            Semester
+                        </h2>
+                        <h1>
+                            {{meanDuration}}<br>
+                        </h1>
+                        Hours
+                    </span>
+                </mat-card-content>
+            </mat-card>
+            
+            <div class="chart-container">
+                <div class="chart">
+                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                </div>
+                <div class="chart">
+                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                </div>
+                <div class="chart">
+                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                </div>
+            </div>
+        </div>
         <span class="stat-controls-container">
             <span>
-                Press button to add new statitic
+                Press button to add new statistic
             </span>
 
             <span class="add-button" (click)="addStat()">
                 <i class="fa-solid fa-add"></i>
             </span>
         </span>
-        <div class="chart-container">
-            <div class="chart">
-                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
-            </div>
-            <div class="chart">
-                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
-            </div>
-            <div class="chart">
-                <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
-            </div>
-        </div>
         <mat-divider></mat-divider>
         <div class="row stat-cont"
             [ngStyle]="{ 'height': stats.length > 1 ? stats.length > 2 ? '70vw':'35vw' : '40vw' }">
             <app-statistic class="stats-container" [ngClass]="stats.length > 1 ? 'col-6' : 'col-12'"
-                *ngFor="let stat of stats"></app-statistic>
+                *ngFor="let stat of stats; let i = index"></app-statistic>
         </div>
     </div>
 </div>

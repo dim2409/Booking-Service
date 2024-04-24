@@ -3,7 +3,65 @@
   padding-inline: 1vw;
   padding-block: 5vw;
 }
-.statistics-route-container .stat-controls-container {
+.statistics-route-container .statistics-header {
+  display: flex;
+}
+.statistics-route-container .statistics-header .total-cards {
+  display: flex;
+}
+.statistics-route-container .statistics-header .total-cards .totals-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .total-cards .totals-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .total-cards .totals-card .totals {
+  display: flex;
+  margin-top: 1vw;
+}
+.statistics-route-container .statistics-header .total-cards .totals-card .totals .total {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #95b9e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .total-cards .totals-card .totals .total h1 {
+  color: #89c9f3;
+  font-size: 2vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .mean-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .mean-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .mean-card .mean-content {
+  display: flex;
+  margin-top: 1vw;
+}
+.statistics-route-container .statistics-header .mean-card .mean-content .mean {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #e9be95;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .mean-card .mean-content .mean h1 {
+  color: #e9b15e;
+  font-size: 2vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .stat-controls-container {
   width: 30%;
   display: flex;
   flex-wrap: nowrap;
@@ -11,7 +69,7 @@
   align-items: center;
   margin-bottom: 1vw;
 }
-.statistics-route-container .stat-controls-container .add-button {
+.statistics-route-container .statistics-header .stat-controls-container .add-button {
   display: flex;
   justify-content: center;
   font-size: smaller;
@@ -22,24 +80,24 @@
   color: #767979;
   transition: ease-in 0.1s;
 }
-.statistics-route-container .stat-controls-container .add-button:hover {
+.statistics-route-container .statistics-header .stat-controls-container .add-button:hover {
   cursor: pointer;
   background: #d7dada;
   color: #5d5f5f;
 }
-.statistics-route-container .stat-controls-container .add-button i {
+.statistics-route-container .statistics-header .stat-controls-container .add-button i {
   font-size: 1.5vw;
+}
+.statistics-route-container .statistics-header .chart-container {
+  display: flex;
+}
+.statistics-route-container .statistics-header .chart-container .chart {
+  margin-inline: 1vw;
+  width: 10vw;
 }
 .statistics-route-container .stat-cont {
   height: 40vw;
 }
 .statistics-route-container .stat-cont .stats-container {
   margin-top: 1vw;
-}
-.statistics-route-container .chart-container {
-  display: flex;
-}
-.statistics-route-container .chart-container .chart {
-  margin-inline: 1vw;
-  width: 10vw;
 }

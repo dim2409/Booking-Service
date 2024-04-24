@@ -7,6 +7,7 @@ import { Chart } from 'chart.js/dist';
 import { MatDividerModule } from '@angular/material/divider';
 import { StatisticComponent } from 'src/app/components/statistic/statistic.component';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-statistics',
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
     BaseChartDirective,
     MatDividerModule,
     StatisticComponent,
-    CommonModule
+    CommonModule,
+    MatCardModule
   ],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.less'
@@ -62,10 +64,10 @@ export class StatisticsComponent implements OnInit {
 
   stats: any = [];
 
-  totals: {} = {}
+  totals!: { totalSemester : number, totalMonth: number ,totalWeek: number};
   meanDuration: number = 0;
   bussiestRoomsThisSemester: any[] = [];
-  bussiestRoomsThisWeek: any[] = [];
+  bussiestRoomsThisWeek!: { name: string, frequency: number };
   weekCapacityIndicator: {} = {};
   monthCapacityIndicator: {} = {};
   approvalRate: {} = {};
