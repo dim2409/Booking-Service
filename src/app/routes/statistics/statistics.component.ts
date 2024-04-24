@@ -97,8 +97,8 @@ export class StatisticsComponent implements OnInit {
   meanDuration: number = 0;
   bussiestRoomsThisSemester: any[] = [];
   bussiestRoomsThisWeek!: { name: string, frequency: number };
-  weekCapacityIndicator!: {capacityIndicator: number};
-  monthCapacityIndicator: {} = {};
+  weekCapacityIndicator!: {capacityIndicator: number, remainingHoursInWeek: number};
+  monthCapacityIndicator!: {capacityIndicator: number, remainingHoursInMonth: number};
   approvalRate: {} = {};
 
   ngOnInit(): void {

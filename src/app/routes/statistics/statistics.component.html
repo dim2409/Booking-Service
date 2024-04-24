@@ -87,7 +87,7 @@
                             </span>
                         </mat-card-content>
                     </mat-card>
-                    <mat-card class="mean-card">
+                    <mat-card class="indicator-card">
                         <mat-card-title>Indicators</mat-card-title>
                         <mat-divider></mat-divider>
                         <mat-card-content class="indicator-content">
@@ -102,6 +102,34 @@
                                     {{weekCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
                                 </span>
                                 Capacity Indicator
+                            </span>
+                            <span class="indicator">
+                                <h2>
+                                    Month
+                                </h2>
+                                <div class="chart">
+                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="indicator-value">
+                                    {{monthCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
+                                </span>
+                                Capacity Indicator
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="remaining-card">
+                        <mat-card-title>Remaining </mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="remaining-content">
+                            <span class="remaining-hours">
+                                <h2>
+                                    {{weekCapacityIndicator.remainingHoursInWeek}}<span class="symbol">hr</span><br>
+                                </h2>
+                                in Week
+                                <h2>
+                                    {{monthCapacityIndicator.remainingHoursInMonth}}<span class="symbol">hr</span><br>
+                                </h2>
+                                in Month
                             </span>
                         </mat-card-content>
                     </mat-card>

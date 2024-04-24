@@ -54,7 +54,7 @@
 
             .bottom-cards {
                 display   : flex;
-                margin-top: 1vw;
+                margin-top: 0.5vw;
 
                 .mean-card {
                     width : fit-content;
@@ -89,13 +89,65 @@
 
                             text-align: center;
 
-
                         }
 
                     }
 
+
+                }
+                .remaining-card{
+                    
+                    width : fit-content;
+                    height: fit-content;
+
+                    margin-inline: 0.3vw;
+
+                    mat-card-title {
+                        padding-inline: 0.5vw;
+                    }
+                    .remaining-content {
+                        display   : flex;
+
+                        .remaining-hours{
+                            
+                            margin-inline: 1vw;
+                            display       : flex;
+                            flex-direction: column;
+                            align-items   : center;
+                            
+                            text-align: center;
+                            h2{
+                                margin-top: 0.6vw;
+                                .symbol{
+                                    font-size:1vw;
+                                }
+                                margin-bottom: 0;
+                                color      : #e9b15e;
+                                font-size  : 1.5vw;
+                                font-weight: 500;
+                            }
+                        }
+
+                    }
+
+                }
+
+                .indicator-card {
+                    width : fit-content;
+                    height: fit-content;
+
+                    margin-inline: 0.3vw;
+
+                    mat-card-title {
+                        padding-inline: 0.5vw;
+                    }
+
                     .indicator-content {
+                        display: flex;
+
                         .indicator {
+                            position: relative;
+                            padding-inline: 0.5vw;
                             display       : flex;
                             flex-direction: column;
                             align-items   : center;
@@ -117,8 +169,8 @@
                             .indicator-value {
                                 position : absolute;
                                 font-size: 1.1vw;
-                                bottom   : 3.4vw;
-                                right: 3.1vw;
+                                bottom   : 2.6vw;
+                                right    : 2.8vw;
 
                                 .symbol {
 

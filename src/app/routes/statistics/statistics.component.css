@@ -41,7 +41,7 @@
 }
 .statistics-route-container .statistics-header .cards .bottom-cards {
   display: flex;
-  margin-top: 1vw;
+  margin-top: 0.5vw;
 }
 .statistics-route-container .statistics-header .cards .bottom-cards .mean-card {
   width: fit-content;
@@ -69,7 +69,48 @@
   font-size: 2vw;
   font-weight: 500;
 }
-.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator {
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours h2 {
+  margin-top: 0.6vw;
+  margin-bottom: 0;
+  color: #e9b15e;
+  font-size: 1.5vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours h2 .symbol {
+  font-size: 1vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator {
+  position: relative;
+  padding-inline: 0.5vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,20 +118,20 @@
   color: #ab95e9;
   text-align: center;
 }
-.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator h2 {
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator h2 {
   margin: 0 !important;
 }
-.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .chart {
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .chart {
   width: 5vw;
   height: 4.3vw;
 }
-.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .indicator-value {
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .indicator-value {
   position: absolute;
   font-size: 1.1vw;
-  bottom: 3.4vw;
-  right: 3.1vw;
+  bottom: 2.6vw;
+  right: 2.8vw;
 }
-.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .indicator-content .indicator .indicator-value .symbol {
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .indicator-value .symbol {
   font-size: 0.71vw;
 }
 .statistics-route-container .statistics-header .stat-controls-container {
