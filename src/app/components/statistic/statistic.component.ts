@@ -186,7 +186,22 @@ export class StatisticComponent implements OnInit {
     this.statOptions.find(option => option.value == action)?.datePicker ? this.datePicker = true : this.datePicker = false;
 
     this.selectedAction = action
+    this.resetData()
     this.getData()
+  }
+  resetData() {
+    this.dayOptions.forEach(day => {
+      day.checked = false
+    })
+    this.monthOptions.forEach(month => {
+      month.checked = false
+    })
+    this.semesters.forEach(semester => {
+      semester.checked = false
+    })
+    this.rooms.forEach(room => {
+      room.checked = false
+    })
   }
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     this.req.dateRange = {
@@ -258,6 +273,7 @@ export class StatisticComponent implements OnInit {
   }
   udpateChart(data: any) {
     let i = 0;
+    this.datasets = [];
     if (data[0].options.chartType == 'doughnut') {
       //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
 
