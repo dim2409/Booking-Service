@@ -213,12 +213,50 @@
 .statistics-route-container .statistics-header .stat-controls-container .add-button i {
   font-size: 1.5vw;
 }
-.statistics-route-container .statistics-header .chart-container {
+.statistics-route-container .statistics-header .right h1 {
+  font-size: 2vw;
+}
+.statistics-route-container .statistics-header .right h2 {
+  font-size: 1.5vw;
+  width: 100%;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .right .charts-container {
   display: flex;
 }
-.statistics-route-container .statistics-header .chart-container .chart {
+.statistics-route-container .statistics-header .right .charts-container .chart-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1vw;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart {
   margin-inline: 1vw;
   width: 10vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label {
+  display: flex;
+  position: absolute;
+  font-size: 1.7vw;
+  bottom: 7.2vw;
+  right: 3.6vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label .year {
+  font-size: 1.4vw;
+  position: absolute;
+  bottom: -1.8vw;
+  right: 1vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.semester {
+  bottom: 7.8vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.month {
+  right: 4vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.week {
+  right: 3.8vw;
 }
 .statistics-route-container .stat-cont {
   height: 40vw;

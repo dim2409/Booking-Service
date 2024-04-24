@@ -159,17 +159,31 @@
                     </mat-card>
                 </div>   
             </div>
-            
-            <div class="chart-container">
-                <div class="chart">
-                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+            <div class="right">
+                <h1>Room Occupancies</h1>
+                <div class="charts-container">
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label week">Week</span>
+                    </span>
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label month">April</span>
+                    </span>
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label semester">
+                            Spring <span class="year">2024</span> 
+                        </span>
+                    </span>
                 </div>
-                <div class="chart">
-                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
-                </div>
-                <div class="chart">
-                    <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
-                </div>
+                <h2>Accumulative Room Ocupancies</h2>
             </div>
         </div>
         <span class="stat-controls-container">

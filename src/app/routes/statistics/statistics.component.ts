@@ -52,7 +52,7 @@ export class StatisticsComponent implements OnInit {
         display: true,
       }
     },
-    //cutout : '90%',
+    cutout : '80%',
     maintainAspectRatio: false,
     responsive: true
   };
