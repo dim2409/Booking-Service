@@ -196,10 +196,16 @@
             </span>
         </span>
         <mat-divider></mat-divider>
-        <div class="row stat-cont"
-            [ngStyle]="{ 'height': stats.length > 1 ? stats.length > 2 ? '70vw':'35vw' : '40vw' }">
-            <app-statistic class="stats-container" [ngClass]="stats.length > 1 ? 'col-6' : 'col-12'"
-                *ngFor="let stat of stats; let i = index"></app-statistic>
+        <div class="row stat-cont" [ngStyle]="{ 'height': stats.length > 1 ? stats.length > 2 ? '70vw':'35vw' : '40vw' }">
+            <div  *ngFor="let stat of stats; let i = index" [ngClass]="stats.length > 1 ? 'col-6' : 'col-12'">
+                <div class="remove-button-container">
+
+                    <span class="remove-button" (click)="removeStat(i)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <app-statistic class="stats-container" ></app-statistic>
+            </div>
         </div>
     </div>
     <app-loading-spinner *ngIf="statsLoading"></app-loading-spinner>

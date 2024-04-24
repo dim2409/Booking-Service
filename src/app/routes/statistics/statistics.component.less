@@ -263,64 +263,69 @@
 
 
 
-        
-        .right{
-            h1{
+
+        .right {
+            h1 {
                 font-size: 2vw;
             }
-            h2{
+
+            h2 {
                 font-size: 1.5vw;
                 width: 100%;
                 text-align: center;
             }
+
             .charts-container {
                 display: flex;
-    
+
                 .chart-container {
                     position: relative;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-    
+
                     font-size: 1vw;
-    
+
                     text-align: center;
-    
+
                     .chart {
                         margin-inline: 1vw;
                         width: 10vw;
                     }
-    
+
                     .chart-label {
                         display: flex;
                         position: absolute;
                         font-size: 1.7vw;
                         bottom: 7.2vw;
                         right: 3.6vw;
-    
+
                         .year {
                             font-size: 1.4vw;
                             position: absolute;
                             bottom: -1.8vw;
                             right: 1vw;
                         }
+
                         &.semester {
                             bottom: 7.8vw;
                         }
+
                         &.month {
                             right: 4vw;
                         }
-        
+
                         &.week {
                             right: 3.8vw;
                         }
                     }
-    
+
                 }
-    
+
             }
         }
     }
+
     .stat-controls-container {
         width: 30%;
         display: flex;
@@ -362,4 +367,35 @@
         }
     }
 
+    .remove-button-container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: fit-content;
+        padding: 0.5vw;
+        .remove-button {
+
+            display: flex;
+            width: -moz-fit-content;
+            padding: 0.3vw;
+            background: #f4f7f7;
+            border-radius: 1rem;
+            color: #c2c7c7;
+            transition: ease-in 0.1s;
+            height: 1.9vw;
+            align-items: center;
+            justify-content: center;
+
+
+            &:hover {
+                cursor: pointer;
+                background: #d7dada;
+                color: #5d5f5f;
+            }
+
+            & i {
+                font-size: 1.5vw;
+            }
+        }
+    }
 }
