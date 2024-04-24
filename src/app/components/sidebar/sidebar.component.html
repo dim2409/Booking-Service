@@ -1,0 +1,13 @@
+<div class="sidebar" [class.open]="isOpen">
+
+    <!-- Sidebar Main Items -->
+    <div class="sidebar-items" *ngFor="let item of items; let i = index" (click)="changeLocation(item.location)">
+      <i [ngClass]="item.icon"></i>
+      <h3 class="item-style">
+        {{ item.label }}
+      </h3>
+    </div>
+</div>  
+
+<!-- Sidebar Overlay -->
+<div *ngIf="isOpen" class="sidebar-overlay" (click)="toggleSidebar()"></div>

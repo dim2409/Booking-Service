@@ -1,6 +1,6 @@
 .moderator-container {
-  padding-bottom: 3.3vw !important;
-  padding-top: 3.3vw !important;
+  padding-bottom: 2.9% !important;
+  padding-top: 2.9% !important;
 }
 .moderator-container .tab {
   margin-left: 20vw;
@@ -17,7 +17,7 @@
   border-bottom: 1px solid #dfdfdf;
 }
 .moderator-container .mdc-tab-indicator__content--underline {
-  --mdc-tab-indicator-active-indicator-color: #0051d4;
+  --mdc-tab-indicator-active-indicator-color: #284168;
 }
 .moderator-container .conflict-container {
   border-radius: 0.5rem;
@@ -26,12 +26,12 @@
   padding: 0.2rem;
 }
 .moderator-container .conflict-container .conflict {
-  color: #0051d4;
+  color: #284168;
   background-color: #ff00004d;
   border-style: solid;
 }
 .moderator-container .conflict-container .conflict .time {
-  color: #c14e69;
+  color: #c23535;
 }
 .moderator-container .conflict-container .conflict .mat-mdc-card-header {
   align-items: center;
@@ -51,10 +51,10 @@
 }
 .moderator-container .moderator-list-container .mat-expansion-panel-header .mat-expansion-panel-header-description {
   margin-right: 450px;
-  color: #c14e69;
+  color: #c23535;
 }
 .moderator-container .badge {
-  background-color: #c14e69;
+  background-color: #c23535;
   color: #ffffff;
   font-size: 1vw;
   font-weight: 500;

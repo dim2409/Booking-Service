@@ -14,6 +14,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
@@ -48,6 +49,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
         }),
         FontAwesomeModule,
         NavbarComponent,
+        SidebarComponent,
         CardListComponent,
         HttpClientModule,
         MatDialogModule,
