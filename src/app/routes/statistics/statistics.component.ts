@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { th } from 'date-fns/locale';
+import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-statistics',
@@ -19,13 +22,16 @@ import { th } from 'date-fns/locale';
     MatDividerModule,
     StatisticComponent,
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    LoadingSpinnerComponent,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.less'
 })
 export class StatisticsComponent implements OnInit {
-
+  statsLoading = true;
   /* CHART SHIT START */
   data = {
     labels: [],
@@ -201,6 +207,7 @@ export class StatisticsComponent implements OnInit {
       this.monthCapacityIndicator = resp.monthCapacityIndicator;
       this.approvalRate = resp.approvalRate;
       this.setUpcharts(resp);
+      this.statsLoading = false
     })
 
   }

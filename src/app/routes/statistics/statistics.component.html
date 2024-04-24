@@ -1,5 +1,5 @@
 <div class="main" [ngStyle]="{ 'height': (stats.length+1) * 15 + 'vw' }">
-    <div class="statistics-route-container">
+    <div class="statistics-route-container" *ngIf="!statsLoading">
         <div class="statistics-header"> 
             <div class="cards">
 
@@ -202,4 +202,5 @@
                 *ngFor="let stat of stats; let i = index"></app-statistic>
         </div>
     </div>
+    <app-loading-spinner *ngIf="statsLoading"></app-loading-spinner>
 </div>

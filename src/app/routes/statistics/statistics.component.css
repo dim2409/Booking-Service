@@ -186,33 +186,6 @@
   font-size: 2vw;
   font-weight: 500;
 }
-.statistics-route-container .statistics-header .stat-controls-container {
-  width: 30%;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1vw;
-}
-.statistics-route-container .statistics-header .stat-controls-container .add-button {
-  display: flex;
-  justify-content: center;
-  font-size: smaller;
-  width: fit-content;
-  padding: 0.3vw;
-  background: #e0e4e4;
-  border-radius: 1rem;
-  color: #767979;
-  transition: ease-in 0.1s;
-}
-.statistics-route-container .statistics-header .stat-controls-container .add-button:hover {
-  cursor: pointer;
-  background: #d7dada;
-  color: #5d5f5f;
-}
-.statistics-route-container .statistics-header .stat-controls-container .add-button i {
-  font-size: 1.5vw;
-}
 .statistics-route-container .statistics-header .right h1 {
   font-size: 2vw;
 }
@@ -257,6 +230,33 @@
 }
 .statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.week {
   right: 3.8vw;
+}
+.statistics-route-container .stat-controls-container {
+  width: 30%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 1vw;
+}
+.statistics-route-container .stat-controls-container .add-button {
+  display: flex;
+  justify-content: center;
+  font-size: smaller;
+  width: fit-content;
+  padding: 0.3vw;
+  background: #e0e4e4;
+  border-radius: 1rem;
+  color: #767979;
+  transition: ease-in 0.1s;
+  margin-left: 1vw;
+}
+.statistics-route-container .stat-controls-container .add-button:hover {
+  cursor: pointer;
+  background: #d7dada;
+  color: #5d5f5f;
+}
+.statistics-route-container .stat-controls-container .add-button i {
+  font-size: 1.5vw;
 }
 .statistics-route-container .stat-cont {
   height: 40vw;
