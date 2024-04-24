@@ -97,6 +97,42 @@ export class StatisticsComponent implements OnInit {
         ],
         hoverOffset: 4,
       }]},
+    {labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]},
+    {labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]},
+    {labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]},
   ]
   chartData = {
     labels: [],
@@ -174,19 +210,26 @@ export class StatisticsComponent implements OnInit {
     data.charts.forEach((chart: any) => {
       chart.forEach((element: any) => {
         this.charts[i].datasets[0] = {
-          data: element.data.accumulatedDataset,
-          backgroundColor: '',//[this.rooms[element.room_id - 1].color, ],
-          label: element.options.label
+          data: element.data.percentageDataset,
+          backgroundColor: '',
         }
-        element.roomIds.forEach((room: any) => {
+        if(element.roomIds == undefined){
           this.charts[i].datasets[0] = {
             ...this.charts[i].datasets[0],
-            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, this.rooms[room - 1].color],
+            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, '#f72571','rgba(255, 99, 132, 0)'],
           }
-        })
-        this.charts[i].datasets[0] = {
-          ...this.charts[i].datasets[0],
-          backgroundColor: [...this.charts[i].datasets[0].backgroundColor,'#e3e3e3'],
+        }else{
+          element.roomIds.forEach((room: any) => {
+            this.charts[i].datasets[0] = {
+              ...this.charts[i].datasets[0],
+              backgroundColor: [...this.charts[i].datasets[0].backgroundColor, this.rooms[room - 1].color],
+            }
+          })
+          
+          this.charts[i].datasets[0] = {
+            ...this.charts[i].datasets[0],
+            backgroundColor: [...this.charts[i].datasets[0].backgroundColor,'#e3e3e3'],
+          }
         }
       })
       i++

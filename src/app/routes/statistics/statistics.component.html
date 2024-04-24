@@ -81,7 +81,7 @@
                                     Week
                                 </h2>
                                 <div class="chart">
-                                    <canvas #approvalChart baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
+                                    <canvas #approvalChart baseChart [options]="indicatorOptions" [data]="charts[3]" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="approval-value">
                                     {{approvalRate.approvalRate}}<span class="symbol">%</span>
@@ -105,7 +105,7 @@
                                     Week
                                 </h2>
                                 <div class="chart">
-                                    <canvas #weekIndicatorChart baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
+                                    <canvas #weekIndicatorChart baseChart [options]="indicatorOptions" [data]="charts[4]" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="indicator-value">
                                     {{weekCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
@@ -117,7 +117,7 @@
                                     Month
                                 </h2>
                                 <div class="chart">
-                                    <canvas #monthIndicatorChart  baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
+                                    <canvas #monthIndicatorChart  baseChart [options]="indicatorOptions" [data]="charts[5]" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="indicator-value">
                                     {{monthCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
