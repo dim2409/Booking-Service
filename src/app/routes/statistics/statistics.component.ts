@@ -8,6 +8,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { StatisticComponent } from 'src/app/components/statistic/statistic.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { th } from 'date-fns/locale';
 
 @Component({
   selector: 'app-statistics',
@@ -52,11 +54,51 @@ export class StatisticsComponent implements OnInit {
         display: true,
       }
     },
-    cutout : '80%',
+    cutout: '80%',
     maintainAspectRatio: false,
     responsive: true
   };
-  weekCapacityIndicatorData = {
+  charts: any[] = [
+    {
+      labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]
+    },
+    {labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]},
+    {labels: [],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [25, 25, 25, 25],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgba(255, 99, 132, 0)'
+        ],
+        hoverOffset: 4,
+      }]},
+  ]
+  chartData = {
     labels: [],
     datasets: [{
       label: 'My First Dataset',
@@ -87,21 +129,33 @@ export class StatisticsComponent implements OnInit {
     maintainAspectRatio: false,
     responsive: true
   }
-  constructor(private statisticsService: StatisticsService) { }
+  rooms: any;
+  constructor(private statisticsService: StatisticsService, private RoomsService: RoomsService) { }
   public roomDayFrequency: any = [];
   @ViewChild(BaseChartDirective) barChart: BaseChartDirective<'bar'> | undefined;
 
+  @ViewChild(BaseChartDirective) approvalChart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) weekIndicatorChart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) monthIndicatorChart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) weekOccupancyChart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) monthOccupancyChart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) semesterOccupancyChart: BaseChartDirective | undefined;
+
+
   stats: any = [];
 
-  totals!: { totalSemester : number, totalMonth: number ,totalWeek: number};
+  totals!: { totalSemester: number, totalMonth: number, totalWeek: number };
   meanDuration: number = 0;
   bussiestRoomsThisSemester: any[] = [];
   bussiestRoomsThisWeek!: { name: string, frequency: number };
-  weekCapacityIndicator!: {capacityIndicator: number, remainingHoursInWeek: number};
-  monthCapacityIndicator!: {capacityIndicator: number, remainingHoursInMonth: number};
-  approvalRate!:  {approvalRate: number, approvedBookings: number, canceledBookings: number, cancelationRate: number, allBookings: number};
+  weekCapacityIndicator!: { capacityIndicator: number, remainingHoursInWeek: number };
+  monthCapacityIndicator!: { capacityIndicator: number, remainingHoursInMonth: number };
+  approvalRate!: { approvalRate: number, approvedBookings: number, canceledBookings: number, cancelationRate: number, allBookings: number };
 
   ngOnInit(): void {
+    this.RoomsService.getAllRooms().subscribe((resp: any) => {
+      this.rooms = resp;
+    })
     this.statisticsService.getGeneralStatistics().subscribe((resp: any) => {
       this.totals = resp.totals;
       this.meanDuration = resp.meanDuration;
@@ -110,8 +164,35 @@ export class StatisticsComponent implements OnInit {
       this.weekCapacityIndicator = resp.weekCapacityIndicator;
       this.monthCapacityIndicator = resp.monthCapacityIndicator;
       this.approvalRate = resp.approvalRate;
+      this.setUpcharts(resp);
+    })
+
+  }
+
+  setUpcharts(data: any) {
+    let i = 0;
+    data.charts.forEach((chart: any) => {
+      chart.forEach((element: any) => {
+        this.charts[i].datasets[0] = {
+          data: element.data.accumulatedDataset,
+          backgroundColor: '',//[this.rooms[element.room_id - 1].color, ],
+          label: element.options.label
+        }
+        element.roomIds.forEach((room: any) => {
+          this.charts[i].datasets[0] = {
+            ...this.charts[i].datasets[0],
+            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, this.rooms[room - 1].color],
+          }
+        })
+        this.charts[i].datasets[0] = {
+          ...this.charts[i].datasets[0],
+          backgroundColor: [...this.charts[i].datasets[0].backgroundColor,'#e3e3e3'],
+        }
+      })
+      i++
     })
   }
+
 
   addStat() {
     this.stats.push({});

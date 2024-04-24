@@ -81,7 +81,7 @@
                                     Week
                                 </h2>
                                 <div class="chart">
-                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                    <canvas #approvalChart baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="approval-value">
                                     {{approvalRate.approvalRate}}<span class="symbol">%</span>
@@ -105,7 +105,7 @@
                                     Week
                                 </h2>
                                 <div class="chart">
-                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                    <canvas #weekIndicatorChart baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="indicator-value">
                                     {{weekCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
@@ -117,7 +117,7 @@
                                     Month
                                 </h2>
                                 <div class="chart">
-                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                    <canvas #monthIndicatorChart  baseChart [options]="indicatorOptions" [data]="chartData" [type]="doughnut"> </canvas>
                                 </div>
                                 <span class="indicator-value">
                                     {{monthCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
@@ -164,19 +164,19 @@
                 <div class="charts-container">
                     <span class="chart-container">
                         <div class="chart">
-                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                            <canvas #weekOccupancyChart baseChart [options]="chartOptions" [data]="charts[0]" [type]="doughnut"> </canvas>
                         </div>
                         <span class="chart-label week">Week</span>
                     </span>
                     <span class="chart-container">
                         <div class="chart">
-                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                            <canvas #monthOccupancyChart baseChart [options]="chartOptions" [data]="charts[1]" [type]="doughnut"> </canvas>
                         </div>
                         <span class="chart-label month">April</span>
                     </span>
                     <span class="chart-container">
                         <div class="chart">
-                            <canvas #barChart baseChart [options]="chartOptions" [data]="data" [type]="doughnut"> </canvas>
+                            <canvas #semesterOccupancyChart baseChart [options]="chartOptions" [data]="charts[2]" [type]="doughnut"> </canvas>
                         </div>
                         <span class="chart-label semester">
                             Spring <span class="year">2024</span> 
