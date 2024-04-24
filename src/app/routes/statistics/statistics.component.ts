@@ -62,7 +62,8 @@ export class StatisticsComponent implements OnInit {
     },
     cutout: '80%',
     maintainAspectRatio: false,
-    responsive: true
+    responsive: true,
+    events: [], // Disables all interactive events, including hover
   };
   charts: any[] = [
     {
@@ -79,7 +80,8 @@ export class StatisticsComponent implements OnInit {
         hoverOffset: 4,
       }]
     },
-    {labels: [],
+    {
+      labels: [],
       datasets: [{
         label: 'My First Dataset',
         data: [25, 25, 25, 25],
@@ -90,8 +92,10 @@ export class StatisticsComponent implements OnInit {
           'rgba(255, 99, 132, 0)'
         ],
         hoverOffset: 4,
-      }]},
-    {labels: [],
+      }]
+    },
+    {
+      labels: [],
       datasets: [{
         label: 'My First Dataset',
         data: [25, 25, 25, 25],
@@ -102,8 +106,10 @@ export class StatisticsComponent implements OnInit {
           'rgba(255, 99, 132, 0)'
         ],
         hoverOffset: 4,
-      }]},
-    {labels: [],
+      }]
+    },
+    {
+      labels: [],
       datasets: [{
         label: 'My First Dataset',
         data: [25, 25, 25, 25],
@@ -114,8 +120,10 @@ export class StatisticsComponent implements OnInit {
           'rgba(255, 99, 132, 0)'
         ],
         hoverOffset: 4,
-      }]},
-    {labels: [],
+      }]
+    },
+    {
+      labels: [],
       datasets: [{
         label: 'My First Dataset',
         data: [25, 25, 25, 25],
@@ -126,8 +134,10 @@ export class StatisticsComponent implements OnInit {
           'rgba(255, 99, 132, 0)'
         ],
         hoverOffset: 4,
-      }]},
-    {labels: [],
+      }]
+    },
+    {
+      labels: [],
       datasets: [{
         label: 'My First Dataset',
         data: [25, 25, 25, 25],
@@ -138,7 +148,8 @@ export class StatisticsComponent implements OnInit {
           'rgba(255, 99, 132, 0)'
         ],
         hoverOffset: 4,
-      }]},
+      }]
+    },
   ]
   chartData = {
     labels: [],
@@ -169,7 +180,8 @@ export class StatisticsComponent implements OnInit {
     cutout: '80%',
     //cutout : '90%',
     maintainAspectRatio: false,
-    responsive: true
+    responsive: true,
+    events: [], // Disables all interactive events, including hover
   }
   rooms: any;
   constructor(private statisticsService: StatisticsService, private RoomsService: RoomsService) { }
@@ -220,22 +232,22 @@ export class StatisticsComponent implements OnInit {
           data: element.data.percentageDataset,
           backgroundColor: '',
         }
-        if(element.roomIds == undefined){
+        if (element.roomIds == undefined) {
           this.charts[i].datasets[0] = {
             ...this.charts[i].datasets[0],
-            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, '#f72571','rgba(255, 99, 132, 0)'],
+            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, '#f72571', 'rgba(255, 99, 132, 0)'],
           }
-        }else{
+        } else {
           element.roomIds.forEach((room: any) => {
             this.charts[i].datasets[0] = {
               ...this.charts[i].datasets[0],
               backgroundColor: [...this.charts[i].datasets[0].backgroundColor, this.rooms[room - 1].color],
             }
           })
-          
+
           this.charts[i].datasets[0] = {
             ...this.charts[i].datasets[0],
-            backgroundColor: [...this.charts[i].datasets[0].backgroundColor,'#e3e3e3'],
+            backgroundColor: [...this.charts[i].datasets[0].backgroundColor, '#e3e3e3'],
           }
         }
       })

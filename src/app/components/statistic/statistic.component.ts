@@ -52,7 +52,7 @@ export class StatisticComponent implements OnInit {
   @ViewChild('semesterSelect') semesterSelect?: MatSelect;
 
   public max = 100;
-  public chartOptions: ChartConfiguration['options'] = {
+  public chartOptions: any['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {},
@@ -66,6 +66,8 @@ export class StatisticComponent implements OnInit {
         display: true,
       }
     },
+    //barThickness:,
+    tension: 0.4,
     maintainAspectRatio: false,
     responsive: true
   };
