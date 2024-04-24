@@ -161,7 +161,6 @@ export class StatisticComponent implements OnInit {
     })
   }
   chartOptionChange(action: any) {
-    console.log('hull?')
     this.roomSelect ? this.roomSelect.value = null : null;
     this.singleRoomSelect ? this.singleRoomSelect.value = null : null;
     this.daySelect ? this.daySelect.value = null : null;
@@ -274,6 +273,8 @@ export class StatisticComponent implements OnInit {
   udpateChart(data: any) {
     let i = 0;
     this.datasets = [];
+    this.frequencyData = []
+        this.percentageData = []
     if (data[0].options.chartType == 'doughnut') {
       //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
 
@@ -327,7 +328,6 @@ export class StatisticComponent implements OnInit {
           ...this.datasets[i],
           data: element,
         }
-        this.chartData.datasets = this.datasets;
         i++;
       })
     } else {
@@ -336,10 +336,10 @@ export class StatisticComponent implements OnInit {
           ...this.datasets[i],
           data: element,
         }
-        this.chartData.datasets = this.datasets;
         i++;
       })
     }
+    this.chartData.datasets = this.datasets;
     this.barChart?.update();
     this.toggleFrequencyFlag = !this.toggleFrequencyFlag;
   }
