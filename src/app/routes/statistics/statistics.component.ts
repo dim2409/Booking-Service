@@ -99,7 +99,7 @@ export class StatisticsComponent implements OnInit {
   bussiestRoomsThisWeek!: { name: string, frequency: number };
   weekCapacityIndicator!: {capacityIndicator: number, remainingHoursInWeek: number};
   monthCapacityIndicator!: {capacityIndicator: number, remainingHoursInMonth: number};
-  approvalRate: {} = {};
+  approvalRate!:  {approvalRate: number, approvedBookings: number, canceledBookings: number, cancelationRate: number, allBookings: number};
 
   ngOnInit(): void {
     this.statisticsService.getGeneralStatistics().subscribe((resp: any) => {

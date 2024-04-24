@@ -74,7 +74,7 @@
 
                             h1 {
                                 color      : #e9b15e;
-                                font-size  : 2vw;
+                                font-size  : 3vw;
                                 font-weight: 500;
                             }
 
@@ -179,6 +179,76 @@
                             }
                         }
                     }
+                }
+                .approval-card {
+                    width : fit-content;
+                    height: fit-content;
+
+                    margin-inline: 0.3vw;
+
+                    mat-card-title {
+                        padding-inline: 0.5vw;
+                    }
+
+                    .approval-content {
+                        display: flex;
+
+                        .approval {
+                            position: relative;
+                            padding-inline: 0.5vw;
+                            display       : flex;
+                            flex-direction: column;
+                            align-items   : center;
+
+                            font-size: 0.8vw;
+                            color    : #ab95e9;
+
+                            text-align: center;
+
+                            h2 {
+                                margin: 0 !important;
+                            }
+
+                            .chart {
+                                width : 5vw;
+                                height: 4.3vw;
+                            }
+
+                            .approval-value {
+                                position : absolute;
+                                font-size: 1.1vw;
+                                bottom   : 2.6vw;
+                                right    : 2vw;
+
+                                .symbol {
+
+                                    font-size: 0.71vw;
+                                }
+                            }
+                        }
+                        .approved {
+
+                            padding-top: 2vw;
+                            h1 {
+                                color      : #e9b15e;
+                                font-size  : 2vw;
+                                font-weight: 500;
+                            }
+
+                            margin-inline: 2vw;
+
+                            display       : flex;
+                            flex-direction: column;
+                            align-items   : center;
+
+                            font-size: 0.8vw;
+                            color    : #e9be95;
+
+                            text-align: center;
+
+                        }
+                    }
+
                 }
             }
         }

@@ -66,7 +66,7 @@
 }
 .statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content .mean h1 {
   color: #e9b15e;
-  font-size: 2vw;
+  font-size: 3vw;
   font-weight: 500;
 }
 .statistics-route-container .statistics-header .cards .bottom-cards .remaining-card {
@@ -133,6 +133,58 @@
 }
 .statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .indicator-value .symbol {
   font-size: 0.71vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval {
+  position: relative;
+  padding-inline: 0.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #ab95e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval h2 {
+  margin: 0 !important;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .chart {
+  width: 5vw;
+  height: 4.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .approval-value {
+  position: absolute;
+  font-size: 1.1vw;
+  bottom: 2.6vw;
+  right: 2vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .approval-value .symbol {
+  font-size: 0.71vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approved {
+  padding-top: 2vw;
+  margin-inline: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #e9be95;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approved h1 {
+  color: #e9b15e;
+  font-size: 2vw;
+  font-weight: 500;
 }
 .statistics-route-container .statistics-header .stat-controls-container {
   width: 30%;

@@ -72,21 +72,30 @@
                     </mat-card>
                 </div>        
                 <div class="bottom-cards">
-                    <mat-card class="mean-card">
-                        <mat-card-title>Mean Duration</mat-card-title>
+                    <mat-card class="approval-card">
+                        <mat-card-title>Approval Rate</mat-card-title>
                         <mat-divider></mat-divider>
-                        <mat-card-content class="mean-content">
-                            <span class="mean">
+                        <mat-card-content class="approval-content">
+                            <span class="approval">
                                 <h2>
-                                    Semester
+                                    Week
                                 </h2>
+                                <div class="chart">
+                                    <canvas baseChart [options]="indicatorOptions" [data]="weekCapacityIndicatorData" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="approval-value">
+                                    {{approvalRate.approvalRate}}<span class="symbol">%</span>
+                                </span>
+                                Approval Rate
+                            </span>
+                            <span class="approved">
                                 <h1>
-                                    {{meanDuration}}<br>
+                                    {{approvalRate.approvedBookings}}/{{approvalRate.allBookings}}<br>
                                 </h1>
-                                Hours
+                                Approved out <br> of all Bookings
                             </span>
                         </mat-card-content>
-                    </mat-card>
+                    </mat-card> 
                     <mat-card class="indicator-card">
                         <mat-card-title>Indicators</mat-card-title>
                         <mat-divider></mat-divider>
@@ -130,6 +139,21 @@
                                     {{monthCapacityIndicator.remainingHoursInMonth}}<span class="symbol">hr</span><br>
                                 </h2>
                                 in Month
+                            </span>
+                        </mat-card-content>
+                    </mat-card>                   
+                    <mat-card class="mean-card">
+                        <mat-card-title>Mean Duration</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="mean-content">
+                            <span class="mean">
+                                <h2>
+                                    Semester
+                                </h2>
+                                <h1>
+                                    {{meanDuration}}<br>
+                                </h1>
+                                Hours
                             </span>
                         </mat-card-content>
                     </mat-card>
