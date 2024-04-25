@@ -63,7 +63,7 @@ export class DialogService {
   openCreateRoomDialog() {
     const dialogRef = this.dialog.open(CreateRoomDialogComponent, {
       autoFocus: false,
-      width: "90vw",
+      width: "33vw",
       height: "90%",
       disableClose: true,
     });

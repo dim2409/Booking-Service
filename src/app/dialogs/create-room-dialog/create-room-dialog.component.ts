@@ -10,6 +10,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @Component({
@@ -24,13 +25,16 @@ import { MatDialogRef } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatIconModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ],
   templateUrl: './create-room-dialog.component.html',
   styleUrl: './create-room-dialog.component.less'
 })
 export class CreateRoomDialogComponent {
+  possibleModerators: any;
 
+  selectedModeratorIds: number[] = [];
 
   constructor(private roomService: RoomsService, public dialogRef: MatDialogRef<CreateRoomDialogComponent>) { }
 
@@ -50,6 +54,9 @@ export class CreateRoomDialogComponent {
     this.roomService.getDepartments({}).subscribe((data: any) => {
       this.departments = data;
     });
+    this.roomService.getPossibleModerators({}).subscribe((data: any) => {
+      this.possibleModerators = data;
+    })
   }
 
   selectDepartment($event: MatSelectChange) {
@@ -67,5 +74,8 @@ export class CreateRoomDialogComponent {
         this.dialogRef.close();
       }
     })
+  }
+  close() {
+    this.dialogRef.close(false);
   }
 }
