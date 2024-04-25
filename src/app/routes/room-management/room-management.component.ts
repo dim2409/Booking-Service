@@ -14,6 +14,7 @@ import { ChartConfiguration, ChartData } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { StatisticsService } from 'src/app/services/statistics/statistics.service';
 import { Chart } from 'chart.js/dist';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-room-management',
@@ -29,7 +30,7 @@ export class RoomManagementComponent {
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
 
-  
+
 
   pageIndex: number = 0;
 
@@ -72,9 +73,11 @@ export class RoomManagementComponent {
   departments: any;
   filters: any;
   roomDayFrequency: any;
-  constructor(private RoomService: RoomsService, private statisticsService: StatisticsService,private filterService: FiltersService, private dialogService: DialogService) {
+  constructor(private _snackBar: MatSnackBar, private RoomService: RoomsService, private statisticsService: StatisticsService, private filterService: FiltersService, private dialogService: DialogService) {
   }
-
+  openSnackBar(message: string, action?: string) {
+    this._snackBar.open(message, action ? action : 'Dismiss')._dismissAfter(3000);
+  }
   ngOnInit() {
     this.RoomService.getDepartments({ user_id: 2 }).subscribe((resp: any) => {
       this.departments = resp
@@ -84,7 +87,7 @@ export class RoomManagementComponent {
       })
     })
     this.getData();
-    
+
   }
 
   filterUpdated(event: any) {
@@ -143,7 +146,8 @@ export class RoomManagementComponent {
 
   addRoom() {
     this.dialogService.openCreateRoomDialog().subscribe((resp: any) => {
-
+      this.getData();
+      this.openSnackBar('Room Added');
     })
   }
 }

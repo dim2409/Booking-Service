@@ -68,7 +68,7 @@ export class CreateRoomDialogComponent {
   onSubmit(createRoomForm:any) {
     this.roomService.createRoom({
       ...createRoomForm.value,
-      color: this.iconColor
+      color: '#'+this.colorControl.value.hex
     }).subscribe((resp: any) => {
       if(resp) {
         this.dialogRef.close();
