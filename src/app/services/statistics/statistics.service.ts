@@ -81,7 +81,6 @@ export class StatisticsService {
     },
     roomOccupancyBySemester: {
       roomPicker: true,
-      singleRoomPicker: true,
       label: 'Occupancy by Semester',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyBySemester', req)
     },
