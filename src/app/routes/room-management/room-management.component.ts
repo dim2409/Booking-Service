@@ -150,4 +150,11 @@ export class RoomManagementComponent {
       this.openSnackBar('Room Added');
     })
   }
+  editRoom(room:any) {
+    console.log(room)
+    this.dialogService.openCreateRoomDialog(room.booking).subscribe((resp: any) => {
+      this.getData();
+      this.openSnackBar('Room Updated');
+    })
+  }
 }

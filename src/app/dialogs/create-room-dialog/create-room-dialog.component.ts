@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,8 +9,9 @@ import { CommonModule } from '@angular/common';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -35,10 +36,18 @@ export class CreateRoomDialogComponent {
   possibleModerators: any;
 
   selectedModeratorIds: number[] = [];
+roomInfo: any;
+selectedBuildingId: any;
+selectedDepartmentId: any;
+roomName: any;
 
-  constructor(private roomService: RoomsService, public dialogRef: MatDialogRef<CreateRoomDialogComponent>) { }
+  constructor(private roomService: RoomsService, public dialogRef: MatDialogRef<CreateRoomDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    
+   }
 
   @ViewChild('createRoomForm') createRoomForm!: NgForm;
+
+  @Input() room: any;
 
   colorCtr: AbstractControl = new FormControl(new Color(255, 243, 0), [Validators.required]);
   color: any;
@@ -53,13 +62,22 @@ export class CreateRoomDialogComponent {
   ngOnInit(): void {
     this.roomService.getDepartments({}).subscribe((data: any) => {
       this.departments = data;
+      this.roomService.getPossibleModerators({}).subscribe((data: any) => {
+        this.possibleModerators = data;
+        console.log(this.data)
+        if(this.data) { 
+          this.color = this.data.color;
+          this.iconColor = this.data.color;  
+          this.roomName = this.data.name;
+          this.selectedDepartmentId =  this.data.department_id;
+          this.selectedBuildingId = this.data.building_id;
+          this.selectDepartment({value: this.data.department_id})
+        }
+      })
     });
-    this.roomService.getPossibleModerators({}).subscribe((data: any) => {
-      this.possibleModerators = data;
-    })
   }
 
-  selectDepartment($event: MatSelectChange) {
+  selectDepartment($event: any) {
     this.roomService.getBuildings({ department_id: $event.value }).subscribe((data: any) => {
       this.buildings = data;
     })

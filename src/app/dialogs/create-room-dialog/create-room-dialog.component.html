@@ -1,11 +1,11 @@
 <div class="top-bar" cdkDragHandle>
     <i class="fa-solid fa-xmark" (click)="close()"></i>
 </div>
-<form #createRoomForm="ngForm" class="roomForm" (ngSubmit)="onSubmit(createRoomForm)">
+<form #createRoomForm="ngForm" class="roomForm"  (ngSubmit)="onSubmit(createRoomForm)">
     <div class="name-color">
         <mat-form-field>
             <mat-label>Room name</mat-label>
-            <input name="name" matInput ngModel>
+            <input name="name" matInput ngModel [(ngModel)]="roomName">
         </mat-form-field>
         <mat-form-field>
             <input matInput [ngxMatColorPicker]="picker" name="color" [formControl]="colorControl">
@@ -20,14 +20,14 @@
     <div class="department-building">
         <mat-form-field class="department">
             <mat-label>Select Department</mat-label>
-            <mat-select name="department_id" (selectionChange)="selectDepartment($event)" matInput ngModel>
+            <mat-select name="department_id" (selectionChange)="selectDepartment($event)" matInput ngModel [(ngModel)]="selectedDepartmentId">
                 <mat-option *ngFor="let department of departments"
                     [value]="department.id">{{department.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="building">
             <mat-label>Select Building</mat-label>
-            <mat-select name="building_id" matInput ngModel [disabled]="buildings?.length<=0">
+            <mat-select name="building_id" matInput ngModel [disabled]="buildings?.length<=0" [(ngModel)]="selectedBuildingId">
                 <mat-option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -44,7 +44,7 @@
 
     <mat-form-field>
         <mat-label>Room info</mat-label>
-        <textarea name="info" matInput ngModel></textarea>
+        <textarea name="info" matInput ngModel [(ngModel)]="roomInfo"></textarea>
     </mat-form-field>
 
     <div class="room-form-buttons">
