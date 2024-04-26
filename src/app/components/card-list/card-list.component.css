@@ -52,7 +52,8 @@
 }
 .card-list-container .mat-mdc-card .buttons {
   position: absolute;
-  right: 0.1rem;
+  right: 0.1vw;
+  top: 0.1vw;
   display: flex;
 }
 .card-list-container .mat-mdc-card .button-color {

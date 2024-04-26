@@ -50,10 +50,6 @@ export class RoomManagementComponent {
 
   buttons = [
     {
-      icon: 'fa-expand',
-      action: 'openInfo',
-    },
-    {
       icon: 'fa-pencil',
       action: 'editRoom',
     },
@@ -146,15 +142,19 @@ export class RoomManagementComponent {
 
   addRoom() {
     this.dialogService.openCreateRoomDialog().subscribe((resp: any) => {
-      this.getData();
-      this.openSnackBar('Room Added');
+      if(resp!=false){
+        this.getData();
+        this.openSnackBar('Room Added');
+      }
     })
   }
   editRoom(room:any) {
     console.log(room)
     this.dialogService.openCreateRoomDialog(room.booking).subscribe((resp: any) => {
-      this.getData();
-      this.openSnackBar('Room Updated');
+      if(resp!=false){
+        this.getData();
+        this.openSnackBar('Room Updated');
+      }
     })
   }
 }

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Observable } from 'rxjs';
+import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 
 
 @Component({
@@ -27,7 +28,8 @@ import { Observable } from 'rxjs';
     MatIconModule,
     MatSelectModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    LoadingSpinnerComponent
   ],
   templateUrl: './create-room-dialog.component.html',
   styleUrl: './create-room-dialog.component.less'
@@ -36,14 +38,15 @@ export class CreateRoomDialogComponent {
   possibleModerators: any;
 
   selectedModeratorIds: number[] = [];
-roomInfo: any;
-selectedBuildingId: any;
-selectedDepartmentId: any;
-roomName: any;
+  roomInfo: any;
+  selectedBuildingId: any;
+  selectedDepartmentId: any;
+  roomName: any;
+  contentLoading!: boolean;
 
   constructor(private roomService: RoomsService, public dialogRef: MatDialogRef<CreateRoomDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    
-   }
+
+  }
 
   @ViewChild('createRoomForm') createRoomForm!: NgForm;
 
@@ -60,19 +63,26 @@ roomName: any;
   }
 
   ngOnInit(): void {
+    if (this.data) this.contentLoading = true;
     this.roomService.getDepartments({}).subscribe((data: any) => {
       this.departments = data;
       this.roomService.getPossibleModerators({}).subscribe((data: any) => {
         this.possibleModerators = data;
         console.log(this.data)
-        if(this.data) { 
+        if (this.data) {
           this.color = this.data.color;
-          this.iconColor = this.data.color;  
+          this.iconColor = this.data.color;
           this.roomName = this.data.name;
-          this.selectedDepartmentId =  this.data.department_id;
+          this.data.moderators.forEach((moderator: any) => {
+            this.selectedModeratorIds.push(moderator.id);
+          })
+          this.roomInfo = this.data.info;
+          this.selectedDepartmentId = this.data.department_id;
           this.selectedBuildingId = this.data.building_id;
-          this.selectDepartment({value: this.data.department_id})
+          this.selectDepartment({ value: this.data.department_id })
         }
+
+        this.contentLoading = false;
       })
     });
   }
@@ -80,15 +90,16 @@ roomName: any;
   selectDepartment($event: any) {
     this.roomService.getBuildings({ department_id: $event.value }).subscribe((data: any) => {
       this.buildings = data;
+
     })
   }
 
-  onSubmit(createRoomForm:any) {
+  onSubmit(createRoomForm: any) {
     this.roomService.createRoom({
       ...createRoomForm.value,
-      color: '#'+this.colorControl.value.hex
+      color: '#' + this.colorControl.value.hex
     }).subscribe((resp: any) => {
-      if(resp) {
+      if (resp) {
         this.dialogRef.close();
       }
     })
