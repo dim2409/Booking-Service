@@ -35,4 +35,7 @@ export class RoomsService {
   createRoom(req: any): Observable <any> {
     return this.http.post(environment.apiUrl + '/createRoom', req);
   }
+  deleteRoom(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/deleteRoom', req);
+  }
 }

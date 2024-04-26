@@ -8,7 +8,10 @@ import { environment } from 'src/environments/environment';
 })
 export class GeneralRequestService {
   constructor(private http: HttpClient) { }
-  getAllSemesters(): Observable <any> {
-    return this.http.get(environment.apiUrl + '/getAllSemesters');
+  getSemesters(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/getAllSemesters', req);
+  }
+  deleteSemester(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/deleteSemester', req);
   }
 }

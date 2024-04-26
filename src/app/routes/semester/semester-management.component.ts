@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { GeneralRequestService } from 'src/app/services/general/general-request.service';
 import { FiltersComponent } from "../../components/filters/filters.component";
 import { ControlCardComponent } from "../../components/control-card/control-card.component";
 import { CardListComponent } from "../../components/card-list/card-list.component";
@@ -17,20 +17,18 @@ import { Chart } from 'chart.js/dist';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-room-management',
+  selector: 'app-semester-management',
   standalone: true,
-  templateUrl: './room-management.component.html',
-  styleUrl: './room-management.component.less',
+  templateUrl: './semester-management.component.html',
+  styleUrl: './semester-management.component.less',
   imports: [CommonModule, FiltersComponent, ControlCardComponent, CardListComponent, LoadingSpinnerComponent, BaseChartDirective]
 })
 
-export class RoomManagementComponent {
+export class semesterManagementComponent {
 
-  @Output() roomUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() semesterUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
-
-
 
   pageIndex: number = 0;
 
@@ -51,11 +49,11 @@ export class RoomManagementComponent {
   buttons = [
     {
       icon: 'fa-pencil',
-      action: 'editRoom',
+      action: 'editsemester',
     },
     {
-      icon: 'fa-trash-alt',
-      action: 'deleteRoom',
+      icon: 'fa-xmark',
+      action: 'deletesemester',
     },
   ]
 
@@ -64,36 +62,24 @@ export class RoomManagementComponent {
     page: 1,
     id: 2
   }
-  rooms: any;
+  semesters: any;
   buildings: any;
   departments: any;
   filters: any;
-  roomDayFrequency: any;
-  constructor(private _snackBar: MatSnackBar, private RoomService: RoomsService, private statisticsService: StatisticsService, private filterService: FiltersService, private dialogService: DialogService) {
+  semesterDayFrequency: any;
+  constructor(private _snackBar: MatSnackBar, private generalRequestService: GeneralRequestService, private statisticsService: StatisticsService, private filterService: FiltersService, private dialogService: DialogService) {
   }
   openSnackBar(message: string, action?: string) {
     this._snackBar.open(message, action ? action : 'Dismiss')._dismissAfter(3000);
   }
   ngOnInit() {
-    document.body.classList.remove('body-overflow');
-    this.RoomService.getDepartments({ user_id: 2 }).subscribe((resp: any) => {
-      this.departments = resp
-      this.RoomService.getBuildings({ user_id: 2 }).subscribe((resp: any) => {
-        this.buildings = resp
-        //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
-      })
-    })
+    
     this.getData();
 
   }
 
   filterUpdated(event: any) {
-    if (event.department.length > 0) {
-      this.RoomService.getBuildings({ user_id: 2, department: event.department }).subscribe((resp: any) => {
-        this.buildings = resp
-        //this.filters = _.cloneDeep(this.filterService.getRoomFilters(['departments', 'buildings'], this.departments, this.buildings));
-      })
-    }
+    
     this.req = {
       page: 1,
       perPage: 10,
@@ -106,8 +92,8 @@ export class RoomManagementComponent {
 
   getData() {
     this.loading = true;
-    this.RoomService.getRooms(this.req).subscribe((resp: any) => {
-      this.rooms = resp.rooms;
+    this.generalRequestService.getSemesters(this.req).subscribe((resp: any) => {
+      this.semesters = resp.semesters;
       this.params.totalItems = resp.total
       this.loading = false
     })
@@ -125,7 +111,6 @@ export class RoomManagementComponent {
     this.getData();
   }
 
-
   sorterUpdated(event: any) {
     if (event.selected) {
       this.req.sortBy = event.value
@@ -138,41 +123,40 @@ export class RoomManagementComponent {
     this.getData();
   }
 
-  addRoom() {
-    this.dialogService.openCreateRoomDialog().subscribe((resp: any) => {
+  updateSemester(event: any) {
+    if (event.action == 'editsemester') {
+      this.editSemester(event)
+    }
+    if (event.action == 'deletesemester') {
+      this.deleteSemester(event)
+    }
+  }
+  editSemester(semester: any) {
+    this.dialogService.openCreateSemesterDialog(semester.booking).subscribe((resp: any) => {
       if (resp != false) {
         this.getData();
-        this.openSnackBar('Room Added');
+        this.openSnackBar('semester Updated');
       }
     })
   }
 
-  updateRoom(event: any) {
-    if (event.action == 'editRoom') {
-      this.editRoom(event)
-    }
-    if (event.action == 'deleteRoom') {
-      this.deleteRoom(event)
-    }
-  }
-  editRoom(room: any) {
-    this.dialogService.openCreateRoomDialog(room.booking).subscribe((resp: any) => {
-      if (resp != false) {
-        this.getData();
-        this.openSnackBar('Room Updated');
-      }
-    })
-  }
-
-  deleteRoom(event: any) {
-    this.dialogService.openConfirmDialog(event.booking,'Are you sure you want to delete this room?').subscribe(res => {
+  deleteSemester(event: any) {
+    this.dialogService.openConfirmDialog(event.booking,'Are you sure you want to delete this semester?').subscribe(res => {
       if (res) {
-        this.RoomService.deleteRoom({id:[event.booking.id]}).subscribe((resp: any) => {
+        this.generalRequestService.deleteSemester({id:[event.booking.id]}).subscribe((resp: any) => {
           if (resp) {
             this.getData();
-            this.openSnackBar('Room Deleted');
+            this.openSnackBar('semester Deleted');
           }
         })
+      }
+    })
+  }
+  addSemester() {
+    this.dialogService.openCreateSemesterDialog().subscribe((resp: any) => {
+      if(resp!=false){
+        this.getData();
+        this.openSnackBar('semester Added');
       }
     })
   }

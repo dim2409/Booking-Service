@@ -6,6 +6,7 @@ import { BookingRequestComponent } from './routes/booking-request/booking-reques
 import { ModeratorDashboardComponent } from './routes/moderator-dashboard/moderator-dashboard.component';
 import { RoomManagementComponent } from './routes/room-management/room-management.component';
 import { StatisticsComponent } from './routes/statistics/statistics.component';
+import { semesterManagementComponent } from './routes/semester/semester-management.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'moderator', component: ModeratorDashboardComponent},
   { path: 'roomManagement', component: RoomManagementComponent},
   { path: 'statistics', component: StatisticsComponent},
+  { path: 'semester', component: semesterManagementComponent},
 ];
 
 @NgModule({

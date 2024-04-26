@@ -5,14 +5,14 @@
         <!-- Controls -->
         <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
-            (bookingUpdated)="updateRoom($event)" #controlCard></app-control-card>
+            (bookingUpdated)="updateSemester($event)" #controlCard></app-control-card>
         
-        <!-- Room List -->
-        <div class="room-list-container">
-            <app-card-list [elements]="rooms" [buttons]="buttons" [removeConflicts]="true"
-                (bookingUpdated)="updateRoom($event)" *ngIf="!loading" (addEvent)="addRoom()"></app-card-list>
+        <!-- semester List -->
+        <div class="semester-list-container">
+            <app-card-list [elements]="semesters" [buttons]="buttons" [removeConflicts]="true"
+                (bookingUpdated)="updateSemester($event)" *ngIf="!loading" (addEvent)="addSemester()"></app-card-list>
             <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-            <div class="noDataMsg" *ngIf="rooms?.length===0 || !rooms && !loading">
+            <div class="noDataMsg" *ngIf="semesters?.length===0 || !semesters && !loading">
                 No Data
             </div>
         </div>
