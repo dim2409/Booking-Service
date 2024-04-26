@@ -15,18 +15,18 @@
             </mat-select>
         </mat-form-field>
         
-        <mat-checkbox class="example-margin">Set current</mat-checkbox>
+        <mat-checkbox class="example-margin" [(ngModel)]="is_current" name="is_current">Set current</mat-checkbox>
     
     </div>
     <div class="dates">
         <mat-form-field subscriptSizing="dynamic">
             <mat-label>Start</mat-label>
-            <input matInput [matDatepicker]="startPicker" ngModel name="date" [(ngModel)]="start" (click)="startPicker.open()">
+            <input matInput [matDatepicker]="startPicker" ngModel name="start" [(ngModel)]="start" (click)="startPicker.open()">
             <mat-datepicker #startPicker></mat-datepicker>
         </mat-form-field>
         <mat-form-field subscriptSizing="dynamic">
             <mat-label>End</mat-label>
-            <input matInput [matDatepicker]="endPicker" ngModel name="date" [(ngModel)]="end" (click)="endPicker.open()">
+            <input matInput [matDatepicker]="endPicker" ngModel name="end" [(ngModel)]="end" (click)="endPicker.open()">
             <mat-datepicker #endPicker></mat-datepicker>
         </mat-form-field>
     </div>

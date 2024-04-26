@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 import { GeneralRequestService } from 'src/app/services/general/general-request.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import moment from 'moment';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class CreateSemesterDialogComponent {
   selectedType: any;
 start: any;
 end: any;
+is_current: any = false;
 
   constructor(private semesterService: GeneralRequestService, public dialogRef: MatDialogRef<CreateSemesterDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -71,15 +73,11 @@ end: any;
     if (this.data) this.contentLoading = true;
     console.log(this.data)
     if (this.data) {
-      this.color = this.data.color;
-      this.iconColor = this.data.color;
-      this.semesterName = this.data.name;
-      this.data.moderators.forEach((moderator: any) => {
-        this.selectedModeratorIds.push(moderator.id);
-      })
-      this.semesterInfo = this.data.info;
-      this.selectedDepartmentId = this.data.department_id;
-      this.selectedBuildingId = this.data.building_id;
+      this.start = this.data.start;
+      this.end = this.data.end;
+      this.is_current = this.data.is_current;
+      this.selectedType = this.data.type;
+      this.is_current = this.data.is_current;
     }
 
     this.contentLoading = false;
@@ -89,6 +87,9 @@ end: any;
   onSubmit(createsemesterForm: any) {
     this.semesterService.createSemester({
       ...createsemesterForm.value,
+      is_current: this.is_current? 1 : 0,
+      start: moment.utc(this.start).tz('Europe/Athens').format(),
+      end: moment.utc(this.end).tz('Europe/Athens').format(),
       color: '#' + this.colorControl.value.hex
     }).subscribe((resp: any) => {
       if (resp) {
