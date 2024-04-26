@@ -1,9 +1,7 @@
 <div class="main mt-5 pt-2 pb-2">
     <div class="tab">
-        <!-- Filters -->
-        <app-filters (filterUpdated)="filterUpdated($event)" [filters]="filters"></app-filters>
         <!-- Controls -->
-        <app-control-card [chips]="chips" [buttons]="buttons" [selectCount]="selectCount" [params]="params"
+        <app-control-card  [buttons]="buttons" [selectCount]="selectCount" [params]="params"
             (onPageChange)="onPageChange($event)" (sorterUpdated)="sorterUpdated($event)"
             (bookingUpdated)="updateSemester($event)" #controlCard></app-control-card>
         

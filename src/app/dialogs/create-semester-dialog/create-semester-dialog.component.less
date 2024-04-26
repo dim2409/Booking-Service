@@ -1,0 +1,64 @@
+@import '../../../variables.less';
+
+.top-bar {
+    position      : absolute;
+    top           : 0;
+    left          : 0;
+    width         : 100%;
+    height        : 6.5%;
+    background    : @primary-color;
+    display       : flex;
+    align-items   : center;
+    flex-direction: row-reverse;
+
+    i {
+        cursor : pointer;
+        color  : @primaryElementTextColor;
+        padding: 1vh;
+    }
+}
+.semesterForm{
+    padding-top: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .type-current{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        
+        
+        mat-form-field{
+            width: 40%;
+        }
+    }
+    .dates{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 90%;        
+        mat-form-field{
+            width: 40%;
+        }
+    }
+    .semester-form-buttons {
+        position: absolute;
+        bottom  : 1vw;
+        right   : 1vw;
+    
+        button {
+            margin-left: 1vw;
+        }
+    }
+    .button-color {
+        background-color: @primary-color;
+        color           : @primaryElementTextColor;
+    }
+    .mat-mdc-raised-button[disabled][disabled] {
+        background-color: #b9b9b9;
+        color           : @primaryElementTextColor;
+    }
+}

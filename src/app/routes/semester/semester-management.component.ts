@@ -93,7 +93,7 @@ export class semesterManagementComponent {
   getData() {
     this.loading = true;
     this.generalRequestService.getSemesters(this.req).subscribe((resp: any) => {
-      this.semesters = resp.semesters;
+      this.semesters = resp.data;
       this.params.totalItems = resp.total
       this.loading = false
     })

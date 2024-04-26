@@ -14,7 +14,7 @@
             </mat-card-title>
             <mat-card-subtitle>
                 <!-- Recurring fields -->
-                <span *ngIf="!element.isRoom && element.type == 'recurringGroup'">
+                <span *ngIf="!(element.isRoom || element.isSemester) && element.type == 'recurringGroup'">
                     <span *ngFor="let day of element.days">
                         {{ rooms[day.room_id-1]?.name }} 
                         {{ day.name | dayName }} - {{day.start | date: 'HH:mm'}} |
@@ -24,7 +24,7 @@
                 </span>
                 
                 <!-- Normal fields -->
-                <span *ngIf="!element.isRoom && element.type != 'recurringGroup'">
+                <span *ngIf="!(element.isRoom || element.isSemester) && element.type != 'recurringGroup'">
                     {{element.rooms[0]?.name}} |
                     {{ element.start | date: 'EEEE d/MM yyyy' }} {{ element.start | date: 'HH:mm' }} -
                     {{ element.end | date: 'HH:mm' }} |
@@ -45,6 +45,11 @@
                         </span>
                     </span>
                 </span>
+                <!-- Semester fields -->
+                <span *ngIf="element.isSemester">
+                    {{element.start | date: ' d/MM/yyyy'}} - {{element.end | date: 'd/MM/yyyy'}} |
+                    {{element?.isCurrent==0 ? '' : element?.status==1 ? 'Current' : ''}} 
+                </span>
             </mat-card-subtitle>
             <!-- Buttons -->
             <div class="buttons">
@@ -61,7 +66,7 @@
             </div>
         </mat-card-header>
         <mat-card-content>
-            <p class="my-2">
+            <p class="my-2" *ngIf="!element.isSemester">
                 {{
                 element?.info ?
                 (element.info.length > 0 ? element.info?.slice(0, 50) + (element.info.length > 50 ? '...' : '') :

@@ -76,7 +76,7 @@ export class DialogService {
       data:semester,
       autoFocus: false,
       width: "33vw",
-      height: "90%",
+      height: "40%",
       disableClose: true,
     });
     return dialogRef.afterClosed();
