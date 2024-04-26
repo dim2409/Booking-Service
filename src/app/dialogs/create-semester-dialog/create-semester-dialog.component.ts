@@ -47,9 +47,9 @@ export class CreateSemesterDialogComponent {
   semesterName: any;
   contentLoading!: boolean;
   selectedType: any;
-start: any;
-end: any;
-is_current: any = false;
+  start: any;
+  end: any;
+  is_current: any = false;
 
   constructor(private semesterService: GeneralRequestService, public dialogRef: MatDialogRef<CreateSemesterDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -77,7 +77,7 @@ is_current: any = false;
       this.end = this.data.end;
       this.is_current = this.data.is_current;
       this.selectedType = this.data.type;
-      this.is_current = this.data.is_current;
+      this.is_current = this.data.is_current == 1;
     }
 
     this.contentLoading = false;
@@ -85,17 +85,32 @@ is_current: any = false;
 
 
   onSubmit(createsemesterForm: any) {
-    this.semesterService.createSemester({
-      ...createsemesterForm.value,
-      is_current: this.is_current? 1 : 0,
-      start: moment.utc(this.start).tz('Europe/Athens').format(),
-      end: moment.utc(this.end).tz('Europe/Athens').format(),
-      color: '#' + this.colorControl.value.hex
-    }).subscribe((resp: any) => {
-      if (resp) {
-        this.dialogRef.close();
-      }
-    })
+    if (this.data) {
+      this.semesterService.updateSemester({
+        ...createsemesterForm.value,
+        id: this.data.id,
+        is_current: this.is_current ? 1 : 0,
+        start: moment.utc(this.start).tz('Europe/Athens').format(),
+        end: moment.utc(this.end).tz('Europe/Athens').format(),
+        color: '#' + this.colorControl.value.hex
+      }).subscribe((resp: any) => {
+        if (resp) {
+          this.dialogRef.close();
+        }
+      })
+    } else {
+      this.semesterService.createSemester({
+        ...createsemesterForm.value,
+        is_current: this.is_current ? 1 : 0,
+        start: moment.utc(this.start).tz('Europe/Athens').format(),
+        end: moment.utc(this.end).tz('Europe/Athens').format(),
+        color: '#' + this.colorControl.value.hex
+      }).subscribe((resp: any) => {
+        if (resp) {
+          this.dialogRef.close();
+        }
+      })
+    }
   }
   close() {
     this.dialogRef.close(false);

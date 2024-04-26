@@ -17,4 +17,7 @@ export class GeneralRequestService {
   createSemester(req: any): Observable <any> {
     return this.http.post(environment.apiUrl + '/createSemester', req);
   }
+  updateSemester(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/updateSemester', req);
+  }
 }

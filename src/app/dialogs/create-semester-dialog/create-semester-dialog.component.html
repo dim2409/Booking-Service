@@ -35,7 +35,7 @@
     <div class="semester-form-buttons">
         <button mat-raised-button class="button-color" type="button" (click)="close()">Cancel</button>
         <button mat-raised-button type="submit" [disabled]="!createsemesterForm.valid" class=" button button-color">
-            <!--  {{this.semester.booking ? 'Update' : 'Create'}} --> Create
+             {{data ? 'Update' : 'Create'}} 
         </button>
     </div>
 

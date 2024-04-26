@@ -47,8 +47,8 @@
                 </span>
                 <!-- Semester fields -->
                 <span *ngIf="element.isSemester">
-                    {{element.start | date: ' d/MM/yyyy'}} - {{element.end | date: 'd/MM/yyyy'}} |
-                    {{element?.isCurrent==0 ? '' : element?.status==1 ? 'Current' : ''}} 
+                    {{element.start | date: ' d/MM/yyyy'}} - {{element.end | date: 'd/MM/yyyy'}} 
+                    {{element?.is_current==0 ? '' : '| Current'}} 
                 </span>
             </mat-card-subtitle>
             <!-- Buttons -->
