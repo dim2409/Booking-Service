@@ -1,7 +1,7 @@
 <div class="top-bar">
     <i class="fa-solid fa-xmark" (click)="close()"></i>
 </div>
-<form #createRoomForm="ngForm" class="roomForm"  (ngSubmit)="onSubmit(createRoomForm)">
+<form #createRoomForm="ngForm" class="roomForm" *ngIf="!contentLoading" (ngSubmit)="onSubmit(createRoomForm)">
     <div class="name-color">
         <mat-form-field>
             <mat-label>Room name</mat-label>
@@ -50,7 +50,7 @@
     <div class="room-form-buttons">
         <button mat-raised-button class="button-color" type="button" (click)="close()">Cancel</button>
         <button mat-raised-button type="submit" [disabled]="!createRoomForm.valid" class=" button button-color">
-           <!--  {{this.room.booking ? 'Update' : 'Create'}} --> Create
+            {{this.data ? 'Update' : 'Create'}} 
         </button>
     </div>
 

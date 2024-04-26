@@ -71,12 +71,13 @@ export class CreateRoomDialogComponent {
         console.log(this.data)
         if (this.data) {
           this.color = this.data.color;
+          this.colorControl.setValue(this.data.color);
           this.iconColor = this.data.color;
           this.roomName = this.data.name;
           this.data.moderators.forEach((moderator: any) => {
             this.selectedModeratorIds.push(moderator.id);
           })
-          this.roomInfo = this.data.info;
+          this.roomInfo = this.data.info? this.data.info : 'No info';
           this.selectedDepartmentId = this.data.department_id;
           this.selectedBuildingId = this.data.building_id;
           this.selectDepartment({ value: this.data.department_id })
@@ -95,14 +96,26 @@ export class CreateRoomDialogComponent {
   }
 
   onSubmit(createRoomForm: any) {
-    this.roomService.createRoom({
-      ...createRoomForm.value,
-      color: '#' + this.colorControl.value.hex
-    }).subscribe((resp: any) => {
-      if (resp) {
-        this.dialogRef.close();
-      }
-    })
+    if (this.data) {
+      this.roomService.editRoom({
+        id: this.data.id,
+        ...createRoomForm.value,
+        color: this.colorControl.value.hex ? '#' + this.colorControl.value.hex : this.data.color
+      }).subscribe((resp: any) => {
+        if (resp) {
+          this.dialogRef.close();
+        }
+      })
+    } else {
+      this.roomService.createRoom({
+        ...createRoomForm.value,
+        color: '#' + this.colorControl.value.hex
+      }).subscribe((resp: any) => {
+        if (resp) {
+          this.dialogRef.close();
+        }
+      })
+    }
   }
   close() {
     this.dialogRef.close(false);
