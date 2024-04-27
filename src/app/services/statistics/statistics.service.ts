@@ -12,6 +12,7 @@ interface Action {
   semesterPicker?: boolean;
   monthPicker?: boolean;
   datePicker?: boolean;
+  typePicker?: boolean;
 }
 
 interface ActionsMap {
@@ -30,12 +31,14 @@ export class StatisticsService {
       daypicker: true,
       semesterPicker: true,
       roomPicker: true,
+      typePicker: true,
       label: 'Hour of Day - Fr',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomHourOfDayOfWeekFrequency', req)
     },
     roomDayOfWeekFrequency: {
       label: 'Day of Week - Fr',
       semesterPicker: true,
+      typePicker: true,
       roomPicker: true,
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDayOfWeekFrequency', req)
     },
@@ -48,6 +51,7 @@ export class StatisticsService {
     },
     roomMonthOfSemesterFrequency: {
       semesterPicker: true,
+      typePicker: true,
       roomPicker: true,
       label: 'Month of Semester - Fr',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomMonthOfSemesterFrequency', req)
@@ -60,6 +64,7 @@ export class StatisticsService {
     },
     roomMonthDurationFrequency: {
       semesterPicker: true,
+      typePicker: true,
       monthPicker: true,
       roomPicker: true,
       label: 'Month Duration - Fr',
@@ -75,29 +80,34 @@ export class StatisticsService {
     roomOccupancyByMonthPercentage: {
       label: 'Occupancy by Month',
       roomPicker: true,
+      typePicker: true,
       monthPicker: true,
       semesterPicker: true,
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyByMonthPercentage', req)
     },
     roomOccupancyBySemester: {
+      typePicker: true,
       roomPicker: true,
       label: 'Occupancy by Semester',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyBySemester', req)
     },
     roomOccupancyByDateRange: {
       roomPicker: true,
+      typePicker: true,
       datePicker: true,
       label: 'Occupancy by Date Range',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomOccupancyByDateRange', req)
     },
     roomDateRangeFrequency: {
       roomPicker: true,
+      typePicker: true,
       datePicker: true,
       label: 'Date Range - Fr',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDateRangeFrequency', req)
     },
     roomDateRangeDurationFrequency: {
       roomPicker: true,
+      typePicker: true,
       datePicker: true,
       label: 'Date Range Duration - Fr',
       action: (req: any) => this.http.post<any>(environment.apiUrl + '/roomDateRangeDurationFrequency', req)
@@ -124,6 +134,7 @@ export class StatisticsService {
       daypicker: this.actionsMap[key].daypicker,
       monthPicker: this.actionsMap[key].monthPicker,
       semesterPicker: this.actionsMap[key].semesterPicker,
+      typePicker: this.actionsMap[key].typePicker,
       datePicker: this.actionsMap[key].datePicker
     }));
   }

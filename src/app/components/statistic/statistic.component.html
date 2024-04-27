@@ -41,6 +41,13 @@
                     {{semester.name}}
                  </button>     
         </mat-menu>
+        <button mat-button [matMenuTriggerFor]="typePickerMenu" *ngIf="typePicker">Type</button>
+        <mat-menu #typePickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let type of types" (click)="typeOptionChange($event, type)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': type.checked, 'fa-circle': !type.checked}"></i>
+                    {{type.label}}
+                 </button>     
+        </mat-menu>
         <div *ngIf="datePicker">
             <mat-date-range-input [rangePicker]="datePickerCallendar" class="option-select hide">
                 <input matStartDate placeholder="Start date" #dateRangeStart>

@@ -108,11 +108,18 @@ export class StatisticComponent implements OnInit {
 
   rooms: any[] = [];
   semesters: any[] = [];
-  statOptions: { roomPicker?: boolean, singleRoomPicker?: boolean, daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean, datePicker?: boolean, }[] = [];
+  types: any[] = [
+    { label: 'Lecture', value: 'lecture', checked: false },
+    { label: 'Teleconference', value: 'teleconference', checked: false },
+    { label: 'Seminar', value: 'seminar', checked: false },
+    { label: 'Other', value: 'other', checked: false }
+  ];
+  statOptions: { typePicker?: boolean, roomPicker?: boolean, singleRoomPicker?: boolean, daypicker?: boolean, label: string, value: string, semesterPicker?: boolean; monthPicker?: boolean, datePicker?: boolean, }[] = [];
   req: {
     days: any[];
     months: any[];
     semesterIds: any[];
+    lecture_type: any[];
     roomIds: any[];
     singleRoomId: any;
     dateRange: {
@@ -123,6 +130,7 @@ export class StatisticComponent implements OnInit {
     days: [],
     months: [],
     semesterIds: [],
+    lecture_type: [],
     roomIds: [],
     singleRoomId: '',
     dateRange: {
@@ -141,6 +149,7 @@ export class StatisticComponent implements OnInit {
   public daypicker = false;
   public monthPicker = false;
   public semesterPicker = false;
+  public typePicker = false;
   public datePicker = false;
   constructor(private RoomsService: RoomsService, private statisticsService: StatisticsService, private generalRequestService: GeneralRequestService) {
 
@@ -153,7 +162,6 @@ export class StatisticComponent implements OnInit {
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp
     })
-    console.log(this.daypicker)
   }
   getData() {
     this.statisticsService.callAction(this.selectedAction, this.req).subscribe((resp: any) => {
@@ -170,6 +178,7 @@ export class StatisticComponent implements OnInit {
       days: [],
       months: [],
       semesterIds: [],
+      lecture_type: [],
       roomIds: [],
       singleRoomId: '',
       dateRange: {
@@ -180,6 +189,7 @@ export class StatisticComponent implements OnInit {
     this.statOptions.find(option => option.value == action)?.daypicker ? this.daypicker = true : this.daypicker = false;
     this.statOptions.find(option => option.value == action)?.monthPicker ? this.monthPicker = true : this.monthPicker = false;
     this.statOptions.find(option => option.value == action)?.semesterPicker ? this.semesterPicker = true : this.semesterPicker = false;
+    this.statOptions.find(option => option.value == action)?.typePicker ? this.typePicker = true : this.typePicker = false;
     this.statOptions.find(option => option.value == action)?.roomPicker ? this.roomPicker = true : this.roomPicker = false;
     this.statOptions.find(option => option.value == action)?.singleRoomPicker ? this.singleRoomPicker = true : this.singleRoomPicker = false;
     this.statOptions.find(option => option.value == action)?.datePicker ? this.datePicker = true : this.datePicker = false;
@@ -197,6 +207,9 @@ export class StatisticComponent implements OnInit {
     })
     this.semesters.forEach(semester => {
       semester.checked = false
+    })
+    this.types.forEach(type => {
+      type.checked = false
     })
     this.rooms.forEach(room => {
       room.checked = false
@@ -267,6 +280,20 @@ export class StatisticComponent implements OnInit {
       // If room_id is already in the array, remove it
       this.req.semesterIds.splice(index, 1);
       semester.checked = false;
+    }
+    this.getData()
+  }
+  typeOptionChange($event: any, type: any) {
+    $event.stopPropagation();
+    const index = this.req.lecture_type.indexOf(type.value);
+    if (index === -1) {
+      
+      this.req.lecture_type.push(type.value);
+      type.checked = true;
+    } else {
+      // If room_id is already in the array, remove it
+      this.req.lecture_type.splice(index, 1);
+      type.checked = false;
     }
     this.getData()
   }

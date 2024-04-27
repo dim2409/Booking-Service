@@ -52,7 +52,17 @@ export class FiltersService {
       name: 'Friday',
       selected: false,
       id: 5
-    },        
+    },
+    {
+      name: 'Saturday',
+      selected: false,
+      id: 6
+    },
+    {
+      name: 'Sunday',
+      selected: false,
+      id: 7
+    }  
   ]
   typeChips = [
     {
@@ -64,6 +74,28 @@ export class FiltersService {
       name: 'Recurring',
       selected: false,
       id: 'recurring'
+    },
+  ]
+  lectureTypeChips = [
+    {
+      name: 'Lecture',
+      selected: false,
+      id: 'lecture'
+    },
+    {
+      name: 'Seminar',
+      selected: false,
+      id: 'seminar'
+    },
+    {
+      name: 'Teleconference',
+      selected: false,
+      id: 'teleconference'
+    },
+    {
+      name: 'Other',
+      selected: false,
+      id: 'other'
     },
   ]
   publicityChips = [
@@ -186,6 +218,12 @@ export class FiltersService {
       id: 'buildingList',
       field: 'building'
     },
+    lecture_type: {
+      title: 'Lecture Types',
+      chips: this.lectureTypeChips, 
+      id: 'lectureTypeList',
+      field: 'lecture_type'
+    }
     // Add more filters as needed
   };
 

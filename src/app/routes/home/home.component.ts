@@ -38,7 +38,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms'], this.rooms));
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'lecture_type'], this.rooms));
     });
     this.getBookings();
     document.body.classList.remove('body-overflow');

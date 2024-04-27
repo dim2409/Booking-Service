@@ -106,7 +106,7 @@ export class NormalBookingsTabComponent implements OnInit {
   ngOnInit(): void {
     this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
       this.rooms = resp;
-      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'status', 'type', 'months', 'days', 'publicity'], this.rooms));
+      this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'lecture_type', 'status', 'type', 'months', 'days', 'publicity'], this.rooms));
     })
 
     this.getData();

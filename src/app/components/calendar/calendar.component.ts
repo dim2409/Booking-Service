@@ -81,7 +81,7 @@ export class CalendarComponent {
 
 
   constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService, private bookingsService: BookingsService) {
-    this.isSmallScreen = window.innerWidth < 600;    
+    this.isSmallScreen = window.innerWidth < 600;
     document.documentElement.style.setProperty('--cellCount', `${5}`);
   }
 
@@ -95,19 +95,21 @@ export class CalendarComponent {
 
     this.RoomService.getBuildings({ user_id: 2 }).subscribe((resp: any) => {
       this.buildings = resp
-      this.filters = _.cloneDeep(this.filterService.getRoomFilters(['buildings'], this.buildings));
+      const roomFilters = _.cloneDeep(this.filterService.getRoomFilters(['buildings'], this.buildings));
+      const otherFilters = _.cloneDeep(this.filterService.getFilters(['lecture_type']));
+      this.filters =  [...roomFilters, ...otherFilters] ;
     })
 
     this.selectedValue = 'Month';
   }
 
-  viewDateUpadate(event: any) {    
+  viewDateUpadate(event: any) {
     const dayName = startOfMonth(event).getDay();
     const dateNumber = endOfMonth(event).getDate();
     console.log(dayName, dateNumber);
-    if((dayName == 0  && dateNumber >= 30) || (dayName == 6 && dateNumber > 30)) {
+    if ((dayName == 0 && dateNumber >= 30) || (dayName == 6 && dateNumber > 30)) {
       document.documentElement.style.setProperty('--cellCount', `${6}`);
-    }else{
+    } else {
       document.documentElement.style.setProperty('--cellCount', `${5}`);
     }
   }
@@ -163,7 +165,7 @@ export class CalendarComponent {
         this.dialogService.openBookingFormDialog(event).subscribe((resp: any) => {
           if (resp) {
             this.bookingsService.createBooking(resp).subscribe((resp: any) => {
-              if(resp) {
+              if (resp) {
                 this.dialogService.openSuccessDialog(resp.message);
               }
             })
