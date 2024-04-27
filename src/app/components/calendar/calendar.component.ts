@@ -97,7 +97,7 @@ export class CalendarComponent {
       this.buildings = resp
       const roomFilters = _.cloneDeep(this.filterService.getRoomFilters(['buildings'], this.buildings));
       const otherFilters = _.cloneDeep(this.filterService.getFilters(['lecture_type']));
-      this.filters =  [...roomFilters, ...otherFilters] ;
+      this.filters =  [ ...otherFilters,...roomFilters] ;
     })
 
     this.selectedValue = 'Month';
@@ -118,10 +118,10 @@ export class CalendarComponent {
     if (event.building?.length > 0) {
       this.RoomService.getRooms({ building: event.building }).subscribe((resp: any) => {
         if (resp.rooms.length > 0) {
-          this.filters[1] = this.filterService.getRoomFilters(['rooms'], resp.rooms)[0];
+          this.filters[2] = this.filterService.getRoomFilters(['rooms'], resp.rooms)[0];
           if (event.room_id?.length > 0) {
             event.room_id.forEach((element: any) => {
-              this.filters[1].chips.find((x: any) => x.id == element).selected = true
+              this.filters[2].chips.find((x: any) => x.id == element).selected = true
             });
           }
           console.log(this.filters)
