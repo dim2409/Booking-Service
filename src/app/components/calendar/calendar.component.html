@@ -71,7 +71,7 @@
         <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
           {{ day.badgeTotal }}
         </span>
-        <span class="add-button" (click)="handleEvent('add', day)">
+        <span class="add-button" (click)="handleEvent('add', day)" [ngClass]="{'disabled': openDialogFlag}">
           <i class="fa-solid fa-add"></i>
         </span>
         <span class="cal-day-number">

@@ -58,6 +58,7 @@ export class CalendarComponent {
   departments: any;
   buildings: any;
   filters!: any[];
+  openDialogFlag: boolean = false;
   eventTimesChanged({
     event,
     newStart,
@@ -162,17 +163,21 @@ export class CalendarComponent {
       case 'eventClicked':
         this.dialogService.openInfoDialog(event);
         break;
-      case 'add':
-        this.dialogService.openBookingFormDialog(event).subscribe((resp: any) => {
-          if (resp) {
-            this.bookingsService.createBooking(resp).subscribe((resp: any) => {
-              if (resp) {
-                this.dialogService.openSuccessDialog(resp.message);
-                this.getData.emit()
-              }
-            })
-          }
-        });
+        case 'add':
+        if(!this.openDialogFlag){
+          this.openDialogFlag = true
+          this.dialogService.openBookingFormDialog(event).subscribe((resp: any) => {
+            if (resp) {
+              this.bookingsService.createBooking(resp).subscribe((resp: any) => {
+                if (resp) {
+                  this.dialogService.openSuccessDialog(resp.message);
+                  this.getData.emit()
+                }
+              })
+            }
+            this.openDialogFlag = false;
+          });
+        }
         break;
     }
   }

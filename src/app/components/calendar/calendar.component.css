@@ -133,6 +133,9 @@ mwl-calendar-month-view .cal-month-view .cal-has-events .cel-title .event {
   margin: 0.5rem;
   font-size: 1rem;
 }
+.disabled.add-button:hover {
+  background: #e0e4e4 !important;
+}
 .cal-day-badge {
   background-color: #c23535;
 }
