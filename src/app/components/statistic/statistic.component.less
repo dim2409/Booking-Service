@@ -1,0 +1,50 @@
+@import '../../../variables.less';
+.static-container {
+    padding: 0.5vw;
+    width: 100%;
+    height: 100%;
+
+    .options-container {
+        display: flex;
+        align-items: center;
+
+        .option-select {
+            margin-left: 1vw;
+        }
+        
+    }
+
+    .percentage-toggle-container {
+        & i {
+            font-size: 1.2vw !important;
+        }
+
+        width : 95%;
+        display : flex;
+        flex-direction: row-reverse;
+    }
+
+}
+i.fa-circle-check{
+    color: @highlight-color !important;
+}
+
+& ::ng-deep .mat-mdc-chip-graphic {
+    display: none !important;
+}
+
+.mat-mdc-standard-chip {
+    padding: 0.5vw !important;
+    padding-left: 1vw !important;
+}
+
+.chart {
+
+    width: 100%;
+    height: 70%;
+
+}
+
+.hide {
+    display: none !important;
+}

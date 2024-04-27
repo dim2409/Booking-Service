@@ -1,0 +1,293 @@
+.statistics-route-container {
+  width: 100%;
+  padding-inline: 1vw;
+  padding-block: 5vw;
+}
+.statistics-route-container .statistics-header {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.statistics-route-container .statistics-header .cards .total-cards {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .total-cards .totals-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .total-cards .totals-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals {
+  display: flex;
+  margin-top: 1vw;
+}
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals .total {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #95b9e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .total-cards .totals-card .totals .total h1 {
+  color: #89c9f3;
+  font-size: 2vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards {
+  display: flex;
+  margin-top: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content {
+  display: flex;
+  margin-top: 1vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content .mean {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #e9be95;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .mean-card .mean-content .mean h1 {
+  color: #e9b15e;
+  font-size: 3vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours {
+  margin-inline: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours h2 {
+  margin-top: 0.6vw;
+  margin-bottom: 0;
+  color: #e9b15e;
+  font-size: 1.5vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .remaining-card .remaining-content .remaining-hours h2 .symbol {
+  font-size: 1vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator {
+  position: relative;
+  padding-inline: 0.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #ab95e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator h2 {
+  margin: 0 !important;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .chart {
+  width: 5vw;
+  height: 4.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .indicator-value {
+  position: absolute;
+  font-size: 1.1vw;
+  bottom: 2.6vw;
+  right: 2.8vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .indicator-card .indicator-content .indicator .indicator-value .symbol {
+  font-size: 0.71vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card {
+  width: fit-content;
+  height: fit-content;
+  margin-inline: 0.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card mat-card-title {
+  padding-inline: 0.5vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content {
+  display: flex;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval {
+  position: relative;
+  padding-inline: 0.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #ab95e9;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval h2 {
+  margin: 0 !important;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .chart {
+  width: 5vw;
+  height: 4.3vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .approval-value {
+  position: absolute;
+  font-size: 1.1vw;
+  bottom: 2.6vw;
+  right: 2vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approval .approval-value .symbol {
+  font-size: 0.71vw;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approved {
+  padding-top: 2vw;
+  margin-inline: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8vw;
+  color: #e9be95;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .cards .bottom-cards .approval-card .approval-content .approved h1 {
+  color: #e9b15e;
+  font-size: 2vw;
+  font-weight: 500;
+}
+.statistics-route-container .statistics-header .right h1 {
+  font-size: 2vw;
+}
+.statistics-route-container .statistics-header .right h2 {
+  font-size: 1.5vw;
+  width: 100%;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .right .charts-container {
+  display: flex;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1vw;
+  text-align: center;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart {
+  margin-inline: 1vw;
+  width: 10vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label {
+  display: flex;
+  position: absolute;
+  font-size: 1.7vw;
+  bottom: 7.2vw;
+  right: 3.6vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label .year {
+  font-size: 1.4vw;
+  position: absolute;
+  bottom: -1.8vw;
+  right: 1vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.semester {
+  bottom: 7.8vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.month {
+  right: 4vw;
+}
+.statistics-route-container .statistics-header .right .charts-container .chart-container .chart-label.week {
+  right: 3.8vw;
+}
+.statistics-route-container .stat-controls-container {
+  width: 30%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 1vw;
+}
+.statistics-route-container .stat-controls-container .add-button {
+  display: flex;
+  justify-content: center;
+  font-size: smaller;
+  width: fit-content;
+  padding: 0.3vw;
+  background: #e0e4e4;
+  border-radius: 1rem;
+  color: #767979;
+  transition: ease-in 0.1s;
+  margin-left: 1vw;
+}
+.statistics-route-container .stat-controls-container .add-button:hover {
+  cursor: pointer;
+  background: #d7dada;
+  color: #5d5f5f;
+}
+.statistics-route-container .stat-controls-container .add-button i {
+  font-size: 1.5vw;
+}
+.statistics-route-container .stat-cont {
+  height: 40vw;
+}
+.statistics-route-container .stat-cont .stats-container {
+  margin-top: 1vw;
+}
+.statistics-route-container .remove-button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: fit-content;
+  padding: 0.5vw;
+}
+.statistics-route-container .remove-button-container .remove-button {
+  display: flex;
+  width: -moz-fit-content;
+  padding: 0.3vw;
+  background: #f4f7f7;
+  border-radius: 1rem;
+  color: #c2c7c7;
+  transition: ease-in 0.1s;
+  height: 1.9vw;
+  align-items: center;
+  justify-content: center;
+}
+.statistics-route-container .remove-button-container .remove-button:hover {
+  cursor: pointer;
+  background: #d7dada;
+  color: #5d5f5f;
+}
+.statistics-route-container .remove-button-container .remove-button i {
+  font-size: 1.5vw;
+}

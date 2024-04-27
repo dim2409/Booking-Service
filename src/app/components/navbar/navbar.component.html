@@ -10,13 +10,20 @@
             Make a booking
         </button> -->
 
+        <button mat-menu-item [routerLink]="'/semester'">
+            Semester Management
+        </button>
+       
         <button mat-menu-item [routerLink]="'/moderator'">
             Moderator Dashboard
         </button>
        
-        <!-- <button mat-menu-item [routerLink]="'/roomManagement'">
+        <button mat-menu-item [routerLink]="'/roomManagement'">
             Room Management
-        </button> -->
+        </button>
+        <button mat-menu-item [routerLink]="'/statistics'">
+            Statistics
+        </button>
 
     </mat-menu>
     <span class="col-10 title" [routerLink]="'/'">

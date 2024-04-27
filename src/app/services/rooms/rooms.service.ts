@@ -28,7 +28,17 @@ export class RoomsService {
     return this.http.get(environment.apiUrl + '/getModeratedRooms/'+id);
   }
 
+  getPossibleModerators(req: any): Observable <any> {
+    return this.http.get(environment.apiUrl + '/getPossibleModerators', req);
+  }
+
   createRoom(req: any): Observable <any> {
     return this.http.post(environment.apiUrl + '/createRoom', req);
+  }
+  editRoom(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/editRoom', req);
+  }
+  deleteRoom(req: any): Observable <any> {
+    return this.http.post(environment.apiUrl + '/deleteRoom', req);
   }
 }

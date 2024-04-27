@@ -3,6 +3,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BookingInfoDialogComponent } from 'src/app/dialogs/booking-info-dialog/booking-info-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { CreateRoomDialogComponent } from 'src/app/dialogs/create-room-dialog/create-room-dialog.component';
+import { CreateSemesterDialogComponent } from 'src/app/dialogs/create-semester-dialog/create-semester-dialog.component';
 import { BookingFormDialogComponent } from 'src/app/dialogs/edit-booking-dialog/booking-form-dialog.component';
 import { SuccessDialogComponent } from 'src/app/dialogs/success-dialog/success-dialog.component';
 
@@ -60,11 +61,22 @@ export class DialogService {
     });
     return dialogRef.afterClosed();
   }
-  openCreateRoomDialog() {
+  openCreateRoomDialog(room?: any) {
     const dialogRef = this.dialog.open(CreateRoomDialogComponent, {
+      data:room,
       autoFocus: false,
-      width: "90vw",
+      width: "33vw",
       height: "90%",
+      disableClose: true,
+    });
+    return dialogRef.afterClosed();
+  }
+  openCreateSemesterDialog(semester?: any) {
+    const dialogRef = this.dialog.open(CreateSemesterDialogComponent, {
+      data:semester,
+      autoFocus: false,
+      width: "33vw",
+      height: "40%",
       disableClose: true,
     });
     return dialogRef.afterClosed();

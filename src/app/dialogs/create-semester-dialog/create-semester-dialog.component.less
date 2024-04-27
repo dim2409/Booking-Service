@@ -5,7 +5,7 @@
     top           : 0;
     left          : 0;
     width         : 100%;
-    height        : 3.5%;
+    height        : 6.5%;
     background    : @primary-color;
     display       : flex;
     align-items   : center;
@@ -17,14 +17,14 @@
         padding: 1vh;
     }
 }
-.roomForm{
+.semesterForm{
     padding-top: 3vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 
-    .name-color{
+    .type-current{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -35,25 +35,16 @@
             width: 40%;
         }
     }
-    .department-building{
+    .dates{
         display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        width: 90%;
-        .department{
-            width: fit-content!important;
-
+        flex-direction: row;
+        justify-content: space-around;
+        width: 90%;        
+        mat-form-field{
+            width: 40%;
         }
-        .building{
-            width: 100%!important;
-        }
-        
     }
-    mat-form-field{
-        width: 90%;
-    }
-    .room-form-buttons {
+    .semester-form-buttons {
         position: absolute;
         bottom  : 1vw;
         right   : 1vw;
