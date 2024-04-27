@@ -5,14 +5,16 @@
   padding: 4vw 2.5vw;
   width: 100%;
   display: block;
+  overflow: auto;
 
   .drag-bar {
+    z-index: 1000;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 6%;
-    background: #0051d4;
+    background: @primary-color;
     color: white;
     display: flex;
     align-items: center;
@@ -116,7 +118,7 @@
         padding-top: 1vw;
 
         textarea {
-          height: 10vw;
+          height: 5vw;
         }
       }
     }
@@ -193,14 +195,15 @@
       }
     }
 
-    .booking-form-buttons {
-      position: absolute;
-      bottom: 2vw;
-      right: 2.3vw;
+    .booking-form-buttons { 
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
 
       button {
+        margin-top: .5vw;
         margin-left: 0.6vw;
-        height: 2.5vw;
+        height: 2vw;
         width: 5vw;
       }
     }

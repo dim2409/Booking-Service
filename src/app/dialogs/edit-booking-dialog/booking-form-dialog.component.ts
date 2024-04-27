@@ -48,11 +48,58 @@ export class BookingFormDialogComponent implements OnInit {
   selectedEnd: Date = new Date();
   startOptions: Date[] = [];
   endOptions: Date[] = [];
-  reqStartOptions = Array.from({ length: 5 }, () => []);
-  reqEndOptions = Array.from({ length: 5 }, () => []);
+  selectedType: any;
+  selectedAttendance: any;
+  reqStartOptions = Array.from({ length: 7 }, () => []);
+  reqEndOptions = Array.from({ length: 7 }, () => []);
   selectedDate: Date = new Date();
   bookingTitle: any;
   bookings: any;
+
+  lectureTypeChips = [
+    {
+      name: 'Lecture',
+      selected: false,
+      id: 'lecture'
+    },
+    {
+      name: 'Seminar',
+      selected: false,
+      id: 'seminar'
+    },
+    {
+      name: 'Teleconference',
+      selected: false,
+      id: 'teleconference'
+    },
+    {
+      name: 'Other',
+      selected: false,
+      id: 'other'
+    },
+  ]
+  attendance = [
+    {
+      name: '<20',
+      selected: false,
+      id: '20'
+    },
+    {
+      name: '20-50',
+      selected: false,
+      id: '20-50'
+    },
+    {
+      name: '50-100',
+      selected: false,
+      id: '50-100'
+    },
+    {
+      name: '>100',
+      selected: false,
+      id: '>100'
+    },
+  ]
 
   rooms: any;
   roomIds: any;
@@ -76,6 +123,8 @@ export class BookingFormDialogComponent implements OnInit {
     { label: 'W', name: 3, selected: false, start: new Date(), end: new Date() },
     { label: 'T', name: 4, selected: false, start: new Date(), end: new Date() },
     { label: 'F', name: 5, selected: false, start: new Date(), end: new Date() },
+    { label: 'S', name: 6, selected: false, start: new Date(), end: new Date() },
+    { label: 'S', name: 7, selected: false, start: new Date(), end: new Date() },
   ];
 
   public options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -169,7 +218,9 @@ export class BookingFormDialogComponent implements OnInit {
       ...this.data.booking,
       ...this.data,
       ...bookingRequestForm.value,
-      start: this.start, 
+      lecture_type: this.selectedType,
+      expected_attendance: this.selectedAttendance,
+      start: this.start,
       end: this.end,
       room_id: this.selectedRoom,
       is_recurring: this.recurringCheck,
@@ -255,9 +306,9 @@ export class BookingFormDialogComponent implements OnInit {
     // Parse the input value using Moment.js
     const parsedTime = moment(value, 'HH:mm');
     var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-      if (regex.test(value)) {
-        this.selectedStart = moment(value, 'HH:mm').toDate();
-      }
+    if (regex.test(value)) {
+      this.selectedStart = moment(value, 'HH:mm').toDate();
+    }
 
     // Check if the parsed time is valid
     if (parsedTime.isValid()) {
@@ -272,7 +323,7 @@ export class BookingFormDialogComponent implements OnInit {
   }
   onReqInputChange(value: any, id: number, start: boolean) {
     value = value.target?.value ?? value;
-    if(start) {
+    if (start) {
       const input = this.matInputs.find(item => item.id == id + 'StartInput');
       if (input) {
         var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
@@ -291,11 +342,11 @@ export class BookingFormDialogComponent implements OnInit {
       } else {
         console.error('MatInput not found with ID:', id);
       }
-    }else{
+    } else {
       var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-        if (regex.test(value)) {
-          this.days[id - 1].end = moment(value, 'HH:mm');
-        }
+      if (regex.test(value)) {
+        this.days[id - 1].end = moment(value, 'HH:mm');
+      }
     }
   }
   onSelectionChange(selectedValue: any, id: number, start: boolean) {

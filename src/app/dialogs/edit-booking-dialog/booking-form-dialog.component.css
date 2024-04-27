@@ -2,14 +2,16 @@
   padding: 4vw 2.5vw;
   width: 100%;
   display: block;
+  overflow: auto;
 }
 .booking-form-dialog .drag-bar {
+  z-index: 1000;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 6%;
-  background: #0051d4;
+  background: #284168;
   color: white;
   display: flex;
   align-items: center;
@@ -97,7 +99,7 @@
   padding-top: 1vw;
 }
 .booking-form-dialog .booking-form .info.normal-info textarea {
-  height: 10vw;
+  height: 5vw;
 }
 .booking-form-dialog .booking-form .recurring-options {
   display: flex;
@@ -129,7 +131,7 @@
   color: #5d5f5f;
 }
 .booking-form-dialog .booking-form .recurring-options .days .day-chip.selected {
-  background: #0051d4 !important;
+  background: #284168 !important;
   color: #ffffff !important;
 }
 .booking-form-dialog .booking-form .recurring-options .days .room-date-time {
@@ -161,13 +163,14 @@
   display: none;
 }
 .booking-form-dialog .booking-form .booking-form-buttons {
-  position: absolute;
-  bottom: 2vw;
-  right: 2.3vw;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 .booking-form-dialog .booking-form .booking-form-buttons button {
+  margin-top: 0.5vw;
   margin-left: 0.6vw;
-  height: 2.5vw;
+  height: 2vw;
   width: 5vw;
 }
 .booking-form-dialog .booking-form .mat-mdc-slide-toggle {
@@ -177,7 +180,7 @@
   display: grid;
 }
 .booking-form-dialog .booking-form .button-color {
-  background-color: #0051d4;
+  background-color: #284168;
   color: #ffffff;
 }
 .booking-form-dialog .booking-form .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
