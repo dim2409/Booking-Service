@@ -56,6 +56,12 @@ export class HomeComponent {
     this.getBookings();
   }
 
+  getData() {
+    this.BookingsService.getActiveBookings(this.req).subscribe((resp: any) => {
+      this.bookings = resp;
+    });
+  }
+
   getBookings() {
     this.BookingsService.getActiveBookings(this.req).subscribe((resp: any) => {
       this.bookings = resp;

@@ -51,6 +51,7 @@ export class CalendarComponent {
 
   @Output() scrollCalendarEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() filterUpdated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() getData: EventEmitter<any> = new EventEmitter<any>();
   @Input() roomChips!: any;
 
   selectedValue!: string;
@@ -167,6 +168,7 @@ export class CalendarComponent {
             this.bookingsService.createBooking(resp).subscribe((resp: any) => {
               if (resp) {
                 this.dialogService.openSuccessDialog(resp.message);
+                this.getData.emit()
               }
             })
           }
