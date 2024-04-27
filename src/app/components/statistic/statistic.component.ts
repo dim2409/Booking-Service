@@ -148,7 +148,7 @@ export class StatisticComponent implements OnInit {
   ngOnInit(): void {
     this.statOptions = this.statisticsService.getActions();
     this.generalRequestService.getSemesters({}).subscribe((resp: any) => {
-      this.semesters = resp;
+      this.semesters = resp.data;
     });
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp
