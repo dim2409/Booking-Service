@@ -28,8 +28,32 @@ export class SidebarService {
       data: {
         label: 'Statistics',
         icon: 'fa-solid fa-chart-pie h2', 
-        location: '/profile',
-        action: "changeLocation('profile')",
+        location: '/statistics',
+        action: "changeLocation('statistics')",
+      },
+    },
+    SEMESTERS: {
+      data: {
+        label: 'Semester Management',
+        icon: 'fa-solid fa-calendar-days h2', 
+        location: '/semester',
+        action: "changeLocation('semester')",
+      },
+    },
+    ROOMS: {
+      data: {
+        label: 'Room Management',
+        icon: 'fa-solid fa-building h2', 
+        location: '/roomManagement',
+        action: "changeLocation('roomManagement')",
+      },
+    },
+    USERBOOKINGS: {
+      data: {
+        label: 'My Bookings',
+        icon: 'fa-solid fa-file-signature h2', 
+        location: '/myBookings',
+        action: "changeLocation('myBookings')",
       },
     },
   };
