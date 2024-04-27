@@ -72,25 +72,11 @@ export class BookingsService {
     }))
   }
 
-  getUserBookings(id: number) {
-    return new Promise(resolve => {
-      this.http.get<any>(environment.apiUrl + '/getUserBookings/' + id).subscribe((data) => {
-        const resp = data.map((item: {
-          end: string | number | Date;
-          color: any; start: string | number | Date;
-        }) => {
-          const startDate = new Date(item.start);
-          const endDate = new Date(item.end);
-          return {
-            ...item,
-            start: startDate,
-            end: endDate,
-            draggable: false,
-          }
-        })
-        resolve(resp);
-      })
-    })
+  getUserBookings(req: any) {
+    return this.http.post<any>(environment.apiUrl + '/getUserBookings', req).pipe(map((data: any) => {
+      const resp = {bookings: this.mapBookings(data.bookings), total: data.total};
+      return resp;
+    }))
   }
 
   createBooking(data: any): Observable<any> {

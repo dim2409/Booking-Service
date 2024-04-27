@@ -5,10 +5,9 @@
   justify-content: space-between;
 }
 .controls-container .actions {
-  position: absolute;
+  width: 100%;
   right: 0;
   display: flex;
-  width: 20vw;
   justify-content: flex-end;
   margin-right: 2vw;
 }
@@ -54,7 +53,7 @@
   background-color: #000000b0;
 }
 .button-color {
-  background-color: #0051d4;
+  background-color: #284168;
 }
 .selected .chip {
   display: flex;

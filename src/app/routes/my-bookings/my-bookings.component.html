@@ -1,3 +1,13 @@
 <div class="main">
-    <app-card-list [elements]="bookings" [buttons]="buttons" (bookingUpdated)="updateBooking($event)"></app-card-list>
+    <app-control-card [buttons]="buttons" [selectCount]="selectCount" [params]="params"
+        (onPageChange)="onPageChange($event)" (selectAllEvent)="selectAll($event)"
+        (bookingUpdated)="updateBooking($event)"
+        #controlCard></app-control-card>
+    <!-- <app-card-list [elements]="bookings" [buttons]="buttons" (bookingUpdated)="updateBooking($event)"></app-card-list> -->
+    <app-card-list [elements]="bookings" [buttons]="buttons" [removeConflicts]="true"
+        (bookingUpdated)="updateBooking($event)" *ngIf="!loading">
+    </app-card-list><app-loading-spinner *ngIf="loading"></app-loading-spinner>
+    <div class="noDataMsg" *ngIf="bookings?.length===0 || !bookings && !loading">
+        No Data
+    </div>
 </div>

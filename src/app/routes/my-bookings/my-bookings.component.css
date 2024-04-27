@@ -1,9 +1,10 @@
 .main {
   margin-top: 5rem !important;
+  padding-left: 20vw;
 }
 .time {
   color: #bec9d5;
 }
 .button-color {
-  background-color: #176b87;
+  background-color: #284168;
 }
