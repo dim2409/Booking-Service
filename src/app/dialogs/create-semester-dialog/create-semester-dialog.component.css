@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 3.5%;
+  height: 6.5%;
   background: #176b87;
   display: flex;
   align-items: center;
@@ -14,51 +14,44 @@
   color: #ffffff;
   padding: 1vh;
 }
-.roomForm {
+.semesterForm {
   padding-top: 3vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
-.roomForm .name-color {
+.semesterForm .type-current {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
 }
-.roomForm .name-color mat-form-field {
+.semesterForm .type-current mat-form-field {
   width: 40%;
 }
-.roomForm .department-building {
+.semesterForm .dates {
   display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-around;
   width: 90%;
 }
-.roomForm .department-building .department {
-  width: fit-content !important;
+.semesterForm .dates mat-form-field {
+  width: 40%;
 }
-.roomForm .department-building .building {
-  width: 100%!important;
-}
-.roomForm mat-form-field {
-  width: 90%;
-}
-.roomForm .room-form-buttons {
+.semesterForm .semester-form-buttons {
   position: absolute;
   bottom: 1vw;
   right: 1vw;
 }
-.roomForm .room-form-buttons button {
+.semesterForm .semester-form-buttons button {
   margin-left: 1vw;
 }
-.roomForm .button-color {
+.semesterForm .button-color {
   background-color: #176b87;
   color: #ffffff;
 }
-.roomForm .mat-mdc-raised-button[disabled][disabled] {
+.semesterForm .mat-mdc-raised-button[disabled][disabled] {
   background-color: #b9b9b9;
   color: #ffffff;
 }

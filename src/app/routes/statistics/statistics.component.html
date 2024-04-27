@@ -1,0 +1,212 @@
+<div class="main" [ngStyle]="{ 'height': (stats.length+1) * 15 + 'vw' }">
+    <div class="statistics-route-container" *ngIf="!statsLoading">
+        <div class="statistics-header"> 
+            <div class="cards">
+
+                <div class="total-cards">
+                    <mat-card class="totals-card">
+                        <mat-card-title>Total Bookings</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total">
+                                <h2>
+                                    Month
+                                </h2>
+                                <h1>
+                                    {{totals.totalMonth}}
+                                </h1>
+                                Bookings
+                                
+                            </span>
+                            <span class="total">
+                                <h2>
+                                    Semester
+                                </h2>
+                                <h1>
+                                    {{totals.totalSemester}}
+                                </h1>
+                                Bookings
+                            </span>
+                            <span class="total">
+                                <h2>
+                                    Week
+                                </h2>
+                                <h1>
+                                    {{totals.totalWeek}}
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="totals-card">
+                        <mat-card-title>Busiest this Semester</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total" *ngFor="let room of bussiestRoomsThisSemester">
+                                <h2>
+                                    {{room.name}}
+                                </h2>
+                                <h1>
+        
+                                    {{room.frequency}}<br>
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="totals-card">
+                        <mat-card-title>This Week</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="totals">
+                            <span class="total">
+                                <h2>
+                                    {{bussiestRoomsThisWeek.name}}
+                                </h2>
+                                <h1>
+        
+                                    {{bussiestRoomsThisWeek.frequency}}<br>
+                                </h1>
+                                Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                </div>        
+                <div class="bottom-cards">
+                    <mat-card class="approval-card">
+                        <mat-card-title>Approval Rate</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="approval-content">
+                            <span class="approval">
+                                <h2>
+                                    Week
+                                </h2>
+                                <div class="chart">
+                                    <canvas #approvalChart baseChart [options]="indicatorOptions" [data]="charts[3]" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="approval-value">
+                                    {{approvalRate.approvalRate}}<span class="symbol">%</span>
+                                </span>
+                                Approval Rate
+                            </span>
+                            <span class="approved">
+                                <h1>
+                                    {{approvalRate.approvedBookings}}/{{approvalRate.allBookings}}<br>
+                                </h1>
+                                Approved out <br> of all Bookings
+                            </span>
+                        </mat-card-content>
+                    </mat-card> 
+                    <mat-card class="indicator-card">
+                        <mat-card-title>Indicators</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="indicator-content">
+                            <span class="indicator">
+                                <h2>
+                                    Week
+                                </h2>
+                                <div class="chart">
+                                    <canvas #weekIndicatorChart baseChart [options]="indicatorOptions" [data]="charts[4]" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="indicator-value">
+                                    {{weekCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
+                                </span>
+                                Capacity Indicator
+                            </span>
+                            <span class="indicator">
+                                <h2>
+                                    Month
+                                </h2>
+                                <div class="chart">
+                                    <canvas #monthIndicatorChart  baseChart [options]="indicatorOptions" [data]="charts[5]" [type]="doughnut"> </canvas>
+                                </div>
+                                <span class="indicator-value">
+                                    {{monthCapacityIndicator.capacityIndicator}}<span class="symbol">%</span>
+                                </span>
+                                Capacity Indicator
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="remaining-card">
+                        <mat-card-title>Remaining </mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="remaining-content">
+                            <span class="remaining-hours">
+                                <h2>
+                                    {{weekCapacityIndicator.remainingHoursInWeek}}<span class="symbol">hr</span><br>
+                                </h2>
+                                in Week
+                                <h2>
+                                    {{monthCapacityIndicator.remainingHoursInMonth}}<span class="symbol">hr</span><br>
+                                </h2>
+                                in Month
+                            </span>
+                        </mat-card-content>
+                    </mat-card>                   
+                    <mat-card class="mean-card">
+                        <mat-card-title>Mean Duration</mat-card-title>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="mean-content">
+                            <span class="mean">
+                                <h2>
+                                    Semester
+                                </h2>
+                                <h1>
+                                    {{meanDuration}}<br>
+                                </h1>
+                                Hours
+                            </span>
+                        </mat-card-content>
+                    </mat-card>
+                </div>   
+            </div>
+            <div class="right">
+                <h1>Room Occupancies</h1>
+                <div class="charts-container">
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #weekOccupancyChart baseChart [options]="chartOptions" [data]="charts[0]" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label week">Week</span>
+                    </span>
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #monthOccupancyChart baseChart [options]="chartOptions" [data]="charts[1]" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label month">April</span>
+                    </span>
+                    <span class="chart-container">
+                        <div class="chart">
+                            <canvas #semesterOccupancyChart baseChart [options]="chartOptions" [data]="charts[2]" [type]="doughnut"> </canvas>
+                        </div>
+                        <span class="chart-label semester">
+                            Spring <span class="year">2024</span> 
+                        </span>
+                    </span>
+                </div>
+                <h2>Accumulative Room Ocupancies</h2>
+            </div>
+        </div>
+        <span class="stat-controls-container">
+            <span>
+                Press button to add new statistic
+            </span>
+
+            <span class="add-button" (click)="addStat()">
+                <i class="fa-solid fa-add"></i>
+            </span>
+        </span>
+        <mat-divider></mat-divider>
+        <div class="row stat-cont" [ngStyle]="{ 'height': stats.length > 1 ? stats.length > 2 ? '70vw':'35vw' : '40vw' }">
+            <div  *ngFor="let stat of stats; let i = index" [ngClass]="stats.length > 1 ? 'col-6' : 'col-12'">
+                <div class="remove-button-container">
+
+                    <span class="remove-button" (click)="removeStat(i)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <app-statistic class="stats-container" ></app-statistic>
+            </div>
+        </div>
+    </div>
+    <app-loading-spinner *ngIf="statsLoading"></app-loading-spinner>
+</div>

@@ -1,0 +1,64 @@
+<div class="static-container">
+    <div class="options-container">
+        <button mat-button [matMenuTriggerFor]="optionsMenu">Pick Statistic</button>
+        <mat-menu #optionsMenu="matMenu">
+            <button mat-menu-item *ngFor="let stat of statOptions"
+                (click)="chartOptionChange(stat.value)">{{stat.label}}</button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="roomMenu" *ngIf="roomPicker" >Room</button>
+        <mat-menu #roomMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let room of rooms" (click)="roomOptionChange($event, room)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': room.checked, 'fa-circle': !room.checked}"></i>
+                    {{room.name}}
+                 </button>     
+        </mat-menu>        
+        <button mat-button [matMenuTriggerFor]="singleRoom" *ngIf="singleRoomPicker" >Room</button>
+        <mat-menu #singleRoom="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let room of rooms" (click)="singleRoomOptionChange($event, room.id)">
+                    {{room.name}}
+                 </button>     
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="daypickerMenu" *ngIf="daypicker" >Day of Week</button>
+        <mat-menu #daypickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let day of dayOptions" (click)="dayOptionChange($event, day)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': day.checked, 'fa-circle': !day.checked}"></i>
+                    {{day.label}}
+                 </button>     
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="monthPickerMenu" *ngIf="monthPicker" >Month</button>
+        <mat-menu #monthPickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let month of monthOptions" (click)="monthOptionChange($event, month)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': month.checked, 'fa-circle': !month.checked}"></i>
+                    {{month.label}}
+                 </button>     
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="semesterPickerMenu" *ngIf="semesterPicker">Semester</button>
+        <mat-menu #semesterPickerMenu="matMenu"  (opened)="true">
+                <button mat-menu-item *ngFor="let semester of semesters" (click)="semesterOptionChange($event, semester)">
+                    <i class="fa-regular" [ngClass]="{'fa-circle-check': semester.checked, 'fa-circle': !semester.checked}"></i>
+                    {{semester.name}}
+                 </button>     
+        </mat-menu>
+        <div *ngIf="datePicker">
+            <mat-date-range-input [rangePicker]="datePickerCallendar" class="option-select hide">
+                <input matStartDate placeholder="Start date" #dateRangeStart>
+                <input matEndDate placeholder="End date" #dateRangeEnd
+                    (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="datePickerCallendar"></mat-datepicker-toggle>
+            <mat-date-range-picker #datePickerCallendar></mat-date-range-picker>
+        </div>
+        <div class="option-select" *ngIf="datasets.length>0">
+            <mat-chip-listbox>
+                <mat-chip-option (click)="toggleFrequency()" [selected]="toggleFrequencyFlag">
+                    <i class="fa-solid fa-percent"></i>
+                </mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+    </div>
+    <div class="chart">
+        <canvas #barChart baseChart [data]="chartData" [options]="chartOptions" [type]="chartType"> </canvas>
+    </div>
+</div>
