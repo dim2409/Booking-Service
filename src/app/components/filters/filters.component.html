@@ -2,7 +2,7 @@
     <div class="filter-container" *ngFor="let filter of filters">
       <p class="filter-title">
         {{ filter.title }}
-        <span class="filter-controls">                
+        <span class="filter-controls" *ngIf="filterControlFlag">                
           <i (click)="filterControl(filter.chips, filter.field)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
         </span>
       </p>

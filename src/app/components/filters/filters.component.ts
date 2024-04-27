@@ -22,6 +22,8 @@ export class FiltersComponent implements OnInit {
   @Output() filterUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() filters!: any;
+  
+  @Input() filterControlFlag!: any;
 
   constructor(private roomService: RoomsService) { }
 
