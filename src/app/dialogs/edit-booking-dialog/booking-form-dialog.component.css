@@ -1,6 +1,6 @@
 .booking-form-dialog {
-  padding: 1.1vw;
-  width: 95%;
+  padding: 4vw 2.5vw;
+  width: 100%;
   display: block;
 }
 .booking-form-dialog .drag-bar {
@@ -8,12 +8,15 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 3.5%;
-  background: #176b87;
+  height: 6%;
+  background: #0051d4;
+  color: white;
   display: flex;
   align-items: center;
   cursor: move;
-  flex-direction: row-reverse;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1vw;
 }
 .booking-form-dialog .drag-bar i {
   cursor: pointer;
@@ -41,6 +44,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 5%;
+  padding: 1vw 0vw;
 }
 .booking-form-dialog .booking-form .checks .check {
   display: flex;
@@ -125,7 +129,7 @@
   color: #5d5f5f;
 }
 .booking-form-dialog .booking-form .recurring-options .days .day-chip.selected {
-  background: #176b87 !important;
+  background: #0051d4 !important;
   color: #ffffff !important;
 }
 .booking-form-dialog .booking-form .recurring-options .days .room-date-time {
@@ -158,11 +162,13 @@
 }
 .booking-form-dialog .booking-form .booking-form-buttons {
   position: absolute;
-  bottom: 1vw;
-  right: 1vw;
+  bottom: 2vw;
+  right: 2.3vw;
 }
 .booking-form-dialog .booking-form .booking-form-buttons button {
-  margin-left: 1vw;
+  margin-left: 0.6vw;
+  height: 2.5vw;
+  width: 5vw;
 }
 .booking-form-dialog .booking-form .mat-mdc-slide-toggle {
   display: grid;
@@ -171,7 +177,7 @@
   display: grid;
 }
 .booking-form-dialog .booking-form .button-color {
-  background-color: #176b87;
+  background-color: #0051d4;
   color: #ffffff;
 }
 .booking-form-dialog .booking-form .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {

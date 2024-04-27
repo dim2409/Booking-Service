@@ -1,8 +1,8 @@
 <mat-dialog-content cdkDrag cdkDragRootElement=".cdk-overlay-pane" class="booking-form-dialog">
   <div class="drag-bar" cdkDragHandle>
+     <h2 mat-dialog-title>{{data.date? "Create Booking on " + data.date.toLocaleDateString('en-GB', options) + "" : "Update Booking"}}</h2>
      <i class="fa-solid fa-xmark" (click)="close()"></i>
   </div>
-  <h2 mat-dialog-title>{{data.date? "Create Booking on " + data.date.toLocaleDateString('en-GB', options) + "" : "Update Booking"}}</h2>
   <form #bookingRequestForm="ngForm" (ngSubmit)="onSave(bookingRequestForm)" class="booking-form">
     <span class="top">
       <!-- Title Input -->

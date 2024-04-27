@@ -1,33 +1,8 @@
 <div class="row navbar">
-    <button mat-button [matMenuTriggerFor]="menu" class="col-1 menu-button"><i class="fa-solid fa-bars"></i></button>
-    <mat-menu #menu="matMenu">
-
-        <!-- <button mat-menu-item [routerLink]="'/myBookings'">
-            My bookings
-        </button>
-
-        <button mat-menu-item [routerLink]="'/makeABooking'">
-            Make a booking
-        </button> -->
-
-        <button mat-menu-item [routerLink]="'/semester'">
-            Semester Management
-        </button>
-       
-        <button mat-menu-item [routerLink]="'/moderator'">
-            Moderator Dashboard
-        </button>
-       
-        <button mat-menu-item [routerLink]="'/roomManagement'">
-            Room Management
-        </button>
-        <button mat-menu-item [routerLink]="'/statistics'">
-            Statistics
-        </button>
-
-    </mat-menu>
-    <span class="col-10 title" [routerLink]="'/'">
-        IEE IHU Booking System
-    </span>
-    <i class="fa-solid fa-cog settings-button col-1"></i>
+    <button class="menubars" (click)="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+        <div class="user-container">
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </button>
 </div>
