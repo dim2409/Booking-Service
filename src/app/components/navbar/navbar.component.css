@@ -1,12 +1,12 @@
 .navbar {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: start;
   gap: 0;
   align-items: center;
+  padding: 1vw;
   position: fixed;
-  padding-left: 11%;
-  padding-right: 11%;
-  height: 6%;
+  height: 7%;
   top: 0;
   left: 0;
   right: 0;
@@ -20,6 +20,11 @@
 }
 .navbar .hometitle {
   font-size: 1.5rem;
+}
+.logo {
+  padding: 1vw;
+  width: 10vw !important;
+  height: auto;
 }
 .menubars {
   background-color: white;
