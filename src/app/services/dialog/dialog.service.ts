@@ -53,9 +53,9 @@ export class DialogService {
     const dialogRef = this.dialog.open(BookingFormDialogComponent, {
       data: booking,
       autoFocus: false,
-      width: "40vw",
+      width: "90vw",
       height: "85%",
-      maxWidth: "30vw",
+      maxWidth: "35vw",
       disableClose: true,
       hasBackdrop: false
     });
