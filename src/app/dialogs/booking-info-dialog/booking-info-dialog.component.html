@@ -10,6 +10,9 @@
             {{data.start.toLocaleDateString('en-GB', options)}}
             <!-- {{data.start.toLocaleDateString('el-GR', options)}} -->
         </p>
+        <p *ngIf="data.url">
+            Event URL: {{data.url}}
+        </p>
         <hr>
         <p>{{data.info}}</p>
     </div>
