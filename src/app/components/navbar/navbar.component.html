@@ -1,6 +1,6 @@
 <div class="row navbar">
     <button class="menubars" (click)="toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
+        <i class="fa-solid fa-bars" *ngIf="!(isMobile$ | async)"></i>
         <div class="user-container">
             <i class="fa-solid fa-user"></i>
         </div>
