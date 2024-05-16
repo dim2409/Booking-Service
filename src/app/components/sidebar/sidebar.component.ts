@@ -22,7 +22,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.items = this.sidebarService.getMainSidebarItems();
-    console.log(this.items);
   }
 
   //Actions

@@ -306,7 +306,6 @@ export class StatisticComponent implements OnInit {
       //let datasets: { data: any; backgroundColor: any; label: any; borderColor: any; }[] = []
 
       data.forEach((element: any) => {
-        console.log(element)
         this.datasets[0] = {
           data: element.data.accumulatedDataset,
           backgroundColor: '',//[this.rooms[element.room_id - 1].color, ],

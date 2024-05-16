@@ -71,7 +71,6 @@ export class CreateSemesterDialogComponent {
 
   ngOnInit(): void {
     if (this.data) this.contentLoading = true;
-    console.log(this.data)
     if (this.data) {
       this.start = this.data.start;
       this.end = this.data.end;

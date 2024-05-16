@@ -31,7 +31,7 @@
     <span class="top">
       <mat-form-field >
         <mat-label>Attendance</mat-label>
-        <mat-select name="type" ngModel [(ngModel)]="selectedAttendance">
+        <mat-select required name="attendance" ngModel [(ngModel)]="selectedAttendance">
           <mat-option *ngFor="let chip of attendance" [value]="chip.id">{{chip.name}}</mat-option>
         </mat-select>
       </mat-form-field>

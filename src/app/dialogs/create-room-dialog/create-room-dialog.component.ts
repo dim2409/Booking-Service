@@ -68,7 +68,6 @@ export class CreateRoomDialogComponent {
       this.departments = data;
       this.roomService.getPossibleModerators({}).subscribe((data: any) => {
         this.possibleModerators = data;
-        console.log(this.data)
         if (this.data) {
           this.color = this.data.color;
           this.colorControl.setValue(this.data.color);

@@ -144,7 +144,6 @@ export class BookingFormDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data)
     if (this.data.rooms) {
       this.rooms = this.data.rooms;
     } else {
@@ -245,7 +244,6 @@ export class BookingFormDialogComponent implements OnInit {
         }
       });
     }
-    console.log(booking)
     this.dialogRef.close(booking);
   }
   close() {
@@ -302,6 +300,7 @@ export class BookingFormDialogComponent implements OnInit {
       console.error('MatSelect not found with ID:', selectId);
     }
   }
+
   onInputChange(value: any) {
     // Parse the input value using Moment.js
     const parsedTime = moment(value, 'HH:mm');
@@ -318,7 +317,7 @@ export class BookingFormDialogComponent implements OnInit {
       // Call the initializeTimeOptions function with the pivotDate
       this.initializeTimeOptions(this.endOptions, pivotDate);
     } else {
-      console.error('Invalid input format. Please use the format "HH:mm".');
+      this.selectedStart = moment('08:00', 'HH:mm').toDate();
     }
   }
   onReqInputChange(value: any, id: number, start: boolean) {
@@ -329,6 +328,8 @@ export class BookingFormDialogComponent implements OnInit {
         var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
         if (regex.test(value)) {
           this.days[id - 1].start = moment(value, 'HH:mm');
+        } else {
+          this.days[id - 1].start = moment('08:00', 'HH:mm').toDate();
         }
         const parsedTime = moment(value, 'HH:mm');
         if (parsedTime.isValid()) {

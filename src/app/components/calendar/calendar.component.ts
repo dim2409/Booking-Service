@@ -108,7 +108,6 @@ export class CalendarComponent {
   viewDateUpadate(event: any) {
     const dayName = startOfMonth(event).getDay();
     const dateNumber = endOfMonth(event).getDate();
-    console.log(dayName, dateNumber);
     if ((dayName == 0 && dateNumber >= 30) || (dayName == 6 && dateNumber > 30)) {
       document.documentElement.style.setProperty('--cellCount', `${6}`);
     } else {
@@ -126,7 +125,6 @@ export class CalendarComponent {
               this.filters[2].chips.find((x: any) => x.id == element).selected = true
             });
           }
-          console.log(this.filters)
         }
       })
     }
