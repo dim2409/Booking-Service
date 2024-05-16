@@ -11,6 +11,7 @@
   overflow: auto;
   padding-bottom: 20vh;
   padding-right: 1vw;
+  transition: left 0.3s;
 }
 .filters-container .filter-container {
   margin-top: 2vh;
@@ -35,6 +36,11 @@
   display: flex;
   margin-left: 0.5vw;
 }
+.close-container {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}
 ::ng-deep .mat-mdc-chip-graphic {
   display: none !important;
 }
@@ -43,7 +49,7 @@
   margin-left: 0.6vw;
 }
 .mat-mdc-chip-focus-overlay {
-  background: white!important;
+  background: white !important;
 }
 .mat-mdc-chip {
   height: fit-content;
@@ -75,4 +81,17 @@
   color: black;
   box-shadow: 2px 2px 2px #eaedf0;
   transition: transform 3s ease-out;
+}
+.filters-container.closed {
+  left: -100vw;
+}
+@media (max-width: 768px) {
+  .filters-container {
+    width: 100vw;
+    z-index: 100;
+    background-color: white;
+  }
+  .filters-container .mat-mdc-chip-action-label {
+    font-size: 3.5vw !important;
+  }
 }

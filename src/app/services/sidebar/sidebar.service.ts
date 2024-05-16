@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class SidebarService {
   private sidebarState = new BehaviorSubject<boolean>(false);
+  private filterSidebarState = new BehaviorSubject<boolean>(false);
   constructor() { }
   mainItems: any = {
     HOME: {
@@ -65,6 +66,11 @@ export class SidebarService {
   toggle() {
     this.sidebarState.next(!this.sidebarState.value);
   }
+  
+  toggleFilterSidebar() {
+    this.filterSidebarState.next(!this.sidebarState.value);
+  }
+
 
   getState(): Observable<boolean> {
     return this.sidebarState.asObservable();

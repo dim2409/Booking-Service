@@ -1,17 +1,28 @@
-<div class="filters-container">
-    <div class="filter-container" *ngFor="let filter of filters">
-      <p class="filter-title">
-        {{ filter.title }}
-        <span class="filter-controls" *ngIf="filterControlFlag">                
-          <i (click)="filterControl(filter.chips, filter.field)" class="fa-solid fa-arrow-rotate-right filter-control"></i>
-        </span>
-      </p>
-      <mat-chip-listbox multiple  [attr.id]="filter.id"  class="filter">
-        <mat-chip-option *ngFor="let chip of filter.chips" [value]="chip.id" [selected]="chip.selected"  
-          (click)="toggleSelect(chip, filter.chips, filter.field)">
-          <i class="fa-solid fa-circle icon" [ngStyle]="{'color': chip.color}" *ngIf="chip.color"></i>
-          {{ chip.name }}
-        </mat-chip-option>
-      </mat-chip-listbox>
-    </div>
+<div class="filters-container" [class.closed]="(isMobile$ | async) && isOpen">
+  <span class="close-container">
+    <button mat-button class="close" (click)="toggleSidebar()" *ngIf="(isMobile$ | async)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </span>
+  <div class="filter-container" *ngFor="let filter of filters">
+    <p class="filter-title">
+      {{ filter.title }}
+      <span class="filter-controls" *ngIf="filterControlFlag && !(isMobile$ | async)">
+        <i (click)="filterControl(filter.chips, filter.field)"
+          class="fa-solid fa-arrow-rotate-right filter-control"></i>
+      </span>
+    </p>
+    <mat-chip-listbox multiple [attr.id]="filter.id" class="filter">
+      <mat-chip-option *ngFor="let chip of filter.chips" [value]="chip.id" [selected]="chip.selected"
+        (click)="toggleSelect(chip, filter.chips, filter.field)">
+        <i class="fa-solid fa-circle icon" [ngStyle]="{'color': chip.color}" *ngIf="chip.color"></i>
+        {{ chip.name }}
+      </mat-chip-option>
+    </mat-chip-listbox>
   </div>
+</div>
+<div *ngIf="(isMobile$ | async)" class="position-absolute"> 
+  <button mat-button (click)="toggleSidebar()">
+    <i class="fa-solid fa-filter"></i>
+  </button>
+</div>

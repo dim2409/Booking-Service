@@ -1,34 +1,36 @@
 @import '../../../variables.less';
 
 .filters-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-right: 1px solid #d2d2d2;
+    position        : absolute;
+    top             : 0;
+    left            : 0;
+    border-right    : 1px solid #d2d2d2;
     background-color: #fdfdfd;
-    width: 15vw;
-    height: 100vh;
-    padding-left: 0.5vw;
-    padding-top: 0.5vh;
-    overflow: auto;
-    padding-bottom: 20vh;
-    padding-right: 1vw;
+    width           : 15vw;
+    height          : 100vh;
+    padding-left    : 0.5vw;
+    padding-top     : 0.5vh;
+    overflow        : auto;
+    padding-bottom  : 20vh;
+    padding-right   : 1vw;
+
+    transition: left 0.3s;
 
     .filter-container {
         margin-top: 2vh;
 
         .filter-title {
-            display: flex;
+            display        : flex;
             justify-content: space-between;
 
             .filter-controls {
                 font-size: medium;
-                color: #586d6eb0;
+                color    : #586d6eb0;
 
                 .filter-control {
                     margin-left: 0.5vw;
-                    cursor: pointer;
-                    transition: color 0.3s ease;
+                    cursor     : pointer;
+                    transition : color 0.3s ease;
                 }
 
                 .filter-control:hover {
@@ -38,10 +40,15 @@
         }
 
         .filter {
-            display: flex;
+            display    : flex;
             margin-left: 0.5vw;
         }
     }
+}
+.close-container{
+    display: flex;
+    width: 100%;
+    justify-content: end;
 }
 
 ::ng-deep .mat-mdc-chip-graphic {
@@ -49,42 +56,65 @@
 }
 
 ::ng-deep .mat-mdc-chip-action-label {
-    font-size: 0.9vw!important;
+    font-size  : 0.9vw !important;
     margin-left: 0.6vw;
 }
+
 .mat-mdc-chip-focus-overlay {
-    background: white!important;
+    background: white !important;
 }
 
 .mat-mdc-chip {
-    height: fit-content;
-    padding: 0.25vw;
-    background: rgb(233, 235, 236)!important;
-    .mat-mdc-chip-action-label{
-        text-wrap: wrap;
+    height    : fit-content;
+    padding   : 0.25vw;
+    background: rgb(233, 235, 236) !important;
+
+    .mat-mdc-chip-action-label {
+        text-wrap   : wrap;
         //background: white;
-        color: black !important;
+        color       : black !important;
     }
+
     transition: transform 3s ease-out;
 }
-.mat-mdc-standard-chip{
-    background-color: #ffffffb0!important;
-    border-style: solid;
-    border-color: #e2e9ec;
-    color: black;
-    border-width: 0.2vw;
-    transition: transform 3s ease-out;
+
+.mat-mdc-standard-chip {
+    background-color: #ffffffb0 !important;
+    border-style    : solid;
+    border-color    : #e2e9ec;
+    color           : black;
+    border-width    : 0.2vw;
+    transition      : transform 3s ease-out;
 }
-.mat-mdc-standard-chip:hover{
-    transition: transform 3s ease-out;    
-    background-color: #ffffffb0!important;
-    border-color: #bdc8d3;
-    color: black;
+
+.mat-mdc-standard-chip:hover {
+    transition      : transform 3s ease-out;
+    background-color: #ffffffb0 !important;
+    border-color    : #bdc8d3;
+    color           : black;
 }
+
 .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
-    background-color: #ffffffb0!important;
-    border-color: #6d7377;
-    color: black;    
-    box-shadow: 2px 2px 2px #eaedf0;    
-    transition: transform 3s ease-out;
+    background-color: #ffffffb0 !important;
+    border-color    : #6d7377;
+    color           : black;
+    box-shadow      : 2px 2px 2px #eaedf0;
+    transition      : transform 3s ease-out;
+}
+
+.filters-container.closed {
+    left: -100vw;
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        width  : 100vw;
+        z-index: 100;
+
+        background-color: white;
+
+        .mat-mdc-chip-action-label {
+            font-size: 3.5vw!important;
+        }
+    }
 }

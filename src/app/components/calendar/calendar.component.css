@@ -240,3 +240,16 @@ mwl-calendar-month-view .cal-month-view .cal-has-events .cel-title .event {
     height: 1vh;
   }
 }
+.filters-container.closed {
+  left: -100vw;
+}
+@media (max-width: 768px) {
+  .calendar-container .calendar .top-container .filters-container {
+    width: 100vw;
+    z-index: 100;
+    background-color: white;
+  }
+  .calendar-container .calendar .top-container .filters-container .mat-mdc-chip-action-label {
+    font-size: 3.5vw !important;
+  }
+}

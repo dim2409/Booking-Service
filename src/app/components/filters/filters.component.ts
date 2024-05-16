@@ -6,6 +6,10 @@ import { MatCardModule } from '@angular/material/card';
 import moment from 'moment';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { MatRippleModule } from '@angular/material/core';
+import { Observable } from 'rxjs';
+import { ScreenSizeService } from 'src/app/services/screenSize/screen-size.service';
+import { SidebarService } from 'src/app/services/sidebar/sidebar.service';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-filters',
   standalone: true,
@@ -13,19 +17,26 @@ import { MatRippleModule } from '@angular/material/core';
     MatSelectModule,
     MatChipsModule,
     MatCardModule,
-    MatRippleModule
+    MatRippleModule,
+    MatButtonModule
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.less'
 })
 export class FiltersComponent implements OnInit {
+  isMobile$!: Observable<boolean>;
+
   @Output() filterUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() filters!: any;
   
   @Input() filterControlFlag!: any;
+  isOpen: boolean = true;
 
-  constructor(private roomService: RoomsService) { }
+  constructor(private roomService: RoomsService, private screenSizeService: ScreenSizeService, public sidebarService: SidebarService) { 
+    this.isMobile$ = this.screenSizeService.isMobile$;
+
+  }
 
   req: { [key: string]: any[]; } = {};
 
@@ -59,5 +70,8 @@ export class FiltersComponent implements OnInit {
     })
     this.updateChips(chips,field);
   }
-
+  toggleSidebar() {
+    this.isOpen = !this.isOpen
+    this.sidebarService.toggleFilterSidebar();
+  }
 }
