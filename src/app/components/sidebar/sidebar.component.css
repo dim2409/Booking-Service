@@ -25,7 +25,6 @@
   display: flex;
   justify-content: start;
   height: 60px;
-  align-items: flex-end;
 }
 .sidebar-items i {
   font-size: 1.4rem;
@@ -60,6 +59,9 @@
   .sidebar .item-style {
     font-size: 6vw !important;
     margin-left: 15vw;
+  }
+  .sidebar .sidebar-items {
+    align-items: flex-end;
   }
   .sidebar .sidebar-items i {
     font-size: 10vw !important;
