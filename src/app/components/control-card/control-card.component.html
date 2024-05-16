@@ -1,5 +1,5 @@
 <div class="controls-container">
-    <div *ngIf="chips">
+    <div *ngIf="!(isMobile$ | async) && chips">
         Sort by
         <mat-chip-listbox aria-label="Room selection" multiple #roomList>
             <mat-chip *ngFor="let chip of chips" [value]="chip.value" [ngClass]="chip.selected?'selected':''"

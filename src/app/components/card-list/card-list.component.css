@@ -5,7 +5,7 @@
   color: #bec9d5;
 }
 .button-color {
-  background-color: #176b87;
+  background-color: #284168;
 }
 .card-list-container {
   position: relative;
@@ -22,12 +22,12 @@
   margin-top: 2vh;
   border-radius: 0.5rem;
   border-style: solid;
-  border-color: #176b87;
+  border-color: #284168;
   padding: 0.5rem;
   transition: transform 0.1s ease-out;
 }
 .card-list-container .add-container .add {
-  color: #176b87;
+  color: #284168;
   transition: transform 0.1s ease-out;
   font-size: 3vw;
 }
@@ -35,12 +35,12 @@
   transform: scale(1.005);
   transition: transform 0.2s ease-out;
   cursor: pointer;
-  border-color: #60a3b9;
+  border-color: #324e7c;
 }
 .card-list-container .add-container:hover .add {
   transform: scale(1.1);
   transition: transform 0.2s ease-out;
-  color: #60a3b9;
+  color: #324e7c;
 }
 .card-list-container .mat-mdc-card {
   margin-block: 3vh;
@@ -57,7 +57,7 @@
   display: flex;
 }
 .card-list-container .mat-mdc-card .button-color {
-  background-color: #176b87;
+  background-color: #284168;
 }
 .select-container {
   width: fit-content;
@@ -72,4 +72,16 @@
   padding: 45%;
   color: #000000b0;
   transition: ease-in 0.1s;
+}
+@media (max-width: 768px) {
+  .card-list-container .add-container {
+    width: 95VW;
+  }
+  .mat-mdc-card {
+    margin-block: 3vh;
+    width: 95vw !important;
+  }
+  .mat-mdc-card .mat-mdc-card-title {
+    font-size: 4vw;
+  }
 }

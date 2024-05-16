@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DayNamePipe } from "../../pipes/day-name.pipe";
+import { Observable } from 'rxjs/internal/Observable';
+import { ScreenSizeService } from 'src/app/services/screenSize/screen-size.service';
 @Component({
     selector: 'app-card-list',
     standalone: true,
@@ -27,7 +29,13 @@ export class CardListComponent {
   @Input() rooms: any[] = [];
   @Input() buttons: any[] = [];
   @Input() removeConflicts: boolean = false;
-  constructor(private BookingsService: BookingsService) { }
+  
+  isMobile$!: Observable<boolean>;
+
+  constructor(private BookingsService: BookingsService, private screenSizeService: ScreenSizeService) { 
+    this.isMobile$ = this.screenSizeService.isMobile$;
+
+  }
 
   buttonAction(action: string, booking: any) {
     this.bookingUpdated.emit({ action: action, selectedBookings: [booking.id], type: 'normal' , individualAction: true, booking: booking});

@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 
 import {MatChipsModule} from '@angular/material/chips';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
+import { ScreenSizeService } from 'src/app/services/screenSize/screen-size.service';
 @Component({
   selector: 'app-control-card',
   standalone: true,
@@ -31,7 +33,12 @@ export class ControlCardComponent {
   @Input() selectCount!: number;
   @Input() params!: any;
   
+  isMobile$!: Observable<boolean>;
+  
+  constructor(private screenSizeService: ScreenSizeService) { 
+    this.isMobile$ = this.screenSizeService.isMobile$;
 
+  }
   selectAll: boolean = false;
   pageIndex!: number;
   buttonAction(action: string) {
