@@ -5,7 +5,7 @@
   width: 15.1vw;
   transition: left 0.3s;
   background-color: white;
-  color: #0051d4;
+  color: #284168;
   z-index: 1000;
   height: 100%;
 }
@@ -25,16 +25,17 @@
   display: flex;
   justify-content: start;
   height: 60px;
+  align-items: flex-end;
 }
 .sidebar-items i {
   font-size: 1.4rem;
   align-items: center;
   margin-left: 10%;
-  color: #0051d4;
+  color: #284168;
   width: 2vw;
 }
 .sidebar-items:hover {
-  background-color: #0051d4;
+  background-color: #284168;
   color: white;
   font-weight: 700;
   cursor: pointer;
@@ -50,4 +51,17 @@
   top: 0;
   left: 0;
   z-index: 999;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100vw;
+    left: -100vw;
+  }
+  .sidebar .item-style {
+    font-size: 6vw !important;
+    margin-left: 15vw;
+  }
+  .sidebar .sidebar-items i {
+    font-size: 10vw !important;
+  }
 }
