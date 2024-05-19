@@ -164,6 +164,9 @@ export class BookingFormDialogComponent implements OnInit {
       this.selectedStart = _.cloneDeep(this.data.booking.start);
       this.selectedEnd = _.cloneDeep(this.data.booking.end);
 
+      this.selectedType = this.data.booking.lecture_type;
+      this.selectedAttendance = this.data.booking.expected_attendance;
+
       this.initializeTimeOptions(this.startOptions);
       this.initializeTimeOptions(this.endOptions, this.selectedStart);
 
@@ -326,7 +329,7 @@ export class BookingFormDialogComponent implements OnInit {
       const input = this.matInputs.find(item => item.id == id + 'StartInput');
       if (input) {
         var regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-        if (regex.test(value)) {
+        if (regex.test(value) || value instanceof Date) {
           this.days[id - 1].start = moment(value, 'HH:mm');
         } else {
           this.days[id - 1].start = moment('08:00', 'HH:mm').toDate();
@@ -354,8 +357,10 @@ export class BookingFormDialogComponent implements OnInit {
     const day = this.days.find(day => day.name == id);
     if (start) {
       day.start = selectedValue;
+      this.onReqInputChange(day.start,day.name, true);      
     } else {
       day.end = selectedValue;
     }
+    return
   }
 }

@@ -50,7 +50,7 @@ export class MyBookingsComponent implements OnInit {
     this.buttons = [
       {
         icon: 'fa-pencil',
-        action: 'updateBooking',
+        action: 'editBooking',
       },
       {
         icon: 'fa-trash',
