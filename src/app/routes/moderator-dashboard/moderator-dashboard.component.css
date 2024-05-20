@@ -38,6 +38,9 @@
 }
 .moderator-container .moderator-list-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
 }
 .moderator-container .moderator-list-container .moderator-list-title {
   margin-block: 2rem;

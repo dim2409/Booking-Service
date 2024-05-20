@@ -1,16 +1,16 @@
 @import '../../../variables.less';
 
 .moderator-container {
-    padding-bottom: 2.9%  !important;
-    padding-top   : 3.4vw !important;
+    padding-bottom: 2.9% !important;
+    padding-top: 3.4vw !important;
 
     .tab {
         margin-left: 20vw;
     }
 
     ::ng-deep .mat-mdc-tab-body.mat-mdc-tab-body-active {
-        height       : 100vh;
-        padding-left : 1vw;
+        height: 100vh;
+        padding-left: 1vw;
         padding-right: 1vw;
     }
 
@@ -18,22 +18,24 @@
         padding-bottom: 7rem;
     }
 
-    .mat-mdc-tab-header{
+    .mat-mdc-tab-header {
         border-bottom: 1px solid rgb(223, 223, 223);
     }
+
     .mdc-tab-indicator__content--underline {
         --mdc-tab-indicator-active-indicator-color: @primary-color;
-      }
+    }
+
     .conflict-container {
         border-radius: 0.5rem;
-        border-style : solid;
-        border-color : #f34248b0;
-        padding      : 0.2rem;
+        border-style: solid;
+        border-color: #f34248b0;
+        padding: 0.2rem;
 
         .conflict {
-            color           : @primary-color;
+            color: @primary-color;
             background-color: #ff00004d;
-            border-style    : solid;
+            border-style: solid;
 
             .time {
                 color: @highlight-color;
@@ -48,9 +50,13 @@
     .moderator-list-container {
         position: relative;
 
+        display: flex;
+        flex-direction: column;
+        gap: 0.4vw;
+
         .moderator-list-title {
             margin-block: 2rem;
-            font-size   : 1.5rem;
+            font-size: 1.5rem;
         }
 
         .mat-expansion-panel-header {
@@ -62,23 +68,24 @@
 
             .mat-expansion-panel-header-description {
                 margin-right: 450px;
-                color       : @highlight-color;
+                color: @highlight-color;
             }
         }
     }
 
     .badge {
         background-color: @highlight-color;
-        color           : @primaryElementTextColor;
-        font-size       : 1vw;
-        font-size       : 1vw;
-        font-weight     : 500;
-        border-radius   : 20px;
-        padding         : 0.8vh;
-        padding-inline  : 1.2vh;
-        margin-left     : 10px;
+        color: @primaryElementTextColor;
+        font-size: 1vw;
+        font-size: 1vw;
+        font-weight: 500;
+        border-radius: 20px;
+        padding: 0.8vh;
+        padding-inline: 1.2vh;
+        margin-left: 10px;
     }
 }
-.mdc-tab__text-label{
+
+.mdc-tab__text-label {
     font-size: 1vw !important;
 }
