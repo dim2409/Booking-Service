@@ -7,6 +7,7 @@ import { ModeratorDashboardComponent } from './routes/moderator-dashboard/modera
 import { RoomManagementComponent } from './routes/room-management/room-management.component';
 import { StatisticsComponent } from './routes/statistics/statistics.component';
 import { semesterManagementComponent } from './routes/semester/semester-management.component';
+import { LoginComponent } from './routes/login/login.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'roomManagement', component: RoomManagementComponent},
   { path: 'statistics', component: StatisticsComponent},
   { path: 'semester', component: semesterManagementComponent},
+  { path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
