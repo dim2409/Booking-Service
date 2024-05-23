@@ -57,6 +57,14 @@ export class SidebarService {
         action: "changeLocation('myBookings')",
       },
     },
+    LOGIN: {
+      data:{
+        label: 'Login',
+        icon: 'fa-solid fa-right-to-bracket',
+        location: '/login',
+        action: "changeLocation('login')",
+      }
+    }
   };
   getMainSidebarItems() {
     let items = []
