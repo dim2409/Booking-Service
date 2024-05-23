@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -13,7 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   templateUrl: './login.component.html',
   styleUrl: './login.component.less'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   
   username: string = '';
   password: string = '';
