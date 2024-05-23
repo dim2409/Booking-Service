@@ -10,10 +10,6 @@ import { Observable } from 'rxjs';
 export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
-
-  login(username: string, password: string) {
-    return this.http.post<any>(environment.apiUrl + '/login', { username, password });
-  }
   generateCASLoginUrl(): string {
     // CAS server base URL
     const casBaseUrl = 'https://sso.ihu.gr';

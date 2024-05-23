@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../authentication/authentication.service';
 @Injectable({
   providedIn: 'root',
 })
 export class SidebarService {
   private sidebarState = new BehaviorSubject<boolean>(false);
   private filterSidebarState = new BehaviorSubject<boolean>(false);
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
   mainItems: any = {
     HOME: {
       data: {
@@ -62,7 +63,7 @@ export class SidebarService {
         label: 'Login',
         icon: 'fa-solid fa-right-to-bracket',
         location: '/login',
-        action: "changeLocation('login')",
+        action: "login()",
       }
     }
   };
@@ -79,6 +80,10 @@ export class SidebarService {
     this.filterSidebarState.next(!this.sidebarState.value);
   }
 
+  login(){
+    const casLoginUrl = this.authenticationService.generateCASLoginUrl();
+    window.location.href = casLoginUrl;
+  }
 
   getState(): Observable<boolean> {
     return this.sidebarState.asObservable();
