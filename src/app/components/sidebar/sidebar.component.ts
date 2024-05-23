@@ -3,6 +3,7 @@ import { SidebarService } from '../../services/sidebar/sidebar.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -14,7 +15,7 @@ export class SidebarComponent implements OnInit {
   items: any;
   isOpen = false;
 
-  constructor(public sidebarService: SidebarService, private router: Router) {
+  constructor(public sidebarService: SidebarService, private router: Router, private authenticationService: AuthenticationService) {
     this.sidebarService.getState().subscribe(isOpen => {
       this.isOpen = isOpen;
     });
@@ -30,7 +31,12 @@ export class SidebarComponent implements OnInit {
   }
 
   changeLocation(location: any) {
-    this.sidebarService.toggle();
-    this.router.navigate([location]);
+    //this.sidebarService.toggle();
+   // this.router.navigate([location]);
   };
+  login(){
+    console.log('hasjdahsdja')
+    const casLoginUrl = this.authenticationService.generateCASLoginUrl();
+    window.location.href = casLoginUrl;
+  }
 }

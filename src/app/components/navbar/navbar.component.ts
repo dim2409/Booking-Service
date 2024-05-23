@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
 import { Observable } from 'rxjs';
 import { ScreenSizeService } from 'src/app/services/screenSize/screen-size.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +26,4 @@ export class NavbarComponent implements OnInit {
   toggleSidebar() {
     this.sidebarService.toggle();
   }
-  changeLocation(location: any) {
-    window.location = location;
-  };
 }

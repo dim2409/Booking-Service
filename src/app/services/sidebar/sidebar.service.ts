@@ -8,7 +8,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class SidebarService {
   private sidebarState = new BehaviorSubject<boolean>(false);
   private filterSidebarState = new BehaviorSubject<boolean>(false);
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
   mainItems: any = {
     HOME: {
       data: {
@@ -78,11 +78,6 @@ export class SidebarService {
   
   toggleFilterSidebar() {
     this.filterSidebarState.next(!this.sidebarState.value);
-  }
-
-  login(){
-    const casLoginUrl = this.authenticationService.generateCASLoginUrl();
-    window.location.href = casLoginUrl;
   }
 
   getState(): Observable<boolean> {
