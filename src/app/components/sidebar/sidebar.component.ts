@@ -31,11 +31,14 @@ export class SidebarComponent implements OnInit {
   }
 
   changeLocation(location: any) {
-    //this.sidebarService.toggle();
-   // this.router.navigate([location]);
+    if(location == '/login'){
+      this.login();
+    }else{
+      this.sidebarService.toggle();
+      this.router.navigate([location]);
+    }
   };
   login(){
-    console.log('hasjdahsdja')
     const casLoginUrl = this.authenticationService.generateCASLoginUrl();
     window.location.href = casLoginUrl;
   }
