@@ -39,6 +39,7 @@ export class SidebarComponent implements OnInit {
     }
   };
   login(){
-    this.authenticationService.login().subscribe();
+    const casLoginUrl = this.authenticationService.generateCASLoginUrl();
+    window.location.href = casLoginUrl;
   }
 }
