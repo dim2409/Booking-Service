@@ -25,8 +25,8 @@ export class AuthenticationService {
     // Send a validation request to the CAS server to validate the ticket
     return this.http.get<any>(`https://sso.ihu.gr/serviceValidate?ticket=${ticket}`);
   }
-  login(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + '/login');
+  login() {
+    this.http.get<any>(environment.apiUrl + '/login');
   }
 
 }
