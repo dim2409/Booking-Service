@@ -26,6 +26,7 @@ export class AuthenticationService {
     return this.http.get<any>(`https://sso.ihu.gr/serviceValidate?ticket=${ticket}`);
   }
   login() {
+    console.log('login')
     this.http.get<any>(environment.apiUrl + '/login');
   }
 
