@@ -39,6 +39,6 @@ export class SidebarComponent implements OnInit {
     }
   };
   login(){
-    this.authenticationService.login();
+    this.authenticationService.login().subscribe();
   }
 }
