@@ -5,12 +5,14 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  private tokenKey = 'auth_token';
+  constructor(private http: HttpClient, private router: Router, public jwtHelper: JwtHelperService) { }
   generateCASLoginUrl(): string {
     // CAS server base URL
     const casBaseUrl = 'https://sso.ihu.gr';
@@ -20,11 +22,6 @@ export class AuthenticationService {
 
     // Construct the CAS login URL
     return `${casBaseUrl}/login?service=${serviceUrl}`;
-  }
-
-  validateCASTicket(ticket: string): Observable<any> {
-    // Send a validation request to the CAS server to validate the ticket
-    return this.http.get<any>(`https://sso.ihu.gr/serviceValidate?ticket=${ticket}`);
   }
   login(): Observable<any> {
     return this.http.get<any>(environment.apiUrl + '/login');
@@ -37,6 +34,7 @@ export class AuthenticationService {
         try {
           const response = await this.http.get<any>(`${environment.apiUrl}/cas/callback`, { params }).toPromise();
           if (response.status === 'success') {
+            this.storeToken(response.token);
             this.router.navigate([response.redirect_url]);
           } else {
             console.error(response.message);
@@ -53,6 +51,21 @@ export class AuthenticationService {
       return false; // Prevent the route from activating until the callback is handled
     }
     return true;
+  }
+
+  storeToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+    console.log('Token stored:', this.getToken());
+    console.log('Token exists:', this.isAuthenticated());
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  isAuthenticated(): any {
+    const token = this.getToken();
+    return token && !this.jwtHelper.isTokenExpired(token);
   }
 
 }
