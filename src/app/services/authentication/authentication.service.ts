@@ -5,13 +5,14 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
   private tokenKey = 'auth_token';
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, public jwtHelper: JwtHelperService) { }
   generateCASLoginUrl(): string {
     // CAS server base URL
     const casBaseUrl = 'https://sso.ihu.gr';
@@ -64,7 +65,7 @@ export class AuthenticationService {
 
   isAuthenticated(): any {
     const token = this.getToken();
-    return token ;//&& !this.jwtHelper.isTokenExpired(token);
+    return token && !this.jwtHelper.isTokenExpired(token);
   }
 
 }
