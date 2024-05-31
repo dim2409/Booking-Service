@@ -27,6 +27,10 @@ import { MatInputModule } from '@angular/material/input';
 
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AuthenticationService } from './services/authentication/authentication.service';
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -66,7 +70,7 @@ import { AuthenticationService } from './services/authentication/authentication.
         MatInputModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter: () => localStorage.getItem('access_token'),
+                tokenGetter: tokenGetter,
                 allowedDomains: ['http://booking.iee.ihu.gr/api'],  // Replace with your API domain
                 disallowedRoutes: ['http://example.com/examplebadroute/'],  // Replace with disallowed routes
             }
