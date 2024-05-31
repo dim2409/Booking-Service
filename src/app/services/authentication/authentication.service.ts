@@ -74,7 +74,8 @@ export class AuthenticationService {
         this.clearToken();
         console.log('Token stored:', this.getToken());
         console.log('Token exists:', this.isAuthenticated());
-        this.router.navigate(['/']);
+        //this.router.navigate(['/']);
+        window.location.href = '/';
       },
       error => {
         console.error('Logout failed:', error);
@@ -82,7 +83,8 @@ export class AuthenticationService {
         this.clearToken();
         console.log('Token stored:', this.getToken());
         console.log('isAuthenticated:', this.isAuthenticated());
-        this.router.navigate(['/']);
+        //this.router.navigate(['/']);
+        window.location.href = '/';
       }
     );
   }
