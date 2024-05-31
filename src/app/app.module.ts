@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AuthenticationService } from './services/authentication/authentication.service';
+
 export function tokenGetter() {
     return localStorage.getItem('access_token');
 }
@@ -40,7 +41,14 @@ export function tokenGetter() {
         { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
         provideCharts(withDefaultRegisterables()),
         AuthenticationService,
-        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+        {
+            provide: JWT_OPTIONS,
+            useFactory: () => ({
+                tokenGetter: tokenGetter,
+                allowedDomains: ['booking.iee.ihu.gr'],  // Replace with your API domain
+                disallowedRoutes: ['http://example.com/examplebadroute/'],  // Replace with disallowed routes
+            }),
+        },
         JwtHelperService
     ],
     bootstrap: [AppComponent],
