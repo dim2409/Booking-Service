@@ -69,7 +69,7 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    this.http.post<any>(`${environment.apiUrl}/logout`, {}).subscribe(
+    this.http.get<any>(`${environment.apiUrl}/logout`, {}).subscribe(
       response => {
         this.clearToken();
         this.router.navigate(['/']);

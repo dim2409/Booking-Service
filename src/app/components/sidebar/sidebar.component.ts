@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
   }
 
   changeLocation(location: any) {
-    if (location == '/login') {
+    if (location == '/logout') {
       this.authenticationService.logout();
     } else if (location == '/login') {
       this.login();
