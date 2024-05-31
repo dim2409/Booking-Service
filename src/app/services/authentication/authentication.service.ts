@@ -35,7 +35,8 @@ export class AuthenticationService {
           const response = await this.http.get<any>(`${environment.apiUrl}/cas/callback`, { params }).toPromise();
           if (response.status === 'success') {
             this.storeToken(response.token);
-            this.router.navigate([response.redirect_url]);
+            window.location.href = '/'
+            //this.router.navigate([response.redirect_url]);
           } else {
             console.error(response.message);
             this.router.navigate([response.redirect_url]);
