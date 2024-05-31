@@ -73,10 +73,10 @@ export class AuthenticationService {
     this.http.get<any>(`${environment.apiUrl}/logout`, {}).subscribe(
       response => {
         this.clearToken();
-        console.log('Token stored:', this.getToken());
-        console.log('Token exists:', this.isAuthenticated());
+        const casLogoutUrl = 'https://sso.ihu.gr/logout';
+
         //this.router.navigate(['/']);
-        window.location.href = '/';
+        window.location.href = casLogoutUrl + '?service=' + encodeURIComponent(window.location.origin);
       },
       error => {
         console.error('Logout failed:', error);
