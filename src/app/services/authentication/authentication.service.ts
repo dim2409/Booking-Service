@@ -72,12 +72,16 @@ export class AuthenticationService {
     this.http.get<any>(`${environment.apiUrl}/logout`, {}).subscribe(
       response => {
         this.clearToken();
+        console.log('Token stored:', this.getToken());
+        console.log('Token exists:', this.isAuthenticated());
         this.router.navigate(['/']);
       },
       error => {
         console.error('Logout failed:', error);
         // Still clear the token and navigate to login page on failure
         this.clearToken();
+        console.log('Token stored:', this.getToken());
+        console.log('Token exists:', this.isAuthenticated());
         this.router.navigate(['/']);
       }
     );
