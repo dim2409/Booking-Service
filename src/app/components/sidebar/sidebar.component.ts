@@ -46,6 +46,7 @@ export class SidebarComponent implements OnInit {
   };
   login() {
     const casLoginUrl = this.authenticationService.generateCASLoginUrl();
+    this.isAuthenticated = this.authenticationService.isAuthenticated();
     window.location.href = casLoginUrl;
   }
 }
