@@ -77,8 +77,8 @@ export class AuthenticationService {
       error => {
         console.error('Logout failed:', error);
         // Still clear the token and navigate to login page on failure
-        this.clearToken();
-        window.location.href = '/';
+        /* this.clearToken();
+        window.location.href = '/'; */
       }
     );
   }
