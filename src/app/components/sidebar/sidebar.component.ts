@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init')
     this.items = this.sidebarService.getMainSidebarItems();
     this.isAuthenticated = this.authenticationService.isAuthenticated();
   }
