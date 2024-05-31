@@ -68,4 +68,23 @@ export class AuthenticationService {
     return token && !this.jwtHelper.isTokenExpired(token);
   }
 
+  logout(): void {
+    this.http.post<any>(`${environment.apiUrl}/logout`, {}).subscribe(
+      response => {
+        this.clearToken();
+        this.router.navigate(['/']);
+      },
+      error => {
+        console.error('Logout failed:', error);
+        // Still clear the token and navigate to login page on failure
+        this.clearToken();
+        this.router.navigate(['/']);
+      }
+    );
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
 }

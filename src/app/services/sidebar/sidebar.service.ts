@@ -58,14 +58,14 @@ export class SidebarService {
         action: "changeLocation('myBookings')",
       },
     },
-    LOGIN: {
+    /* LOGIN: {
       data:{
         label: 'Login',
         icon: 'fa-solid fa-right-to-bracket',
         location: '/login',
         action: "login()",
       }
-    }
+    } */
   };
   getMainSidebarItems() {
     let items = []

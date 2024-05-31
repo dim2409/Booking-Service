@@ -14,6 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class SidebarComponent implements OnInit {
   items: any;
   isOpen = false;
+  isAuthenticated: any;
 
   constructor(public sidebarService: SidebarService, private router: Router, private authenticationService: AuthenticationService) {
     this.sidebarService.getState().subscribe(isOpen => {
@@ -23,6 +24,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.items = this.sidebarService.getMainSidebarItems();
+    this.isAuthenticated = this.authenticationService.isAuthenticated();
   }
 
   //Actions
@@ -31,14 +33,16 @@ export class SidebarComponent implements OnInit {
   }
 
   changeLocation(location: any) {
-    if(location == '/login'){
+    if (location == '/login') {
+      this.authenticationService.logout();
+    } else if (location == '/login') {
       this.login();
-    }else{
+    } else {
       this.sidebarService.toggle();
       this.router.navigate([location]);
     }
   };
-  login(){
+  login() {
     const casLoginUrl = this.authenticationService.generateCASLoginUrl();
     window.location.href = casLoginUrl;
   }

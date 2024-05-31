@@ -8,6 +8,20 @@
       </h3>
     </div>
     <div>
+    <div class="sidebar-items" (click)="changeLocation('/login')" *ngIf="isAuthenticated">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <h3 class="item-style">
+        Login
+      </h3>
+    </div>
+    <div>
+    <div class="sidebar-items" (click)="changeLocation('/logout')" *ngIf="!isAuthenticated">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <h3 class="item-style">
+        Logout
+      </h3>
+    </div>
+    <div>
       
     </div>
 </div>  
