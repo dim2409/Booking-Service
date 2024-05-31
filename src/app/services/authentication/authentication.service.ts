@@ -56,8 +56,6 @@ export class AuthenticationService {
 
   storeToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
-    console.log('Token stored:', this.getToken());
-    console.log('Token exists:', this.isAuthenticated());
   }
 
   getToken(): string | null {
@@ -66,32 +64,32 @@ export class AuthenticationService {
 
   isAuthenticated(): any {
     const token = this.getToken();
-    return token!=null && !this.jwtHelper.isTokenExpired(token);
+    return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 
   logout(): void {
     this.http.get<any>(`${environment.apiUrl}/logout`, {}).subscribe(
       response => {
-        this.clearToken();
+        //this.clearToken();
         const casLogoutUrl = 'https://sso.ihu.gr/logout';
-
-        //this.router.navigate(['/']);
         window.location.href = casLogoutUrl + '?service=' + encodeURIComponent(window.location.origin);
       },
       error => {
         console.error('Logout failed:', error);
         // Still clear the token and navigate to login page on failure
         this.clearToken();
-        console.log('Token stored:', this.getToken());
-        console.log('isAuthenticated:', this.isAuthenticated());
-        //this.router.navigate(['/']);
         window.location.href = '/';
       }
     );
   }
 
+  checkAuthentication(): Observable<{ authenticated: boolean }> {
+    return this.http.get<{ authenticated: boolean }>(`${environment.apiUrl}/authenticated`, {});
+  }
+
   clearToken(): void {
     localStorage.removeItem(this.tokenKey);
+    console.log('Token Cleared')
   }
 
 }

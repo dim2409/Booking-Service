@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { CalendarOptions } from '@fullcalendar/core'; 
+import { CalendarOptions } from '@fullcalendar/core';
 import { ScreenSizeService } from './services/screenSize/screen-size.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,9 +15,17 @@ export class AppComponent {
     plugins: []
   };
   isModeratorRoute!: boolean;
-  constructor(private router: Router, private screenSizeService: ScreenSizeService) { }
+  authenticated!: boolean;
+  constructor(private router: Router, private screenSizeService: ScreenSizeService, private authService: AuthenticationService) { }
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.authService.checkAuthentication().subscribe(
+      response => {
+        this.authenticated = response.authenticated;
+        if(!this.authenticated)this.authService.clearToken();
+      },
+      error => {
+        console.error('Error checking authentication:', error);
+      }
+    );
   }
 }
