@@ -65,7 +65,7 @@ export class AuthenticationService {
 
   isAuthenticated(): any {
     const token = this.getToken();
-    return token && !this.jwtHelper.isTokenExpired(token);
+    return token!=null && !this.jwtHelper.isTokenExpired(token);
   }
 
   logout(): void {
@@ -81,7 +81,7 @@ export class AuthenticationService {
         // Still clear the token and navigate to login page on failure
         this.clearToken();
         console.log('Token stored:', this.getToken());
-        console.log('Token exists:', this.isAuthenticated());
+        console.log('isAuthenticated:', this.isAuthenticated());
         this.router.navigate(['/']);
       }
     );
