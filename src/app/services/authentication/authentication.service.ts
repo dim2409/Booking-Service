@@ -34,7 +34,7 @@ export class AuthenticationService {
         try {
           const response = await this.http.get<any>(`${environment.apiUrl}/cas/callback`, { params }).toPromise();
           if (response.status === 'success') {
-            this.storeToken(response.token);
+            this.storeToken(response.token, response.user);
             window.location.href = '/'
             //this.router.navigate([response.redirect_url]);
           } else {
@@ -54,10 +54,15 @@ export class AuthenticationService {
     return true;
   }
 
-  storeToken(token: string) {
+  storeToken(token: string, userDetails: any) {
     localStorage.setItem(this.tokenKey, token);
+    localStorage.setItem('user_details', JSON.stringify(userDetails));
   }
 
+  getUserDetails(): any {
+    const userDetails = localStorage.getItem('user');
+    return userDetails ? JSON.parse(userDetails) : null;
+  }
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
@@ -89,6 +94,7 @@ export class AuthenticationService {
 
   clearToken(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('user');
     console.log('Token Cleared')
   }
 

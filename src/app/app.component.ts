@@ -27,5 +27,6 @@ export class AppComponent {
         console.error('Error checking authentication:', error);
       }
     );
+    console.log(this.authService.getUserDetails());
   }
 }
