@@ -56,7 +56,7 @@ export class SidebarService {
       },
     },
     USERBOOKINGS: {
-      filter: 'all',
+      filter: ['all'],
       data: {
         label: 'My Bookings',
         icon: 'fa-solid fa-file-signature h2',
@@ -67,17 +67,20 @@ export class SidebarService {
   };
   getMainSidebarItems() {
     let items = [];
-    let userRoles = this.authService.getUserRoles().map((role: { name: any; }) => role.name);
-  
-    for (let key in this.mainItems) {
-      const item = this.mainItems[key];
-      const filters = item.filter;
-  
-      if (filters.includes('all') || filters.some((role: any) => userRoles.includes(role))) {
-        items.push(item.data);
+    if(this.authService.isAuthenticated()) {
+      
+      let userRoles = this.authService.getUserRoles().map((role: { name: any; }) => role.name);
+    
+      for (let key in this.mainItems) {
+        const item = this.mainItems[key];
+        const filters = item.filter;
+    
+        if (filters.includes('all') || filters.some((role: any) => userRoles.includes(role))) {
+          items.push(item.data);
+        }
       }
+    
     }
-  
     return items;
   }
   toggle() {
