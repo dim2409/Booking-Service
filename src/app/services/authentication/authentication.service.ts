@@ -56,7 +56,7 @@ export class AuthenticationService {
 
   storeToken(token: string, userDetails: any) {
     localStorage.setItem(this.tokenKey, token);
-    localStorage.setItem('user_details', JSON.stringify(userDetails));
+    localStorage.setItem('user', JSON.stringify(userDetails));
   }
 
   getUserDetails(): any {
