@@ -56,7 +56,7 @@ export class SidebarService {
       },
     },
     USERBOOKINGS: {
-      filter: ['all'],
+      filter: ['faculty', 'admin'],
       data: {
         label: 'My Bookings',
         icon: 'fa-solid fa-file-signature h2',

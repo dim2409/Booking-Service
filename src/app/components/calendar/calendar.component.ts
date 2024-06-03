@@ -13,6 +13,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameMonth, isSameDay, subWeeks, startOfMonth, addWeeks, endOfMonth } from 'date-fns';
 import _ from 'lodash';
 import { Subject } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import { FiltersService } from 'src/app/services/filters/filters.service';
@@ -59,6 +60,7 @@ export class CalendarComponent {
   buildings: any;
   filters!: any[];
   openDialogFlag: boolean = false;
+  addFlag: any = false;
   eventTimesChanged({
     event,
     newStart,
@@ -82,7 +84,7 @@ export class CalendarComponent {
   activeDayIsOpen: boolean = false;
 
 
-  constructor(private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService, private bookingsService: BookingsService) {
+  constructor(private authService: AuthenticationService, private RoomService: RoomsService, private filterService: FiltersService, private dialogService: DialogService, private bookingsService: BookingsService) {
     this.isSmallScreen = window.innerWidth < 600;
     document.documentElement.style.setProperty('--cellCount', `${5}`);
   }
@@ -99,10 +101,15 @@ export class CalendarComponent {
       this.buildings = resp
       const roomFilters = _.cloneDeep(this.filterService.getRoomFilters(['buildings'], this.buildings));
       const otherFilters = _.cloneDeep(this.filterService.getFilters(['lecture_type']));
-      this.filters =  [ ...otherFilters,...roomFilters] ;
+      this.filters = [...otherFilters, ...roomFilters];
     })
 
     this.selectedValue = 'Month';
+
+    const userRoles = this.authService.getUserRoles().map((role: { name: any; }) => role.name);
+    if (userRoles!=null && userRoles.includes('admin') || userRoles.includes('faculty')) {
+      this.addFlag = true;
+    }
   }
 
   viewDateUpadate(event: any) {
@@ -161,8 +168,8 @@ export class CalendarComponent {
       case 'eventClicked':
         this.dialogService.openInfoDialog(event);
         break;
-        case 'add':
-        if(!this.openDialogFlag){
+      case 'add':
+        if (!this.openDialogFlag) {
           this.openDialogFlag = true
           this.dialogService.openBookingFormDialog(event).subscribe((resp: any) => {
             if (resp) {
