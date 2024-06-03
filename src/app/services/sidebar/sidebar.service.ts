@@ -67,17 +67,17 @@ export class SidebarService {
   };
   getMainSidebarItems() {
     let items = [];
-    let userRoles = this.authService.getUserRoles();
-
+    let userRoles = this.authService.getUserRoles().map((role: { name: any; }) => role.name);
+  
     for (let key in this.mainItems) {
       const item = this.mainItems[key];
       const filters = item.filter;
-
-      if (filters.includes('all') || filters.some((role: string) => userRoles.includes(role))) {
+  
+      if (filters.includes('all') || filters.some((role: any) => userRoles.includes(role))) {
         items.push(item.data);
       }
     }
-
+  
     return items;
   }
   toggle() {
