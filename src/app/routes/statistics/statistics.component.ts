@@ -207,6 +207,8 @@ export class StatisticsComponent implements OnInit {
   approvalRate!: { approvalRate: number, approvedBookings: number, canceledBookings: number, cancelationRate: number, allBookings: number };
 
   ngOnInit(): void {
+    document.body.classList.remove('body-overflow');
+
     this.RoomsService.getAllRooms().subscribe((resp: any) => {
       this.rooms = resp;
     })

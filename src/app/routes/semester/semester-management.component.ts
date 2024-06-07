@@ -73,6 +73,7 @@ export class semesterManagementComponent {
     this._snackBar.open(message, action ? action : 'Dismiss')._dismissAfter(3000);
   }
   ngOnInit() {
+    document.body.classList.remove('body-overflow');
     
     this.getData();
 

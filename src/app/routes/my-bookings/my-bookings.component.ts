@@ -43,6 +43,8 @@ export class MyBookingsComponent implements OnInit {
   constructor(private BookingsService: BookingsService, private dialogService: DialogService, private _snackBar: MatSnackBar, private RoomsService: RoomsService) { }
 
   ngOnInit(): void {
+    document.body.classList.remove('body-overflow');
+
     this.loading = true;
     this.RoomsService.getRooms({}).subscribe((resp: any) => {
       this.rooms = resp
