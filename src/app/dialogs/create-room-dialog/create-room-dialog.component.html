@@ -37,7 +37,7 @@
         <mat-label>Select Moderators</mat-label>
         <mat-select matInput multiple ngModel name="moderator_ids" [(ngModel)]="selectedModeratorIds">
             <mat-option *ngFor="let moderator of possibleModerators" [value]="moderator.id">
-                {{moderator.first_name}} {{moderator.last_name}} ({{moderator.AM}})
+                {{moderator.first_name}} {{moderator.last_name}} <span *ngIf="moderator.AM!=0">({{moderator.AM}})</span>
             </mat-option>
         </mat-select>
     </mat-form-field>
