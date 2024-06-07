@@ -20,6 +20,7 @@ import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loa
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { DialogService } from 'src/app/services/dialog/dialog.service';
 import _ from 'lodash';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-normal-bookings-tab',
@@ -48,7 +49,8 @@ export class NormalBookingsTabComponent implements OnInit {
     private BookingsService: BookingsService,
     private RoomsService: RoomsService,
     private filterService: FiltersService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthenticationService, 
   ) { }
 
   @Output() bookingUpdate: EventEmitter<any> = new EventEmitter<any>();
@@ -104,7 +106,7 @@ export class NormalBookingsTabComponent implements OnInit {
   @ViewChild('roomList') roomList: any;
 
   ngOnInit(): void {
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+    this.RoomsService.getModeratedRooms(this.authService.getUserId()).subscribe((resp: any) => {
       this.rooms = resp;
       this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'lecture_type', 'status', 'type', 'months', 'days', 'publicity'], this.rooms));
     })

@@ -18,6 +18,7 @@ import { ControlCardComponent } from "../../../components/control-card/control-c
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import _ from 'lodash';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 @Component({
     selector: 'app-conflicting-bookings-tab',
     standalone: true,
@@ -48,7 +49,7 @@ export class ConflictingBookingsTabComponent {
   loading!: boolean;
   filters!: any[];
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService,  private filterService: FiltersService) { }
+  constructor(private authService: AuthenticationService, private BookingsService: BookingsService, private RoomsService: RoomsService,  private filterService: FiltersService) { }
 
   chips = [
     { label: 'Day created', value: 'created_at', selected: true, asc: false },
@@ -83,7 +84,7 @@ export class ConflictingBookingsTabComponent {
   }
 
   ngOnInit(): void {
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+    this.RoomsService.getModeratedRooms(this.authService.getUserId()).subscribe((resp: any) => {
       this.rooms = resp;
       this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'type', 'months', 'days'], this.rooms));
     })

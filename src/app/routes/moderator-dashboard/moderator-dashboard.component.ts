@@ -15,6 +15,7 @@ import { RecurringConflictsTabComponent } from "./recurring-conflicts-tab/recurr
 import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 @Component({
   selector: 'app-moderator-dashboard',
   standalone: true,
@@ -45,7 +46,7 @@ export class ModeratorDashboardComponent implements OnInit {
   rooms: any;
   loading!: boolean;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService, private _snackBar: MatSnackBar) { }
+  constructor(private authService: AuthenticationService, private BookingsService: BookingsService, private RoomsService: RoomsService, private dialogService: DialogService, private _snackBar: MatSnackBar) { }
 
   @ViewChild(NormalBookingsTabComponent) normalBookingsTab!: NormalBookingsTabComponent;
   @ViewChild(RecurringBookingsTabComponent) recurringBookingsTabComponent!: RecurringBookingsTabComponent;
@@ -57,7 +58,7 @@ export class ModeratorDashboardComponent implements OnInit {
     this.getRooms();
   }
   getRooms() {
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+    this.RoomsService.getModeratedRooms(this.authService.getUserId()).subscribe((resp: any) => {
       this.rooms = resp;
     });
   }

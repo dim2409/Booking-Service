@@ -68,6 +68,10 @@ export class AuthenticationService {
     const userDetails = localStorage.getItem('user');
     return userDetails ? JSON.parse(userDetails).roles : null;
   }
+  getUserId(): any {
+    const userDetails = localStorage.getItem('user');
+    return userDetails ? JSON.parse(userDetails).id : null;
+  }
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }

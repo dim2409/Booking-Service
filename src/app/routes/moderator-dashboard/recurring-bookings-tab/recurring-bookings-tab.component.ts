@@ -19,6 +19,7 @@ import { ControlCardComponent } from "../../../components/control-card/control-c
 import { LoadingSpinnerComponent } from "../../../components/loading-spinner/loading-spinner.component";
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import _ from 'lodash';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-recurring-bookings-tab',
@@ -70,7 +71,7 @@ export class RecurringBookingsTabComponent implements OnInit {
   loading!: boolean;
   filters: any;
 
-  constructor(private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) { }
+  constructor(private authService: AuthenticationService, private BookingsService: BookingsService, private RoomsService: RoomsService, private filterService: FiltersService, private dialogService: DialogService) { }
 
 
   @ViewChild(ControlCardComponent) controlCard!: ControlCardComponent;
@@ -82,7 +83,7 @@ export class RecurringBookingsTabComponent implements OnInit {
     user_id: 2
   }
   ngOnInit(): void {
-    this.RoomsService.getModeratedRooms(2).subscribe((resp: any) => {
+    this.RoomsService.getModeratedRooms(this.authService.getUserId()).subscribe((resp: any) => {
       this.rooms = resp;
       this.filters = _.cloneDeep(this.filterService.getFilters(['rooms', 'status', 'days', 'publicity'], this.rooms));
     })
