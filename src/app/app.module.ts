@@ -15,7 +15,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -25,15 +25,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 @NgModule({
     declarations: [
         AppComponent,
     ],
     providers: [
-        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }, 
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
         { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
         provideCharts(withDefaultRegisterables())
-        ],
+    ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

@@ -8,6 +8,7 @@ import { RoomManagementComponent } from './routes/room-management/room-managemen
 import { StatisticsComponent } from './routes/statistics/statistics.component';
 import { semesterManagementComponent } from './routes/semester/semester-management.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { LoginComponent } from './routes/login/login.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'roomManagement', component: RoomManagementComponent},
   { path: 'statistics', component: StatisticsComponent},
   { path: 'semester', component: semesterManagementComponent},
-  { path: 'cas/callback', canActivate: [AuthenticationService], data: { casCallback: true } }
+  { path: 'login', component: LoginComponent},
+  //{ path: 'cas/callback', canActivate: [AuthenticationService], data: { casCallback: true } }
 ];
 
 @NgModule({

@@ -1,0 +1,25 @@
+<div>
+    <div class="moderation-insturctions">
+        <p class="h4">
+            You need to be logged as a moderator in order to see all the feautures of this app.
+        </p>
+        <p class="h4">
+            Please use the following moderator credentials:
+        </p>
+        <p class="h4">
+            Username: <span class="highlight">
+                mod
+            </span>
+        </p>
+        <p class="h4">
+            Password: <span class="highlight">
+                mod
+            </span>
+        </p>
+    </div>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-container">
+        <input type="text" name="username" [(ngModel)]="username" placeholder="Username" required />
+        <input type="password" name="password" [(ngModel)]="password" placeholder="Password" required />
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+</div>

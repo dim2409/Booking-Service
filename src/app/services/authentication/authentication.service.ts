@@ -22,9 +22,10 @@ export class AuthenticationService {
     // Construct the CAS login URL
     return `${casBaseUrl}/login?service=${serviceUrl}`;
   }
-  login(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + '/login');
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(environment.apiUrl + '/login',{username: username, password: password});
   }
+
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (route.data['casCallback']) {
       const ticket = route.queryParams['ticket'];

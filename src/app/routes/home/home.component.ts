@@ -22,7 +22,7 @@ import _ from 'lodash';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.less',
-    imports: [CommonModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule, FiltersComponent]
+    imports: [CommonModule, CalendarComponentModule, MatDialogModule, MatMenuModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, RouterModule]
 })
 export class HomeComponent {
   roomIds: any = "";
