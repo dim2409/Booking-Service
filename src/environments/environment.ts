@@ -1,4 +1,4 @@
 export const environment = {    
   production: true,
-  apiUrl: 'http://booking.iee.ihu.gr/api'
+  apiUrl: 'https://bookingservicebackend.onrender.com/api'
 };
