@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarService } from '../../services/sidebar/sidebar.service';
-import { Subscription } from 'rxjs';
+import { MenuItem, SidebarService } from '../../services/sidebar/sidebar.service';
+import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   styleUrl: './sidebar.component.less'
 })
 export class SidebarComponent implements OnInit {
-  items: any;
+  items$: Observable<MenuItem[]> = this.sidebarService.filteredItems$;
   isOpen = false;
 
   constructor(public sidebarService: SidebarService, private router: Router, private authenticationService: AuthenticationService) {
@@ -22,8 +22,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = this.sidebarService.getMainSidebarItems();
-  }
+  } 
 
   //Actions
   toggleSidebar() {

@@ -21,7 +21,6 @@ export class LoginComponent {
     this.authenticationService.login(this.username, this.password).subscribe({
           next: (response) => {
             if(response.status === 'success'){
-              this.authenticationService.storeToken(response.token);
               this.router.navigate(['/']);
             }else{
               console.error(response.message);

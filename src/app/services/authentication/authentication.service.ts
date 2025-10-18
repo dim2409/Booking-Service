@@ -2,14 +2,30 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
+
+export interface User {
+  email: string;
+  id: number;
+  username: string;
+  roles: ['admin' | 'moderator' | 'guest'| 'faculty'];
+}
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  
+  private currentUserSubject = new BehaviorSubject<User | null>(
+    {
+      email: '',
+      id: 0,
+      username: 'guest',
+      roles: ['guest']
+    }
+  );
+  currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
   private tokenKey = 'auth_token';
   constructor(private http: HttpClient, private router: Router) { }
   generateCASLoginUrl(): string {
@@ -23,7 +39,17 @@ export class AuthenticationService {
     return `${casBaseUrl}/login?service=${serviceUrl}`;
   }
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(environment.apiUrl + '/login',{username: username, password: password});
+    return this.http.post<any>(environment.apiUrl + '/login', {username, password}).pipe(
+      map(response => {
+        if (response.status === 'success') {
+          this.storeToken(response.token);
+          this.currentUserSubject.next(response.user);
+        } else {
+          console.error(response.message);
+        }
+        return response;
+      })
+    );
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -55,8 +81,6 @@ export class AuthenticationService {
 
   storeToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
-    console.log('Token stored:', this.getToken());
-    console.log('Token exists:', this.isAuthenticated());
   }
 
   getToken(): string | null {
