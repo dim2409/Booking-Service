@@ -27,7 +27,13 @@ export class AuthenticationService {
   );
   currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
   private tokenKey = 'auth_token';
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    const storedUser = localStorage.getItem('user');
+    this.currentUserSubject = new BehaviorSubject<User | null>(
+      storedUser ? JSON.parse(storedUser) : null
+    );
+    this.currentUser$ = this.currentUserSubject.asObservable();
+   }
   generateCASLoginUrl(): string {
     // CAS server base URL
     const casBaseUrl = 'https://sso.ihu.gr';
@@ -43,6 +49,7 @@ export class AuthenticationService {
       map(response => {
         if (response.status === 'success') {
           this.storeToken(response.token);
+          localStorage.setItem('user', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
         } else {
           console.error(response.message);
@@ -50,6 +57,10 @@ export class AuthenticationService {
         return response;
       })
     );
+  }
+
+  get currentUser(): User | null {
+    return this.currentUserSubject.value;
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
