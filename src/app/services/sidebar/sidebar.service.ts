@@ -23,7 +23,7 @@ export class SidebarService {
         icon: 'fas fa-home h2',
         location: '/',
         action: "changeLocation('')",
-        roles: ['guest']
+        roles: ['guest', 'moderator', 'admin', 'faculty']
       },
       {
         label: 'Moderator View',
